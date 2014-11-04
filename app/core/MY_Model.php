@@ -13,6 +13,7 @@ class MY_Model extends CI_Model
     
     public $table_name;
     public $primary_key;
+    public $total_results;
     
     function __construct() 
     {
@@ -65,7 +66,6 @@ class MY_Model extends CI_Model
         {
             $this->db->order_by($order['field'], $order['order']);
         }
-
         return $this->db->get($this->table_name);
     }
     

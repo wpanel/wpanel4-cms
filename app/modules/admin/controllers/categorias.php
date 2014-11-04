@@ -26,7 +26,7 @@ class Categorias extends MX_Controller {
 
 		// Template da tabela
 		$this->table->set_template(array('table_open' => '<table class="table table-striped">'));
-		$this->table->set_heading('#', 'Título', 'Categoria-pai', 'Ações');
+		$this->table->set_heading('#', 'Título', 'Categoria-pai', 'Visão', 'Ações');
 		$query = $this->categoria->list_all();
 
 		foreach ($query->result() as $row) {
@@ -34,6 +34,7 @@ class Categorias extends MX_Controller {
 				$row->id,
 				$row->title,
 				$this->categoria->get_title_by_id($row->category_id),
+				$row->view,
 				div(array('class' => 'btn-group btn-group-sm')) .
 				anchor('admin/categorias/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
 				anchor('admin/categorias/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .

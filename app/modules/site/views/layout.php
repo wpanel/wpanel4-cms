@@ -2,9 +2,7 @@
 <html>
     <head>
         <title><?= $this->wpanel->get_config('site_titulo'); ?></title>
-
         <?= $this->wpanel->get_meta(); ?>
-
         <!-- Bootstrap -->
         <link href="<?= base_url(); ?>lib/css/bootstrap.css" rel="stylesheet">
         <!-- jQuery -->
@@ -52,6 +50,13 @@
         }
         .page-header {
             margin-top: 15px;
+        }
+        .footer {
+            margin-top:20px;
+            /*padding: 15px;*/
+            background-color: #333;
+            color: #fff;
+            min-height: 350px;
         }
         </style>
         <!-- Auto-play do carrossel -->
@@ -178,49 +183,52 @@
                     </div>
                     <!-- end - Widget -->
                     <!-- Widget -->
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12">
-                            <hr/>
-                            <div class="fb-like-box" 
-                            data-href="<?= $this->wpanel->get_config('link_likebox'); ?>" 
-                            data-colorscheme="light" 
-                            data-show-faces="true" 
-                            data-header="false" 
-                            data-stream="false" 
-                            data-show-border="false" 
-                            width="265" 
-                            height="300"></div>
+                            
                         </div>
-                    </div>
+                    </div> -->
                     <!-- end - Widget -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4 class="page-header">Newsletter</h4>
-                            <?= form_open('newsletter', array('role' => 'form')); ?>
-                                <div class="form-group">
-                                    <label class="control-label" for="nome">Nome</label>
-                                    <input class="form-control" name="nome" id="nome" placeholder="Seu nome..." type="text">
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" for="email">Email</label>
-                                    <input class="form-control" name="email" id="email" placeholder="Seu email..." type="text">
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-envelope"></span> Enviar
-                                </button>
-                            <?= form_close(); ?>
-                        </div>
-                    </div>
                 </div>
                 <!-- end - sidebar -->
             </div>
             <!-- end - body wrapper -->
             <!-- Rodape | Inicio -->
-            <div class="row" style="margin-top:20px;">
+            <div class="row footer">
+                <div class="col-md-4">
+                    <h4 class="page-header">Sobre</h4>
+                    <p><?= $this->wpanel->get_config('site_desc'); ?></p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="page-header">Newsletter</h4>
+                    <?= form_open('newsletter', array('role' => 'form')); ?>
+                        <div class="form-group">
+                            <label class="control-label" for="nome">Nome</label>
+                            <input class="form-control" name="nome" id="nome" placeholder="Seu nome..." type="text">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="email">Email</label>
+                            <input class="form-control" name="email" id="email" placeholder="Seu email..." type="text">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-envelope"></span> Enviar
+                        </button>
+                    <?= form_close(); ?>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="page-header">Social</h4>
+                    <div class="fb-like-box col-md-4" 
+                        data-href="<?= $this->wpanel->get_config('link_likebox'); ?>" 
+                        data-colorscheme="light" 
+                        data-show-faces="true" 
+                        data-header="false" 
+                        data-stream="false" 
+                        data-show-border="false" 
+                        width="300" 
+                        height="250"></div>
+                </div>
                 <div class="col-md-12">
-                    <div class="well well-sm">
-                        <p><?= $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://dotsistemas.com.br">Dot Sistemas</a>.</p>
-                    </div>
+                    <p><?= $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://dotsistemas.com.br">Dot Sistemas</a>.</p>
                 </div>
             </div>
             <!-- Rodape | Fim -->
