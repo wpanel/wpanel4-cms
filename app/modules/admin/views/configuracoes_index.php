@@ -1,11 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-// Carrega o CKEditor
-// echo '<script type="text/javascript" src="'.base_url().'ckeditor/ckeditor.js"></script>';
-// echo '<script>CKEDITOR.replace("editor");</script>';
-
-echo '<script src="'.base_url().'lib/tinymce/tinymce.min.js"></script>';
-echo '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
+echo $this->wpanel->load_editor();
 
 echo page_header('Configurações', 2);
 

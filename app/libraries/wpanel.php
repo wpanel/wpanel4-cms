@@ -11,6 +11,9 @@
 class wpanel
 {
 
+	var $meta_author = 'Eliel de Paula <elieldepaula@gmail.com>';
+	var $text_editor = 'tinymce';
+
 	public function __construct($config = array()) {
 		if (count($config) > 0) {
 			$this->initialize($config);
@@ -72,6 +75,7 @@ class wpanel
 	{
 		$meta = array(
 	        array('name' => 'robots', 'content' => 'all'),
+	        array('name' => 'author', 'content' => $this->meta_author),
 	        array('name' => 'description', 'content' => $this->get_config('site_desc')),
 	        array('name' => 'keywords', 'content' => $this->get_config('site_tags')),
 	        array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
@@ -89,12 +93,39 @@ class wpanel
 	 **/
 	public function get_config($item = '')
 	{
-		$this->load->model('configuracao');
-		if ($item == '') {
-			return $this->configuracao->get_by_id('1')->row();
+		if (isset($this->$item)) {
+			return $this->$item;
 		} else {
-			$query = $this->configuracao->get_by_id('1')->row();
-			return $query->$item;
+			$this->load->model('configuracao');
+			if ($item == '') {
+				return $this->configuracao->get_by_id('1')->row();
+			} else {
+				$query = $this->configuracao->get_by_id('1')->row();
+				return $query->$item;
+			}
+		}		
+	}
+
+	/**
+	 * Este método carrega as bibliotecas do editor de texto preferido
+	 * nas telas onde são usados.
+	 *
+	 * @return Mixed
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function load_editor()
+	{
+		$str_out = '';
+		if ($this->text_editor == 'tinymce') {
+			$str_out .= '<script src="'.base_url().'lib/tinymce/tinymce.min.js"></script>';
+			$str_out .= '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
+			return $str_out;
+		} elseif ($this->text_editor == 'ckeditor') {
+			$str_out .= '<script type="text/javascript" src="'.base_url('').'lib/ckeditor/ckeditor.js"></script>';
+			$str_out .= '<script>CKEDITOR.replace("editor");</script>';
+			return $str_out;
+		} else {
+			return false;
 		}
 	}
 

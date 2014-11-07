@@ -1,11 +1,6 @@
 <?php
 
-// echo '<script type="text/javascript" src="'.base_url().'ckeditor/ckeditor.js"></script>';
-// echo '<script>CKEDITOR.replace("editor");</script>';
-
-echo '<script src="'.base_url().'lib/tinymce/tinymce.min.js"></script>';
-echo '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
-
+echo $this->wpanel->load_editor();
 
 echo form_open_multipart('admin/pages/edit/'.$id, array('role'=>'form'));
 

@@ -13,8 +13,6 @@
  */
 class Auth {
 
-	private $CI;
-
 	var $auth_table_name = 'users';
 	var $auth_table_key = 'id';
 	var $auth_username_field = 'username';
