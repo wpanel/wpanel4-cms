@@ -16,9 +16,8 @@ echo form_input(array('name'=>'order', 'class'=>'form-control'));
 echo form_error('order');
 echo close_div(2);
 
-$options = array(
-                  'slide'  => 'Slide'
-                );
+$options = config_item('pos_banners');
+
 echo col(2);
 echo div(array('class'=>'form-group'));
 echo form_label('Posição', 'position');
@@ -32,6 +31,8 @@ $options = array(
                   '0'  => 'Indisponível',
                   '1'  => 'Publicado'
                 );
+
+
 echo col(3);
 echo div(array('class'=>'form-group'));
 echo form_label('Status', 'status');

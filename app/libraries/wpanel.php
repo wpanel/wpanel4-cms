@@ -11,9 +11,6 @@
 class wpanel
 {
 
-	var $meta_author = 'Eliel de Paula <elieldepaula@gmail.com>';
-	var $text_editor = 'tinymce';
-
 	public function __construct($config = array()) {
 		if (count($config) > 0) {
 			$this->initialize($config);
@@ -23,6 +20,17 @@ class wpanel
 
 	public function __get($var) {
 		return get_instance()->$var;
+	}
+
+	/**
+	 * Retorna o valor da variável $pos_banners.
+	 *
+	 * @return array()
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function get_pos_banners()
+	{
+		return $this->pos_banners;
 	}
 
 	private function _attributes($attributes)
@@ -75,7 +83,7 @@ class wpanel
 	{
 		$meta = array(
 	        array('name' => 'robots', 'content' => 'all'),
-	        array('name' => 'author', 'content' => $this->meta_author),
+	        array('name' => 'author', 'content' => config_item('meta_author')),
 	        array('name' => 'description', 'content' => $this->get_config('site_desc')),
 	        array('name' => 'keywords', 'content' => $this->get_config('site_tags')),
 	        array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
@@ -87,22 +95,21 @@ class wpanel
 	 * Este método retorna um valor da tabela de configurações
 	 * ou o objeto todo para ser selecionado externamente.
 	 *
+	 * Adicionado o recurso de retornar uma configuração do 
+	 * arquivo 'config/wpanel.php'
+	 *
 	 * @return mixed
 	 * @param $item String
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
 	public function get_config($item = '')
 	{
-		if (isset($this->$item)) {
-			return $this->$item;
+		$this->load->model('configuracao');
+		if ($item == '') {
+			return $this->configuracao->get_by_id('1')->row();
 		} else {
-			$this->load->model('configuracao');
-			if ($item == '') {
-				return $this->configuracao->get_by_id('1')->row();
-			} else {
-				$query = $this->configuracao->get_by_id('1')->row();
-				return $query->$item;
-			}
+			$query = $this->configuracao->get_by_id('1')->row();
+			return $query->$item;
 		}		
 	}
 
@@ -116,11 +123,11 @@ class wpanel
 	public function load_editor()
 	{
 		$str_out = '';
-		if ($this->text_editor == 'tinymce') {
+		if (config_item('text_editor') == 'tinymce') {
 			$str_out .= '<script src="'.base_url().'lib/tinymce/tinymce.min.js"></script>';
 			$str_out .= '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
 			return $str_out;
-		} elseif ($this->text_editor == 'ckeditor') {
+		} elseif (config_item('text_editor') == 'ckeditor') {
 			$str_out .= '<script type="text/javascript" src="'.base_url('').'lib/ckeditor/ckeditor.js"></script>';
 			$str_out .= '<script>CKEDITOR.replace("editor");</script>';
 			return $str_out;
