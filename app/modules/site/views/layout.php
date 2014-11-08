@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?= $this->wpanel->get_config('site_titulo'); ?></title>
+        <title><?= $this->wpanel->get_config('site_titulo') . $page_title; ?></title>
         <?= $this->wpanel->get_meta(); ?>
         <!-- Bootstrap -->
         <link href="<?= base_url(); ?>lib/css/bootstrap.css" rel="stylesheet">
@@ -11,18 +11,24 @@
         <!-- BEGIN Facebook -->
         <div id="fb-root"></div>
         <script>
-        (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1472322323008859&version=v2.0";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
+        // (function (d, s, id) {
+        //         var js, fjs = d.getElementsByTagName(s)[0];
+        //         if (d.getElementById(id))
+        //             return;
+        //         js = d.createElement(s);
+        //         js.id = id;
+        //         js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1472322323008859&version=v2.0";
+        //         fjs.parentNode.insertBefore(js, fjs);
+        //     }(document, 'script', 'facebook-jssdk'));
         </script>
         <!-- END Facebook -->
         <style type="text/css">
+        body {
+            background-image: url('<?php echo base_url() . '/media/' . $this->wpanel->get_config('background'); ?>');
+            background-position: top center;
+            /*background-repeat: no-repeat;*/
+            background-attachment: fixed;
+        }
         .space {
             height: 15px;
         }
@@ -76,7 +82,7 @@
             'class' => 'background-image hidden-xs'
         );
 
-        echo img($image_properties);
+        //echo img($image_properties);
 
         ?>
         <div class="space hidden-xs">&nbsp;</div>

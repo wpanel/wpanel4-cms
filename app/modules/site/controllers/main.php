@@ -19,7 +19,7 @@ class main extends MX_Controller {
 	public $layout = 'layout';
 
 	function __construct() {
-		$this->load->model('banner');
+		
 	}
 
 	/**
@@ -71,6 +71,7 @@ class main extends MX_Controller {
 		$content_vars['post'] = $post;
 
 		// Variáveis obrigatórias para o layout
+		$content_vars['page_title'] = '';
 		$layout_vars['content'] = $this->load->view('main_post_to_home', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -107,6 +108,7 @@ class main extends MX_Controller {
 		}
 
 		// Variáveis obrigatórias para o layout
+		$content_vars['page_title'] = '';
 		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -139,19 +141,21 @@ class main extends MX_Controller {
 
 		// Variáveis da view interna
 		if ($category_id == '') {
-			$content_vars['posts'] = $this->post->get_by_field(
+			$qry_post = $this->post->get_by_field(
 				array('page'=>'0', 'status'=>'1'), 
 				null, 
 				array('field'=>'created', 'order'=>'desc')
 			);
 		} else {
 			$content_vars['titulo_view'] = 'Posts de "'.$qry_category->title.'"';
-			$content_vars['posts'] = $this->post->get_by_category($category_id, 'desc');
+			$qry_post = $this->post->get_by_category($category_id, 'desc');
 		}
 
+		$content_vars['posts'] = $qry_post;
 		$content_vars['categoria'] = $qry_category;
 
 		// Variáveis obrigatórias para o layout
+		$content_vars['page_title'] = ' - artigos de ' . $qry_category->title;
 		$layout_vars['content'] = $this->load->view($view, $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -187,6 +191,7 @@ class main extends MX_Controller {
 		$content_vars['post'] = $post;
 
 		// Variáveis obrigatórias para o layout
+		$content_vars['page_title'] = ' - ' . $post->title;
 		$layout_vars['content'] = $this->load->view('main_post', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -211,6 +216,7 @@ class main extends MX_Controller {
 		$content_vars['titulo_view'] = 'Resultados da busca por "'.$termos_busca.'"';
 		$content_vars['posts'] = $this->post->busca_posts($termos_busca);
 		// Variáveis obrigatórias para o layout
+		$content_vars['page_title'] = ' - resultado da busca "'.$termos_busca.'"';
 		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -284,6 +290,7 @@ class main extends MX_Controller {
 			$content_vars['captcha'] = $this->form_validation->get_captcha();
 
 			// Variáveis obrigatórias para o layout
+			$content_vars['page_title'] = ' - fale conosco';
 			$layout_vars['content'] = $this->load->view('main_contato', $content_vars, TRUE);
 
 			$this->load->view($this->layout, $layout_vars);
@@ -348,6 +355,7 @@ class main extends MX_Controller {
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 		if ($this->form_validation->run() == FALSE) {
 			// Variáveis obrigatórias para o layout
+			$content_vars['page_title'] = ' - cadastro de newsletter.';
 			$layout_vars['content'] = $this->load->view('main_newsletter', $content_vars, TRUE);
 			$this->load->view($this->layout, $layout_vars);
 		} else {

@@ -9,7 +9,7 @@
     <?php } else { ?>
     <div class="col-md-12">
     <?php } ?>
-        <h2><?= $post->title; ?></h2>
+        <h1><?= $post->title; ?></h1>
         <p class="text-muted">
             <span class="visible-xs"> Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
             <small>
@@ -22,7 +22,12 @@
             <div style="margin-top:15px;margin-bottom:15px;" class="thumbnail">
                 <!-- Largura mínima de 700px -->
                 <?php
-                echo img(array('src'=>'media/capas/'.$post->image, 'class'=>'img-responsive', 'style'=>'margin-top:5px;'));
+                $img_param = array(
+                    'src'=>'media/capas/'.$post->image,
+                    'alt'=>$post->title,
+                    'class'=>'img-responsive', 'style'=>'margin-top:5px;'
+                );
+                echo img($img_param);
                 ?>
             </div>
             <?php

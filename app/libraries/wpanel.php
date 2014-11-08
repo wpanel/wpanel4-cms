@@ -26,17 +26,6 @@ class wpanel
 	}
 
 	/**
-	 * Retorna o valor da variável $pos_banners.
-	 *
-	 * @return array()
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	public function get_pos_banners()
-	{
-		return $this->pos_banners;
-	}
-
-	/**
 	 * Este método preenche uma lista de atributos passados
 	 * em forma de array em um elemento HTML
 	 *
@@ -232,6 +221,7 @@ class wpanel
 	 **/
 	public function get_banner($position)
 	{
+		$this->load->model('banner');
 		return $this->banner->get_banners($position)->result();
 	}
 
