@@ -119,6 +119,7 @@ class banners extends MX_Controller {
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
+				$this->remove_image($id);
 				$dados_save['content'] = $this->upload();
 			}
 
@@ -145,6 +146,8 @@ class banners extends MX_Controller {
 		}
 
 		$this->load->model('banner');
+
+		$this->remove_image($id);
 
 		if($this->banner->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Banner excluído com sucesso.');
@@ -178,5 +181,30 @@ class banners extends MX_Controller {
 		}
 
 	}
+
+	/**
+	 * Este método faz a exclusão de uma imagem de banner.
+	 *
+	 * @return boolean
+	 * @param $id Integer ID do banner.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	private function remove_image($id)
+    {
+    	$this->load->model('banner');
+        $banner = $this->banner->get_by_id($id)->row();
+        $filename = './media/banners/' . $banner->content;
+        if(file_exists($filename))
+        {
+            if(unlink($filename))
+            {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
 
 }

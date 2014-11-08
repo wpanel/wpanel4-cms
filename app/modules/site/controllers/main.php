@@ -19,7 +19,7 @@ class main extends MX_Controller {
 	public $layout = 'layout';
 
 	function __construct() {
-		
+		// Códigos e chamadas executados ao iniciar a classe.
 	}
 
 	/**

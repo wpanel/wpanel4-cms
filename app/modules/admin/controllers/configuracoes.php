@@ -10,14 +10,17 @@
  *--------------------------------------------------------------------------
  */
 
-class Configuracoes extends MX_Controller {
+class Configuracoes extends MX_Controller 
+{
+    
+        function __construct() {
+                $this->load->model('configuracao');
+        }
 
 	public function index()
 	{
 		$layout_vars = array();
 		$content_vars = array();
-
-		$this->load->model('configuracao');
 
 		$this->form_validation->set_rules('site_titulo', 'Título do site', 'required');
 		
@@ -88,8 +91,15 @@ class Configuracoes extends MX_Controller {
 			$dados_save['smtp_usuario'] = $this->input->post('smtp_usuario');
 			$dados_save['smtp_senha'] = $this->input->post('smtp_senha');
 			
-			if($this->input->post('alterar_logomarca')=='1')$dados_save['logomarca'] = $this->upload('logomarca');
-			if($this->input->post('alterar_background')=='1')$dados_save['background'] = $this->upload('background');
+			if($this->input->post('alterar_logomarca')=='1'){
+                            $this->remove_image('logomarca');
+                            $dados_save['logomarca'] = $this->upload('logomarca');
+                        }
+                        
+			if($this->input->post('alterar_background')=='1'){
+                            $this->remove_image('background');
+                            $dados_save['background'] = $this->upload('background');
+                        }
 
 			if($this->configuracao->update('1', $dados_save))
 			{
@@ -133,5 +143,31 @@ class Configuracoes extends MX_Controller {
 		}
 
 	}
+    
+    /**
+	 * Este método remove uma imagem de configuração da pasta
+	 * para evitar que a alteração de imagens gaste espaço
+	 * desnecessário no servidor.
+	 *
+	 * @return boolean
+	 * @param $item String Item de configuração.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/    
+    private function remove_image($item)
+    {
+        $config = $this->configuracao->get_by_id('1')->row();
+        $filename = './media/' . $config->$item;
+        if(file_exists($filename))
+        {
+            if(unlink($filename))
+            {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
 
 }

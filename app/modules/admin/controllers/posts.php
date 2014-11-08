@@ -177,6 +177,7 @@ class Posts extends MX_Controller {
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
+				$this->remove_image($id);
 				$dados_save['image'] = $this->upload();
 			}
 
@@ -216,6 +217,8 @@ class Posts extends MX_Controller {
 
 		$this->load->model('post');
 
+		$this->remove_image($id);
+
 		if($this->post->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Postagem excluída com sucesso.');
 			redirect('admin/posts');
@@ -248,5 +251,30 @@ class Posts extends MX_Controller {
 		}
 
 	}
+
+	/**
+	 * Este método faz a exclusão de uma imagem de capa.
+	 *
+	 * @return boolean
+	 * @param $id Integer ID da postagem.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	private function remove_image($id)
+    {
+    	$this->load->model('post');
+        $post = $this->post->get_by_id($id)->row();
+        $filename = './media/capas/' . $post->image;
+        if(file_exists($filename))
+        {
+            if(unlink($filename))
+            {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
 
 }
