@@ -71,7 +71,6 @@ class main extends MX_Controller {
 		$content_vars['post'] = $post;
 
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_post_to_home', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -108,7 +107,6 @@ class main extends MX_Controller {
 		}
 
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -154,7 +152,6 @@ class main extends MX_Controller {
 		$content_vars['categoria'] = $qry_category;
 
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view($view, $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -190,7 +187,6 @@ class main extends MX_Controller {
 		$content_vars['post'] = $post;
 
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_post', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -215,7 +211,6 @@ class main extends MX_Controller {
 		$content_vars['titulo_view'] = 'Resultados da busca por "'.$termos_busca.'"';
 		$content_vars['posts'] = $this->post->busca_posts($termos_busca);
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -240,7 +235,6 @@ class main extends MX_Controller {
 		$content_vars['lista_videos'] = $this->simplepie->get_items();
 
 		// Variáveis obrigatórias para o layout
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_videos', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -261,7 +255,6 @@ class main extends MX_Controller {
 
 		// Variáveis obrigatórias para o layout
 		$layout_vars['menu_categorias'] = $this->wpanel->menu_categorias();
-		$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 		$layout_vars['content'] = $this->load->view('main_video', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -291,7 +284,6 @@ class main extends MX_Controller {
 			$content_vars['captcha'] = $this->form_validation->get_captcha();
 
 			// Variáveis obrigatórias para o layout
-			$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 			$layout_vars['content'] = $this->load->view('main_contato', $content_vars, TRUE);
 
 			$this->load->view($this->layout, $layout_vars);
@@ -356,7 +348,6 @@ class main extends MX_Controller {
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 		if ($this->form_validation->run() == FALSE) {
 			// Variáveis obrigatórias para o layout
-			$layout_vars['banner_slide'] = $this->banner->get_banners('slide');
 			$layout_vars['content'] = $this->load->view('main_newsletter', $content_vars, TRUE);
 			$this->load->view($this->layout, $layout_vars);
 		} else {

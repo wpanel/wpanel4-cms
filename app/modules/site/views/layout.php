@@ -82,7 +82,7 @@
         <div class="space hidden-xs">&nbsp;</div>
         <!-- Main wrapper -->
         <div class="container wpn_conteudo">
-            <!-- Banner -->
+            <!-- Banner slide -->
             <div class="row hidden-xs">
                 <div id="carousel-topo" data-interval="false" class="carousel slide"
                      data-ride="carousel">
@@ -90,7 +90,7 @@
                         <?php
                         // Laço com o banner slider.
                         $laco = 0;
-                        foreach ($banner_slide->result() as $ban_sld) {
+                        foreach ($this->wpanel->get_banner('slide') as $ban_sld) {
                             ?>
                             <div <?php if ($laco == 0) {
                             echo 'class="item active"';
@@ -120,7 +120,7 @@
                     </a>
                 </div>
             </div>
-            <!-- End - Banner -->
+            <!-- End - Banner slide -->
             <!-- Navbar Topo | Inicio -->
             <div class="row">
                 <div class="navbar navbar-default navbar-inverse navbar-static-top">

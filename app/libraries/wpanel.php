@@ -11,14 +11,17 @@
 class wpanel
 {
 
-	public function __construct($config = array()) {
-		if (count($config) > 0) {
+	public function __construct($config = array()) 
+	{
+		if (count($config) > 0) 
+		{
 			$this->initialize($config);
 		}
 		log_message('debug', "Wpanel Class Initialized");
 	}
 
-	public function __get($var) {
+	public function __get($var) 
+	{
 		return get_instance()->$var;
 	}
 
@@ -33,6 +36,13 @@ class wpanel
 		return $this->pos_banners;
 	}
 
+	/**
+	 * Este método preenche uma lista de atributos passados
+	 * em forma de array em um elemento HTML
+	 *
+	 * @return mixed
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 */
 	private function _attributes($attributes)
 	{
 		if(is_array($attributes))
@@ -58,13 +68,18 @@ class wpanel
 	 * @param $config array()
 	 * @return void
 	 */
-	public function initialize($config = array()) {
-		foreach ($config as $key => $val) {
+	public function initialize($config = array()) 
+	{
+		foreach ($config as $key => $val) 
+		{
 			if (isset($this->$key)) {
 				$method = 'set_' . $key;
-				if (method_exists($this, $method)) {
+				if (method_exists($this, $method)) 
+				{
 					$this->$method($val);
-				} else {
+				}
+				else 
+				{
 					$this->$key = $val;
 				}
 			}
@@ -107,7 +122,9 @@ class wpanel
 		$this->load->model('configuracao');
 		if ($item == '') {
 			return $this->configuracao->get_by_id('1')->row();
-		} else {
+		} 
+		else 
+		{
 			$query = $this->configuracao->get_by_id('1')->row();
 			return $query->$item;
 		}		
@@ -123,15 +140,20 @@ class wpanel
 	public function load_editor()
 	{
 		$str_out = '';
-		if (config_item('text_editor') == 'tinymce') {
+		if (config_item('text_editor') == 'tinymce') 
+		{
 			$str_out .= '<script src="'.base_url().'lib/tinymce/tinymce.min.js"></script>';
 			$str_out .= '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
 			return $str_out;
-		} elseif (config_item('text_editor') == 'ckeditor') {
+		} 
+		elseif (config_item('text_editor') == 'ckeditor') 
+		{
 			$str_out .= '<script type="text/javascript" src="'.base_url('').'lib/ckeditor/ckeditor.js"></script>';
 			$str_out .= '<script>CKEDITOR.replace("editor");</script>';
 			return $str_out;
-		} else {
+		} 
+		else 
+		{
 			return false;
 		}
 	}
@@ -149,7 +171,8 @@ class wpanel
 		$str = '';
 		$this->load->model('categoria');
 		$this->load->model('post_categoria');
-		foreach ($this->post_categoria->list_by_post($post_id)->result() as $value) {
+		foreach ($this->post_categoria->list_by_post($post_id)->result() as $value) 
+		{
 			$str .= anchor(
 					'/posts/'.$value->category_id,
 					$this->categoria->get_title_by_id($value->category_id),
@@ -170,7 +193,8 @@ class wpanel
 	{
 		$str = '';
 		$x = explode(',', $tags);
-		foreach ($x as $value) {
+		foreach ($x as $value) 
+		{
 			$str .= $pre.$value.$pos;
 		}
 		return $str;
@@ -197,6 +221,18 @@ class wpanel
 		}
 		$str .= '</ul>';
 		return $str;
+	}
+
+	/**
+	 * Este método retorna uma lista de banners informando
+	 * a posição.
+	 *
+	 * @return mixed
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function get_banner($position)
+	{
+		return $this->banner->get_banners($position)->result();
 	}
 
 } // END class 
