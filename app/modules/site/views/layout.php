@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?= $this->wpanel->get_config('site_titulo') . $page_title; ?></title>
+        <title><?= $this->wpanel->get_titulo(); ?></title>
         <?= $this->wpanel->get_meta(); ?>
         <!-- Bootstrap -->
         <link href="<?= base_url(); ?>lib/css/bootstrap.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <!-- END Facebook -->
         <style type="text/css">
         body {
-            background-image: url('<?php echo base_url() . '/media/' . $this->wpanel->get_config('background'); ?>');
+            background-image: url('<?php echo base_url('media') . '/' . $this->wpanel->get_config('background'); ?>');
             background-position: top center;
             /*background-repeat: no-repeat;*/
             background-attachment: fixed;

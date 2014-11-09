@@ -18,7 +18,8 @@ class main extends MX_Controller {
 	 **/
 	public $layout = 'layout';
 
-	function __construct() {
+	function __construct() 
+	{
 		// Códigos e chamadas executados ao iniciar a classe.
 	}
 
@@ -28,90 +29,22 @@ class main extends MX_Controller {
 	 * @return void
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function index() {
+	public function index() 
+	{
 		/**
 		 * Este bloco verifica se deve exibir uma página específica ou
 		 * se deve listar uma categoria específica na página inicial.
 		 */
-		if ($this->wpanel->get_config('home_tipo') == 'page') {
-			$this->post_to_home($this->wpanel->get_config('home_id'));
-		} elseif ($this->wpanel->get_config('home_tipo') == 'category') {
-			$this->posts_to_home($this->wpanel->get_config('home_id'));
+		if ($this->wpanel->get_config('home_tipo') == 'page') 
+		{
+			$this->load->model('post');
+			$query_post = $this->post->get_by_id($this->wpanel->get_config('home_id'))->row();
+			$this->post($query_post->link);
+		} 
+		elseif ($this->wpanel->get_config('home_tipo') == 'category') 
+		{
+			$this->posts($this->wpanel->get_config('home_id'));
 		}
-	}
-
-	/**
-	 * Este método exibe uma postagem com base na variável $id e foi criado
-	 * especialmente para ser usado na página inicial do site.
-	 *
-	 * @return void
-	 * @param $link String Link da postagem.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	public function post_to_home($id = '') {
-
-		if ($id == '') {
-			show_404();
-		}
-
-		$layout_vars = array();
-		$content_vars = array();
-		$this->load->model('post');
-
-		$post = $this->post->get_by_id($id)->row();
-
-		if (count($post) <= 0) {
-			show_404();
-		}
-
-		if ($post->status == 0) {
-			show_error('Esta página foi suspensa temporariamente', 404);
-		}
-
-		$content_vars['post'] = $post;
-
-		// Variáveis obrigatórias para o layout
-		$content_vars['page_title'] = '';
-		$layout_vars['content'] = $this->load->view('main_post_to_home', $content_vars, TRUE);
-
-		$this->load->view($this->layout, $layout_vars);
-	}
-
-	/**
-	 * Este método lista as postagens de uma categoria indicada
-	 * pela variável $category_id, foi desenvolvido para ser
-	 * usado na página inicial para não exibir o título da
-	 * categoria na tela inicial do site.
-	 *
-	 * @return void
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 * @param $category_id Int ID da categoria a ser listada.
-	 **/
-	public function posts_to_home($category_id = '')
-	{
-		$layout_vars = array();
-		$content_vars = array();
-		$this->load->model('post');
-		$this->load->model('categoria');
-		$this->load->model('post_categoria');
-
-		// Variáveis da página inicial
-		if ($category_id == '') {
-			$content_vars['posts'] = $this->post->get_by_field(
-				array('page'=>'0', 'status'=>'1'), 
-				null, 
-				array('field'=>'created', 'order'=>'desc')
-			);
-		} else {
-			$content_vars['titulo_view'] = '';
-			$content_vars['posts'] = $this->post->get_by_category($category_id, 'desc');
-		}
-
-		// Variáveis obrigatórias para o layout
-		$content_vars['page_title'] = '';
-		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
-
-		$this->load->view($this->layout, $layout_vars);
 	}
 
 	/**
@@ -124,41 +57,41 @@ class main extends MX_Controller {
 	 **/
 	public function posts($category_id = '')
 	{
+
 		$layout_vars = array();
 		$content_vars = array();
+		$titulo_view = '';
+		$tipos_views = config_item('posts_views');
+		$view = 'lista';
+		$qry_post = null;
+		$qry_category = null;
+
 		$this->load->model('post');
 		$this->load->model('categoria');
 		$this->load->model('post_categoria');
 
-		$qry_category = $this->categoria->get_by_id($category_id)->row();
-
-		// Seleciona o tipo de visualização pela categoria
-		if ($category_id != '' and $qry_category->view == 'Mosaico') {
-			$view = 'main_posts_mosaico';
+		if($category_id == '')
+		{
+			$qry_post = $this->post->get_by_field(array('page'=>'0', 'status'=>'1'), null, array('field'=>'created', 'order'=>'desc'));
 		} else {
-			$view = 'main_posts';
-		}
-
-		// Variáveis da view interna
-		if ($category_id == '') {
-			$qry_post = $this->post->get_by_field(
-				array('page'=>'0', 'status'=>'1'), 
-				null, 
-				array('field'=>'created', 'order'=>'desc')
-			);
-		} else {
-			$content_vars['titulo_view'] = 'Posts de "'.$qry_category->title.'"';
+			$qry_category = $this->categoria->get_by_id($category_id)->row();
 			$qry_post = $this->post->get_by_category($category_id, 'desc');
+			$view = strtolower($qry_category->view);
+			$titulo_view = 'Postagens de '.$qry_category->title;
 		}
 
-		$content_vars['posts'] = $qry_post;
-		$content_vars['categoria'] = $qry_category;
+		// Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('posts/' . $category_id));
+		$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+		$this->wpanel->set_meta_title($titulo_view);
 
-		// Variáveis obrigatórias para o layout
-		$content_vars['page_title'] = ' - artigos de ' . $qry_category->title;
-		$layout_vars['content'] = $this->load->view($view, $content_vars, TRUE);
+		$content_vars['titulo_view'] = $titulo_view;
+		$content_vars['posts'] = $qry_post;
+
+		$layout_vars['content'] = $this->load->view($tipos_views[$view], $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
+
 	}
 
 	/**
@@ -170,7 +103,9 @@ class main extends MX_Controller {
 	 **/
 	public function post($link = '') {
 
-		if ($link == '') {
+        // Verifica se foi informado um link.
+		if ($link == '')
+		{
 			show_404();
 		}
 
@@ -180,18 +115,34 @@ class main extends MX_Controller {
 
 		$post = $this->post->get_by_field('link', $link)->row();
 
-		if (count($post) <= 0) {
+        // Verifica a existência e disponibilidade do post.
+		if (count($post) <= 0) 
+		{
 			show_404();
 		}
-
-		if ($post->status == 0) {
+		if ($post->status == 0) 
+		{
 			show_error('Esta página foi suspensa temporariamente', 404);
+		}
+
+        // Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('post/' . $link));
+		$this->wpanel->set_meta_description($post->description);
+		$this->wpanel->set_meta_keywords($post->tags);
+		$this->wpanel->set_meta_title($post->title);
+
+		if ($post->image) 
+		{
+			$this->wpanel->set_meta_image(base_url('media/capas') . '/' . $post->image);
+		} 
+		else 
+		{
+			$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
 		}
 
 		$content_vars['post'] = $post;
 
 		// Variáveis obrigatórias para o layout
-		$content_vars['page_title'] = ' - ' . $post->title;
 		$layout_vars['content'] = $this->load->view('main_post', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
@@ -228,7 +179,8 @@ class main extends MX_Controller {
 	 * @return void
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function videos() {
+	public function videos() 
+	{
 		$layout_vars = array();
 		$content_vars = array();
 		$this->load->library('Simplepie');
@@ -253,7 +205,8 @@ class main extends MX_Controller {
 	 * @param $code String Código do vídeo do Youtube.
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function video($code) {
+	public function video($code) 
+	{
 		$layout_vars = array();
 		$content_vars = array();
 
@@ -284,7 +237,8 @@ class main extends MX_Controller {
 
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 
-		if ($this->form_validation->run() == FALSE) {
+		if ($this->form_validation->run() == FALSE) 
+		{
 
 			$content_vars['conf'] = $this->wpanel->get_config();
 			$content_vars['captcha'] = $this->form_validation->get_captcha();
@@ -295,7 +249,9 @@ class main extends MX_Controller {
 
 			$this->load->view($this->layout, $layout_vars);
 
-		} else {
+		} 
+		else 
+		{
 
 			$nome = $this->input->post('nome');
 			$email = $this->input->post('email');
@@ -330,10 +286,13 @@ class main extends MX_Controller {
 			$this->email->subject('[Mensagem do site]');
 			$this->email->message($msg);
 
-			if ($this->email->send()) {
+			if ($this->email->send()) 
+			{
 				$this->session->set_flashdata('msg_contato', 'Sua mensagem foi enviada com sucesso!');
 				redirect('contato');
-			} else {
+			} 
+			else 
+			{
 				$this->session->set_flashdata('msg_contato', 'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
 				redirect('contato');
 			}
@@ -353,12 +312,15 @@ class main extends MX_Controller {
 		$this->form_validation->set_rules('nome', 'Nome', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-		if ($this->form_validation->run() == FALSE) {
+		if ($this->form_validation->run() == FALSE) 
+		{
 			// Variáveis obrigatórias para o layout
 			$content_vars['page_title'] = ' - cadastro de newsletter.';
 			$layout_vars['content'] = $this->load->view('main_newsletter', $content_vars, TRUE);
 			$this->load->view($this->layout, $layout_vars);
-		} else {
+		} 
+		else 
+		{
 			$this->load->model('newsletter');
 			$dados_save = array(
 				'nome' => $this->input->post('nome'),
@@ -369,7 +331,9 @@ class main extends MX_Controller {
 			{
 				$this->session->set_flashdata('msg_newsletter', 'Seus dados foram salvos com sucesso!');
 				redirect('');
-			} else {
+			} 
+			else 
+			{
 				$this->session->set_flashdata('msg_newsletter', 'Erro, seus dados não puderam ser salvos, tente novamente mais tarde.');
 				redirect('newsletter');
 			}

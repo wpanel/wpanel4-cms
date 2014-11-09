@@ -11,6 +11,16 @@
  */
 
 /**
+ * Defini a localidade do site para exibição nas meta-tags.
+ */
+$config['meta_locale'] = 'pt_BR';
+
+/**
+ * Defini as views disponíveis para a exibição das listas de postagens.
+ */
+$config['posts_views'] = array('lista' => 'main_posts', 'mosaico' => 'main_posts_mosaico');
+
+/**
  * Defini qual editor online usará no painel de controle.
  * As opções são: 'tynimce' ou 'ckeditor'
  */

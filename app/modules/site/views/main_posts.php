@@ -1,7 +1,7 @@
 <?php
 
-if (@$titulo_view) {
-    echo '<h3 class="page-header">'.$titulo_view.'</h3>';
+if ($titulo_view) {
+    echo '<h1 class="page-header">'.$titulo_view.'</h1>';
 }
 
 foreach ($posts->result() as $post) {

@@ -11,6 +11,12 @@
 class wpanel
 {
 
+	private $meta_url = '';
+	private $meta_description = '';
+	private $meta_image = '';
+	private $meta_keywords = '';
+	private $meta_title = '';
+
 	public function __construct($config = array()) 
 	{
 		if (count($config) > 0) 
@@ -76,6 +82,57 @@ class wpanel
 		return $this;
 	}
 
+	public function set_meta_url($value){
+		$this->meta_url = $value;
+	}
+
+	public function set_meta_description($value){
+		$this->meta_description = $value;
+	}
+
+	public function set_meta_image($value){
+		$this->meta_image = $value;
+	}
+
+	public function set_meta_keywords($value){
+		$this->meta_keywords = $value;
+	}
+
+	public function set_meta_title($value){
+		$this->meta_title = $value;
+	}
+
+	/**
+	 * Este método retorna o título da página.
+	 *
+	 * @return String
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function get_titulo()
+	{
+		if ($this->meta_title == '') {
+			return $this->get_config('site_titulo');
+		} else {
+			return $this->get_config('site_titulo') . ' - ' . $this->meta_title;
+		}
+	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function get_head()
+	{
+		//TODO Gerar as tags meta preparadas para o SEO.
+		$meta = array();
+		// Título
+		// description
+		// URL
+	}
+
 	/**
 	 * Este método retorna um conjunto pronto de tags META para
 	 * ser inserido no "head" do layout do site.
@@ -85,12 +142,42 @@ class wpanel
 	 **/
 	public function get_meta()
 	{
+
+		$description = "";
+		$sitename = "";
+		$url = "";
+		$og_title = "";
+
+		// Trata a descrição.
+		if ($this->meta_description == '') {
+			$description = $this->get_config('site_desc');
+		} else {
+			$description = $this->meta_description;
+		}
+
+		if ($this->meta_title == '') {
+			$og_title = $this->get_config('site_titulo');
+		} else {
+			$og_title = $this->meta_title;
+		}
+
 		$meta = array(
 	        array('name' => 'robots', 'content' => 'all'),
 	        array('name' => 'author', 'content' => config_item('meta_author')),
-	        array('name' => 'description', 'content' => $this->get_config('site_desc')),
-	        array('name' => 'keywords', 'content' => $this->get_config('site_tags')),
-	        array('name' => 'Content-type', 'content' => 'text/html; charset=utf-8', 'type' => 'equiv')
+	        array('name' => 'canonical', 'content' => $this->meta_url),
+	        array('name' => 'title', 'content' => $this->get_titulo()),
+	        array('name' => 'description', 'content' => $description),
+	        array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' . $this->meta_keywords),
+	        array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
+	        // continua...
+	        array('name' => 'og:locale', 'content' => config_item('meta_locale')),
+	        array('name' => 'og:type', 'content' => 'article'),
+	        array('name' => 'og:image', 'content' => $this->meta_image),
+	        array('name' => 'og:title', 'content' => $og_title),
+	        array('name' => 'og:description', 'content' => $description),
+	        array('name' => 'og:url', 'content' => $this->meta_url),
+	        array('name' => 'og:site_name', 'content' => $this->get_config('site_titulo')),
+
 	    );
 		return meta($meta); 
 	}
