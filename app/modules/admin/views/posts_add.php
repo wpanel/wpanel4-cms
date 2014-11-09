@@ -11,6 +11,12 @@ echo form_error('title');
 echo close_div();
 
 echo div(array('class'=>'form-group'));
+echo form_label('Descrição para os mecanismos de busca (No máximo 160 caracteres.)', 'description');
+echo form_textarea(array('name'=>'description', 'value'=> set_value('description'), 'class'=>'form-control', 'rows'=>'3'));
+echo form_error('description');
+echo close_div();
+
+echo div(array('class'=>'form-group'));
 echo form_label('Conteúdo', 'content');
 echo form_textarea(array('name'=>'content', 'value'=> set_value('content'), 'class'=>'form-control ckeditor', 'id'=>'editor'));
 echo form_error('content');
@@ -32,7 +38,7 @@ echo close_div(2);
 
 echo col(3);
 echo div(array('class'=>'form-group'));
-echo form_label('Palavras-chave', 'tags');
+echo form_label('Palavras-chave (Separe com vírgula)', 'tags');
 echo form_textarea(array('name'=>'tags', 'value'=> set_value('tags'), 'class'=>'form-control', 'rows'=>'5'));
 echo close_div(2);
 

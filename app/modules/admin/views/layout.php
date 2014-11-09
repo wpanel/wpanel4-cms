@@ -65,9 +65,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li<?php if($this->uri->segment(2)=='dashboard' or $this->uri->segment(2)==''){echo ' class="active"';} ?>><?= anchor('admin/dashboard', 'Dashboard'); ?></li>
-            <!-- <li<?php if($this->uri->segment(2)=='imoveis'){echo ' class="active"';} ?>><?= anchor('admin/imoveis', 'Imóveis'); ?></li> -->
-            <li<?php if($this->uri->segment(2)=='pages'){echo ' class="active"';} ?>><?= anchor('admin/pages', 'Páginas'); ?></li>
             <li<?php if($this->uri->segment(2)=='posts'){echo ' class="active"';} ?>><?= anchor('admin/posts', 'Postagens'); ?></li>
+            <li<?php if($this->uri->segment(2)=='pages'){echo ' class="active"';} ?>><?= anchor('admin/pages', 'Páginas'); ?></li>
             <li<?php if($this->uri->segment(2)=='categorias'){echo ' class="active"';} ?>><?= anchor('admin/categorias', 'Categorias de posts'); ?></li>
             <li<?php if($this->uri->segment(2)=='banners'){echo ' class="active"';} ?>><?= anchor('admin/banners', 'Banners'); ?></li>
             <li<?php if($this->uri->segment(2)=='usuarios'){echo ' class="active"';} ?>><?= anchor('admin/usuarios', 'Usuários'); ?></li>

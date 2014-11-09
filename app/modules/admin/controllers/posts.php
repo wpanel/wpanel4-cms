@@ -84,6 +84,7 @@ class Posts extends MX_Controller {
 			$dados_save = array();
 			$dados_save['user_id'] = $this->auth->get_userid();
 			$dados_save['title'] = $this->input->post('title');
+			$dados_save['description'] = $this->input->post('description');
 			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
@@ -166,6 +167,7 @@ class Posts extends MX_Controller {
 
 			$dados_save = array();
 			$dados_save['title'] = $this->input->post('title');
+			$dados_save['description'] = $this->input->post('description');
 			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');

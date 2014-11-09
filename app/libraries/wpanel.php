@@ -110,27 +110,14 @@ class wpanel
 	 **/
 	public function get_titulo()
 	{
-		if ($this->meta_title == '') {
+		if ($this->meta_title == '') 
+		{
 			return $this->get_config('site_titulo');
-		} else {
+		} 
+		else 
+		{
 			return $this->get_config('site_titulo') . ' - ' . $this->meta_title;
 		}
-	}
-
-
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function get_head()
-	{
-		//TODO Gerar as tags meta preparadas para o SEO.
-		$meta = array();
-		// Título
-		// description
-		// URL
 	}
 
 	/**
@@ -162,13 +149,13 @@ class wpanel
 		}
 
 		$meta = array(
+			array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
 	        array('name' => 'robots', 'content' => 'all'),
 	        array('name' => 'author', 'content' => config_item('meta_author')),
 	        array('name' => 'canonical', 'content' => $this->meta_url),
 	        array('name' => 'title', 'content' => $this->get_titulo()),
 	        array('name' => 'description', 'content' => $description),
 	        array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' . $this->meta_keywords),
-	        array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
 	        // continua...
 	        array('name' => 'og:locale', 'content' => config_item('meta_locale')),
 	        array('name' => 'og:type', 'content' => 'article'),
