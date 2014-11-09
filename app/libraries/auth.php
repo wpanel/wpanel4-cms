@@ -5,8 +5,7 @@
  *
  * Provides a basic wai to autenticate users with a 'admin/user' role.
  *
- * @package		CodeIgniter
- * @subpackage	Libraries
+ * @package		Auth
  * @category	Libraries
  * @author		Eliel de Paula <elieldepaula@gmail.com>
  * @link		http://elieldepaula.com.br

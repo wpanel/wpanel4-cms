@@ -156,65 +156,23 @@ class main extends MX_Controller {
 	 **/
 	public function search()
 	{
+		
 		$termos_busca = $this->input->post('search');
 
 		$layout_vars = array();
 		$content_vars = array();
+
 		$this->load->model('post');
 		$this->load->model('categoria');
 		$this->load->model('post_categoria');
+
 		// Variáveis da página interna
 		$content_vars['titulo_view'] = 'Resultados da busca por "'.$termos_busca.'"';
 		$content_vars['posts'] = $this->post->busca_posts($termos_busca);
+		
 		// Variáveis obrigatórias para o layout
 		$content_vars['page_title'] = ' - resultado da busca "'.$termos_busca.'"';
 		$layout_vars['content'] = $this->load->view('main_posts', $content_vars, TRUE);
-
-		$this->load->view($this->layout, $layout_vars);
-	}
-
-	/**
-	 * Este método faz a listagem de vídeos integrada ao Youtube.
-	 *
-	 * @return void
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	public function videos() 
-	{
-		$layout_vars = array();
-		$content_vars = array();
-		$this->load->library('Simplepie');
-
-		$this->simplepie->set_feed_url($this->wpanel->get_config()->youtube_rss);
-		$this->simplepie->set_cache_location(APPPATH . 'cache/rss');
-		$this->simplepie->init();
-		$this->simplepie->handle_content_type();
-
-		$content_vars['lista_videos'] = $this->simplepie->get_items();
-
-		// Variáveis obrigatórias para o layout
-		$layout_vars['content'] = $this->load->view('main_videos', $content_vars, TRUE);
-
-		$this->load->view($this->layout, $layout_vars);
-	}
-
-	/**
-	 * Este método faz a exibição de um vídeo de acordo com o $code informado.
-	 *
-	 * @return void
-	 * @param $code String Código do vídeo do Youtube.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	public function video($code) 
-	{
-		$layout_vars = array();
-		$content_vars = array();
-
-		$content_vars['code'] = $code;
-
-		// Variáveis obrigatórias para o layout
-		$layout_vars['menu_categorias'] = $this->wpanel->menu_categorias();
-		$layout_vars['content'] = $this->load->view('main_video', $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
 	}
