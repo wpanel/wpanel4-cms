@@ -48,13 +48,13 @@
 $active_group = ENVIRONMENT;
 $active_record = TRUE;
 
-/*
-| Configuration for development database.
-*/
+/**
+ * Configurações para o ambiente development.
+ */
 $db['development']['hostname'] = 'localhost';
 $db['development']['username'] = 'root'; 
 $db['development']['password'] = 'root'; 
-$db['development']['database'] = 'wpanel_11'; 
+$db['development']['database'] = 'wpanel'; 
 $db['development']['dbdriver'] = 'mysql';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
@@ -66,13 +66,14 @@ $db['development']['dbcollat'] = 'utf8_general_ci';
 $db['development']['swap_pre'] = '';
 $db['development']['autoinit'] = TRUE;
 $db['development']['stricton'] = FALSE;
-/*
-| Configuration for production database.
-*/
+
+/**
+ * Configurações para o ambiente production.
+ */
 $db['production']['hostname'] = 'localhost';
-$db['production']['username'] = 'wwwijmar_wpanel'; 
-$db['production']['password'] = 'mapexpro'; 
-$db['production']['database'] = 'wwwijmar_wpanel'; 
+$db['production']['username'] = ''; 
+$db['production']['password'] = ''; 
+$db['production']['database'] = ''; 
 $db['production']['dbdriver'] = 'mysql';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;

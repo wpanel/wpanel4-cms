@@ -61,7 +61,7 @@ class main extends MX_Controller {
 		$layout_vars = array();
 		$content_vars = array();
 		$titulo_view = '';
-		$tipos_views = config_item('posts_views');
+		$posts_views = config_item('posts_views');
 		$view = 'lista';
 		$qry_post = null;
 		$qry_category = null;
@@ -73,7 +73,9 @@ class main extends MX_Controller {
 		if($category_id == '')
 		{
 			$qry_post = $this->post->get_by_field(array('page'=>'0', 'status'=>'1'), null, array('field'=>'created', 'order'=>'desc'));
-		} else {
+		} 
+		else 
+		{
 			$qry_category = $this->categoria->get_by_id($category_id)->row();
 			$qry_post = $this->post->get_by_category($category_id, 'desc');
 			$view = strtolower($qry_category->view);
@@ -88,7 +90,7 @@ class main extends MX_Controller {
 		$content_vars['titulo_view'] = $titulo_view;
 		$content_vars['posts'] = $qry_post;
 
-		$layout_vars['content'] = $this->load->view($tipos_views[$view], $content_vars, TRUE);
+		$layout_vars['content'] = $this->load->view($posts_views[$view], $content_vars, TRUE);
 
 		$this->load->view($this->layout, $layout_vars);
 
@@ -169,6 +171,11 @@ class main extends MX_Controller {
 		// Variáveis da página interna
 		$content_vars['titulo_view'] = 'Resultados da busca por "'.$termos_busca.'"';
 		$content_vars['posts'] = $this->post->busca_posts($termos_busca);
+
+		// Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('search'));
+		$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+		$this->wpanel->set_meta_title('Resultados da busca por '.$termos_busca);
 		
 		// Variáveis obrigatórias para o layout
 		$content_vars['page_title'] = ' - resultado da busca "'.$termos_busca.'"';
@@ -201,6 +208,11 @@ class main extends MX_Controller {
 			$content_vars['conf'] = $this->wpanel->get_config();
 			$content_vars['captcha'] = $this->form_validation->get_captcha();
 
+			// Seta as variáveis 'meta'
+			$this->wpanel->set_meta_url(site_url('contato'));
+			$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+			$this->wpanel->set_meta_title('Contato');
+
 			// Variáveis obrigatórias para o layout
 			$content_vars['page_title'] = ' - fale conosco';
 			$layout_vars['content'] = $this->load->view('main_contato', $content_vars, TRUE);
@@ -229,7 +241,8 @@ class main extends MX_Controller {
 
 			$this->load->library('email');
 			// Verifica se usa SMTP ou não
-			if ($this->wpanel->get_config('usa_smtp') == 1) {
+			if ($this->wpanel->get_config('usa_smtp') == 1) 
+			{
 				$conf_email = array();
 				$conf_email['protocol'] = 'smtp';
 				$conf_email['smtp_host'] = $this->wpanel->get_config('smtp_servidor');
@@ -267,11 +280,17 @@ class main extends MX_Controller {
 	{
 		$layout_vars = array();
 		$content_vars = array();
+
 		$this->form_validation->set_rules('nome', 'Nome', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+		
 		if ($this->form_validation->run() == FALSE) 
 		{
+			// Seta as variáveis 'meta'
+			$this->wpanel->set_meta_url(site_url('newsletter'));
+			$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+			$this->wpanel->set_meta_title('Cadastro de newsletters');
 			// Variáveis obrigatórias para o layout
 			$content_vars['page_title'] = ' - cadastro de newsletter.';
 			$layout_vars['content'] = $this->load->view('main_newsletter', $content_vars, TRUE);

@@ -74,17 +74,24 @@
         </script>
     </head>
     <body>
-        <?php
+        <div class="space hidden-xs">&nbsp;</div>
+        <div class="container hidden-xs">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
 
-        // Insere a imagem que será colocada como background pelo CSS.
-        $image_properties = array(
-            'src' => base_url() . '/media/' . $this->wpanel->get_config('background'),
-            'class' => 'background-image hidden-xs'
-        );
+                    // Insere a imagem que será colocada como background pelo CSS.
+                    $image_properties = array(
+                        'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
+                        'class' => 'hidden-xs'
+                    );
 
-        //echo img($image_properties);
+                    echo img($image_properties);
 
-        ?>
+                    ?>
+                </div>
+            </div>
+        </div>
         <div class="space hidden-xs">&nbsp;</div>
         <!-- Main wrapper -->
         <div class="container wpn_conteudo">
@@ -234,7 +241,7 @@
                         height="250"></div>
                 </div>
                 <div class="col-md-12">
-                    <p><?= $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://dotsistemas.com.br">Dot Sistemas</a>.</p>
+                    <p><?= $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://elieldepaula.com.br" alt="Eliel de Paula - Desenvolvedor Web">Eliel de Paula</a>, desenvolvido com <a href="http://elieldepaula.com.br/wpanel" alt="WPanel CMS">WPanel CMS</a>.</p>
                 </div>
             </div>
             <!-- Rodape | Fim -->
