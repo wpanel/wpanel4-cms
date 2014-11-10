@@ -241,14 +241,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `status` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Fazendo dump de dados para tabela `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `role`, `created`, `updated`, `status`) VALUES
-(1, 'Administrador do site', 'admin@seusite.com', 'admin', '827ccb0eea8a706c4c34a16891f84e7b', 'admin', '2014-10-20 02:18:24', '2014-11-09 23:50:05', '1');
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
