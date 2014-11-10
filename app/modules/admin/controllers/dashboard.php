@@ -1,7 +1,11 @@
-<?php 
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * Esta classe forma o conjunto de funcionalidades do Dashboard do Wpanel
+ *
+ * @package Wpanel
+ * @author Eliel de Paula <elieldepaula@gmail.com>
+ **/
 class Dashboard extends MX_Controller {
 
 	function __construct()
@@ -11,27 +15,12 @@ class Dashboard extends MX_Controller {
 
 	public function index()
 	{
-		// Ativa o cache da página por 15 minutos.
-		// $this->output->cache(15);
 
 		$this->auth->protect('admin');
 		
 		$layout_vars = array();
 		$content_vars = array();
 
-		// Calcula os totais dos imóveis.
-		//----------------------------------------------------------------------------------------------------
-		// $this->db->like('status', '1');
-		// $this->db->from('imoveis');
-		// $total_imoveis_publicados = $this->db->count_all_results();
-
-		// $this->db->like('status', '0');
-		// $this->db->from('imoveis');
-		// $total_imoveis_rascunhos = $this->db->count_all_results();
-
-		// $content_vars['total_imoveis_publicados'] = $total_imoveis_publicados;
-		// $content_vars['total_imoveis_rascunhos'] = $total_imoveis_rascunhos;
-		// $content_vars['total_imoveis'] = $this->db->count_all('imoveis');
 		//----------------------------------------------------------------------------------------------------
 		// Calcula os totais dos banners
 		//----------------------------------------------------------------------------------------------------
@@ -68,25 +57,98 @@ class Dashboard extends MX_Controller {
 
 	}
 
+	/**
+	 * Este método faz o login do usuário no wpanel.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
 	public function login()
 	{
+		$this->load->model('user');
+		if ($this->user->inicial_user() == false)
+		{
+			redirect('admin/dashboard/firstadmin');
+		}
+
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('password', 'Senha', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->load->view('login');
-		} else {
+		} 
+		else 
+		{
 			$conf_login = array('user_field' => $_POST['email'],'pass_field' => $_POST['password']);
 			$this->auth->login($conf_login);
 		}
 	}
 
+	/**
+	 * Este método faz o logout do usuário.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
 	public function logout()
 	{
 		$this->auth->logout();
 	}
-}
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/dashboard.php */
+	/**
+	 * Este método faz o cadastro do primeiro administrador do wpanel.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function firstadmin()
+	{
+
+		$this->load->model('user');
+		if ($this->user->inicial_user() == true)
+		{
+			redirect('admin/dashboard/login');
+		}
+		
+		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
+		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
+		$this->form_validation->set_rules('name', 'Nome completo', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+
+			$layout_vars = array();
+			$content_vars = array();
+
+			$this->load->view('dashboard_firstadmin', $layout_vars);
+
+		} 
+		else 
+		{
+
+			$dados_save = array(
+				'name' => $this->input->post('name'),
+				'email' => $this->input->post('email'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password'),
+				'role' => 'admin',
+				'created' => date('Y-m-d H:i:s'),
+				'updated' => date('Y-m-d H:i:s'),
+				'status' => 1
+			);
+
+			if($this->user->save($dados_save))
+			{
+				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+				redirect('admin/dashboard/login');
+			} 
+			else 
+			{
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
+				redirect('admin/dashboard/firstadmin');
+			}
+		}
+	}
+} //END Class dashboard.

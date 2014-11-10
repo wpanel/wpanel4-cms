@@ -14,10 +14,5 @@ $route['video/(:any)'] 			= 'site/main/video/$1';
 $route['newsletter'] 			= 'site/main/newsletter';
 $route['contato'] 				= 'site/main/contato';
 
-/* Rotas para o site padrão imobiliário */
-$route['imoveis'] 				= 'site/realestate/index';
-$route['imovel/(:any)'] 		= 'site/realestate/imovel/$1';
-$route['busca'] 				= 'site/realestate/buscar_imovel';
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
