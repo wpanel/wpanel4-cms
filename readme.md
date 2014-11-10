@@ -27,11 +27,8 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 - Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
 - Crie uma base de dados, carregue o database.sql incluíudo e configure os dados no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
 - Acesse pelo navegador, o site de exemplo já deve estar funcionando.
-- Acesse o painel de controle adicionando /admin à URL, os dados iniciais são:
-
-Email: admin@seusite.com
-
-Senha: 12345
+- Acesse o painel de controle adicionando /admin à URL.
+- Será solicitado que cadastre um administrador inicial.
 
 #Licença
 
