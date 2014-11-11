@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `configuracoes` (
   `addthis_uid` varchar(30) DEFAULT NULL,
   `logomarca` varchar(200) DEFAULT NULL,
   `background` varchar(200) DEFAULT NULL,
+  `bgcolor` varchar(15) DEFAULT NULL,
   `texto_contato` text,
   `usa_smtp` tinyint(1) NOT NULL,
   `smtp_servidor` varchar(100) NOT NULL,
