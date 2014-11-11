@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Eliel de Paula <elieldepaula@gmail.com>">
-    <link rel="icon" href="<?= base_url() ?>lib/img/favicon.ico">
+    <link rel="icon" href="<?=base_url()?>lib/img/favicon.ico">
 
     <title>wPanel 11 - Administração</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?= base_url() ?>lib/css/bootstrap.css" rel="stylesheet">
+    <link href="<?=base_url()?>lib/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="<?= base_url() ?>lib/css/dashboard.css" rel="stylesheet">
+    <link href="<?=base_url()?>lib/css/dashboard.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="<?= base_url() ?>lib/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="<?= base_url() ?>lib/js/ie-emulation-modes-warning.js"></script>
+    <!--[if lt IE 9]><script src="<?=base_url()?>lib/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="<?=base_url()?>lib/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,16 +45,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?= site_url('admin'); ?>">
+          <a class="navbar-brand" href="<?=site_url('admin');?>">
             <span style="color:#fff;font-weight:bolder;">wPanel</span> - Administração
           </a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li<?php if($this->uri->segment(2)=='dashboard' or $this->uri->segment(2)==''){echo ' class="active"';} ?>><?= anchor('admin/dashboard', glyphicon('th').'Dashboard'); ?></li>
-            <li<?php if($this->uri->segment(2)=='configuracoes'){echo ' class="active"';} ?>><?= anchor('admin/configuracoes', glyphicon('cog').'Configurações'); ?></li>
-            <li<?php if($this->uri->segment(2)=='usuarios'){echo ' class="active"';} ?>><?= anchor('admin/usuarios/edit/'.$this->auth->get_userid(), glyphicon('user').'Perfil'); ?></li>
-            <li><?= anchor('/admin/dashboard/logout', glyphicon('off').'Sair'); ?></li>
+            <li<?php if ($this->uri->segment(2) == 'dashboard' or $this->uri->segment(2) == '') {echo ' class="active"';}?>><?=anchor('admin/dashboard', glyphicon('th') . 'Dashboard');?></li>
+            <li<?php if ($this->uri->segment(2) == 'configuracoes') {echo ' class="active"';}?>><?=anchor('admin/configuracoes', glyphicon('cog') . 'Configurações');?></li>
+            <li<?php if ($this->uri->segment(2) == 'usuarios') {echo ' class="active"';}?>><?=anchor('admin/usuarios/edit/' . $this->auth->get_userid(), glyphicon('user') . 'Perfil');?></li>
+            <li><?=anchor('/admin/dashboard/logout', glyphicon('off') . 'Sair');?></li>
           </ul>
         </div>
       </div>
@@ -64,13 +64,13 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li<?php if($this->uri->segment(2)=='dashboard' or $this->uri->segment(2)==''){echo ' class="active"';} ?>><?= anchor('admin/dashboard', 'Dashboard'); ?></li>
-            <li<?php if($this->uri->segment(2)=='posts'){echo ' class="active"';} ?>><?= anchor('admin/posts', 'Postagens'); ?></li>
-            <li<?php if($this->uri->segment(2)=='pages'){echo ' class="active"';} ?>><?= anchor('admin/pages', 'Páginas'); ?></li>
-            <li<?php if($this->uri->segment(2)=='categorias'){echo ' class="active"';} ?>><?= anchor('admin/categorias', 'Categorias de posts'); ?></li>
-            <li<?php if($this->uri->segment(2)=='banners'){echo ' class="active"';} ?>><?= anchor('admin/banners', 'Banners'); ?></li>
-            <li<?php if($this->uri->segment(2)=='usuarios'){echo ' class="active"';} ?>><?= anchor('admin/usuarios', 'Usuários'); ?></li>
-            <li<?php if($this->uri->segment(2)=='configuracoes'){echo ' class="active"';} ?>><?= anchor('admin/configuracoes', 'Configurações'); ?></li>
+            <li<?php if ($this->uri->segment(2) == 'dashboard' or $this->uri->segment(2) == '') {echo ' class="active"';}?>><?=anchor('admin/dashboard', 'Dashboard');?></li>
+            <li<?php if ($this->uri->segment(2) == 'posts') {echo ' class="active"';}?>><?=anchor('admin/posts', 'Postagens');?></li>
+            <li<?php if ($this->uri->segment(2) == 'pages') {echo ' class="active"';}?>><?=anchor('admin/pages', 'Páginas');?></li>
+            <li<?php if ($this->uri->segment(2) == 'categorias') {echo ' class="active"';}?>><?=anchor('admin/categorias', 'Categorias de posts');?></li>
+            <li<?php if ($this->uri->segment(2) == 'banners') {echo ' class="active"';}?>><?=anchor('admin/banners', 'Banners');?></li>
+            <li<?php if ($this->uri->segment(2) == 'usuarios') {echo ' class="active"';}?>><?=anchor('admin/usuarios', 'Usuários');?></li>
+            <li<?php if ($this->uri->segment(2) == 'configuracoes') {echo ' class="active"';}?>><?=anchor('admin/configuracoes', 'Configurações');?></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -79,8 +79,8 @@
           // Mensagens do sistema;
           $msg_sistema = $this->session->flashdata('msg_sistema');
 
-          if($msg_sistema){
-            echo alerts($msg_sistema, 'warning', true);
+          if ($msg_sistema) {
+          	echo alerts($msg_sistema, 'warning', true);
           }
 
           // Conteúdo dinâmico.
@@ -96,11 +96,18 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?= base_url() ?>lib/js/jquery.js"></script>
-    <script src="<?= base_url() ?>lib/js/bootstrap.js"></script>
-    <script src="<?= base_url() ?>lib/js/docs.js"></script>
+    <script src="<?=base_url();?>lib/js/jquery.js"></script>
+    <script src="<?=base_url();?>lib/js/bootstrap.js"></script>
+    <script src="<?=base_url();?>lib/js/bootstrap-colorpicker.js"></script>
+    <script src="<?=base_url();?>lib/js/docs.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="<?= base_url() ?>lib/js/ie10-viewport-bug-workaround.js"></script>
-  
+    <script src="<?=base_url()?>lib/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script>
+      $(function(){
+          $('.colorpicker').colorpicker();
+      });
+    </script>
+
   </body>
 </html>
