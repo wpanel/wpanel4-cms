@@ -8,7 +8,8 @@
  * @author Eliel de Paula <elieldepaula@gmail.com>
  * @since 28/10/2014
  **/
-class main extends MX_Controller {
+class main extends MX_Controller 
+{
 
 	/**
 	 * Esta variável recebe o nome do layout principal do site
@@ -103,7 +104,8 @@ class main extends MX_Controller {
 	 * @param $link String Link da postagem.
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function post($link = '') {
+	public function post($link = '')
+	{
 
         // Verifica se foi informado um link.
 		if ($link == '')
