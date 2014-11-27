@@ -77,7 +77,7 @@
 
     echo div(array('class'=>'form-group'));
     // echo form_label('Conteúdo', 'content');
-    echo form_textarea(array('name'=>'content', 'rows'=>'5', 'class'=>'form-control ckeditor', 'id'=>'editor'));
+    echo form_textarea(array('name'=>'content', 'rows'=>'5', 'class'=>'form-control ckeditor', 'placeholder'=>'Digite o texto da postagem', 'id'=>'editor'));
     echo form_error('content');
     echo close_div();
 

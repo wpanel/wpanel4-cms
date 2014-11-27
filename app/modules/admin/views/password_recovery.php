@@ -3,7 +3,7 @@
 	<head>
 
 		<meta charset="utf-8">
-		<title>wPanel 11 | Login</title>
+		<title>wPanel 11 | Recuperação de senha</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="Layout para administração de sites e aplicações web com Bootstrap 3.">
 		<meta name="author" content="Eliel de Paula <elieldepaula@gmail.com>">
@@ -50,36 +50,33 @@
 						<!-- Titulo do painel -->
 						<div class="panel-heading">
 							<h3 class="panel-title">
-								<span class="glyphicon glyphicon-user"></span>&nbsp;<b>Login de usuários</b>
+								<span class="glyphicon glyphicon-wrench"></span>&nbsp;<b>Recuperação de senha</b>
 							</h3>
 						</div>
 						<!-- Corpo do painel -->
 						<div class="panel-body">
 							<?php
-							$msg_sistema = $this->session->flashdata('msg_auth');
+							$msg_sistema = $this->session->flashdata('msg_recover');
 
 							if ($msg_sistema) {
 								echo alerts($msg_sistema, 'warning', true);
 							}
-							echo form_open('admin/login', array('role' => 'form'));
+							echo form_open('admin/repass', array('role' => 'form'));
 							?>
+							<div class="row">
+								<div class="col-md-12">
+									<p>Informe o email usado no seu cadastro para que possamos enviar as orientações para redefinir sua senha.</p>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="control-label" for="email">Email</label>
 								<input class="form-control" id="email" name="email" placeholder="Seu email..." type="email">
 								<?php echo form_error('email');?>
 							</div>
-							<div class="form-group">
-								<label class="control-label" for="password">Senha</label>
-								<input class="form-control" id="password" name="password" placeholder="Sua senha..." type="password">
-								<?php echo form_error('password');?>
-							</div>
 							<p>
 								<button type="submit" class="btn btn-lg btn-primary btn-block">
-									<span class="glyphicon glyphicon-log-in"></span>&nbsp;Entrar
+									<span class="glyphicon glyphicon-log-in"></span>&nbsp;Enviar
 								</button>
-							</p>
-							<p class="text-center">
-								<?= anchor('admin/repass', 'Recuperar senha'); ?>
 							</p>
 							<?php 
 							echo form_close();

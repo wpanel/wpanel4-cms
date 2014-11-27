@@ -41,7 +41,7 @@ echo close_div(3);
 
 echo div(array('class'=>'form-group'));
 echo form_label('Imagem do banner', 'userfile');
-echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
+echo form_input(array('name'=>'userfile', 'type'=>'file'));
 echo close_div();
 
 echo hr();

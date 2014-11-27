@@ -2,6 +2,10 @@
 
 $route['default_controller'] 	= "site/main";
 $route['admin'] 				= "admin/dashboard";
+$route['admin'] 				= "admin/dashboard";
+$route['admin/login']			= 'admin/dashboard/login';
+$route['admin/repass']			= 'admin/dashboard/password_recover';
+$route['admin/repass/(:any)']	= 'admin/dashboard/password_recover/$1';
 $route['404_override'] 			= '';
 
 /* Rotas personalizadas para o site padrão. */
