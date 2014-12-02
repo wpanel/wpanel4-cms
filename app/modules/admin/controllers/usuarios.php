@@ -123,8 +123,12 @@ class Usuarios extends MX_Controller {
 
 			if($this->user->update($id, $dados_save))
 			{
-				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-				redirect('admin/usuarios');
+				if($this->input->post('alterar_senha') == '1'){
+					redirect('admin/logout');
+				} else {
+					$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+					redirect('admin/usuarios');
+				}
 			} else {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
 				redirect('admin/usuarios');

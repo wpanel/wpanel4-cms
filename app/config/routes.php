@@ -1,9 +1,10 @@
 <?php if (!defined('BASEPATH'))exit('No direct script access allowed');
 
-$route['default_controller'] 	= "site/main";
-$route['admin'] 				= "admin/dashboard";
-$route['admin'] 				= "admin/dashboard";
+$route['default_controller'] 	= 'site/main';
+$route['admin'] 				= 'admin/dashboard';
+$route['admin'] 				= 'admin/dashboard';
 $route['admin/login']			= 'admin/dashboard/login';
+$route['admin/logout']			= 'admin/dashboard/logout';
 $route['admin/repass']			= 'admin/dashboard/password_recover';
 $route['admin/repass/(:any)']	= 'admin/dashboard/password_recover/$1';
 $route['404_override'] 			= '';
