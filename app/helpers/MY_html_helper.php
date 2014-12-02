@@ -3,9 +3,9 @@
 /**
  * Extensão para o helper HTML nativo do CodeIgniter.
  *
- * @author Eliel de Paula <elieldepaula@gmail.com>
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @since 20/10/2014
- */
+ **/
 
 
 if ( ! function_exists('html_comment'))

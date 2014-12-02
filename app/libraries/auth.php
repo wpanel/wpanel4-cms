@@ -1,37 +1,41 @@
-<?php if (!defined('BASEPATH')) {exit('No direct script access allowed');}
+<?php if (!defined('BASEPATH'))exit('No direct script access allowed');
 
 /**
  * Eliel de Paula Auth class
  *
- * Provides a basic wai to autenticate users with a 'admin/user' role.
+ * Provides a basic way to autenticate users with a 'admin/user' role.
  *
  * @package		Auth
  * @category	Libraries
- * @author		Eliel de Paula <elieldepaula@gmail.com>
+ * @author		Eliel de Paula <dev@elieldepaula.com.br>
  * @link		http://elieldepaula.com.br
  */
-class Auth {
+class Auth 
+{
 
-	var $auth_table_name = 'users';
-	var $auth_table_key = 'id';
-	var $auth_username_field = 'username';
-	var $auth_password_field = 'password';
-	var $auth_status_field = 'status';
-	var $auth_role_field = 'role';
-	var $auth_login_redirect = '';
-	var $auth_logout_redirect = '';
-	var $auth_msg_erro_login = 'You need login to access.';
-	var $auth_msg_erro_fail = 'Login failed, try again.';
-	var $auth_msg_erro_role = 'You need the right permission to access this area.';
+	var $auth_table_name 		= 'users';
+	var $auth_table_key 		= 'id';
+	var $auth_username_field 	= 'username';
+	var $auth_password_field 	= 'password';
+	var $auth_status_field 		= 'status';
+	var $auth_role_field 		= 'role';
+	var $auth_login_redirect 	= '';
+	var $auth_logout_redirect	= '';
+	var $auth_msg_erro_login 	= 'You need login to access.';
+	var $auth_msg_erro_fail 	= 'Login failed, try again.';
+	var $auth_msg_erro_role 	= 'You need the right permission to access this area.';
 
-	public function __construct($config = array()) {
-		if (count($config) > 0) {
+	public function __construct($config = array()) 
+	{
+		if (count($config) > 0) 
+		{
 			$this->initialize($config);
 		}
 		log_message('debug', "Auth Class Initialized");
 	}
 
-	public function __get($var) {
+	public function __get($var) 
+	{
 		return get_instance()->$var;
 	}
 
@@ -43,14 +47,20 @@ class Auth {
 	 * @param $config array()
 	 * @return void
 	 */
-	public function initialize($config = array()) {
-		foreach ($config as $key => $val) {
-			if (isset($this->$key)) {
+	public function initialize($config = array()) 
+	{
+		foreach ($config as $key => $val) 
+		{
+			if (isset($this->$key)) 
+			{
 				$method = 'set_' . $key;
 
-				if (method_exists($this, $method)) {
+				if (method_exists($this, $method)) 
+				{
 					$this->$method($val);
-				} else {
+				}
+				else
+				{
 					$this->$key = $val;
 				}
 			}
@@ -82,22 +92,30 @@ class Auth {
 	 * @param $options array()
 	 * @return mixed
 	 */
-	public function login($options = array()) {
-		if (count($options)<=0) {
+	public function login($options = array()) 
+	{
+		if (count($options)<=0) 
+		{
 			$user = $this->input->post($this->auth_username_field);
 			$pass = $this->input->post($this->auth_password_field);
-		} else {
+		}
+		else
+		{
 			$user = strip_tags($options['user_field']);
 			$pass = strip_tags($options['pass_field']);
 		}
-		if (!$user && !$pass) {
+		if (!$user && !$pass)
+		{
 			$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_fail);
 			return redirect($this->auth_logout_redirect);
-		} else {
+		}
+		else
+		{
 			$this->db->where($this->auth_username_field, $user);
 			$this->db->where($this->auth_password_field, md5($pass));
 			$user_data = $this->db->get($this->auth_table_name)->row();
-			if ($user_data->{$this->auth_table_key}) {
+			if ($user_data->{$this->auth_table_key})
+			{
 				$session_data = array(
 					$this->auth_table_key => $user_data->{$this->auth_table_key},
 					$this->auth_username_field => $user_data->{$this->auth_username_field},
@@ -106,7 +124,9 @@ class Auth {
 				);
 				$this->session->set_userdata($session_data);
 				return redirect($this->auth_login_redirect);
-			} else {
+			}
+			else
+			{
 				$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_fail);
 				return redirect($this->auth_logout_redirect);
 			}
@@ -119,7 +139,8 @@ class Auth {
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 * @return mixed
 	 */
-	public function logout() {
+	public function logout()
+	{
 		$session_data = array(
 			$this->auth_table_key => null,
 			$this->auth_username_field => null,
@@ -138,13 +159,18 @@ class Auth {
 	 * @param $role String
 	 * @return mixed
 	 */
-	public function protect($role = 'user') {
-		if ($this->session->userdata('logged_in')) {
-			if ($this->session->userdata($this->auth_role_field) != $role) {
+	public function protect($role = 'user')
+	{
+		if ($this->session->userdata('logged_in'))
+		{
+			if ($this->session->userdata($this->auth_role_field) != $role)
+			{
 				$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_role);
 				return redirect($this->auth_logout_redirect);
 			}
-		} else {
+		}
+		else
+		{
 			$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_login);
 			return redirect($this->auth_logout_redirect);
 		}
@@ -156,7 +182,8 @@ class Auth {
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 * @return String
 	 */
-	public function get_userid() {
+	public function get_userid()
+	{
 		return $this->session->userdata($this->auth_table_key);
 	}
 
@@ -166,7 +193,8 @@ class Auth {
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 * @return String
 	 */
-	public function get_username() {
+	public function get_username()
+	{
 		return $this->session->userdata($this->auth_username_field);
 	}
 
@@ -176,7 +204,8 @@ class Auth {
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 * @return String
 	 */
-	public function get_role() {
+	public function get_role()
+	{
 		return $this->session->userdata($this->auth_role_field);
 	}
 }

@@ -5,7 +5,7 @@
  * utilizadas no funcionamento do wPanel.
  *
  * @package wPanel
- * @author Eliel de Paula <elieldepaula@gmail.com>
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @since 26/10/2014
  **/
 class wpanel
@@ -36,7 +36,7 @@ class wpanel
 	 * em forma de array em um elemento HTML
 	 *
 	 * @return mixed
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 */
 	private function _attributes($attributes)
 	{
@@ -59,7 +59,7 @@ class wpanel
 	 * Initialize the library loading the configuration files or
 	 * an array() passed on load of the class.
 	 *
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 * @param $config array()
 	 * @return void
 	 */
@@ -106,7 +106,7 @@ class wpanel
 	 * Este método retorna o título da página.
 	 *
 	 * @return String
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 **/
 	public function get_titulo()
 	{
@@ -125,7 +125,7 @@ class wpanel
 	 * ser inserido no "head" do layout do site.
 	 *
 	 * @return mixed
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 **/
 	public function get_meta()
 	{
@@ -178,7 +178,7 @@ class wpanel
 	 *
 	 * @return mixed
 	 * @param $item String
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 **/
 	public function get_config($item = '')
 	{
@@ -198,7 +198,7 @@ class wpanel
 	 * nas telas onde são usados.
 	 *
 	 * @return Mixed
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 **/
 	public function load_editor()
 	{
@@ -226,7 +226,7 @@ class wpanel
 	 * cria o link para a listagem de cada categoria.
 	 *
 	 * @return String
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 * @param $post_id Int Código da postagem.
 	 **/
 	public function categorias_do_post($post_id)
@@ -249,7 +249,7 @@ class wpanel
 	 * Este método formata as tags de um post para exibição com bootstrap.
 	 *
 	 * @return String
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 * @param $args String Lista de tags separadas por vírgula.
 	 **/
 	public function prepare_tags($tags, $pre='<span class="label label-primary">', $pos='</span> ')
@@ -268,7 +268,7 @@ class wpanel
 	 * em forma de menu para ser exibido na sidebar do site.
 	 *
 	 * @return String
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 * @param $cat-pai Int Id da categoria pai.
 	 **/
 	public function menu_categorias($cat_pai=0, $attributes = array(), $item = array())
@@ -291,7 +291,7 @@ class wpanel
 	 * a posição.
 	 *
 	 * @return mixed
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
 	 **/
 	public function get_banner($position)
 	{
@@ -299,4 +299,4 @@ class wpanel
 		return $this->banner->get_banners($position)->result();
 	}
 
-} // END class 
+} // END class wpanel

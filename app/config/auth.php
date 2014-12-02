@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Auth library configuration file.
+ * Configurações da biblioteca Auth()
  *
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @since 01/10/2014
