@@ -2,10 +2,10 @@
 }
 
 echo page_header(
-	'Páginas',
+	'Agenda de eventos',
 	2,
-	anchor('admin/pages/add',
-		glyphicon('plus-sign') . 'Nova página',
+	anchor('admin/agendas/add',
+		glyphicon('plus-sign') . 'Novo evento',
 		array('class' => 'pull-right', 'style' => 'margin-left:20px;'))
 );
 

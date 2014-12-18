@@ -67,8 +67,10 @@
             <li<?php if ($this->uri->segment(2) == 'dashboard' or $this->uri->segment(2) == '') {echo ' class="active"';}?>><?=anchor('admin/dashboard', 'Dashboard');?></li>
             <li<?php if ($this->uri->segment(2) == 'posts') {echo ' class="active"';}?>><?=anchor('admin/posts', 'Postagens');?></li>
             <li<?php if ($this->uri->segment(2) == 'pages') {echo ' class="active"';}?>><?=anchor('admin/pages', 'Páginas');?></li>
+            <li<?php if ($this->uri->segment(2) == 'agendas') {echo ' class="active"';}?>><?=anchor('admin/agendas', 'Agenda de eventos');?></li>
             <li<?php if ($this->uri->segment(2) == 'categorias') {echo ' class="active"';}?>><?=anchor('admin/categorias', 'Categorias de posts');?></li>
             <li<?php if ($this->uri->segment(2) == 'banners') {echo ' class="active"';}?>><?=anchor('admin/banners', 'Banners');?></li>
+            <li<?php if ($this->uri->segment(2) == 'albuns' or $this->uri->segment(2) == 'fotos') {echo ' class="active"';}?>><?=anchor('admin/albuns', 'Albuns de fotos');?></li>
             <li<?php if ($this->uri->segment(2) == 'usuarios') {echo ' class="active"';}?>><?=anchor('admin/usuarios', 'Usuários');?></li>
             <li<?php if ($this->uri->segment(2) == 'configuracoes') {echo ' class="active"';}?>><?=anchor('admin/configuracoes', 'Configurações');?></li>
           </ul>

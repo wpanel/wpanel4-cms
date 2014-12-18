@@ -27,7 +27,7 @@ class Categorias extends MX_Controller {
 		// Template da tabela
 		$this->table->set_template(array('table_open' => '<table class="table table-striped">'));
 		$this->table->set_heading('#', 'Título', 'Categoria-pai', 'Visão', 'Ações');
-		$query = $this->categoria->list_all();
+		$query = $this->categoria->get_list();
 
 		foreach ($query->result() as $row) {
 			$this->table->add_row(
@@ -57,7 +57,7 @@ class Categorias extends MX_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			// Prepara a lista de categorias.
-			$query = $this->categoria->list_all();
+			$query = $this->categoria->get_list();
 			$options = array();
 			$options[0] = 'Sem categoria';
 			foreach ($query->result() as $row) {
@@ -85,7 +85,6 @@ class Categorias extends MX_Controller {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a categoria.');
 				redirect('admin/categorias');
 			}
-
 		}
 	}
 
@@ -104,7 +103,7 @@ class Categorias extends MX_Controller {
 			}
 
 			// Prepara a lista de categorias.
-			$query = $this->categoria->list_all();
+			$query = $this->categoria->get_list();
 			$options = array();
 			$options[0] = 'Sem categoria';
 			foreach ($query->result() as $row) {
@@ -133,7 +132,6 @@ class Categorias extends MX_Controller {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a categoria.');
 				redirect('admin/categorias');
 			}
-
 		}
 	}
 

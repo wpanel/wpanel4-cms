@@ -24,7 +24,7 @@ class Usuarios extends MX_Controller {
 		$layout_vars = array();
 		$content_vars = array();
 
-		$content_vars['usuarios'] = $this->user->list_all()->result();
+		$content_vars['usuarios'] = $this->user->get_list()->result();
 		$layout_vars['content'] = $this->load->view('users_index', $content_vars, TRUE);
 
 		$this->load->view('layout', $layout_vars);

@@ -31,8 +31,8 @@ class Configuracoes extends MX_Controller {
 			$this->load->model('categoria');
 			$this->load->model('post');
 
-			$query_categorias = $this->categoria->list_all()->result();
-			$query_posts = $this->post->list_all()->result();
+			$query_categorias = $this->categoria->get_list()->result();
+			$query_posts = $this->post->get_list()->result();
 
 			$opt_categoria = array();
 			$opt_categoria[''] = 'Listar postagens de todas as categorias.';

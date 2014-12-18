@@ -37,13 +37,18 @@ class MY_Model extends CI_Model
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $order array - Array com a ordenação dos resultados.
+     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
      * @return mixed
      **/
-    public function list_all($order = array())
+    public function get_list($order = array(), $limit = array())
     {
         if ((is_array($order)) and (count($order)!=0)) 
         {
             $this->db->order_by($order['field'], $order['order']);
+        }
+        if((is_array($limit)) and (count($limit) != 0))
+        {
+            $this->db->limit($limit['limit'], $limit['offset']);
         }
         return $this->db->get($this->table_name);
     }
@@ -57,25 +62,6 @@ class MY_Model extends CI_Model
     public function count_all() 
     {
         return $this->db->count_all($this->table_name);
-    }
-    
-    /**
-     * Este método retorna uma lista de resultados limitados e ordenados de acordo
-     * com os parametros informados.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $offset int - Limite inicial
-     * @param $limit int - Limite final
-     * @param $order array - Array com a ordenação dos resultados.
-     * @return mixed
-     **/
-    public function get_paged_list($offset = 0, $limit = 10, $order = array())
-    {
-        if ((is_array($order)) and (count($order)!=0)) 
-        {
-            $this->db->order_by($order['field'], $order['order']);
-        }
-        return $this->db->get($this->table_name, $limit, $offset);
     }
     
     /**
@@ -99,9 +85,10 @@ class MY_Model extends CI_Model
      * @param $field string - Campo que será usado como filtro.
      * @param $value string - Valor a ser filtrado.
      * @param $order array - Array com a ordenação dos resultados.
+     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
      * @return mixed
      **/
-    public function get_by_field($field, $value = null, $order = array())
+    public function get_by_field($field, $value = null, $order = array(), $limit = array())
     {
         if (is_array($field))
         {
@@ -117,6 +104,10 @@ class MY_Model extends CI_Model
         if ((is_array($order)) and (count($order)!=0)) 
         {
             $this->db->order_by($order['field'], $order['order']);
+        }
+        if((is_array($limit)) and (count($limit) != 0))
+        {
+            $this->db->limit($limit['limit'], $limit['offset']);
         }
         return $this->db->get($this->table_name);
     }

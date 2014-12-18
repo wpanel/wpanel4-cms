@@ -19,7 +19,7 @@ class banners extends MX_Controller {
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table class="table table-striped">')); 
 		$this->table->set_heading('#', 'Título', 'Posição', 'Ordem', 'Status', 'Ações');
-		$query = $this->banner->list_all();
+		$query = $this->banner->get_list();
 
 		foreach($query->result() as $row)
 		{

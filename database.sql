@@ -23,6 +23,22 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `albuns`
+--
+
+CREATE TABLE IF NOT EXISTS `albuns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `titulo` varchar(200) DEFAULT NULL,
+  `descricao` mediumtext,
+  `capa` varchar(200) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
 -- Estrutura para tabela `banners`
 --
 
@@ -39,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_banners_usuarios1_idx` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Fazendo dump de dados para tabela `banners`
@@ -130,6 +146,24 @@ CREATE TABLE IF NOT EXISTS `configuracoes` (
 
 INSERT INTO `configuracoes` (`id`, `site_titulo`, `site_desc`, `site_tags`, `site_contato`, `site_telefone`, `link_instagram`, `link_twitter`, `link_facebook`, `link_likebox`, `copyright`, `addthis_uid`, `logomarca`, `background`, `texto_contato`, `usa_smtp`, `smtp_servidor`, `smtp_porta`, `smtp_usuario`, `smtp_senha`, `youtube_rss`, `google_analytics`, `home_tipo`, `home_id`) VALUES
 (1, 'WPanel CMS', 'Este é um site-exemplo usando WPanel CMS', 'wpanel, cms, codeigniter, demonstração', 'email@seusite.com', '', 'http://instagram.com.br/elieldepaula', 'http://twitter.com/elielulisses', 'http://facebook.com/elieldepaula', 'http://facebook.com/dotsistemas', '® 2014 wPanel - Direitos reservados', '', 'logomarca.png', 'background.jpg', '<p>Esta &eacute; uma mensagem adicional &agrave; p&aacute;gina de contato, use-a para passar maiores informa&ccedil;&otilde;es de contato como endere&ccedil;o, telefones adicionais etc.</p>\n', 0, '', 25, '', '', '', '', 'page', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `fotos`
+--
+
+CREATE TABLE IF NOT EXISTS `fotos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `album_id` int(11) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `filename` varchar(200) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `album_id` (`album_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -243,6 +277,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Restrições para tabelas `fotos`
+--
+ALTER TABLE `fotos`
+  ADD CONSTRAINT `fotos_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `albuns` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

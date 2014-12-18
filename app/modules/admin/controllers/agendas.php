@@ -10,7 +10,7 @@
 |--------------------------------------------------------------------------
 */
 
-class Posts extends MX_Controller {
+class Agendas extends MX_Controller {
 
 	function __construct()
 	{
@@ -28,28 +28,29 @@ class Posts extends MX_Controller {
 
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table class="table table-striped">')); 
-		$this->table->set_heading('#', 'Título', 'Categoria(s)', 'Data', 'Status', 'Ações');
-		$query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));//, array('offset'=>'0','limit'=>'2'));
+		$this->table->set_heading('#', 'Título', 'Data', 'Status', 'Ações');
+		// $query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));//, array('offset'=>'0','limit'=>'2'));
+		$query = $this->post->get_by_category(1, 'desc');
 
 		foreach($query->result() as $row)
 		{
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				$this->wpanel->categorias_do_post($row->id),
+				// $this->wpanel->categorias_do_post($row->id),
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações
 				div(array('class'=>'btn-group btn-group-sm')).
-				anchor('admin/posts/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				anchor('admin/posts/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
+				anchor('admin/agendas/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
+				anchor('admin/agendas/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
 				div(null,true)
 
 				);
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('posts_index', $content_vars, TRUE);
+		$layout_vars['content'] = $this->load->view('agendas_index', $content_vars, TRUE);
 
 		$this->load->view('layout', $layout_vars);
 	}
@@ -73,7 +74,7 @@ class Posts extends MX_Controller {
 			}
 
 			$content_vars['categorias'] = $categorias;
-			$layout_vars['content'] = $this->load->view('posts_add', $content_vars, TRUE);
+			$layout_vars['content'] = $this->load->view('agendas_add', $content_vars, TRUE);
 
 			$this->load->view('layout', $layout_vars);
 
@@ -89,7 +90,7 @@ class Posts extends MX_Controller {
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s');
+			$dados_save['created'] = date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['image'] = $this->upload();
 			// Identifica se é uma página ou uma postagem
@@ -102,21 +103,17 @@ class Posts extends MX_Controller {
 			{
 				// Salva o relacionamento das categorias
 				$this->load->model('post_categoria');
+				$cat_save = array();
+				$cat_save['post_id'] = $new_post;
+				$cat_save['category_id'] = 1;
+				$this->post_categoria->save($cat_save);
 
-				foreach($this->input->post('category_id') as $cat_id){
-					$cat_save = array();
-					$cat_save['post_id'] = $new_post;
-					$cat_save['category_id'] = $cat_id;
-					$this->post_categoria->save($cat_save);
-				}
-
-				$this->session->set_flashdata('msg_sistema', 'Postagem salva com sucesso.');
-				redirect('admin/posts');
+				$this->session->set_flashdata('msg_sistema', 'Agenda salva com sucesso.');
+				redirect('admin/agendas');
 			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a postagem.');
-				redirect('admin/posts');
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a agenda.');
+				redirect('admin/agendas');
 			}
-
 		}
 	}
 
@@ -131,7 +128,7 @@ class Posts extends MX_Controller {
 		{
 
 			if($id == null){
-				$this->session->set_flashdata('msg_sistema', 'Postagem inexistente.');
+				$this->session->set_flashdata('msg_sistema', 'Agenda inexistente.');
 				redirect('admin/posts');
 			}
 
@@ -157,7 +154,7 @@ class Posts extends MX_Controller {
 			$content_vars['categorias'] = $categorias;
 			$content_vars['cat_select'] = $cat_select;
 			$content_vars['row'] = $this->post->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('posts_edit', $content_vars, TRUE);
+			$layout_vars['content'] = $this->load->view('agendas_edit', $content_vars, TRUE);
 
 			$this->load->view('layout', $layout_vars);
 
@@ -172,6 +169,7 @@ class Posts extends MX_Controller {
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
+			$dados_save['created'] = date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
@@ -187,25 +185,12 @@ class Posts extends MX_Controller {
 
 			if($upd_post)
 			{
-				// Salva o relacionamento das categorias.
-				$this->load->model('post_categoria');
-				// Apaga os relacionamentos anteriores.
-				$this->post_categoria->delete_by_post($id);
-				// Cadastra as alterações.
-				foreach($this->input->post('category_id') as $cat_id){
-					$cat_save = array();
-					$cat_save['post_id'] = $id;
-					$cat_save['category_id'] = $cat_id;
-					$this->post_categoria->save($cat_save);
-				}
-
-				$this->session->set_flashdata('msg_sistema', 'Postagem salva com sucesso.');
-				redirect('admin/posts');
+				$this->session->set_flashdata('msg_sistema', 'Agenda salva com sucesso.');
+				redirect('admin/agendas');
 			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a postagem.');
-				redirect('admin/posts');
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a agenda.');
+				redirect('admin/agendas');
 			}
-
 		}
 	}
 
@@ -213,8 +198,8 @@ class Posts extends MX_Controller {
 	{
 
 		if($id == null){
-			$this->session->set_flashdata('msg_sistema', 'Postagem inexistente.');
-			redirect('admin/posts');
+			$this->session->set_flashdata('msg_sistema', 'Agenda inexistente.');
+			redirect('admin/agendas');
 		}
 
 		$this->load->model('post');
@@ -222,11 +207,11 @@ class Posts extends MX_Controller {
 		$this->remove_image($id);
 
 		if($this->post->delete($id)){
-			$this->session->set_flashdata('msg_sistema', 'Postagem excluída com sucesso.');
-			redirect('admin/posts');
+			$this->session->set_flashdata('msg_sistema', 'Agenda excluída com sucesso.');
+			redirect('admin/agendas');
 		} else {
-			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir a postagem.');
-			redirect('admin/posts');
+			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir a agenda.');
+			redirect('admin/agendas');
 		}
 	}
 
@@ -251,7 +236,6 @@ class Posts extends MX_Controller {
 		} else {
 			return false;
 		}
-
 	}
 
 	/**
@@ -278,5 +262,4 @@ class Posts extends MX_Controller {
             return FALSE;
         }
     }
-
 }
