@@ -249,7 +249,8 @@ class main extends MX_Controller
 	 * @return void
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function videos() {
+	public function videos() 
+	{
 		$layout_vars = array();
 		$content_vars = array();
 		$this->load->library('Simplepie');
@@ -274,7 +275,8 @@ class main extends MX_Controller
 	 * @param $code String Código do vídeo do Youtube.
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function video($code) {
+	public function video($code) 
+	{
 		$layout_vars = array();
 		$content_vars = array();
 
