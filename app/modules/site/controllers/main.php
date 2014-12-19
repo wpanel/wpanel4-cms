@@ -153,6 +153,140 @@ class main extends MX_Controller
 	}
 
 	/**
+	 * Este método exibe uma lista com todos os álbuns de foto.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function albuns()
+	{
+		$layout_vars = array();
+		$content_vars = array();
+		$this->load->model('album');
+
+		// Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('albuns'));
+		$this->wpanel->set_meta_description('Álbuns de fotos');
+		$this->wpanel->set_meta_keywords(' album, fotos');
+		$this->wpanel->set_meta_title('Álbuns de fotos');
+		$this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+
+		// Variáveis obrigatórias para o layout
+		$content_vars['albuns'] = $this->album->get_list();
+		$layout_vars['content'] = $this->load->view('main_albuns', $content_vars, TRUE);
+
+		$this->load->view($this->layout, $layout_vars);
+	}
+
+	/**
+	 * Este método exibe um álbum de foto de acordo com o ID.
+	 *
+	 * @return void
+	 * @param $album_id Int ID do álbum de foto.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function album($album_id)
+	{
+		$layout_vars = array();
+		$content_vars = array();
+		$this->load->model('album');
+		$this->load->model('foto');
+
+		$album = $this->album->get_by_id($album_id)->row();
+
+		// Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('album/' . $album_id));
+		$this->wpanel->set_meta_description($album->descricao);
+		$this->wpanel->set_meta_keywords(' album, fotos');
+		$this->wpanel->set_meta_title($album->titulo);
+		$this->wpanel->set_meta_image(base_url('media/capas') . '/' . $album->capa);
+
+		// Variáveis obrigatórias para o layout
+		$content_vars['album'] = $album;
+		$content_vars['fotos'] = $this->foto->get_by_field('album_id', $album_id, array('field'=>'created', 'order'=>'desc'));
+
+		$layout_vars['content'] = $this->load->view('main_album', $content_vars, TRUE);
+
+		$this->load->view($this->layout, $layout_vars);
+	}
+
+	/**
+	 * Este método exibe uma foto pronta para compartilhamento
+	 * nas redes sociais e para comentários.
+	 *
+	 * @return void
+	 * @param $foto_id Int ID da foto.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function foto($foto_id)
+	{
+		$layout_vars = array();
+		$content_vars = array();
+		$this->load->model('album');
+		$this->load->model('foto');
+
+		$foto = $this->foto->get_by_id($foto_id)->row();
+
+		// Seta as variáveis 'meta'
+		$this->wpanel->set_meta_url(site_url('foto/' . $foto_id));
+		$this->wpanel->set_meta_description($foto->descricao);
+		$this->wpanel->set_meta_keywords(' album, fotos');
+		$this->wpanel->set_meta_title($foto->descricao);
+		$this->wpanel->set_meta_image(base_url('media/albuns/'.$foto->album_id) . '/' . $foto->filename);
+
+		// Variáveis obrigatórias para o layout
+		$content_vars['album'] = $this->album->get_by_id($foto->album_id)->row();
+		$content_vars['foto'] = $foto;
+
+		$layout_vars['content'] = $this->load->view('main_foto', $content_vars, TRUE);
+
+		$this->load->view($this->layout, $layout_vars);
+	}
+
+	/**
+	 * Este método faz a listagem de vídeos integrada ao Youtube.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function videos() {
+		$layout_vars = array();
+		$content_vars = array();
+		$this->load->library('Simplepie');
+
+		$this->simplepie->set_feed_url($this->wpanel->get_config('youtube_rss'));
+		$this->simplepie->set_cache_location(APPPATH . 'cache/rss');
+		$this->simplepie->init();
+		$this->simplepie->handle_content_type();
+
+		$content_vars['lista_videos'] = $this->simplepie->get_items();
+
+		// Variáveis obrigatórias para o layout
+		$layout_vars['content'] = $this->load->view('main_videos', $content_vars, TRUE);
+
+		$this->load->view($this->layout, $layout_vars);
+	}
+
+	/**
+	 * Este método faz a exibição de um vídeo de acordo com o $code informado.
+	 *
+	 * @return void
+	 * @param $code String Código do vídeo do Youtube.
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function video($code) {
+		$layout_vars = array();
+		$content_vars = array();
+
+		$content_vars['code'] = $code;
+
+		// Variáveis obrigatórias para o layout
+			$layout_vars['content'] = $this->load->view('main_video', $content_vars, TRUE);
+
+		$this->load->view($this->layout, $layout_vars);
+	}
+
+	/**
 	 * Este método faz a exibição do resultado de uma pesquisa.
 	 *
 	 * @return void

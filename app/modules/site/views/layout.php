@@ -148,6 +148,12 @@
                                 <?php echo anchor('/post/sobre', 'Sobre'); ?>
                             </li>
                             <li>
+                                <?php echo anchor('/albuns', 'Fotos'); ?>
+                            </li>
+                            <li>
+                                <?php echo anchor('/videos', 'Vídeos'); ?>
+                            </li>
+                            <li>
                                 <?php echo anchor('contato', 'Contato'); ?>
                             </li>
                         </ul>
