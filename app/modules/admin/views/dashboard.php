@@ -46,7 +46,7 @@
   </div>
   <div class="col-md-4" style="margin-top:10px;">
     <a 
-      href="<?= site_url('/'); ?>" target="_blank" 
+      href="<?= site_url(); ?>" target="_blank" 
       class="btn btn-success btn-lg btn-block" 
       style="padding-top:30px;padding-bottom:30px;">
       <span class="glyphicon glyphicon-arrow-left"></span> Ir para o site
