@@ -1,17 +1,19 @@
 <?php
 
 if (@$titulo_view) {
-    echo '<h1 class="page-header">'.$titulo_view.'</h1>';
+    echo '<h3 class="page-header">'.$titulo_view.'</h3>';
 }
 
 ?>
 
-<div class="row">
+<div class="row wpn-postagens">
 <?php
-foreach ($posts->result() as $post) {
+$col = 3;
+foreach ($posts->result() as $post)
+{
 ?>
     <div class="col-md-4">
-        <div class="thumbnail">
+        <div class="wpn-capa">
             <?php
             $img_data = array(
                 'src'=>'media/capas/'.$post->image, 
@@ -20,15 +22,15 @@ foreach ($posts->result() as $post) {
                 'alt'=>$post->title, 
                 'title'=>$post->title
             );
-            echo img($img_data);
+            echo anchor('post/'.$post->link, img($img_data));
             ?>
             <div class="caption">
-                <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
+                <h4><?php echo anchor('post/'.$post->link, $post->title); ?></h4>
             </div>
-            
         </div>
     </div>
-<?php
+    <?php
+    if($col == 3){ $col = 1; echo '</div><div class="row wpn-postagens">'; } else { $col = $col +1; }
 }
 ?>
 </div>

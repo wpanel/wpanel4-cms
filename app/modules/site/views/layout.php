@@ -4,11 +4,14 @@
         <title><?php echo $this->wpanel->get_titulo(); ?></title>
         <?php echo $this->wpanel->get_meta(); ?>
         <!-- Bootstrap -->
-        <link href="<?php echo base_url(); ?>lib/css/bootstrap.css" rel="stylesheet">
+        <link href="<?php echo base_url('lib/css'); ?>/bootstrap.css" rel="stylesheet">
+        <!-- Estilo do layout -->
+        <link href="<?php echo base_url('assets/css'); ?>/wpanel.css" rel="stylesheet">
         <!-- jQuery -->
-        <script src="<?php echo base_url()?>lib/js/jquery.js"></script>
+        <script src="<?php echo base_url('lib/js')?>/jquery.js"></script>
         <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="<?php echo base_url(); ?>lib/js/bootstrap.js" type="text/javascript"></script>
+        <script src="<?php echo base_url('lib/js'); ?>/bootstrap.js" type="text/javascript"></script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?= $this->wpanel->get_config('addthis_uid'); ?>"></script>  
         <!-- BEGIN Facebook -->
         <div id="fb-root"></div>
         <script>
@@ -26,72 +29,43 @@
         <style type="text/css">
             body {
                 background-image: url('<?php echo base_url('media') . '/' . $this->wpanel->get_config('background'); ?>');
-                background-position: top center;
-                /*background-repeat: no-repeat;*/
-                background-attachment: fixed;
                 background-color: <?php echo $this->wpanel->get_config('bgcolor'); ?>;
-            }
-            .space {
-                height: 15px;
-            }
-            .wpn_conteudo {
-                background-color: #fff;
-            }
-            img.background-image {
-                min-height: 100%;
-                min-width: 1024px;
-                width: 100%;
-                height: auto;
-                position: fixed;
-                top: 0px;
-                left: 0px;
-                z-index: -1;
-            }
-            .menu-sidebar {
-
-                list-style: none;
-                list-style-position: outside;
-
-                margin: 0;
-                padding: 0;
-
-            }
-            .page-header {
-                margin-top: 15px;
-            }
-            .footer {
-                margin-top:20px;
-                /*padding: 15px;*/
-                background-color: #333;
-                color: #fff;
-                min-height: 350px;
             }
         </style>
     </head>
     <body>
-        <div class="space hidden-xs">&nbsp;</div>
-        <div class="container hidden-xs">
-            <div class="row">
-                <div class="col-md-12">
-                    <?php
 
-                    // Insere a imagem que será colocada como background pelo CSS.
-                    $image_properties = array(
-                    	'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
-                    	'class' => 'hidden-xs'
-                    );
+        <?php
+        // Verifica se a logomarca foi configurada e a exibe.
+        if($this->wpanel->get_config('logomarca'))
+        {
+            ?>
+            <div class="container hidden-xs wpn-logomarca">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
 
-                    echo img($image_properties);
+                        // Insere a imagem que será colocada como background pelo CSS.
+                        $image_properties = array(
+                        	'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
+                        	'class' => 'hidden-xs'
+                        );
 
-                    ?>
+                        echo img($image_properties);
+
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="space hidden-xs">&nbsp;</div>
-        <!-- Main wrapper -->
-        <div class="container wpn_conteudo">
+            <?php
+        }
+        ?>
+
+        <!-- Main corpo -->
+        <div class="container wpn-corpo">
+
             <!-- Banner slide -->
-            <div class="row hidden-xs">
+            <div class="row hidden-xs wpn-banner">
                 <div id="carousel-topo" data-interval="false" class="carousel slide"
                      data-ride="carousel">
                     <div class="carousel-inner">
@@ -128,6 +102,7 @@
                 </div>
             </div>
             <!-- End - Banner slide -->
+
             <!-- Navbar Topo | Inicio -->
             <div class="row">
                 <div class="navbar navbar-default navbar-inverse navbar-static-top">
@@ -138,6 +113,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
+                        <?php echo anchor('', $this->wpanel->get_config('site_titulo'), array('class'=>'navbar-brand visible-xs')); ?>
                     </div>
                     <div class="collapse navbar-collapse navbar-top-collapse">
                         <ul class="nav navbar-nav navbar-left" style="">
@@ -161,15 +137,18 @@
                 </div>
             </div>
             <!-- Navbar Topo | Fim -->
+
             <!-- Body wrapper -->
             <div class="row">
+
                 <!-- Content -->
-                <div class="col-md-9">
+                <div class="col-md-9 wpn_conteudo">
                     <?php echo $content; ?>
                 </div>
                 <!-- end - content -->
+
                 <!-- sidebar -->
-                <div class="col-md-3">
+                <div class="col-md-3 wpn-sidebar">
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
@@ -193,10 +172,12 @@
                     <!-- end - Widget -->
                 </div>
                 <!-- end - sidebar -->
+
             </div>
             <!-- end - body wrapper -->
+
             <!-- Rodape | Inicio -->
-            <div class="row footer">
+            <div class="row wpn-rodape">
                 <div class="col-md-4">
                     <h4 class="page-header">Sobre</h4>
                     <p><?php echo $this->wpanel->get_config('site_desc'); ?></p>
@@ -219,7 +200,7 @@
                 </div>
                 <div class="col-md-4">
                     <h4 class="page-header">Social</h4>
-                    <div class="fb-like-box col-md-4"
+                    <div class="fb-like-box"
                         data-href="<?php echo $this->wpanel->get_config('link_likebox'); ?>"
                         data-colorscheme="light"
                         data-show-faces="true"
@@ -230,14 +211,14 @@
                         height="250">
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 copyright">
                     <p><?php echo $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://elieldepaula.com.br" alt="Eliel de Paula - Desenvolvedor Web">Eliel de Paula</a>, desenvolvido com <a href="http://elieldepaula.com.br/wpanel" alt="WPanel CMS">WPanel CMS</a>.</p>
                 </div>
             </div>
             <!-- Rodape | Fim -->
         </div>
-        <!-- end - Main wrapper -->
-        <div class="space hidden-xs">&nbsp;</div>
+        <!-- end - Corpo -->
+
     </body>
     <!-- Auto-play do carrossel -->
     <script type="text/javascript">

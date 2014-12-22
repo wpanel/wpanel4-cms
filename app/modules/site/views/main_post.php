@@ -1,5 +1,5 @@
 <!-- Postagem. -->
-<div class="row">
+<div class="row wpn-postagem">
     <?php if ($post->page==0){ ?>
         <div class="col-md-2 text-center hidden-xs">
             <h2><?php echo mdate('%d', strtotime($post->created)); ?></h2>
@@ -19,7 +19,7 @@
         <?php
         if ($post->image) {
             ?>
-            <div style="margin-top:15px;margin-bottom:15px;" class="thumbnail">
+            <div class="wpn-capa">
                 <!-- Largura mínima de 700px -->
                 <?php
                 $img_param = array(
@@ -32,12 +32,26 @@
             </div>
             <?php
         }
+        ?>
+        <div class="row wpn-social-buttons">
+            <div class="col-md-12">
+                <!-- AddThis Button BEGIN -->        
+                 <div class="addthis_toolbox addthis_default_style">            
+                     <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>            
+                     <a class="addthis_button_tweet"></a>            
+                     <a class="addthis_button_pinterest_pinit"></a>            
+                     <a class="addthis_counter addthis_pill_style"></a>            
+                 </div>            
+                 <!-- AddThis Button END -->
+            </div>
+        </div>
+        <?php
 
         echo $post->content;
 
         if ($post->page==0) {
             ?>
-            <h3>Comentarios</h3>
+            <h4>Comentarios</h4>
             <!-- Comentários do Facebook -->
             <div class="fb-comments" 
                 data-href="<?php echo site_url('post/' . $post->link); ?>" 

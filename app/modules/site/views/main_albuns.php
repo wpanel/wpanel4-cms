@@ -4,7 +4,7 @@
 	</div>
 </div>
 
-<div class="row" style="margin-bottom: 10px;">
+<div class="row wpn-social-buttons">
     <div class="col-md-12">
         <!-- AddThis Button BEGIN -->        
          <div class="addthis_toolbox addthis_default_style ">            

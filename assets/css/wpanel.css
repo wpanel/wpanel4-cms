@@ -1,0 +1,87 @@
+
+/**
+ * Folha de estilos do layout de demonstração do Wpanel 11
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * 
+ */
+
+
+body {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.space {
+    height: 15px;
+}
+
+/* Topo */
+
+.wpn-logomarca {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.wpn-banner {}
+
+/* Conteúdo */
+
+.wpn-corpo {
+    background-color: #fff;
+}
+
+.page-header {
+    margin-top: 15px;
+}
+
+.wpn-postagens {}
+
+.wpn-postagens .wpn-capa {
+    height:200px;
+    overflow: hidden;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.wpn-postagem {}
+
+.wpn-postagem .wpn-capa {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.wpn-postagem .wpn-social-buttons {
+    margin-bottom: 10px;
+}
+
+/* Sidebar */
+
+.wpn-sidebar {}
+
+.menu-sidebar {
+    list-style: none;
+    list-style-position: outside;
+    margin: 0;
+    padding: 0;
+}
+
+/* Rodapé */
+
+.wpn-rodape {
+    margin-top:20px;
+    background-color: #333;
+    color: #fff;
+    min-height: 350px;
+}
+
+.wpn-rodape .fb-like-box {
+    background-color: #fff;
+}
+
+.wpn-rodape .copyright {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
