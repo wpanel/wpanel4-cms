@@ -29,15 +29,13 @@ class Agendas extends MX_Controller {
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table class="table table-striped">')); 
 		$this->table->set_heading('#', 'Título', 'Data', 'Status', 'Ações');
-		// $query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));//, array('offset'=>'0','limit'=>'2'));
-		$query = $this->post->get_by_category(1, 'desc');
+		$query = $this->post->get_by_field('page','2', array('field'=>'created','order'=>'desc'));//, array('offset'=>'0','limit'=>'2'));
 
 		foreach($query->result() as $row)
 		{
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				// $this->wpanel->categorias_do_post($row->id),
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações
@@ -94,20 +92,13 @@ class Agendas extends MX_Controller {
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['image'] = $this->upload();
 			// Identifica se é uma página ou uma postagem
-			// 0=post, 1=Página
-			$dados_save['page'] = '0';
+			// 0=post, 1=Página, 2=Agenda
+			$dados_save['page'] = '2';
 
 			$new_post = $this->post->save($dados_save);
 
 			if($new_post)
 			{
-				// Salva o relacionamento das categorias
-				$this->load->model('post_categoria');
-				$cat_save = array();
-				$cat_save['post_id'] = $new_post;
-				$cat_save['category_id'] = 1;
-				$this->post_categoria->save($cat_save);
-
 				$this->session->set_flashdata('msg_sistema', 'Agenda salva com sucesso.');
 				redirect('admin/agendas');
 			} else {
@@ -172,8 +163,8 @@ class Agendas extends MX_Controller {
 			$dados_save['created'] = date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			// Identifica se é uma página ou uma postagem
-			// 0=post, 1=Página
-			$dados_save['page'] = '0';
+			// 0=post, 1=Página, 2=Agenda
+			$dados_save['page'] = '2';
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
