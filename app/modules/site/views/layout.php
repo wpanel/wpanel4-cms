@@ -149,6 +149,7 @@
 
                 <!-- sidebar -->
                 <div class="col-md-3 wpn-sidebar">
+
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
@@ -162,6 +163,16 @@
                         </div>
                     </div>
                     <!-- end - Widget -->
+
+                    <!-- Widget -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="page-header">Eventos</h4>
+                            <?php echo $this->wpanel->menu_agendas(array('class' => 'menu-sidebar')); ?>
+                        </div>
+                    </div>
+                    <!-- end - Widget -->
+
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
@@ -170,6 +181,7 @@
                         </div>
                     </div>
                     <!-- end - Widget -->
+
                 </div>
                 <!-- end - sidebar -->
 

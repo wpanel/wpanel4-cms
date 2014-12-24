@@ -82,8 +82,8 @@ class MY_Model extends CI_Model
      * informamos o campo que será usado como filtro.
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $field string - Campo que será usado como filtro.
-     * @param $value string - Valor a ser filtrado.
+     * @param $field string - Campo que será usado como filtro ou array com múltiplas condições.
+     * @param $value string - Valor a ser filtrado, caso o parametro $field seja um array este parâmetro não será utilizado.
      * @param $order array - Array com a ordenação dos resultados.
      * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
      * @return mixed
@@ -92,9 +92,9 @@ class MY_Model extends CI_Model
     {
         if (is_array($field))
         {
-            foreach ($field as $key => $value) 
+            foreach ($field as $key => $val) 
             {
-                $this->db->where($key, $value);
+                $this->db->where($key, $val);
             }
         } 
         else 

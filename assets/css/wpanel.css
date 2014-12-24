@@ -66,6 +66,9 @@ body {
     margin: 0;
     padding: 0;
 }
+.menu-sidebar small {
+    padding-left: 20px;
+}
 
 /* Rodapé */
 

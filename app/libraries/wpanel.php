@@ -287,6 +287,27 @@ class wpanel
 	}
 
 	/**
+	 * Este método retorna uma listagem com as agendas de eventos
+	 * cadastrados e publicados.
+	 *
+	 * @return String
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 **/
+	public function menu_agendas($attributes = array())
+	{
+		$this->load->model('post');
+		$query = $this->post->get_by_field(array('page'=>'2', 'status'=>'1'),null, array('field'=>'created','order'=>'desc'));
+		$str = '';
+		$str .= '<ul '.$this->_attributes($attributes).'>';
+		foreach ($query->result() as $key => $value)
+		{
+			$str .= '<li>'.anchor('/post/'.$value->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $value->title) . '<br/><small>' . $value->description.'</small><br/><small>' . date('d/m/Y', strtotime($value->created)).'</small></li>';
+		}
+		$str .= '</ul>';
+		return $str;
+	}
+
+	/**
 	 * Este método retorna uma lista de banners informando
 	 * a posição.
 	 *
