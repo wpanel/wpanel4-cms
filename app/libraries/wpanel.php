@@ -320,4 +320,86 @@ class wpanel
 		return $this->banner->get_banners($position)->result();
 	}
 
+	/**
+	 * Este método retorna uma lista de postagens de acordo com
+	 * a categoria indicada.
+	 *
+	 * @return mixed
+	 * @param $categoria int Código da categoria que será listada, caso não seja informada lista todos as postagens.
+	 * @param $limit array array com a limitação do resultado.
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 **/
+	public function get_posts($categoria = '', $limit = array())
+	{
+		// buscar uma lista de postagens
+		$this->load->model('post');
+
+		if($categoria == '')
+		{
+			$qry_post = $this->post->get_by_field(array('page'=>'0', 'status'=>'1'), null, array('field'=>'created', 'order'=>'desc'), $limit)->result();
+		} 
+		else 
+		{
+			$qry_post = $this->post->get_by_category($categoria, 'desc', $limit)->result();
+		}
+		return $qry_post;
+	}
+
+	/**
+	 * Este método retorna uma postagem de acordo com o link informado.
+	 *
+	 * @return mixed
+	 * @param $link string Link da postagem a ser exibida.
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 **/
+	public function get_post_by_link($link)
+	{
+		// Verifica se foi informado um link.
+		if ($link == '')
+		{
+			return false;
+		}
+		$this->load->model('post');
+		$post = $this->post->get_by_field('link', $link)->row();
+		// Verifica a existência e disponibilidade do post.
+		if (count($post) <= 0) 
+		{
+			return false;
+		} 
+		else if ($post->status == 0) 
+		{
+			return false;
+		} else {
+			return $post;
+		}
+	}
+
+	/**
+	 * Este método retorna uma postagem de acordo com o ID informado.
+	 *
+	 * @return mixed
+	 * @param $id string Link da postagem a ser exibida.
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 **/
+	public function get_post_by_id($id)
+	{
+		// Verifica se foi informado um id.
+		if ($id == '')
+		{
+			return false;
+		}
+		$this->load->model('post');
+		$post = $this->post->get_by_id($id)->row();
+		// Verifica a existência e disponibilidade do post.
+		if (count($post) <= 0) 
+		{
+			return false;
+		} 
+		else if ($post->status == 0) 
+		{
+			return false;
+		} else {
+			return $post;
+		}
+	}
 } // END class wpanel
