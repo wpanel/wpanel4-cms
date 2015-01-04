@@ -352,7 +352,6 @@ class main extends MX_Controller
 			$this->wpanel->set_meta_title('Contato');
 
 			// Variáveis obrigatórias para o layout
-			$content_vars['page_title'] = ' - fale conosco';
 			$layout_vars['content'] = $this->load->view('main_contato', $content_vars, TRUE);
 
 			$this->load->view($this->layout, $layout_vars);

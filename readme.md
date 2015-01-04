@@ -3,11 +3,12 @@
 
 Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para sites que eu desenvolvi para meus projetos de sites em PHP.
 
-A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos de plugins intermináveis que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, robusto e muito rápido.
+A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos e plugins de terçeiros intermináveis que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, robusto e muito rápido, além de ser
+muito popular, ter uma ótima documentação e uma boa comunidade.
 
 Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo já com uma otimização básica do SEO.
 
-É sem dúvida um bom ponto de partida para um bom projeto. Não é uma obrigação, mas ficaria feliz em saber e contribuir nos projetos que forem desenvolvidos apartir do wpanel. :)
+É sem dúvida um bom ponto de partida para qualquer projeto. Não é uma obrigação, mas ficaria feliz em saber e contribuir nos projetos que forem desenvolvidos apartir do wpanel. :)
 
 ##Admin
 
@@ -25,14 +26,14 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 
 - Faça o download ou clone este repositório;
 - Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
-- Crie uma base de dados, carregue o database.sql incluíudo e configure os dados no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
+- Crie uma base de dados e carregue o database.sql incluíudo, em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
 - Acesse pelo navegador, o site de exemplo já deve estar funcionando.
 - Acesse o painel de controle adicionando /admin à URL.
 - Será solicitado que cadastre um administrador inicial.
 
 #Licença
 
-Este projeto é um projeto pessoal de vários anos, estou disponibilizando sob a licença MIT, você pode usar da forma que achar melhor, mas sem nenhuma garantia. Se quiser contribuir para o projeto, entre em contato comigo pelo email dev[at]elieldepaula.com.br, clone o repositório e vamos fazer um CMS mais completo para quem usa CodeIgniter.
+Este é um projeto pessoal em que trabalho a vários anos, estou disponibilizando sob a licença MIT, você pode usar da forma que achar melhor, mas sem nenhuma garantia. Se quiser contribuir para o projeto, entre em contato comigo pelo email dev[at]elieldepaula.com.br, clone o repositório e vamos fazer um CMS mais completo para quem usa CodeIgniter.
 
 #The MIT License (MIT)
 

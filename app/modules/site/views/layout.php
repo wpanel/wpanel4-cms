@@ -153,7 +153,7 @@
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="page-header">Pesquisa</h4>
+                            <h4 class="page-header"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisa</h4>
                             <?php echo form_open('search', array('class' => 'form-inline', 'role' => 'form')); ?>
                             <div class="form-group">
                                 <input type="text" name="search" class="form-control" placeholder="Digite o que procura..." />
@@ -167,7 +167,7 @@
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="page-header">Eventos</h4>
+                            <h4 class="page-header"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Eventos</h4>
                             <?php echo $this->wpanel->menu_agendas(array('class' => 'menu-sidebar')); ?>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                     <!-- Widget -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="page-header">Categorias</h4>
+                            <h4 class="page-header"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Categorias</h4>
                             <?php echo $this->wpanel->menu_categorias(0, array('class' => 'menu-sidebar')); ?>
                         </div>
                     </div>
@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 copyright">
-                    <p><?php echo $this->wpanel->get_config('copyright'); ?>. Site by <a href="http://elieldepaula.com.br" alt="Eliel de Paula - Desenvolvedor Web">Eliel de Paula</a>, desenvolvido com <a href="http://elieldepaula.com.br/wpanel" alt="WPanel CMS">WPanel CMS</a>.</p>
+                    <p><?php echo $this->wpanel->get_config('copyright'); ?>. Desenvolvido com <a href="http://elieldepaula.com.br/wpanel" alt="WPanel CMS">WPanel CMS</a>.</p>
                 </div>
             </div>
             <!-- Rodape | Fim -->
