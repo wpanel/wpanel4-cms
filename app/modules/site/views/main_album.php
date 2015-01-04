@@ -22,7 +22,8 @@
 
 <div class="row">
 	<?php
-	$col = 1;
+	$col = 1; // Contador de ítens.
+	$max_col = 3; // Número máximo de ítens por  linha.
 	foreach($fotos->result() as $row){
 		?>
 		<div class="col-md-4">
@@ -38,7 +39,8 @@
 
 		</div>
 		<?php
-		if($col == 3){ $col = 0; echo '</div><div class="row">'; } else { $col = $col +1; }
+		// Cria uma nova linha de acordo com a quantidade de ítens por linha.
+		if($col == $max_col){ $col = 0; echo '</div><div class="row">'; } else { $col = $col +1; }
 	}
 	?>
 </div>

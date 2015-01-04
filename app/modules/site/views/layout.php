@@ -12,7 +12,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="<?php echo base_url('lib/js'); ?>/bootstrap.js" type="text/javascript"></script>
         <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?= $this->wpanel->get_config('addthis_uid'); ?>"></script>  
-        <!-- BEGIN Facebook -->
+        <!-- Facebook -->
         <div id="fb-root"></div>
         <script>
              (function (d, s, id) {
@@ -25,8 +25,15 @@
                  fjs.parentNode.insertBefore(js, fjs);
              }(document, 'script', 'facebook-jssdk'));
         </script>
-        <!-- END Facebook -->
+        <!-- Estilos -->
         <style type="text/css">
+        /*
+        Nota
+        -----
+        Estes estilos estão aqui pois precisam de informações dinâmicas do Wpanel, edite os estilos
+        do layout no arquivo /assets/css/wpanel.css
+        
+        */
             body {
                 background-image: url('<?php echo base_url('media') . '/' . $this->wpanel->get_config('background'); ?>');
                 background-color: <?php echo $this->wpanel->get_config('bgcolor'); ?>;
@@ -93,6 +100,7 @@
                         } // Fim do laço
                         ?>
                     </div>
+                    <!-- Ícones de navegação do slide. -->
                     <a class="left carousel-control" href="#carousel-topo" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
@@ -121,13 +129,13 @@
                                 <?php echo anchor('', 'Home'); ?>
                             </li>
                             <li>
-                                <?php echo anchor('/post/sobre', 'Sobre'); ?>
+                                <?php echo anchor('post/sobre', 'Sobre'); ?>
                             </li>
                             <li>
-                                <?php echo anchor('/albuns', 'Fotos'); ?>
+                                <?php echo anchor('albuns', 'Fotos'); ?>
                             </li>
                             <li>
-                                <?php echo anchor('/videos', 'Vídeos'); ?>
+                                <?php echo anchor('videos', 'Vídeos'); ?>
                             </li>
                             <li>
                                 <?php echo anchor('contato', 'Contato'); ?>

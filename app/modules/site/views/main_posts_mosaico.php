@@ -8,7 +8,8 @@ if (@$titulo_view) {
 
 <div class="row wpn-postagens">
 <?php
-$col = 3;
+$col = 1; // Contador de ítens.
+$max_col = 3; // Número máximo de ítens por  linha.
 foreach ($posts->result() as $post)
 {
 ?>
@@ -30,7 +31,8 @@ foreach ($posts->result() as $post)
         </div>
     </div>
     <?php
-    if($col == 3){ $col = 1; echo '</div><div class="row wpn-postagens">'; } else { $col = $col +1; }
+    // Cria uma nova linha de acordo com a quantidade de ítens por linha.
+    if($col == $max_col){ $col = 1; echo '</div><div class="row wpn-postagens">'; } else { $col = $col +1; }
 }
 ?>
 </div>
