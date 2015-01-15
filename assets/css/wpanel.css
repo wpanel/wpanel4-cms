@@ -1,5 +1,6 @@
 
 /**
+ *
  * Folha de estilos do layout de demonstração do Wpanel 11
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
@@ -27,6 +28,8 @@ body {
 .wpn-banner {}
 
 /* Conteúdo */
+
+.wpn-conteudo {}
 
 .wpn-corpo {
     background-color: #fff;
