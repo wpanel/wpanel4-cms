@@ -27,14 +27,13 @@
         </script>
         <!-- Estilos -->
         <style type="text/css">
-            /*
-            
-            Nota
-            -----
-            Estes estilos estão aqui pois precisam de informações dinâmicas do Wpanel, edite os estilos
-            do layout no arquivo /assets/css/wpanel.css
-            
-            */
+        /*
+        Nota
+        -----
+        Estes estilos estão aqui pois precisam de informações dinâmicas do Wpanel, edite os estilos
+        do layout no arquivo /assets/css/wpanel.css
+        
+        */
             body {
                 background-image: url('<?php echo base_url('media') . '/' . $this->wpanel->get_config('background'); ?>');
                 background-color: <?php echo $this->wpanel->get_config('bgcolor'); ?>;
@@ -80,11 +79,9 @@
                         <?php
                         // Laço com o banner slider.
                         $laco = 0;
-                        foreach ($this->wpanel->get_banner('slide') as $ban_sld) 
-                        {
+                        foreach ($this->wpanel->get_banner('slide') as $ban_sld) {
                         	
-                            if ($laco == 0) 
-                            {
+                            if ($laco == 0) {
                         		echo '<div class="item active">';
                         	} else {
                         		echo '<div class="item">';
@@ -128,7 +125,7 @@
                     </div>
                     <div class="collapse navbar-collapse navbar-top-collapse">
                         <ul class="nav navbar-nav navbar-left" style="">
-                            <li> <!--Pode usar: class="active" -->
+                            <li> <!-- class="active" -->
                                 <?php echo anchor('', 'Home'); ?>
                             </li>
                             <li>
@@ -153,7 +150,7 @@
             <div class="row">
 
                 <!-- Content -->
-                <div class="col-md-9 wpn-conteudo">
+                <div class="col-md-9 wpn_conteudo">
                     <?php echo $content; ?>
                 </div>
                 <!-- end - content -->
