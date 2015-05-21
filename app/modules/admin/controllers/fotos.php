@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class fotos extends MX_Controller {
-	
+
 	function __construct()
 	{
 		$this->auth->protect('admin');
@@ -21,7 +21,7 @@ class fotos extends MX_Controller {
 		// $query_album = $this->album->get_by_id($album_id)->row();
 
 		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table class="table table-striped">')); 
+		$this->table->set_template(array('table_open'  => '<table class="table table-striped">'));
 		$this->table->set_heading('#', 'Imagem', 'Descricao', 'Data', 'Status', 'Ações');
 		$query = $this->foto->get_by_field('album_id', $album_id, array('field'=>'created', 'order'=>'desc'));
 
@@ -37,11 +37,11 @@ class fotos extends MX_Controller {
             $imagem = img($capa_properties);
 
 			$this->table->add_row(
-				$row->id, 
-				$imagem, 
-				$row->descricao, 
+				$row->id,
+				$imagem,
+				$row->descricao,
 				mdate('%d/%m/%Y - %H:%i', strtotime($row->created)),
-				status_post($row->status), 
+				status_post($row->status),
 				div(array('class'=>'btn-group btn-group-sm')).
 				anchor('admin/fotos/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
 				anchor('admin/fotos/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
@@ -54,7 +54,7 @@ class fotos extends MX_Controller {
 		$layout_vars['content'] = $this->load->view('fotos_index', $content_vars, TRUE);
 
 		$this->load->view('layout', $layout_vars);
-	}	
+	}
 
 	public function add($album_id)
 	{
@@ -62,7 +62,7 @@ class fotos extends MX_Controller {
 		$content_vars = array();
 
 		$this->form_validation->set_rules('descricao', 'Foto', 'required');
-		
+
 		if ($this->form_validation->run() == FALSE)
 		{
 			$content_vars['album_id'] = $album_id;
@@ -91,7 +91,68 @@ class fotos extends MX_Controller {
 				redirect('admin/fotos/index/'.$album_id);
 			}
 		}
-	}	
+	}
+
+  public function addmass($album_id = null)
+  {
+
+    if($album_id == null)
+    {
+      $this->session->set_flashdata('msg_sistema', 'Álbum de fotos inexistente.');
+      redirect('admin/fotos/index/'.$album_id);
+    }
+
+    $layout_vars = array();
+    $content_vars = array();
+
+    $this->form_validation->set_rules('descricao', 'Foto', 'required');
+
+    if ($this->form_validation->run() == FALSE)
+    {
+      $content_vars['album_id'] = $album_id;
+      $layout_vars['content'] = $this->load->view('fotos_addmass', $content_vars, TRUE);
+      $this->load->view('layout', $layout_vars);
+    } else {
+
+      $this->load->model('foto');
+
+      /* Faz o laço do upload */
+      $pasta = './media/albuns/'.$album_id.'/';
+      $fotos = $_FILES['fotos'];
+
+      for($i = 0; $i < sizeof($fotos); $i++)
+      {
+
+        $nome = $album_id . '_' . time() . '_' . str_replace(array(' ', ',', '-'), '', $fotos["name"][$i]);
+        $tmpname = $fotos["tmp_name"][$i];
+        $caminho = $pasta . $nome;
+
+        //TODO Fazer um tipo de validação aqui...
+        if(move_uploaded_file($tmpname, $caminho))
+        {
+
+          $dados_save = array();
+          $dados_save['album_id'] = $album_id;
+          $dados_save['descricao'] = $this->input->post('descricao');
+          $dados_save['status'] = $this->input->post('status');
+          $dados_save['created'] = date('Y-m-d H:i:s');
+          $dados_save['updated'] = date('Y-m-d H:i:s');
+          $dados_save['filename'] = $nome;
+
+          $uploads = $this->foto->save($dados_save);
+
+        } else {
+          $this->session->set_flashdata('msg_sistema', 'Não foi possível enviar as fotos.');
+          redirect('admin/fotos/index/'.$album_id);
+        }
+      }
+      /* Fim do laço do upload */
+
+      $this->session->set_flashdata('msg_sistema', 'Fotos salvas com sucesso.');
+      redirect('admin/fotos/index/'.$album_id);
+
+    }
+  }
 
 	public function edit($id = null)
 	{
@@ -102,7 +163,7 @@ class fotos extends MX_Controller {
 		$row = $this->foto->get_by_id($id)->row();
 
 		$this->form_validation->set_rules('descricao', 'Descrição', 'required');
-		
+
 		if ($this->form_validation->run() == FALSE)
 		{
 
@@ -121,7 +182,7 @@ class fotos extends MX_Controller {
 			$dados_save['descricao'] = $this->input->post('descricao');
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			
+
 			if($this->input->post('alterar_imagem')=='1')
 			{
 				$this->remove_image($id);
@@ -139,7 +200,7 @@ class fotos extends MX_Controller {
 				redirect('admin/fotos/index/'.$row->album_id);
 			}
 		}
-	}	
+	}
 
 	public function delete($id = null)
 	{
