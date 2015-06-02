@@ -169,6 +169,63 @@ CREATE TABLE IF NOT EXISTS `fotos` (
 
 -- --------------------------------------------------------
 
+
+--
+-- Estrutura para tabela `menus`
+--
+
+CREATE TABLE IF NOT EXISTS `menus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `nome` varchar(100) DEFAULT NULL,
+  `slug` varchar(200) DEFAULT NULL,
+  `posicao` varchar(45) DEFAULT NULL,
+  `estilo` varchar(45) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menus_users1_idx` (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Fazendo dump de dados para tabela `menus`
+--
+
+INSERT INTO `menus` (`id`, `user_id`, `nome`, `slug`, `posicao`, `estilo`, `created`, `updated`) VALUES
+(1, 1, 'Menu principal', 'menu-principal', 'topo', 'lista', '2015-06-01 11:30:39', '2015-06-01 11:37:01');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `menu_itens`
+--
+
+CREATE TABLE IF NOT EXISTS `menu_itens` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_id` int(11) NOT NULL,
+  `label` varchar(200) DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
+  `href` text,
+  `slug` varchar(200) DEFAULT NULL,
+  `ordem` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menu_itens_menus_idx` (`menu_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Fazendo dump de dados para tabela `menu_itens`
+--
+
+INSERT INTO `menu_itens` (`id`, `menu_id`, `label`, `tipo`, `href`, `slug`, `ordem`, `created`, `updated`) VALUES
+(1, 1, 'Início', 'funcional', 'home', '', 1, '2015-06-01 13:08:00', '2015-06-02 16:02:10'),
+(2, 1, 'Fotos', 'funcional', 'albuns', '', 3, '2015-06-01 18:03:37', '2015-06-02 15:55:28'),
+(3, 1, 'Sobre', 'post', 'pagina-inicial', '', 5, '2015-06-01 22:40:27', '2015-06-02 17:14:47'),
+(4, 1, 'Postagens', 'posts', '1', '', 2, '2015-06-02 14:08:34', '2015-06-02 17:14:13'),
+(5, 1, 'Fale conosco', 'funcional', 'contato', '', 6, '2015-06-02 17:15:01', '2015-06-02 17:15:01'),
+(6, 1, 'Vídeos', 'funcional', 'videos', '', 4, '2015-06-02 17:14:36', '2015-06-02 17:14:36');
+
 --
 -- Estrutura para tabela `newsletter_email`
 --

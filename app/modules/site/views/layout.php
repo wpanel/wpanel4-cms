@@ -124,22 +124,7 @@
                         <?php echo anchor('', $this->wpanel->get_config('site_titulo'), array('class'=>'navbar-brand visible-xs')); ?>
                     </div>
                     <div class="collapse navbar-collapse navbar-top-collapse">
-                        <ul class="nav navbar-nav navbar-left" style="">
-                            <li> <!-- class="active" -->
-                                <?php echo anchor('', 'Home'); ?>
-                            </li>
-                            <li>
-                                <?php echo anchor('post/sobre', 'Sobre'); ?>
-                            </li>
-                            <li>
-                                <?php echo anchor('albuns', 'Fotos'); ?>
-                            </li>
-                            <li>
-                                <?php echo anchor('videos', 'Vídeos'); ?>
-                            </li>
-                            <li>
-                                <?php echo anchor('contato', 'Contato'); ?>
-                            </li>
+                        <?= $this->wpanel->get_menu('1', 'nav navbar-nav navbar-left'); ?>
                         </ul>
                     </div>
                 </div>

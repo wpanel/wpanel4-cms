@@ -36,3 +36,9 @@ $config['meta_author'] = 'Eliel de Paula <dev@elieldepaula.com.br>';
  * painel de contorle.
  */
 $config['pos_banners'] = array('slide' => 'Slide', 'sidebar' => 'Sidebar');
+
+/**
+ * Defini as posições dos menus no site para serem listados no 
+ * painel de contorle.
+ */
+$config['pos_menus'] = array('topo' => 'Topo', 'sidebar' => 'Lateral', 'footer' => 'Rodapé');
