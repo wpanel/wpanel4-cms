@@ -20,12 +20,12 @@ class menus extends MX_Controller {
 
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table class="table table-striped">'));
-        $this->table->set_heading('#', 'Título', 'Posição', 'Estilo', 'Ações');
+        $this->table->set_heading('#', 'Título', 'Ações'); // 'Posição', 'Estilo',
         $query = $this->menu->get_list();
 
         foreach ($query->result() as $row) {
-            $this->table->add_row(
-                    $row->id, anchor('admin/menuitens/index/'.$row->id, $row->nome), $row->posicao, $row->estilo, div(array('class' => 'btn-group btn-group-sm')) .
+            $this->table->add_row( //$row->posicao, $row->estilo
+                    $row->id, anchor('admin/menuitens/index/'.$row->id, $row->nome), div(array('class' => 'btn-group btn-group-sm')) .
                     anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                     anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
                     div(null, true)
@@ -44,7 +44,7 @@ class menus extends MX_Controller {
         $content_vars = array();
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('posicao', 'Posição', 'required');
+        //$this->form_validation->set_rules('posicao', 'Posição', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $layout_vars['content'] = $this->load->view('menus_add', $content_vars, TRUE);
@@ -76,7 +76,7 @@ class menus extends MX_Controller {
         $content_vars = array();
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('posicao', 'Posição', 'required');
+        //$this->form_validation->set_rules('posicao', 'Posição', 'required');
 
         if ($this->form_validation->run() == FALSE) {
 

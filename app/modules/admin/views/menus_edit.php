@@ -13,9 +13,9 @@ echo row();
 $options_pos = config_item('pos_menus');
 
 echo col(2);
-echo div(array('class' => 'form-group'));
+echo div(array('class' => 'form-group hidden'));
 echo form_label('Posição', 'posicao');
-echo form_dropdown('posicao', $options_pos, $row->posicao, null, 'form-control');
+echo form_dropdown('posicao', $options_pos, $row->posicao, 'disabled', 'form-control');
 echo form_error('posicao');
 echo close_div(2);
 
@@ -28,9 +28,9 @@ $options_estilo = array(
 
 
 echo col(3);
-echo div(array('class' => 'form-group'));
+echo div(array('class' => 'form-group hidden'));
 echo form_label('Estilo', 'estilo');
-echo form_dropdown('estilo', $options_estilo, $row->estilo, null, 'form-control');
+echo form_dropdown('estilo', $options_estilo, $row->estilo, 'disabled', 'form-control');
 echo close_div(3);
 
 echo row();

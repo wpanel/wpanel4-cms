@@ -27,22 +27,22 @@
         <?= form_error('tipo'); ?>
     </div>
     <div class="form-group" id="form_link">
-        <label for="link">Link</label>
+        <label for="link">Link externo</label>
         <input type="text" name="link" id="link" class="form-control" />
         <?= form_error('link'); ?>
     </div>
-    <div class="form-group" id="form_post">
+    <div class="form-group" id="form_post" style="display: none;">
         <label for="post_id">Página ou Postagem</label>
         <select class="form-control" name="post_id" id="post_id">
             <?php
             foreach ($posts as $row_post)
             {
-                echo '<option value="' . $row_post->id . '">' . $row_post->title . '</option>';
+                echo '<option value="' . $row_post->link . '">' . $row_post->title . '</option>';
             }
             ?>
         </select>
     </div>
-    <div class="form-group" id="form_posts">
+    <div class="form-group" id="form_posts" style="display: none;">
         <label for="categoria_id">Listagem de categoria</label>
         <select class="form-control" name="categoria_id" id="categoria_id">
             <?php
@@ -53,14 +53,23 @@
             ?>
         </select>
     </div>
-    <div class="form-group" id="form_funcional">
+    <div class="form-group" id="form_funcional" style="display: none;">
         <label for="funcional">Página funcional</label>
         <select class="form-control" name="funcional" id="funcional">
             <option value="home">Página inicial</option>
             <option value="contato">Página de contato</option>
-            <option value="fotos">Galeria de fotos</option>
+            <option value="albuns">Galeria de fotos</option>
             <option value="videos">Galeria de videos</option>
         </select>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="ordem">Ordem de exibição</label>
+                <input type="text" name="ordem" id="ordem" class="form-control" />
+                <?= form_error('ordem'); ?>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Cadastrar</button>

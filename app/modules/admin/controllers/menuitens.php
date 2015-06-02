@@ -23,15 +23,33 @@ class menuitens extends MX_Controller
 
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table class="table table-striped">'));
-        $this->table->set_heading('#', 'Label', 'Tipo', 'Link', 'Ações');
-        $query = $this->menu_item->get_list();
+        $this->table->set_heading('Label', 'Ordem', 'Tipo', 'Link', 'Ações');
+        $query = $this->menu_item->get_list(array('field'=>'ordem', 'order'=>'asc'));
 
         foreach ($query->result() as $row)
         {
+
+            switch ($row->tipo)
+            {
+                case 'post':
+                    $link = $this->get_titulo_postagem($row->href);
+                    break;
+                case 'posts':
+                    $link = $this->get_titulo_categoria($row->href);
+                    break;
+                case 'link':
+                    $link = $row->href;
+                    break;
+                case 'funcional':
+                    $link = humanize($row->href);
+                    break;
+
+            }
+
             $this->table->add_row(
-                    $row->id, $row->label, $row->tipo, $row->href, div(array('class' => 'btn-group btn-group-sm')) .
+                    $row->label, $row->ordem, humanize($row->tipo), $link, div(array('class' => 'btn-group btn-group-sm')) .
                     anchor('admin/menuitens/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    anchor('admin/menuitens/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
+                    anchor('admin/menuitens/delete/' . $menu_id . '/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
                     div(null, true)
             );
         }
@@ -51,7 +69,6 @@ class menuitens extends MX_Controller
 
         $this->form_validation->set_rules('label', 'Label', 'required');
         $this->form_validation->set_rules('tipo', 'Tipo', 'required');
-//        $this->form_validation->set_rules('link', 'Link', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->model('post');
@@ -68,13 +85,14 @@ class menuitens extends MX_Controller
             $dados_save['label'] = $this->input->post('label');
             $dados_save['tipo'] = $tipo_link;
             $dados_save['slug'] = '';
+            $dados_save['ordem'] = $this->input->post('ordem');
             $dados_save['created'] = date('Y-m-d H:i:s');
             $dados_save['updated'] = date('Y-m-d H:i:s');
             // Verifica de onde vem os dados para o campo 'link'
             switch ($tipo_link)
             {
                 case 'link':
-                    $dados_save['href'] = $this->input->post('href');
+                    $dados_save['href'] = $this->input->post('link');
                     break;
                 case 'post':
                     $dados_save['href'] = $this->input->post('post_id');
@@ -102,114 +120,92 @@ class menuitens extends MX_Controller
         $layout_vars = array();
         $content_vars = array();
 
-        $this->form_validation->set_rules('title', 'Título', 'required');
-        $this->form_validation->set_rules('order', 'Ordem', 'required');
-        $this->form_validation->set_rules('position', 'Posição', 'required');
+        $this->form_validation->set_rules('label', 'Label', 'required');
+        $this->form_validation->set_rules('tipo', 'Tipo', 'required');
 
         if ($this->form_validation->run() == FALSE) {
 
             if ($id == null) {
-                $this->session->set_flashdata('msg_sistema', 'Banner inexistente.');
-                redirect('admin/menuitens');
+                $this->session->set_flashdata('msg_sistema', 'Item de menu inexistente.');
+                redirect('admin/menus');
             }
 
+            $this->load->model('post');
+            $this->load->model('categoria');
 
+            $content_vars['posts'] = $this->post->get_list()->result();
+            $content_vars['categorias'] = $this->categoria->get_list()->result();
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu_item->get_by_id($id)->row();
-            $layout_vars['content'] = $this->load->view('banners_edit', $content_vars, TRUE);
+            $layout_vars['content'] = $this->load->view('menuitens_edit', $content_vars, TRUE);
             $this->load->view('layout', $layout_vars);
         } else {
 
-
-
+            $menu_id = $this->input->post('menu_id');
+            $tipo_link = $this->input->post('tipo');
             $dados_save = array();
-            $dados_save['title'] = $this->input->post('title');
-            $dados_save['order'] = $this->input->post('order');
-            $dados_save['position'] = $this->input->post('position');
-            $dados_save['status'] = $this->input->post('status');
+            $dados_save['label'] = $this->input->post('label');
+            $dados_save['tipo'] = $tipo_link;
+            $dados_save['slug'] = '';
+            $dados_save['ordem'] = $this->input->post('ordem');
             $dados_save['updated'] = date('Y-m-d H:i:s');
 
-            if ($this->input->post('alterar_imagem') == '1') {
-                $this->remove_image($id);
-                $dados_save['content'] = $this->upload();
+            // Verifica de onde vem os dados para o campo 'link'
+            switch ($tipo_link)
+            {
+                case 'link':
+                    $dados_save['href'] = $this->input->post('link');
+                    break;
+                case 'post':
+                    $dados_save['href'] = $this->input->post('post_id');
+                    break;
+                case 'posts':
+                    $dados_save['href'] = $this->input->post('categoria_id');
+                    break;
+                case 'funcional':
+                    $dados_save['href'] = $this->input->post('funcional');
+                    break;
             }
 
-            $new_post = $this->menu_item->update($id, $dados_save);
-
-            if ($new_post) {
-                $this->session->set_flashdata('msg_sistema', 'Banner salvo com sucesso.');
-                redirect('admin/menuitens');
+            if ($this->menu_item->update($id, $dados_save)) {
+                $this->session->set_flashdata('msg_sistema', 'Item de menu salvo com sucesso.');
+                redirect('admin/menuitens/index/' . $menu_id);
             } else {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o banner.');
-                redirect('admin/menuitens');
+                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o item de menu.');
+                redirect('admin/menuitens/index/' . $menu_id);
             }
         }
     }
 
-    public function delete($id = null)
+    public function delete($menu_id, $id = null)
     {
 
         if ($id == null) {
-            $this->session->set_flashdata('msg_sistema', 'Banner inexistente.');
-            redirect('admin/menuitens');
+            $this->session->set_flashdata('msg_sistema', 'Item de menu inexistente.');
+            redirect('admin/menuitens/index/' . $menu_id);
         }
-
-
-
-        $this->remove_image($id);
 
         if ($this->menu_item->delete($id)) {
-            $this->session->set_flashdata('msg_sistema', 'Banner excluído com sucesso.');
-            redirect('admin/menuitens');
+            $this->session->set_flashdata('msg_sistema', 'Item de menu excluído com sucesso.');
+            redirect('admin/menuitens/index/' . $menu_id);
         } else {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o banner.');
-            redirect('admin/menuitens');
+            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o item de menu.');
+            redirect('admin/menuitens/index/' . $menu_id);
         }
     }
 
-    private function upload()
+    private function get_titulo_postagem($post_link)
     {
-
-        $config['upload_path'] = './media/banners/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '2000';
-        $config['max_width'] = '0';
-        $config['max_height'] = '0';
-        $config['remove_spaces'] = TRUE;
-        $config['file_name'] = md5(date('YmdHis'));
-
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload()) {
-            $upload_data = array();
-            $upload_data = $this->upload->data();
-            return $upload_data['file_name'];
-        } else {
-            return false;
-        }
+        $this->load->model('post');
+        $query = $this->post->get_by_field('link', $post_link)->row();
+        return $query->title;
     }
 
-    /**
-     * Este método faz a exclusão de uma imagem de banner.
-     *
-     * @return boolean
-     * @param $id Integer ID do banner.
-     * @author Eliel de Paula <elieldepaula@gmail.com>
-     * */
-    private function remove_image($id)
+    private function get_titulo_categoria($categoria_id)
     {
-
-        $banner = $this->menu_item->get_by_id($id)->row();
-        $filename = './media/banners/' . $banner->content;
-        if (file_exists($filename)) {
-            if (unlink($filename)) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
+        $this->load->model('categoria');
+        $query = $this->categoria->get_by_id($categoria_id)->row();
+        return $query->title;
     }
 
 }
