@@ -1,12 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-echo page_header(
-        'Itens do menu', 
-        2, 
-        '&nbsp;&nbsp;' . anchor('admin/menuitens/add/'.$menu_id, glyphicon('plus-sign') . 'Novo ítem de menu', array('class'=>'pull-right')) . '&nbsp;&nbsp;' .
-        '&nbsp;&nbsp;' . anchor('admin/menus', glyphicon('chevron-left') . 'Voltar', array('class'=>'pull-right', 'style'=>'margin-right:15px;'))
-        );
-
-echo div(array('class'=>'table-responsive'));
-echo $listagem;
-echo div(null, true);
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b>Itens do menus</b>
+    </div>
+    <div class="panel-body">
+        <?= anchor('admin/menuitens/add/'.$menu_id, glyphicon('plus-sign') . 'Novo ítem de menu', array('class'=>'btn btn-warning')); ?>
+    </div>
+    <?php
+    echo div(array('class'=>'table-responsive'));
+    echo $listagem;
+    echo div(null, true);
+    ?>
+</div>

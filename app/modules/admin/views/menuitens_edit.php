@@ -76,6 +76,6 @@
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Salvar as alterações</button>
-        <?= anchor('admin/menuitens/index/' . $row->menu_id, 'Cancelar', array('class' => 'btn btn-danger')); ?>
+        <?= anchor('admin/menus', 'Cancelar', array('class' => 'btn btn-danger')); ?>
     </div>
 </form>

@@ -1,7 +1,11 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-echo page_header('Gerenciador de Menus', 2, anchor('admin/menus/add', glyphicon('plus-sign') . 'Novo menu', array('class'=>'pull-right')));
-
-echo div(array('class'=>'table-responsive'));
-echo $listagem;
-echo div(null, true);
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b>Gerenciador de menus</b>
+    </div>
+    <div class="panel-body">
+        <?= anchor('admin/menus/add', glyphicon('plus-sign') . 'Novo menu', array('class'=>'btn btn-primary')); ?>
+    </div>
+    <ul class="list-group">
+        <?= $listagem; ?>
+    </ul>
+</div>
