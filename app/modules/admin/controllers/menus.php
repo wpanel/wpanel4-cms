@@ -3,48 +3,113 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class menus extends MX_Controller {
+class menus extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         $this->auth->protect('admin');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         $this->load->model('menu');
     }
 
-    public function index() {
-        
-        $this->load->library('table');
+    public function index()
+    {
 
         $layout_vars = array();
         $content_vars = array();
+        $this->load->model('menu_item');
 
-        // Template da tabela
-        $this->table->set_template(array('table_open' => '<table class="table table-striped">'));
-        $this->table->set_heading('#', 'Título', 'Ações'); // 'Posição', 'Estilo',
-        $query = $this->menu->get_list();
+        $query_menu = $this->menu->get_list();
 
-        foreach ($query->result() as $row) {
-            $this->table->add_row( //$row->posicao, $row->estilo
-                    $row->id, anchor('admin/menuitens/index/'.$row->id, $row->nome), div(array('class' => 'btn-group btn-group-sm')) .
-                    anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
-                    div(null, true)
-            );
+        $html_menu = "";
+        foreach ($query_menu->result() as $row)
+        {
+            $html_menu .= "<li class=\"list-group-item\"><div class=\"row\">";
+            $html_menu .= "<div class=\"col-md-1 col-sm-1\"><b>[" . $row->id . "]</b></div>";
+            $html_menu .= "<div class=\"col-md-9 col-sm-9\">" . $row->nome . "</div>";
+            $html_menu .= "<div class=\"col-md-2 col-sm-2 btn-group btn-group-sm\">";
+            $html_menu .= anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default'));
+            $html_menu .= anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();'));
+            $html_menu .= "</div>";
+            $html_menu .= "</div></li>";
+            $html_menu .= "<li class=\"list-group-item\">";
+            $html_menu .= $this->get_menu_item($row->id);
+            $html_menu .= "</li>";
         }
 
-        $content_vars['listagem'] = $this->table->generate();
+        $content_vars['listagem'] = $html_menu;
         $layout_vars['content'] = $this->load->view('menus_index', $content_vars, TRUE);
 
         $this->load->view('layout', $layout_vars);
     }
 
-    public function add() {
-        
+    private function get_menu_item($menu_id)
+    {
+
+        $this->load->library('table');
+        $this->load->model('menu_item');
+
+        $content_vars = array();
+
+        // Template da tabela
+        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered">'));
+        $this->table->set_heading('Label', 'Ordem', 'Tipo', 'Link', 'Ações');
+        $query = $this->menu_item->get_by_field('menu_id', $menu_id, array('field' => 'ordem', 'order' => 'asc'));
+
+        foreach ($query->result() as $row)
+        {
+
+            switch ($row->tipo)
+            {
+                case 'post':
+                    $link = $this->get_titulo_postagem($row->href);
+                    break;
+                case 'posts':
+                    $link = $this->get_titulo_categoria($row->href);
+                    break;
+                case 'link':
+                    $link = $row->href;
+                    break;
+                case 'funcional':
+                    $link = humanize($row->href);
+                    break;
+            }
+
+            $this->table->add_row(
+                    $row->label, $row->ordem, humanize($row->tipo), $link, div(array('class' => 'btn-group btn-group-sm')) .
+                    anchor('admin/menuitens/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                    anchor('admin/menuitens/delete/' . $menu_id . '/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
+                    div(null, true)
+            );
+        }
+
+        $content_vars['menu_id'] = $menu_id;
+        $content_vars['listagem'] = $this->table->generate();
+        return $this->load->view('menuitens_index', $content_vars, TRUE);
+    }
+
+    private function get_titulo_postagem($post_link)
+    {
+        $this->load->model('post');
+        $query = $this->post->get_by_field('link', $post_link)->row();
+        return $query->title;
+    }
+
+    private function get_titulo_categoria($categoria_id)
+    {
+        $this->load->model('categoria');
+        $query = $this->categoria->get_by_id($categoria_id)->row();
+        return $query->title;
+    }
+
+    public function add()
+    {
+
         $layout_vars = array();
         $content_vars = array();
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        //$this->form_validation->set_rules('posicao', 'Posição', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $layout_vars['content'] = $this->load->view('menus_add', $content_vars, TRUE);
@@ -70,13 +135,13 @@ class menus extends MX_Controller {
         }
     }
 
-    public function edit($id = null) {
-        
+    public function edit($id = null)
+    {
+
         $layout_vars = array();
         $content_vars = array();
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        //$this->form_validation->set_rules('posicao', 'Posição', 'required');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -89,7 +154,6 @@ class menus extends MX_Controller {
             $content_vars['row'] = $this->menu->get_by_id($id)->row();
             $layout_vars['content'] = $this->load->view('menus_edit', $content_vars, TRUE);
             $this->load->view('layout', $layout_vars);
-            
         } else {
 
             $dados_save = array();
@@ -109,7 +173,8 @@ class menus extends MX_Controller {
         }
     }
 
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         if ($id == null) {
             $this->session->set_flashdata('msg_sistema', 'Menu inexistente.');
@@ -124,4 +189,5 @@ class menus extends MX_Controller {
             redirect('admin/menus');
         }
     }
+
 }

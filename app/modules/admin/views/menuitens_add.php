@@ -73,6 +73,6 @@
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Cadastrar</button>
-        <?= anchor('admin/menuitens/index/' . $menu_id, 'Cancelar', array('class' => 'btn btn-danger')); ?>
+        <?= anchor('admin/menus', 'Cancelar', array('class' => 'btn btn-danger')); ?>
     </div>
 </form>
