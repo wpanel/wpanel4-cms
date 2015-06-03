@@ -1,14 +1,14 @@
-<?php if (!defined('BASEPATH')) {exit('No direct script access allowed');
-}
-
-echo page_header(
-	'Páginas',
-	2,
-	anchor('admin/pages/add',
-		glyphicon('plus-sign') . 'Nova página',
-		array('class' => 'pull-right', 'style' => 'margin-left:20px;'))
-);
-
-echo div(array('class' => 'table-responsive'));
-echo $listagem;
-echo div(null, true);
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b>Páginas</b>
+    </div>
+    <div class="panel-body">
+        <?= anchor('admin/pages/add', glyphicon('plus-sign') . 'Nova página', array('class' => 'btn btn-primary')); ?>
+    </div>
+    <?php
+    echo div(array('class' => 'table-responsive'));
+    echo $listagem;
+    echo div(null, true);
+    ?>
+</div>
