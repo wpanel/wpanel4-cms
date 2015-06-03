@@ -50,6 +50,19 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li <?= link_ativo('dashboard'); ?>><?= anchor('admin/dashboard', glyphicon('th') . 'Dashboard'); ?></li>
+                        <li class="visible-xs">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Site <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li <?= link_ativo('posts'); ?>><?= anchor('admin/posts', 'Postagens'); ?></li>
+                                <li <?= link_ativo('pages'); ?>><?= anchor('admin/pages', 'Páginas'); ?></li>
+                                <li <?= link_ativo('agendas'); ?>><?= anchor('admin/agendas', 'Agenda de eventos'); ?></li>
+                                <li <?= link_ativo('categorias'); ?>><?= anchor('admin/categorias', 'Categorias de posts'); ?></li>
+                                <li <?= link_ativo('banners'); ?>><?= anchor('admin/banners', 'Banners'); ?></li>
+                                <li <?= link_ativo('albuns'); ?>  <?= link_ativo('fotos'); ?>><?= anchor('admin/albuns', 'Albuns de fotos'); ?></li>
+                                <li <?= link_ativo('menus'); ?> <?= link_ativo('menuitens'); ?>><?= anchor('admin/menus', 'Gerenciador de menus'); ?></li>
+                                <li <?= link_ativo('usuarios'); ?>><?= anchor('admin/usuarios', 'Usuários'); ?></li>
+                            </ul>
+                        </li>
                         <li <?= link_ativo('configuracoes'); ?>><?= anchor('admin/configuracoes', glyphicon('cog') . 'Configurações'); ?></li>
                         <li <?= link_ativo('usuarios'); ?>><?= anchor('admin/usuarios/edit/' . $this->auth->get_userid(), glyphicon('user') . 'Perfil'); ?></li>
                         <li><?= anchor('/admin/dashboard/logout', glyphicon('off') . 'Sair'); ?></li>
