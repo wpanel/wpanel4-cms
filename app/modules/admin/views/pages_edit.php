@@ -72,7 +72,7 @@ echo $this->wpanel->load_editor();
                 );
         echo nbs(); // &nbsp;
         echo anchor('admin/pages', 'Cancelar', array('class'=>'btn btn-danger'));
-        echo close_div(2);
+        echo close_div(3);
 
         echo form_close();
         ?>
