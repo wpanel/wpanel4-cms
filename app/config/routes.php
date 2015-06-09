@@ -13,6 +13,7 @@ $route['404_override'] 			= '';
 $route['posts'] 			= 'site/main/posts';
 $route['posts/(:any)'] 			= 'site/main/posts/$1';
 $route['post/(:any)'] 			= 'site/main/post/$1';
+$route['events']			= 'site/main/events';
 $route['search']			= 'site/main/search';
 $route['albuns'] 			= 'site/main/albuns';
 $route['album/(:any)'] 			= 'site/main/album/$1';

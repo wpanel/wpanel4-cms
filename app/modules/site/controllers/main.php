@@ -143,6 +143,43 @@ class main extends MX_Controller
     }
 
     /**
+     * Este método lista as postagens de eventos.
+     *
+     * @return void
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * */
+    public function events()
+    {
+
+        $layout_vars = array();
+        $content_vars = array();
+        $titulo_view = '';
+        $posts_views = config_item('posts_views');
+        $view = 'lista';
+        $qry_post = null;
+        $qry_category = null;
+
+        $this->load->model('post');
+        $this->load->model('categoria');
+        $this->load->model('post_categoria');
+
+        $qry_post = $this->post->get_by_field(array('page' => '2', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'));
+        $titulo_view = 'Eventos';
+
+        // Seta as variáveis 'meta'
+        $this->wpanel->set_meta_url(site_url('events'));
+        $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+        $this->wpanel->set_meta_title($titulo_view);
+
+        $content_vars['titulo_view'] = $titulo_view;
+        $content_vars['posts'] = $qry_post;
+
+        $layout_vars['content'] = $this->load->view($posts_views[$view], $content_vars, TRUE);
+
+        $this->load->view($this->layout, $layout_vars);
+    }
+
+    /**
      * Este método exibe uma lista com todos os álbuns de foto.
      *
      * @return void
