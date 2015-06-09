@@ -63,6 +63,7 @@
             <option value="contato" <?php if($row->href == 'contato'){ echo 'selected="selected"';} ?>>Página de contato</option>
             <option value="albuns" <?php if($row->href == 'fotos'){ echo 'selected="selected"';} ?>>Galeria de fotos</option>
             <option value="videos" <?php if($row->href == 'videos'){ echo 'selected="selected"';} ?>>Galeria de videos</option>
+            <option value="eventos" <?php if($row->href == 'eventos'){ echo 'selected="selected"';} ?>>Lista de eventos</option>
             <option value="rss" <?php if($row->href == 'rss'){ echo 'selected="selected"';} ?>>Página de RSS</option>
         </select>
     </div>

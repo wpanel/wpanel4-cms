@@ -148,7 +148,7 @@ class main extends MX_Controller
      * @return void
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * */
-    public function events()
+    public function eventos()
     {
 
         $layout_vars = array();
