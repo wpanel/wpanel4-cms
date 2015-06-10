@@ -60,6 +60,7 @@
                                 <li <?= link_ativo('banners'); ?>><?= anchor('admin/banners', 'Banners'); ?></li>
                                 <li <?= link_ativo('albuns'); ?>  <?= link_ativo('fotos'); ?>><?= anchor('admin/albuns', 'Albuns de fotos'); ?></li>
                                 <li <?= link_ativo('menus'); ?> <?= link_ativo('menuitens'); ?>><?= anchor('admin/menus', 'Gerenciador de menus'); ?></li>
+                                <li <?= link_ativo('newsletters'); ?>><?= anchor('admin/newsletters', 'Newsletters'); ?></li>
                                 <li <?= link_ativo('usuarios'); ?>><?= anchor('admin/usuarios', 'Usuários'); ?></li>
                             </ul>
                         </li>
@@ -82,6 +83,7 @@
                         <li <?= link_ativo('banners'); ?>><?= anchor('admin/banners', 'Banners'); ?></li>
                         <li <?= link_ativo('albuns'); ?>  <?= link_ativo('fotos'); ?>><?= anchor('admin/albuns', 'Albuns de fotos'); ?></li>
                         <li <?= link_ativo('menus'); ?> <?= link_ativo('menuitens'); ?>><?= anchor('admin/menus', 'Gerenciador de menus'); ?></li>
+                        <li <?= link_ativo('newsletters'); ?>><?= anchor('admin/newsletters', 'Newsletters'); ?></li>
                         <li <?= link_ativo('usuarios'); ?>><?= anchor('admin/usuarios', 'Usuários'); ?></li>
                         <li <?= link_ativo('configuracoes'); ?>><?= anchor('admin/configuracoes', 'Configurações'); ?></li>
                     </ul>
