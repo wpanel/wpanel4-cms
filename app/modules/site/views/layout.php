@@ -125,7 +125,6 @@
                     </div>
                     <div class="collapse navbar-collapse navbar-top-collapse">
                         <?= $this->wpanel->get_menu('1', 'nav navbar-nav navbar-left'); ?>
-                        </ul>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,10 @@
                 <input type="radio" name="tipo" id="tipo_funcional" value="funcional" />
                 Página funcional
             </label>
+            <label>
+                <input type="radio" name="tipo" id="tipo_submenu" value="submenu" />
+                Sub-Menu
+            </label>
         </div>
         <?= form_error('tipo'); ?>
     </div>
@@ -62,6 +66,15 @@
             <option value="videos">Galeria de videos</option>
             <option value="eventos">Lista de eventos</option>
             <option value="rss">Página de RSS</option>
+        </select>
+    </div>
+    <div class="form-group" id="form_submenu" style="display: none;">
+        <label for="funcional">Sub-menu</label>
+        <select class="form-control" name="submenu" id="funcional">
+            <option value="">[Selecione um menu]</option>
+            <?php foreach($menus as $row_menu){ ?>
+            <option value="<?= $row_menu->id; ?>"><?= $row_menu->nome; ?></option>
+            <?php } ?>
         </select>
     </div>
     <div class="row">

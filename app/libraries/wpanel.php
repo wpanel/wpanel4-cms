@@ -380,6 +380,19 @@ class wpanel
         }
     }
 
+    /**
+     * Este método faz a exibição de um menu usando o ID como parametro principal.
+     * 
+     * O menu é gerado usando "<ul></ul>" e "<li></li>", os estilos pré-definidos são
+     * os usados pelo Bootstrap, mas pode-se deixar os parametros de estilo em
+     * branco e criar seus próprios estilos usando "ul li {}"
+     * 
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param int $menu_id
+     * @param string $class_menu
+     * @param string $class_item
+     * @return string|boolean
+     */
     public function get_menu($menu_id = null, $class_menu = null, $class_item = null)
     {
         if ($menu_id == null) {
@@ -392,7 +405,11 @@ class wpanel
         $html .= "<ul class=\"" . $class_menu . "\">";
         foreach ($query as $row)
         {
-            $html .= "<li class=\"" . $class_item . "\">";
+            if ($row->tipo == 'submenu') {
+                $html .= "<li class=\"" . $class_item . " dropdown\">";
+            } else {
+                $html .= "<li class=\"" . $class_item . "\">";
+            }
             switch ($row->tipo)
             {
                 case 'link':
@@ -410,6 +427,10 @@ class wpanel
                     } else {
                         $html .= anchor($row->href, $row->label);
                     }
+                    break;
+                case 'submenu':
+                    $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" >" . $row->label . " <span class=\"caret\"></span></a>";
+                    $html .= $this->get_menu($row->href, 'dropdown-menu');
                     break;
             }
             $html .= "</li>";

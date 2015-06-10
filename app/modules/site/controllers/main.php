@@ -153,11 +153,8 @@ class main extends MX_Controller
 
         $layout_vars = array();
         $content_vars = array();
-        $titulo_view = '';
         $posts_views = config_item('posts_views');
         $view = 'lista';
-        $qry_post = null;
-        $qry_category = null;
 
         $this->load->model('post');
         $this->load->model('categoria');

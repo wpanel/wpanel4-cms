@@ -74,6 +74,9 @@ class menus extends MX_Controller
                 case 'funcional':
                     $link = humanize($row->href);
                     break;
+                case 'submenu':
+                    $link = $this->get_titulo_menu($row->href);
+                    break;
             }
 
             $this->table->add_row(
@@ -101,6 +104,13 @@ class menus extends MX_Controller
         $this->load->model('categoria');
         $query = $this->categoria->get_by_id($categoria_id)->row();
         return $query->title;
+    }
+    
+    private function get_titulo_menu($menu_id)
+    {
+        $this->load->model('menu');
+        $query = $this->menu->get_by_id($menu_id)->row();
+        return $query->nome;
     }
 
     public function add()

@@ -24,6 +24,10 @@
                 <input type="radio" name="tipo" id="tipo_funcional" value="funcional" <?php if($row->tipo == 'funcional'){ echo 'checked="checked"'; } ?> />
                 Página funcional
             </label>
+            <label>
+                <input type="radio" name="tipo" id="tipo_submenu" value="submenu" <?php if($row->tipo == 'submenu'){ echo 'checked="checked"'; } ?> />
+                Sub-Menu
+            </label>
         </div>
         <?= form_error('tipo'); ?>
     </div>   
@@ -65,6 +69,15 @@
             <option value="videos" <?php if($row->href == 'videos'){ echo 'selected="selected"';} ?>>Galeria de videos</option>
             <option value="eventos" <?php if($row->href == 'eventos'){ echo 'selected="selected"';} ?>>Lista de eventos</option>
             <option value="rss" <?php if($row->href == 'rss'){ echo 'selected="selected"';} ?>>Página de RSS</option>
+        </select>
+    </div>
+    <div class="form-group" id="form_submenu" <?php if($row->tipo == 'submenu'){ echo 'style="display:block;"'; } else {echo 'style="display:none;"';} ?>>
+        <label for="funcional">Sub-menu</label>
+        <select class="form-control" name="submenu" id="funcional">
+            <option value="">[Selecione um menu]</option>
+            <?php foreach($menus as $row_menu){ ?>
+            <option value="<?= $row_menu->id; ?>" <?php if($row->href == $row_menu->id){ echo 'selected="selected"'; } ?>><?= $row_menu->nome; ?></option>
+            <?php } ?>
         </select>
     </div>
     <div class="row">

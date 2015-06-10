@@ -30,9 +30,11 @@ class menuitens extends MX_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->model('post');
             $this->load->model('categoria');
+            $this->load->model('menu');
             $content_vars['menu_id'] = $menu_id;
             $content_vars['posts'] = $this->post->get_list()->result();
             $content_vars['categorias'] = $this->categoria->get_list()->result();
+            $content_vars['menus'] = $this->menu->get_list()->result();
             $layout_vars['content'] = $this->load->view('menuitens_add', $content_vars, TRUE);
             $this->load->view('layout', $layout_vars);
         } else {
@@ -59,6 +61,9 @@ class menuitens extends MX_Controller
                     break;
                 case 'funcional':
                     $dados_save['href'] = $this->input->post('funcional');
+                    break;
+                case 'submenu':
+                    $dados_save['href'] = $this->input->post('submenu');
                     break;
             }
 
@@ -89,16 +94,18 @@ class menuitens extends MX_Controller
 
             $this->load->model('post');
             $this->load->model('categoria');
+            $this->load->model('menu');
 
             $content_vars['posts'] = $this->post->get_list()->result();
             $content_vars['categorias'] = $this->categoria->get_list()->result();
+            $content_vars['menus'] = $this->menu->get_list()->result();
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu_item->get_by_id($id)->row();
             $layout_vars['content'] = $this->load->view('menuitens_edit', $content_vars, TRUE);
             $this->load->view('layout', $layout_vars);
         } else {
 
-            $menu_id = $this->input->post('menu_id');
+//            $menu_id = $this->input->post('menu_id');
             $tipo_link = $this->input->post('tipo');
             $dados_save = array();
             $dados_save['label'] = $this->input->post('label');
@@ -121,6 +128,9 @@ class menuitens extends MX_Controller
                     break;
                 case 'funcional':
                     $dados_save['href'] = $this->input->post('funcional');
+                    break;
+                case 'submenu':
+                    $dados_save['href'] = $this->input->post('submenu');
                     break;
             }
 
