@@ -78,6 +78,7 @@ class main extends MX_Controller
             $qry_post = $this->post->get_by_category($category_id, 'desc');
             $view = strtolower($qry_category->view);
             $titulo_view = 'Postagens de ' . $qry_category->title;
+            $descricao_view = $qry_category->description;
         }
 
         // Seta as variáveis 'meta'
@@ -86,6 +87,7 @@ class main extends MX_Controller
         $this->wpanel->set_meta_title($titulo_view);
 
         $content_vars['titulo_view'] = $titulo_view;
+        $content_vars['descricao_view'] = $descricao_view;
         $content_vars['posts'] = $qry_post;
 
         $layout_vars['content'] = $this->load->view($posts_views[$view], $content_vars, TRUE);

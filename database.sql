@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
   `link` varchar(100) DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
+  `description` text,
   `category_id` int(11) DEFAULT NULL,
   `view` varchar(45) DEFAULT 'Lista',
   PRIMARY KEY (`id`),

@@ -2,6 +2,7 @@
 
 if ($titulo_view) {
     echo '<h3 class="page-header">'.$titulo_view.'</h3>';
+    echo '<p>'.$descricao_view.'</p>';
 }
 
 foreach ($posts->result() as $post) {
