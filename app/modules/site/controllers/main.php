@@ -27,6 +27,20 @@ class main extends MX_Controller
         // Códigos e chamadas executados ao iniciar a classe.
     }
 
+    public function custom() {
+        /*
+         * Este método é chamado caso seja configurado o uso de um
+         * página inicial personaizada no painel de configurações.
+         * 
+         * Para informações sobre como implementar um método personalizado
+         * confira a documentação ou entre em contto com dev@elieldepaula.com.br
+         */
+
+        echo '<h1>Página inicial personalizada do wPanel.</h1>';
+        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações > Página inicial.</p>';
+
+    }
+
     /**
      * Este método exibe a página inicial do site.
      *
@@ -39,12 +53,18 @@ class main extends MX_Controller
          * Este bloco verifica se deve exibir uma página específica ou
          * se deve listar uma categoria específica na página inicial.
          */
-        if ($this->wpanel->get_config('home_tipo') == 'page') {
-            $this->load->model('post');
-            $query_post = $this->post->get_by_id($this->wpanel->get_config('home_id'))->row();
-            $this->post($query_post->link);
-        } elseif ($this->wpanel->get_config('home_tipo') == 'category') {
-            $this->posts($this->wpanel->get_config('home_id'));
+        switch ($this->wpanel->get_config('home_tipo')) {
+            case 'page':
+                $this->load->model('post');
+                $query_post = $this->post->get_by_id($this->wpanel->get_config('home_id'))->row();
+                $this->post($query_post->link);
+                break;
+            case 'category':
+                $this->posts($this->wpanel->get_config('home_id'));
+                break;
+            default:
+                return $this->custom();
+                break;
         }
     }
 

@@ -14,6 +14,9 @@ if ($row->home_tipo == 'category') {
 } elseif ($row->home_tipo == 'page') {
     $category_check = '';
     $page_check = 'checked';
+} else if($row->home_tipo == 'custom') {
+    $category_check = '';
+    $custom_check = 'checked';
 }
 
 if ($row->usa_smtp == 1) {
@@ -86,6 +89,12 @@ if ($row->usa_smtp == 1) {
                 <div class="form-group">
                     <label for="home_post">Páginas e postagens disponíveis</label>
                     <?= form_dropdown('home_post', $opt_posts, $row->home_id, null, 'form-control'); ?>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="home_tipo" value="custom" <?= $custom_check; ?> class="radio" />
+                        Usar um método personalizado como página inicial.
+                    </label>
                 </div>
             </div>
         </div>
