@@ -39,9 +39,7 @@ class menus extends MX_Controller
         }
 
         $content_vars['listagem'] = $html_menu;
-        $layout_vars['content'] = $this->load->view('menus_index', $content_vars, TRUE);
-
-        $this->load->view('layout', $layout_vars);
+        $this->wpanel->load_view('menus/index', $content_vars);
     }
 
     private function get_menu_item($menu_id)
@@ -89,7 +87,7 @@ class menus extends MX_Controller
 
         $content_vars['menu_id'] = $menu_id;
         $content_vars['listagem'] = $this->table->generate();
-        return $this->load->view('menuitens_index', $content_vars, TRUE);
+        return $this->load->view('menuitens/index', $content_vars, TRUE);
     }
 
     private function get_titulo_postagem($post_link)
@@ -122,8 +120,7 @@ class menus extends MX_Controller
         $this->form_validation->set_rules('nome', 'Nome', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $layout_vars['content'] = $this->load->view('menus_add', $content_vars, TRUE);
-            $this->load->view('layout', $layout_vars);
+            $this->wpanel->load_view('menus/add', $content_vars);
         } else {
 
             $dados_save = array();
@@ -162,8 +159,7 @@ class menus extends MX_Controller
 
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu->get_by_id($id)->row();
-            $layout_vars['content'] = $this->load->view('menus_edit', $content_vars, TRUE);
-            $this->load->view('layout', $layout_vars);
+            $this->wpanel->load_view('menus/edit', $content_vars);
         } else {
 
             $dados_save = array();

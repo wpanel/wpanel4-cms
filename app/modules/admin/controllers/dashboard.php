@@ -51,9 +51,10 @@ class Dashboard extends MX_Controller {
 		$content_vars['total_posts'] = $this->db->count_all('posts');
 		//----------------------------------------------------------------------------------------------------
 
-		$layout_vars['content'] = $this->load->view('dashboard', $content_vars, TRUE);
+		//$layout_vars['content'] = $this->load->view('dashboard', $content_vars, TRUE);
 
-		$this->load->view('layout', $layout_vars);
+		//$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('dashboard/index', $content_vars);
 
 	}
 
@@ -76,7 +77,7 @@ class Dashboard extends MX_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->load->view('login');
+			$this->load->load->view('layout/login');
 		} 
 		else 
 		{

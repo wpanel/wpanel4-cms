@@ -35,8 +35,7 @@ class menuitens extends MX_Controller
             $content_vars['posts'] = $this->post->get_list()->result();
             $content_vars['categorias'] = $this->categoria->get_list()->result();
             $content_vars['menus'] = $this->menu->get_list()->result();
-            $layout_vars['content'] = $this->load->view('menuitens_add', $content_vars, TRUE);
-            $this->load->view('layout', $layout_vars);
+            $this->wpanel->load_view('menuitens/add', $content_vars);
         } else {
             $tipo_link = $this->input->post('tipo');
             $dados_save = array();
@@ -101,8 +100,7 @@ class menuitens extends MX_Controller
             $content_vars['menus'] = $this->menu->get_list()->result();
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu_item->get_by_id($id)->row();
-            $layout_vars['content'] = $this->load->view('menuitens_edit', $content_vars, TRUE);
-            $this->load->view('layout', $layout_vars);
+            $this->wpanel->load_view('menuitens/edit', $content_vars);
         } else {
 
 //            $menu_id = $this->input->post('menu_id');

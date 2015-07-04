@@ -47,9 +47,7 @@ class Pages extends MX_Controller {
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('pages_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('pages/index', $content_vars);
 	}
 
 	public function add()
@@ -63,9 +61,7 @@ class Pages extends MX_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 
-			$layout_vars['content'] = $this->load->view('pages_add', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('pages/add', $content_vars);
 
 		} else {
 
@@ -129,9 +125,7 @@ class Pages extends MX_Controller {
 
 			$content_vars['id'] = $id;
 			$content_vars['row'] = $this->post->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('pages_edit', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('pages/edit', $content_vars);
 
 		} else {
 

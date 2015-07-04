@@ -51,9 +51,7 @@ class fotos extends MX_Controller {
 
 		$content_vars['album_id'] = $album_id;
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('fotos_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('fotos/index', $content_vars);
 	}
 
 	public function add($album_id)
@@ -66,8 +64,7 @@ class fotos extends MX_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			$content_vars['album_id'] = $album_id;
-			$layout_vars['content'] = $this->load->view('fotos_add', $content_vars, TRUE);
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('fotos/add', $content_vars);
 		} else {
 
 			$this->load->model('foto');
@@ -110,8 +107,7 @@ class fotos extends MX_Controller {
     if ($this->form_validation->run() == FALSE)
     {
       $content_vars['album_id'] = $album_id;
-      $layout_vars['content'] = $this->load->view('fotos_addmass', $content_vars, TRUE);
-      $this->load->view('layout', $layout_vars);
+      $this->wpanel->load_view('fotos/addmass', $content_vars);
     } else {
 
       $this->load->model('foto');
@@ -174,8 +170,7 @@ class fotos extends MX_Controller {
 
 			$content_vars['id'] = $id;
 			$content_vars['row'] = $row;
-			$layout_vars['content'] = $this->load->view('fotos_edit', $content_vars, TRUE);
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('fotos/edit', $content_vars);
 
 		} else {
 

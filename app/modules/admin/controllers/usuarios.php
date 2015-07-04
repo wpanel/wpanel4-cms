@@ -25,9 +25,7 @@ class Usuarios extends MX_Controller {
 		$content_vars = array();
 
 		$content_vars['usuarios'] = $this->user->get_list()->result();
-		$layout_vars['content'] = $this->load->view('users_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('users/index', $content_vars);
 	}
 
 	public function add()
@@ -44,9 +42,7 @@ class Usuarios extends MX_Controller {
 			$layout_vars = array();
 			$content_vars = array();
 
-			$layout_vars['content'] = $this->load->view('users_add', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('users/add', $content_vars);
 
 		} else {
 
@@ -102,9 +98,7 @@ class Usuarios extends MX_Controller {
 
 			$content_vars['id'] = $id;
 			$content_vars['row'] = $this->user->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('users_edit', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('users/edit', $content_vars);
 
 		} else {
 

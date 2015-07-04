@@ -15,6 +15,7 @@ class Auth
 
 	var $auth_table_name 		= 'users';
 	var $auth_table_key 		= 'id';
+	var $auth_name_field 		= 'name';
 	var $auth_username_field 	= 'username';
 	var $auth_password_field 	= 'password';
 	var $auth_status_field 		= 'status';
@@ -120,6 +121,7 @@ class Auth
 					$this->auth_table_key => $user_data->{$this->auth_table_key},
 					$this->auth_username_field => $user_data->{$this->auth_username_field},
 					$this->auth_role_field => $user_data->{$this->auth_role_field},
+					$this->auth_name_field => $user_data->{$this->auth_name_field},
 					'logged_in' => TRUE
 				);
 				$this->session->set_userdata($session_data);
@@ -145,6 +147,7 @@ class Auth
 			$this->auth_table_key => null,
 			$this->auth_username_field => null,
 			$this->auth_role_field => null,
+			$this->auth_name_field => null,
 			'logged_in' => TRUE
 		);
 		$this->session->unset_userdata($session_data);
@@ -196,6 +199,11 @@ class Auth
 	public function get_username()
 	{
 		return $this->session->userdata($this->auth_username_field);
+	}
+
+	public function get_name()
+	{
+		return $this->session->userdata($this->auth_name_field);
 	}
 
 	/**

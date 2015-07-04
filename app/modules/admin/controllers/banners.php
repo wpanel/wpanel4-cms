@@ -37,9 +37,7 @@ class banners extends MX_Controller {
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('banners_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('banners/index', $content_vars);
 	}	
 
 	public function add()
@@ -53,8 +51,7 @@ class banners extends MX_Controller {
 		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$layout_vars['content'] = $this->load->view('banners_add', $content_vars, TRUE);
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('banners/add', $content_vars);
 		} else {
 
 			$this->load->model('banner');
@@ -103,8 +100,7 @@ class banners extends MX_Controller {
 			$this->load->model('banner');
 			$content_vars['id'] = $id;
 			$content_vars['row'] = $this->banner->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('banners_edit', $content_vars, TRUE);
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('banners/edit', $content_vars);
 
 		} else {
 

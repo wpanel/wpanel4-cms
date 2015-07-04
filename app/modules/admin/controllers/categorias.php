@@ -43,9 +43,7 @@ class Categorias extends MX_Controller {
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('categorias_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('categorias/index', $content_vars);
 	}
 
 	public function add() {
@@ -65,9 +63,7 @@ class Categorias extends MX_Controller {
 			}
 
 			$content_vars['options'] = $options;
-			$layout_vars['content'] = $this->load->view('categorias_add', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('categorias/add', $content_vars);
 
 		} else {
 
@@ -112,9 +108,7 @@ class Categorias extends MX_Controller {
 
 			$content_vars['row'] = $this->categoria->get_by_id($id)->row();
 			$content_vars['options'] = $options;
-			$layout_vars['content'] = $this->load->view('categorias_edit', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('categorias/edit', $content_vars);
 
 		} else {
 

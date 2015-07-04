@@ -18,8 +18,7 @@ class newsletters extends MX_Controller
         $this->load->model('newsletter');
         $contatos = $this->newsletter->get_list()->result();
         $content_vars['contatos'] = $contatos;
-        $layout_vars['content'] = $this->load->view('newsletters_index', $content_vars, TRUE);
-        $this->load->view('layout', $layout_vars);
+        $this->wpanel->load_view('newsletter/index', $content_vars);
     }
 
 }

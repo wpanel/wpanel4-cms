@@ -199,11 +199,11 @@ class wpanel
     {
         $str_out = '';
         if (config_item('text_editor') == 'tinymce') {
-            $str_out .= '<script src="' . base_url() . 'lib/tinymce/tinymce.min.js"></script>';
+            $str_out .= '<script src="' . base_url() . 'lib/plugins/tinymce/tinymce.min.js"></script>';
             $str_out .= '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
             return $str_out;
         } elseif (config_item('text_editor') == 'ckeditor') {
-            $str_out .= '<script type="text/javascript" src="' . base_url('') . 'lib/ckeditor/ckeditor.js"></script>';
+            $str_out .= '<script type="text/javascript" src="' . base_url('') . 'lib/plugins/ckeditor/ckeditor.js"></script>';
             $str_out .= '<script>CKEDITOR.replace("editor");</script>';
             return $str_out;
         } else {
@@ -438,6 +438,12 @@ class wpanel
 
         $html .= "</ul>";
         return $html;
+    }
+
+    public function load_view($view, $dados = null) {
+        $this->load->view('layout/header');
+        $this->load->view($view, $dados);
+        $this->load->view('layout/footer');
     }
 
 }

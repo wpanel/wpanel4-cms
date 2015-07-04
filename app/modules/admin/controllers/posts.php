@@ -49,9 +49,7 @@ class Posts extends MX_Controller {
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('posts_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		$this->wpanel->load_view('posts/index', $content_vars);
 	}
 
 	public function add()
@@ -73,9 +71,7 @@ class Posts extends MX_Controller {
 			}
 
 			$content_vars['categorias'] = $categorias;
-			$layout_vars['content'] = $this->load->view('posts_add', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('posts/add', $content_vars);
 
 		} else {
 
@@ -157,9 +153,7 @@ class Posts extends MX_Controller {
 			$content_vars['categorias'] = $categorias;
 			$content_vars['cat_select'] = $cat_select;
 			$content_vars['row'] = $this->post->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('posts_edit', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('posts/edit', $content_vars);
 
 		} else {
 

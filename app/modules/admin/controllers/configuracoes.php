@@ -51,9 +51,8 @@ class Configuracoes extends MX_Controller {
 			 * -------------------------------------------------------------
 			 */
 			$content_vars['row'] = $this->configuracao->get_by_id('1')->row();
-			$layout_vars['content'] = $this->load->view('configuracoes_index', $content_vars, TRUE);
 
-			$this->load->view('layout', $layout_vars);
+			$this->wpanel->load_view('configuracoes/index', $content_vars);
 
 		} else {
 

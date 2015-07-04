@@ -48,9 +48,8 @@ class Agendas extends MX_Controller {
 		}
 
 		$content_vars['listagem'] = $this->table->generate();
-		$layout_vars['content'] = $this->load->view('agendas_index', $content_vars, TRUE);
-
-		$this->load->view('layout', $layout_vars);
+		
+		$this->wpanel->load_view('agendas/index', $content_vars);
 	}
 
 	public function add()
@@ -72,9 +71,8 @@ class Agendas extends MX_Controller {
 			}
 
 			$content_vars['categorias'] = $categorias;
-			$layout_vars['content'] = $this->load->view('agendas_add', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			
+			$this->wpanel->load_view('agendas/add', $content_vars);
 
 		} else {
 
@@ -145,9 +143,8 @@ class Agendas extends MX_Controller {
 			$content_vars['categorias'] = $categorias;
 			$content_vars['cat_select'] = $cat_select;
 			$content_vars['row'] = $this->post->get_by_id($id)->row();
-			$layout_vars['content'] = $this->load->view('agendas_edit', $content_vars, TRUE);
-
-			$this->load->view('layout', $layout_vars);
+			
+			$this->wpanel->load_view('agendas/edit', $content_vars);
 
 		} else {
 
