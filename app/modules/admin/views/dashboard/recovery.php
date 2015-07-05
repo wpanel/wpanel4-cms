@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Admin WPanel | Login</title>
+    <title>Admin WPanel | Recuperação de senha</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.3.4 -->
     <link href="<?= base_url('lib/css') ?>/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -26,35 +26,35 @@
         <a href="index2.html"><b>Admin</b>WPanel</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg">Faça o login para acessar</p>
-          <?php
-          
-          $msg_sistema = $this->session->flashdata('msg_auth');
-          if ($msg_sistema) {
-              echo alerts($msg_sistema, 'warning', true);
-          }
+        <p class="login-box-msg">Recuperação de senha</p>
+			<?php
+			$msg_sistema = $this->session->flashdata('msg_recover');
 
-          echo form_open('admin/login', array('role' => 'form'));
-          echo form_open('admin/login', array('role' => 'form'));
-
-            ?>
-            <div class="form-group has-feedback">
-              <input type="email" name="email" class="form-control" placeholder="Email"/>
-              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <input type="password" name="password" class="form-control" placeholder="Senha"/>
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-              <div class="col-xs-8">       
-                <?= anchor('admin/repass', 'Esqueci minha senha'); ?>                 
-              </div><!-- /.col -->
+			if ($msg_sistema) {
+				echo alerts($msg_sistema, 'warning', true);
+			}
+			echo form_open('admin/repass', array('role' => 'form'));
+			?>
+			<div class="row">
+				<div class="col-md-12">
+					<p>Informe o email usado no seu cadastro para que possamos enviar as orientações para redefinir sua senha.</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="email">Email</label>
+				<input class="form-control" id="email" name="email" placeholder="Seu email..." type="email">
+				<?php echo form_error('email');?>
+			</div>
+			<div class="row">
+			<div class="col-xs-8">                         
+              </div>
               <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
-              </div><!-- /.col -->
-            </div>
-          </form>
+				<button type="submit" class="btn btn-primary btn-block btn-flat">Enviar</button>
+			</div>
+			</div>
+			<?php 
+			echo form_close();
+			?>
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 

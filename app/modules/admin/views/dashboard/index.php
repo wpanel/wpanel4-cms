@@ -1,5 +1,17 @@
+<section class="content-header">
+    <h1>
+        Dashboard
+        <small>Seja bem vindo ao painel de controle.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Dashboard</li>
+    </ol>
+</section>
 
-<h1 class="page-header">Dashboard</h1>
+<section class="content">
+    <div class="box">
+      <div class="box-body">
+
 <div class="row">
   <div class="col-md-4" style="margin-top:10px;">
     <a 
@@ -147,5 +159,8 @@
       </tbody>
     </table>
   </div>
+</div>
 
 </div>
+</div>
+</section>

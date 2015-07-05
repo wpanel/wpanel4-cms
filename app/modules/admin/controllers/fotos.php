@@ -21,7 +21,7 @@ class fotos extends MX_Controller {
 		// $query_album = $this->album->get_by_id($album_id)->row();
 
 		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table class="table table-striped">'));
+		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">'));
 		$this->table->set_heading('#', 'Imagem', 'Descricao', 'Data', 'Status', 'Ações');
 		$query = $this->foto->get_by_field('album_id', $album_id, array('field'=>'created', 'order'=>'desc'));
 

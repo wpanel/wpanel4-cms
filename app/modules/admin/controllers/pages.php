@@ -27,7 +27,7 @@ class Pages extends MX_Controller {
 		$content_vars = array();
 
 		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table class="table table-striped">')); 
+		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
 		$this->table->set_heading('#', 'Título', 'Data', 'Status', 'Ações');
 		$query = $this->post->get_by_field('page','1');
 

@@ -29,7 +29,7 @@
       
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="<?= site_url('admin'); ?>" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>WP</span>
           <!-- logo for regular state and mobile devices -->
@@ -86,12 +86,12 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img src="<?= base_url('lib/img') ?>/no-user.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p><?= $this->auth->get_name(); ?></p>
 
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>
           <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -130,9 +130,9 @@
   	        <li <?= link_ativo('configuracoes'); ?>>
   	        	<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>Configurações</span>'); ?>
   	        </li>
-  	        <li <?= link_ativo('sobre'); ?>>
+  	        <!-- <li <?= link_ativo('sobre'); ?>>
   	        	<?= anchor('admin/sobre', '<i class="fa fa-life-ring"></i> <span>Sobre o sistema</span>'); ?>
-  	        </li>
+  	        </li> -->
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -140,5 +140,5 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
+
+

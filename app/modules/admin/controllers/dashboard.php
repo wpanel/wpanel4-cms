@@ -181,7 +181,7 @@ class Dashboard extends MX_Controller {
 		{
 			if($recovery_key == null)
 			{
-				$this->load->view('password_recovery');
+				$this->load->view('dashboard/recovery');
 			}
 			else
 			{

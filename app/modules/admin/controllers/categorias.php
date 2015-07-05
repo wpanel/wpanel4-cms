@@ -25,7 +25,7 @@ class Categorias extends MX_Controller {
 		$content_vars = array();
 
 		// Template da tabela
-		$this->table->set_template(array('table_open' => '<table class="table table-striped">'));
+		$this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
 		$this->table->set_heading('#', 'Título', 'Categoria-pai', 'Visão', 'Ações');
 		$query = $this->categoria->get_list();
 
