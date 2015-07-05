@@ -37,7 +37,7 @@ class Categorias extends MX_Controller {
 				$row->view,
 				div(array('class' => 'btn-group btn-group-sm')) .
 				anchor('admin/categorias/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-				anchor('admin/categorias/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
+				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/categorias/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null, true)
 			);
 		}

@@ -42,7 +42,7 @@ class Posts extends MX_Controller {
 				// Ícones de ações
 				div(array('class'=>'btn-group btn-group-sm')).
 				anchor('admin/posts/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				anchor('admin/posts/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
+				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/posts/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null,true)
 
 				);

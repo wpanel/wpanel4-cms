@@ -30,7 +30,8 @@ class menus extends MX_Controller
             $html_menu .= "<div class=\"col-md-9 col-sm-9\">" . $row->nome . "</div>";
             $html_menu .= "<div class=\"col-md-2 col-sm-2 btn-group btn-group-sm\">";
             $html_menu .= anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default'));
-            $html_menu .= anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();'));
+            // $html_menu .= anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();'));
+            $html_menu .= '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menus/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>';
             $html_menu .= "</div>";
             $html_menu .= "</div></li>";
             $html_menu .= "<li class=\"list-group-item\">";
@@ -80,7 +81,7 @@ class menus extends MX_Controller
             $this->table->add_row(
                     $row->label, $row->ordem, humanize($row->tipo), $link, div(array('class' => 'btn-group btn-group-sm')) .
                     anchor('admin/menuitens/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    anchor('admin/menuitens/delete/' . $menu_id . '/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();')) .
+                    '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menuitens/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
                     div(null, true)
             );
         }

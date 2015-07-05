@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
         <li><a href="<?= site_url('admin/categorias'); ?>"><i class="fa fa-tag"></i> Categorias</a></li>
-        <li>Cadastro categoria</li>
+        <li>Cadastro de categoria</li>
     </ol>
 </section>
 

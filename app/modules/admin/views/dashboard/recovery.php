@@ -40,9 +40,10 @@
 					<p>Informe o email usado no seu cadastro para que possamos enviar as orientações para redefinir sua senha.</p>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group has-feedback">
 				<label class="control-label" for="email">Email</label>
 				<input class="form-control" id="email" name="email" placeholder="Seu email..." type="email">
+				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				<?php echo form_error('email');?>
 			</div>
 			<div class="row">

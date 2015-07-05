@@ -23,7 +23,11 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="skin-blue sidebar-mini">
+
+  <?php $msg_sistema = $this->session->flashdata('msg_sistema'); ?>
+
+  <body <?php if ($msg_sistema) { echo "onload=\"sysmsg('".$msg_sistema."');\""; } ?> class="skin-blue sidebar-mini">
+
     <!-- Site wrapper -->
     <div class="wrapper">
       

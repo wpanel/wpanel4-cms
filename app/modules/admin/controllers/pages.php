@@ -41,7 +41,7 @@ class Pages extends MX_Controller {
 				// Ícones de ações
 				div(array('class'=>'btn-group btn-group-sm')).
 				anchor('admin/pages/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				anchor('admin/pages/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
+				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/pages/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null,true)
 			);
 		}

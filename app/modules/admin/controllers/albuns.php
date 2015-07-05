@@ -41,7 +41,7 @@ class albuns extends MX_Controller {
 				div(array('class'=>'btn-group btn-group-sm')).
 				anchor('admin/fotos/index/'.$row->id, glyphicon('picture'), array('class' => 'btn btn-default')).
 				anchor('admin/albuns/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				anchor('admin/albuns/delete/'.$row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick'=>'return apagar();')).
+				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/albuns/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null,true)
 			);
 		}
