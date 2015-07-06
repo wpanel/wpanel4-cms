@@ -16,15 +16,11 @@
         <div class="box-header with-border">
             <h3 class="box-title">Lista de álbuns</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/albuns/add', glyphicon('plus-sign') . 'Novo álbum', array('class' => 'btn btn-primary')); ?>
+                <?= anchor('admin/albuns/add', glyphicon('plus-sign') . 'Novo álbum', array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">
-            <?php
-            echo div(array('class' => 'table-responsive'));
-            echo $listagem;
-            echo div(null, true);
-            ?>
+            <?= $listagem; ?>
         </div>
     </div>
 </section>

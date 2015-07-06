@@ -23,7 +23,6 @@ if ($row->usa_smtp == 1) {
 }
 
 ?>
-<link href="<?= base_url('lib/css'); ?>/bootstrap-colorpicker.css" rel="stylesheet">
 
 <section class="content-header">
     <h1>
@@ -274,7 +273,6 @@ if ($row->usa_smtp == 1) {
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-confirma-modal-sm"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar as alterações</button>
-                    <!--<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar as alterações</button>-->
                 </div>
                 
                 <div class="modal fade bs-confirma-modal-sm" tabindex="-1" role="dialog">

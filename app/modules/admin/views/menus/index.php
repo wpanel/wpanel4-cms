@@ -14,7 +14,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Lista de menus</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/menus/add', glyphicon('plus-sign') . 'Novo menu', array('class'=>'btn btn-primary')); ?>
+                <?= anchor('admin/menus/add', glyphicon('plus-sign') . 'Novo menu', array('class'=>'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">

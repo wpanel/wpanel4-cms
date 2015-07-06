@@ -1,7 +1,7 @@
 <section class="content-header">
     <h1>
         Dashboard
-        <small>Seja bem vindo ao painel de controle.</small>
+        <small>Seja bem vindo ao painel de controle do WPanel CMS.</small>
     </h1>
     <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Dashboard</li>

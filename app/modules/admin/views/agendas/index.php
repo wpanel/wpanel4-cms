@@ -16,15 +16,11 @@
         <div class="box-header with-border">
             <h3 class="box-title">Lista de eventos</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/agendas/add', glyphicon('plus-sign') . 'Novo evento', array('class' => 'btn btn-primary')); ?>
+                <?= anchor('admin/agendas/add', glyphicon('plus-sign') . 'Novo evento', array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">
-            <?php
-            echo div(array('class' => 'table-responsive'));
-            echo $listagem;
-            echo div(null, true);
-            ?>
+            <?= $listagem; ?>
         </div>
     </div>
 </section>

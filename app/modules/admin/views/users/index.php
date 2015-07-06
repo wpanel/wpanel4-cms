@@ -15,7 +15,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Lista de usuários</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/usuarios/add', glyphicon('plus-sign') . 'Novo usuário', array('class' => 'btn btn-primary')); ?>
+                <?= anchor('admin/usuarios/add', glyphicon('plus-sign') . 'Novo usuário', array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">

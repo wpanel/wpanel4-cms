@@ -17,17 +17,13 @@
         <div class="box-header with-border">
             <h3 class="box-title">Lista de fotos</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/albuns', glyphicon('chevron-left') . 'Voltar', array('class' => 'btn btn-primary')); ?>
-                <?= anchor('admin/fotos/add/'.$album_id, glyphicon('plus-sign') . 'Adicionar foto', array('class' => 'btn btn-primary')); ?>
-                <?= anchor('admin/fotos/addmass/'.$album_id, glyphicon('plus-sign') . 'Adicionar foto em massa', array('class' => 'btn btn-primary')); ?>
+                <?= anchor('admin/albuns', glyphicon('chevron-left') . 'Voltar', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/fotos/add/'.$album_id, glyphicon('plus-sign') . 'Adicionar foto', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/fotos/addmass/'.$album_id, glyphicon('plus-sign') . 'Adicionar foto em massa', array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">
-            <?php
-            echo div(array('class' => 'table-responsive'));
-            echo $listagem;
-            echo div(null, true);
-            ?>
+            <?= $listagem; ?>
         </div>
     </div>
 </section>

@@ -4,7 +4,7 @@
         <div class="pull-right hidden-xs">
           <b>Versão</b> 2.0 | Página renderizada em <strong>{elapsed_time}</strong> segundos.
         </div>
-        <strong>Copyright &copy; 2006-<?= date('Y') ?> <a href="http://elieldepaula.com.br">Eliel de Paula</a>.</strong>
+        <strong>Copyright &copy; <?= date('Y') ?> <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</strong>
       </footer>
     </div>
     <!-- ./wrapper -->
@@ -86,7 +86,7 @@
                 }
             });
 
-            $('.colorpicker').colorpicker();
+            //$('.colorpicker').colorpicker();
 
             /* -------------------------------------------------------------------------
              * Este bloco faz o funcionamento do formulário de cadastro 
