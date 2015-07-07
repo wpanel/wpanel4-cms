@@ -123,7 +123,7 @@ class Dashboard extends MX_Controller {
 			$layout_vars = array();
 			$content_vars = array();
 
-			$this->load->view('dashboard_firstadmin', $layout_vars);
+			$this->load->view('/dashboard/firstadmin', $layout_vars);
 
 		} 
 		else 
@@ -134,6 +134,7 @@ class Dashboard extends MX_Controller {
 				'email' => $this->input->post('email'),
 				'username' => $this->input->post('username'),
 				'password' => $this->input->post('password'),
+				'skin' => 'blue',
 				'role' => 'admin',
 				'created' => date('Y-m-d H:i:s'),
 				'updated' => date('Y-m-d H:i:s'),

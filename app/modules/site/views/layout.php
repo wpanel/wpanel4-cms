@@ -216,7 +216,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 copyright">
-                    <p><?php echo $this->wpanel->get_config('copyright'); ?>. Desenvolvido com <a href="http://elieldepaula.com.br/wpanel" alt="WPanel CMS">WPanel CMS</a>.</p>
+                    <p><?php echo $this->wpanel->get_config('copyright'); ?>. Desenvolvido com <a href="http://elieldepaula.com.br/post/wpanel-cms.html" alt="WPanel CMS">WPanel CMS</a>.</p>
                 </div>
             </div>
             <!-- Rodape | Fim -->

@@ -24,9 +24,25 @@
     <![endif]-->
   </head>
 
-  <?php $msg_sistema = $this->session->flashdata('msg_sistema'); ?>
+  <?php 
 
-  <body <?php if ($msg_sistema) { echo "onload=\"sysmsg('".$msg_sistema."');\""; } ?> class="skin-blue sidebar-mini">
+  $skin = $this->wpanel->get_from_user('skin');
+  if($skin == ''){
+    $skin = 'blue';
+  }
+
+  $avatar = $this->wpanel->get_from_user('image');
+  if($avatar == ''){
+    $avatar = base_url('lib/img') . '/no-user.jpg';
+  } else {
+    $avatar = base_url('media/avatar') . '/'.$avatar;
+  }
+
+  $msg_sistema = $this->session->flashdata('msg_sistema'); 
+
+  ?>
+
+  <body <?php if ($msg_sistema) { echo "onload=\"sysmsg('".$msg_sistema."');\""; } ?> class="skin-<?= $skin; ?> sidebar-mini">
 
     <!-- Site wrapper -->
     <div class="wrapper">
@@ -53,25 +69,27 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="<?= base_url('lib/img') ?>/no-user.jpg" class="user-image" alt="User Image"/>
+
+                  <img src="<?= $avatar; ?>" class="user-image" alt="User Image"/>
+
                   <span class="hidden-xs"><?= $this->auth->get_name(); ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="<?= base_url('lib/img') ?>/no-user.jpg" class="img-circle" alt="User Image" />
+                    <img src="<?= $avatar; ?>" class="img-circle" alt="User Image" />
                     <p>
                       <?= $this->auth->get_name(); ?>
-                      <!-- <small>Member since Nov. 2012</small> -->
+                      <small>Cadastrado em <?= datetime_for_user($this->wpanel->get_from_user('created'), false); ?></small>
                     </p>
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <?= anchor('admin/usuarios/edit/' . $this->auth->get_userid(), glyphicon('user') . 'Perfil', array('class'=>'btn btn-default btn-flat')); ?>
+                      <?= anchor('admin/usuarios/edit/' . $this->auth->get_userid(), glyphicon('user') . 'Perfil', array('class'=>'btn btn-primary btn-flat')); ?>
                     </div>
                     <div class="pull-right">
-                      <?= anchor('/admin/dashboard/logout', glyphicon('off') . 'Sair', array('class'=>'btn btn-default btn-flat')); ?>
+                      <?= anchor('/admin/dashboard/logout', glyphicon('off') . 'Sair', array('class'=>'btn btn-danger btn-flat')); ?>
                     </div>
                   </li>
                 </ul>
@@ -90,7 +108,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="<?= base_url('lib/img') ?>/no-user.jpg" class="img-circle" alt="User Image" />
+              <img src="<?= $avatar; ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p><?= $this->auth->get_name(); ?></p>

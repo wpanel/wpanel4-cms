@@ -440,10 +440,27 @@ class wpanel
         return $html;
     }
 
-    public function load_view($view, $dados = null) {
+    /**
+     * Este método faz o carregamento das views do painel de controle seguinto o novo
+     * modelo de distribuição dos arquivos.
+     * 
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param string $view
+     * @param array $dados
+     * @return mixed
+     */
+    public function load_view($view, $dados = null)
+    {
         $this->load->view('layout/header');
         $this->load->view($view, $dados);
         $this->load->view('layout/footer');
+    }
+
+    public function get_from_user($param)
+    {
+        $this->load->model('user');
+        $query = $this->user->get_by_id($this->auth->get_userid())->row();
+        return $query->$param;
     }
 
 }

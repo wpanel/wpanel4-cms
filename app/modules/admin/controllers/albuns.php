@@ -180,13 +180,6 @@ class albuns extends MX_Controller {
 		}
 	}
 
-	/**
-	 * Este método faz a exclusão de uma imagem de banner.
-	 *
-	 * @return boolean
-	 * @param $id Integer ID do banner.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
 	private function remove_image($id)
     {
     	$this->load->model('album');

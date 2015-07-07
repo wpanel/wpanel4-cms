@@ -102,6 +102,12 @@ if ($row->usa_smtp == 1) {
                                 <label for="home_post">Páginas e postagens disponíveis</label>
                                 <?= form_dropdown('home_post', $opt_posts, $row->home_id, null, 'form-control'); ?>
                             </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="home_tipo" value="custom" <?= $category_check; ?> class="radio" />
+                                    Usar uma página personalizada como página inicial.
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <!--Painel de configuração do layout-->

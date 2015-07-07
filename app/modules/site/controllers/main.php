@@ -36,6 +36,7 @@ class main extends MX_Controller
          * confira a documentação ou entre em contto com dev@elieldepaula.com.br
          */
 
+        echo '<meta charset="UTF-8">';
         echo '<h1>Página inicial personalizada do wPanel.</h1>';
         echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações > Página inicial.</p>';
 
