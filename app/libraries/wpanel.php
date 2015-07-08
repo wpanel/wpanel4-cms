@@ -200,7 +200,15 @@ class wpanel
         $str_out = '';
         if (config_item('text_editor') == 'tinymce') {
             $str_out .= '<script src="' . base_url() . 'lib/plugins/tinymce/tinymce.min.js"></script>';
-            $str_out .= '<script>tinymce.init({selector:\'textarea#editor\'});</script>';
+            $str_out .= '<script>tinymce.init({selector:\'textarea#editor\',';
+            $str_out .= '        plugins: [';
+            $str_out .= '            "advlist autolink lists link image charmap print preview anchor",';
+            $str_out .= '            "searchreplace visualblocks code fullscreen",';
+            $str_out .= '            "insertdatetime media table contextmenu paste"';
+            $str_out .= '        ],';
+            $str_out .= '        menubar: false,';
+            $str_out .= '        toolbar: " bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"';
+            $str_out .= '});</script>';
             return $str_out;
         } elseif (config_item('text_editor') == 'ckeditor') {
             $str_out .= '<script type="text/javascript" src="' . base_url('') . 'lib/plugins/ckeditor/ckeditor.js"></script>';
@@ -227,157 +235,10 @@ class wpanel
         foreach ($this->post_categoria->list_by_post($post_id)->result() as $value)
         {
             $str .= anchor(
-                            '/posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
+                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
                     ) . ' ';
         }
         return $str;
-    }
-
-    /**
-     * Este método formata as tags de um post para exibição com bootstrap.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $args String Lista de tags separadas por vírgula.
-     * */
-    public function prepare_tags($tags, $pre = '<span class="label label-primary">', $pos = '</span> ')
-    {
-        $str = '';
-        $x = explode(',', $tags);
-        foreach ($x as $value)
-        {
-            $str .= $pre . $value . $pos;
-        }
-        return $str;
-    }
-
-    /**
-     * Este método faz a listagem das categorias e sub-categorias
-     * em forma de menu para ser exibido na sidebar do site.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $cat-pai Int Id da categoria pai.
-     * */
-    public function menu_categorias($cat_pai = 0, $attributes = array(), $item = array())
-    {
-        $this->load->model('categoria');
-        $str = '';
-        $str .= '<ul ' . $this->_attributes($attributes) . '>';
-        $query = $this->categoria->get_by_field('category_id', $cat_pai);
-        foreach ($query->result() as $key => $value)
-        {
-            $str .= '<li ' . $this->_attributes($item) . '>' . anchor('/posts/' . $value->id . '/' . $value->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $value->title) . '</li>';
-            $str .= $this->menu_categorias($value->id, $attributes, $item);
-        }
-        $str .= '</ul>';
-        return $str;
-    }
-
-    /**
-     * Este método retorna uma listagem com as agendas de eventos
-     * cadastrados e publicados.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
-    public function menu_agendas($attributes = array())
-    {
-        $this->load->model('post');
-        $query = $this->post->get_by_field(array('page' => '2', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'));
-        $str = '';
-        $str .= '<ul ' . $this->_attributes($attributes) . '>';
-        foreach ($query->result() as $key => $value)
-        {
-            $str .= '<li>' . anchor('/post/' . $value->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $value->title) . '<br/><small>' . $value->description . '</small><br/><small>' . date('d/m/Y', strtotime($value->created)) . '</small></li>';
-        }
-        $str .= '</ul>';
-        return $str;
-    }
-
-    /**
-     * Este método retorna uma lista de banners informando
-     * a posição.
-     *
-     * @return mixed
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
-    public function get_banner($position)
-    {
-        $this->load->model('banner');
-        return $this->banner->get_banners($position)->result();
-    }
-
-    /**
-     * Este método retorna uma lista de postagens de acordo com
-     * a categoria indicada.
-     *
-     * @return mixed
-     * @param $categoria int Código da categoria que será listada, caso não seja informada lista todos as postagens.
-     * @param $limit array array com a limitação do resultado.
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
-    public function get_posts($categoria = '', $limit = array())
-    {
-        // buscar uma lista de postagens
-        $this->load->model('post');
-
-        if ($categoria == '') {
-            $qry_post = $this->post->get_by_field(array('page' => '0', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'), $limit)->result();
-        } else {
-            $qry_post = $this->post->get_by_category($categoria, 'desc', $limit)->result();
-        }
-        return $qry_post;
-    }
-
-    /**
-     * Este método retorna uma postagem de acordo com o link informado.
-     *
-     * @return mixed
-     * @param $link string Link da postagem a ser exibida.
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
-    public function get_post_by_link($link)
-    {
-        // Verifica se foi informado um link.
-        if ($link == '') {
-            return false;
-        }
-        $this->load->model('post');
-        $post = $this->post->get_by_field('link', $link)->row();
-        // Verifica a existência e disponibilidade do post.
-        if (count($post) <= 0) {
-            return false;
-        } else if ($post->status == 0) {
-            return false;
-        } else {
-            return $post;
-        }
-    }
-
-    /**
-     * Este método retorna uma postagem de acordo com o ID informado.
-     *
-     * @return mixed
-     * @param $id string Link da postagem a ser exibida.
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
-    public function get_post_by_id($id)
-    {
-        // Verifica se foi informado um id.
-        if ($id == '') {
-            return false;
-        }
-        $this->load->model('post');
-        $post = $this->post->get_by_id($id)->row();
-        // Verifica a existência e disponibilidade do post.
-        if (count($post) <= 0) {
-            return false;
-        } else if ($post->status == 0) {
-            return false;
-        } else {
-            return $post;
-        }
     }
 
     /**
@@ -461,6 +322,11 @@ class wpanel
         $this->load->model('user');
         $query = $this->user->get_by_id($this->auth->get_userid())->row();
         return $query->$param;
+    }
+
+    public function teste()
+    {
+        $this->load->view('default/contact');
     }
 
 }

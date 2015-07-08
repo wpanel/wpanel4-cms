@@ -22,7 +22,7 @@ $config['posts_views'] = array('lista' => 'main_posts', 'mosaico' => 'main_posts
 
 /**
  * Defini qual editor online usará no painel de controle.
- * As opções são: 'tynimce' ou 'ckeditor'
+ * As opções são: 'tinymce' ou 'ckeditor'
  */
 $config['text_editor'] = 'ckeditor';
 
@@ -36,9 +36,3 @@ $config['meta_author'] = 'Eliel de Paula <dev@elieldepaula.com.br>';
  * painel de contorle.
  */
 $config['pos_banners'] = array('slide' => 'Slide', 'sidebar' => 'Sidebar');
-
-/**
- * Defini as posições dos menus no site para serem listados no 
- * painel de contorle.
- */
-$config['pos_menus'] = array('topo' => 'Topo', 'sidebar' => 'Lateral', 'footer' => 'Rodapé');

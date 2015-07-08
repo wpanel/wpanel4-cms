@@ -12,7 +12,7 @@ if($msg_contato){
 ?>
 <div class="row">
     <div class="col-sm-offset-2 col-md-10">
-        <?= $conf->texto_contato; ?>
+        <?= $contact_content; ?>
     </div>
 </div>
 <div class="row">

@@ -35,14 +35,7 @@
         ?>
         <div class="row wpn-social-buttons">
             <div class="col-md-12">
-                <!-- AddThis Button BEGIN -->        
-                 <div class="addthis_toolbox addthis_default_style">            
-                     <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>            
-                     <a class="addthis_button_tweet"></a>            
-                     <a class="addthis_button_pinterest_pinit"></a>            
-                     <a class="addthis_counter addthis_pill_style"></a>            
-                 </div>            
-                 <!-- AddThis Button END -->
+                <?= $this->widgets->addthis_buttons(); ?>          
             </div>
         </div>
         <?php
@@ -50,16 +43,13 @@
         echo $post->content;
 
         if ($post->page==0) {
-            ?>
-            <h4>Comentarios</h4>
-            <!-- Comentários do Facebook -->
-            <div class="fb-comments" 
-                data-href="<?php echo site_url('post/' . $post->link); ?>" 
-                data-num-posts="15" data-width="100%"></div>
-            <?php
+            echo '<h4>Comentarios</h4>';
+            echo $this->widgets->facebook_comments(site_url('post/'.$post->link));
         }
+        
+        echo $this->widgets->post_tags($post->link);
+
         ?>
-        <?php echo $this->wpanel->prepare_tags($post->tags); ?>
     </div>
 </div>
 <!-- end - Postagem. -->

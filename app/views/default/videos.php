@@ -17,21 +17,14 @@ function get_code_video($var=''){
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<!-- AddThis Button BEGIN -->        
-		<div class="addthis_toolbox addthis_default_style">            
-			<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>            
-			<a class="addthis_button_tweet"></a>            
-			<a class="addthis_button_pinterest_pinit"></a>            
-			<a class="addthis_counter addthis_pill_style"></a>            
-		</div>            
-		<!-- AddThis Button END -->
+		<?= $this->widgets->addthis_buttons(); ?>
 	</div>
 </div>
 <div class="row">
 	<?php
 	$col = 1; // Contador de itens.
 	$max_col = 3; // Número máximo de ítens por linha.
-	foreach($lista_videos as $item){
+	foreach($videos as $item){
 		?>
 		<div class="col-md-4">
 			<div class="Xthumbnail">
