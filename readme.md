@@ -10,13 +10,13 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 
 É sem dúvida um bom ponto de partida para qualquer projeto. Não é uma obrigação, mas ficaria feliz em saber e contribuir nos projetos que forem desenvolvidos apartir do wpanel. :)
 
-##Admin
+##Painel de controle
 
-<img src="http://elieldepaula.com.br/files/img-wpanel/dashboard.png" alt="Wpanel 11 dashboard.">
+<img src="http://elieldepaula.com.br/_img_wpanel/dashboard.png" alt="Wpanel 12 dashboard.">
 
-##Site
+##Site de exemplo
 
-<img src="http://elieldepaula.com.br/files/img-wpanel/site-preview.jpg" alt="Site de demonstração.">
+<img src="http://elieldepaula.com.br/_img_wpanel/site-preview.png" alt="Site de exemplo.">
 
 ###Requisitos
 
