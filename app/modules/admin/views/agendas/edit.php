@@ -56,7 +56,7 @@ echo $this->wpanel->load_editor();
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Data', 'created');
-            echo form_input(array('name'=>'created', 'value'=> date('d/m/Y', strtotime($row->created)), 'class'=>'form-control'));
+            echo form_input(array('name'=>'created', 'value'=> datetime_for_user($row->created, false), 'class'=>'form-control'));
             echo close_div(2);
 
             echo col(3);

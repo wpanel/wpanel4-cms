@@ -36,7 +36,7 @@ class Agendas extends MX_Controller {
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				mdate('%d/%m/%Y', strtotime($row->created)), 
+				datetime_for_user($row->created, false), 
 				status_post($row->status),
 				// Ícones de ações
 				div(array('class'=>'btn-group btn-group-sm')).
@@ -86,7 +86,7 @@ class Agendas extends MX_Controller {
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s', strtotime($this->input->post('created')));
+			$dados_save['created'] = datetime_for_mysql($this->input->post('created') . ' 12:00:00'); //date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['image'] = $this->upload();
 			// Identifica se é uma página ou uma postagem
@@ -157,7 +157,7 @@ class Agendas extends MX_Controller {
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s', strtotime($this->input->post('created')));
+			$dados_save['created'] = datetime_for_mysql($this->input->post('created') . ' 12:00:00');//date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página, 2=Agenda
