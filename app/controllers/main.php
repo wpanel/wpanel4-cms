@@ -3,31 +3,53 @@
 class main extends CI_Controller 
 {
 
+    // Define o template a ser usado.
 	var $template = 'default';
 
+    // Define as variáveis mais usadas no controller.
 	var $data_header = array();
 	var $data_content = array();
 	var $data_footer = array();
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Método construtor da classe.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	function __construct()
 	{
 
 		parent::__construct();
+
 		$this->load->library('widgets');
 
-		$this->data_header['wpn_meta'] = $this->wpanel->get_meta();
-		$this->data_header['wpn_title'] = $this->wpanel->get_titulo();
-		$this->data_header['wpn_assets'] = base_url('assets');
-		$this->data_header['wpn_header_addthis'] = $this->_header_addthis();
-		$this->data_header['wpn_header_facebook'] = $this->_header_facebook();
-		$this->data_header['wpn_background'] = $this->_background();
-		$this->data_header['wpn_logomarca'] = $this->_logomarca();
+        // Defini algumas variáveis usadas no header e footer do template.
+        // -----------------------------------------------------------------------------------------
+		$this->data_header['wpn_meta']                = $this->wpanel->get_meta();
+		$this->data_header['wpn_title']               = $this->wpanel->get_titulo();
+		$this->data_header['wpn_assets']              = base_url('assets');
+		$this->data_header['wpn_header_addthis']      = $this->_header_addthis();
+		$this->data_header['wpn_header_facebook']     = $this->_header_facebook();
+		$this->data_header['wpn_background']          = $this->_background();
+		$this->data_header['wpn_logomarca']           = $this->_logomarca();
 
-		$this->data_footer['wpn_copyright'] = $this->wpanel->get_config('copyright');
-		$this->data_footer['wpn_google_analytics'] = $this->_google_analytics();
+		$this->data_footer['wpn_copyright']           = $this->wpanel->get_config('copyright');
+		$this->data_footer['wpn_google_analytics']    = $this->_google_analytics();
 
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Método 'custom', onde o desenvolvedor cria uma página inicial
+     * personalizada.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	public function custom()
 	{
 
@@ -36,15 +58,24 @@ class main extends CI_Controller
          * página inicial personaizada no painel de configurações.
          * 
          * Para informações sobre como implementar um método personalizado
-         * confira a documentação ou entre em contto com dev@elieldepaula.com.br
+         * confira a documentação ou entre em contto com dev@elieldepaula.com.br>
          */
 
         echo '<meta charset="UTF-8">';
         echo '<h1>Página inicial personalizada do wPanel.</h1>';
-        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações > Página inicial.</p>';
+        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações > 
+                Página inicial.</p>';
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Método index() que faz o funcionamento da página inicial do site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	public function index()
 	{
 
@@ -64,20 +95,36 @@ class main extends CI_Controller
 
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método posts() gera uma listagem das postagens disponíveis
+     * para exibição no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $category_id Int ID da categoria para listagem.
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	public function posts($category_id = '')
     {
 
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $this->load->model('categoria');
         $this->load->model('post_categoria');
 
         // Envia os dados para a view de acordo com a categoria.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         if ($category_id == '') {
 
-            $this->data_content['posts'] = $this->post->get_by_field(array('page' => '0', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'));
+            $this->data_content['posts'] = $this->post->get_by_field(
+                array('page' => '0', 
+                    'status' => '1'
+                    ), 
+                null, 
+                array('field' => 'created', 'order' => 'desc')
+            );
 
         } else {
 
@@ -90,35 +137,46 @@ class main extends CI_Controller
         }
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('posts/' . $category_id));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+            $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
 		$this->load->view($this->template.'/posts', $this->data_content);
 		$this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método post() faz a exibição de uma postagem ou página que for
+     * indicada pelo parametro $link.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $link String Link para exibição da postagem.
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function post($link = '')
     {
 
         // Verifica se foi informado um link.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         if ($link == '')
         	show_404();
 
         // Prepara e envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $post = $this->post->get_by_field('link', $link)->row();
         $this->data_content['post'] = $post;
 
         // Verifica a existência e disponibilidade do post.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         if (count($post) <= 0)
             show_404();
         
@@ -126,7 +184,7 @@ class main extends CI_Controller
             show_error('Esta página foi suspensa temporariamente', 404);
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('post/' . $link));
         $this->wpanel->set_meta_description($post->description);
         $this->wpanel->set_meta_keywords($post->tags);
@@ -134,15 +192,16 @@ class main extends CI_Controller
         if ($post->image) {
             $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $post->image);
         } else {
-            $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+            $this->wpanel->set_meta_image(base_url('media') . '/' . 
+                $this->wpanel->get_config('logomarca'));
         }
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
 
         // Seleciona a view específica de cada tipo de post.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         switch ($post->page) {
         	case '1':
         		$this->load->view($this->template.'/page', $this->data_content);
@@ -158,110 +217,154 @@ class main extends CI_Controller
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método events() faz uma listagem dos eventos disponíveis para
+     * exibição no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function events()
     {
 
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $this->load->model('categoria');
         $this->load->model('post_categoria');
 
         // Recupera a lista de eventos.
-        //----------------------------------------------------------
-        $query = $this->post->get_by_field(array('page' => '2', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'));
+        //------------------------------------------------------------------------------------------
+        $query = $this->post->get_by_field(
+            array('page' => '2', 'status' => '1'), 
+            null, 
+            array('field' => 'created', 'order' => 'desc')
+        );
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('events'));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+            $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['posts'] = $query;
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/events', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método search() realiza uma busca por termos indicados no formulário
+     * no título, descrição e conteúdo das postagens independente do seu tipo.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function search()
     {
 
     	// Recebe os termos da busca.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $termos_busca = $this->input->post('search');
 
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $this->load->model('categoria');
         $this->load->model('post_categoria');
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['termos_busca'] = $termos_busca;
         $this->data_content['posts'] = $this->post->busca_posts($termos_busca);
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('search'));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+            $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/search', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método albuns() faz uma listagem de albuns de foto disponíveis
+     * para exibição no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function albuns()
     {
         
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('album');
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('albuns'));
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
-        $this->wpanel->set_meta_image(base_url('media') . '/' . $this->wpanel->get_config('logomarca'));
+        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+            $this->wpanel->get_config('logomarca'));
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['albuns'] = $this->album->get_list();
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/albuns', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método album() faz a exibição das fotos de um determinado álbum
+     * indicado pelo parametro $album_id
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $album_id Int ID do álbum para exibição.
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function album($album_id)
     {
 
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('album');
         $this->load->model('foto');
 
         // Recupera os detalhes do álbum.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $album = $this->album->get_by_id($album_id)->row();
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('album/' . $album_id));
         $this->wpanel->set_meta_description($album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
@@ -269,56 +372,77 @@ class main extends CI_Controller
         $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $album->capa);
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['album'] = $album;
-        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, array('field' => 'created', 'order' => 'desc'));
+        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, 
+            array('field' => 'created', 'order' => 'desc'));
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/album', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O metodo foto() faz a exibição de uma foto de algum ámbum, indicada
+     * pelo parâmmetro $foto_id
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $foto_id Int ID da foto para exibição.
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function foto($foto_id)
     {
         
         // Carrega os models necessários.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->model('album');
         $this->load->model('foto');
 
         // Recupera os detalhes da foto.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $foto = $this->foto->get_by_id($foto_id)->row();
 
         // Seta as variáveis 'meta'.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('foto/' . $foto_id));
         $this->wpanel->set_meta_description($foto->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($foto->descricao);
-        $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' . $foto->filename);
+        $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' . 
+            $foto->filename);
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['album'] = $this->album->get_by_id($foto->album_id)->row();
         $this->data_content['foto'] = $foto;
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/foto', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método videos() faz a exibição da lista de vídeos de um canal do
+     * Youtube(®) pelo método de RSS.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function videos()
     {
 
     	// Recupera a lista de vídeos com a biblioteca Simplepie.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->library('Simplepie');
         $this->simplepie->set_feed_url($this->wpanel->get_config('youtube_rss'));
         $this->simplepie->set_cache_location(APPPATH . 'cache/rss');
@@ -326,39 +450,57 @@ class main extends CI_Controller
         $this->simplepie->handle_content_type();
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['videos'] = $this->simplepie->get_items();
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/videos', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método video() faz a exibição do vídeo indicado pelo parametro $code.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $code string Código do vídeo no youtube.
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function video($code)
     {
 
         // Envia os dados para a view.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->data_content['code'] = $code;
 
         // Exibe o template.
-        //----------------------------------------------------------
+        //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
         $this->load->view($this->template.'/video', $this->data_content);
         $this->load->view($this->template.'/footer', $this->data_footer);
 
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método contato() faz o funcionamento da página de contato do site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	public function contato()
 	{
 
 		$this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('captcha', 'Confirmação', 'required|captcha');
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', 
+            '</span></p>');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -405,15 +547,26 @@ class main extends CI_Controller
             $this->email->message($msg);
 
             if ($this->email->send()) {
-                $this->session->set_flashdata('msg_contato', 'Sua mensagem foi enviada com sucesso!');
+                $this->session->set_flashdata('msg_contato', 
+                    'Sua mensagem foi enviada com sucesso!');
                 redirect('contato');
             } else {
-                $this->session->set_flashdata('msg_contato', 'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
+                $this->session->set_flashdata('msg_contato', 
+                    'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
                 redirect('contato');
             }
 		}
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método rss() gera a página padrão XML para os leitores de RSS
+     * com as postagens disponíveis no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	public function rss()
     {
         
@@ -443,12 +596,22 @@ class main extends CI_Controller
         
     }
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * O método newsletter() faz o cadastro de um email para o coletor
+     * de contatos do WPanel.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
     public function newsletter()
     {
         
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', 
+            '</span></p>');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -466,14 +629,30 @@ class main extends CI_Controller
                 print("<script>alert('Seus dados foram salvos com sucesso, obrigado!');</script>");
                 redirect('');
             } else {
-                print("<script>alert('Erro, seus dados não puderam ser salvos, tente novamente mais tarde.');</script>");
+                print("<script>alert('Erro, seus dados não puderam ser salvos, tente novamente mais 
+                    tarde.');</script>");
                 redirect();
             }
         }
     }
 
-	/* ----------------------- Métodos privados, não altere apartir daqui se não tiver certeza do que está fazendo! ----------------------- */
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Métodos privados, não altere apartir daqui se não tiver certeza 
+     * do que está fazendo!
+     * ---------------------------------------------------------------------------------------------
+     */
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método retorna uma tag <img /> com a logomarca que estiver
+     * configurada no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $var tipo descricao
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
 	private function _logomarca()
 	{
 		$image_properties = array(
@@ -484,25 +663,53 @@ class main extends CI_Controller
         return img($image_properties);
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método retorna um código CSS para a exibição da imagem de 
+     * fundo (background) configurada no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
 	private function _background()
 	{
 		$html  = "";
 		$html .= "<style type=\"text/css\">
             body {
-                background-image: url('" . base_url('media') . '/' . $this->wpanel->get_config('background') . "');
+                background-image: url('" . base_url('media') . '/' . 
+                    $this->wpanel->get_config('background') . "');
                 background-color: " . $this->wpanel->get_config('bgcolor') . ";
             }
         </style>";  
 		return $html;
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega a biblioteca externa do serviço AddThis(®)
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
 	private function _header_addthis()
 	{
 		$html  = "";
-		$html .= "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js#pubid=" . $this->wpanel->get_config('addthis_uid') . "\"></script>";  
+		$html .= "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js
+        #pubid=" . $this->wpanel->get_config('addthis_uid') . "\"></script>";  
 		return $html;
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega o cabeçalho para o funcionamento dos widgets
+     * do facebook(®) no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
 	private function _header_facebook()
 	{
 		$html = "";
@@ -514,13 +721,22 @@ class main extends CI_Controller
 		                     return;
 		                 js = d.createElement(s);
 		                 js.id = id;
-		                 js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1472322323008859&version=v2.0\";
+		                 js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&
+                         appId=1472322323008859&version=v2.0\";
 		                 fjs.parentNode.insertBefore(js, fjs);
 		             }(document, 'script', 'facebook-jssdk'));
 		        </script>";
 		return $html;
 	}
 
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega o código do GoogleAnalýtics(®) no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
 	private function _google_analytics()
 	{
 		return $this->wpanel->get_config('google_analytics');
