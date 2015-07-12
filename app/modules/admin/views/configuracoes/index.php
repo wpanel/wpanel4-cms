@@ -8,12 +8,22 @@ $category_check = '';
 $page_check = '';
 $smtp_checked = '';
 
-if ($row->home_tipo == 'category') {
-    $category_check = 'checked';
-    $page_check = '';
-} elseif ($row->home_tipo == 'page') {
-    $category_check = '';
-    $page_check = 'checked';
+switch ($row->home_tipo) {
+    case 'category':
+        $category_check = 'checked';
+        $page_check = '';
+        $custom_check = '';
+        break;
+    case 'page':
+        $category_check = '';
+        $page_check = 'checked';
+        $custom_check = '';
+        break;
+    default:
+        $category_check = '';
+        $page_check = '';
+        $custom_check = 'checked';
+        break;
 }
 
 if ($row->usa_smtp == 1) {
@@ -104,7 +114,7 @@ if ($row->usa_smtp == 1) {
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="home_tipo" value="custom" <?= $category_check; ?> class="radio" />
+                                    <input type="radio" name="home_tipo" value="custom" <?= $custom_check; ?> class="radio" />
                                     Usar uma página personalizada como página inicial.
                                 </label>
                             </div>

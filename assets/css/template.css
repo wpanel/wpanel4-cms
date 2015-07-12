@@ -11,6 +11,8 @@ body {
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .space {
