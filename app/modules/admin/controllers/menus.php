@@ -30,8 +30,8 @@ class menus extends MX_Controller
             $html_menu .= "<div class=\"col-md-9 col-sm-9\">" . $row->nome . "</div>";
             $html_menu .= "<div class=\"col-md-2 col-sm-2 btn-group btn-group-sm\">";
             $html_menu .= anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default'));
-            // $html_menu .= anchor('admin/menus/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'onClick' => 'return apagar();'));
-            $html_menu .= '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menus/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>';
+            $html_menu .= '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menus/delete/' . 
+                $row->id).'\');">'.glyphicon('trash').'</button>';
             $html_menu .= "</div>";
             $html_menu .= "</div></li>";
             $html_menu .= "<li class=\"list-group-item\">";
@@ -52,7 +52,7 @@ class menus extends MX_Controller
         $content_vars = array();
 
         // Template da tabela
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped table-bordered">'));
+        $this->table->set_template(array('table_open' => '<table class="table table-striped table-bordered">'));
         $this->table->set_heading('Label', 'Ordem', 'Tipo', 'Link', 'Ações');
         $query = $this->menu_item->get_by_field('menu_id', $menu_id, array('field' => 'ordem', 'order' => 'asc'));
 
@@ -81,7 +81,8 @@ class menus extends MX_Controller
             $this->table->add_row(
                     $row->label, $row->ordem, humanize($row->tipo), $link, div(array('class' => 'btn-group btn-group-sm')) .
                     anchor('admin/menuitens/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menuitens/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
+                    '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menuitens/delete/' . 
+                        $row->id).'\');">'.glyphicon('trash').'</button>' .
                     div(null, true)
             );
         }
@@ -182,15 +183,19 @@ class menus extends MX_Controller
 
     public function delete($id = null)
     {
-
         if ($id == null) {
             $this->session->set_flashdata('msg_sistema', 'Menu inexistente.');
             redirect('admin/menus');
         }
-
         if ($this->menu->delete($id)) {
-            $this->session->set_flashdata('msg_sistema', 'Menu excluído com sucesso.');
-            redirect('admin/menus');
+            $this->load->model('menu_item');
+            if($this->menu_item->delete_by_menu($id)) {
+                $this->session->set_flashdata('msg_sistema', 'Menu excluído com sucesso.');
+                redirect('admin/menus');
+            } else {
+                $this->session->set_flashdata('msg_sistema', 'Menu excluído com sucesso, porém os itens do menu não foram excluídos.');
+                redirect('admin/menus');
+            }
         } else {
             $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o menu.');
             redirect('admin/menus');

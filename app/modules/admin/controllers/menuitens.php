@@ -142,7 +142,7 @@ class menuitens extends MX_Controller
         }
     }
 
-    public function delete($menu_id, $id = null)
+    public function delete($id = null)
     {
 
         if ($id == null) {
