@@ -324,11 +324,6 @@ class wpanel
         return $query->$param;
     }
 
-    public function teste()
-    {
-        $this->load->view('default/contact');
-    }
-
 }
 
 // END class wpanel
