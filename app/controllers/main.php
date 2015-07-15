@@ -31,13 +31,13 @@ class main extends CI_Controller
 		$this->data_header['wpn_meta']                = $this->wpanel->get_meta();
 		$this->data_header['wpn_title']               = $this->wpanel->get_titulo();
 		$this->data_header['wpn_assets']              = base_url('assets');
-		$this->data_header['wpn_header_addthis']      = $this->_header_addthis();
-		$this->data_header['wpn_header_facebook']     = $this->_header_facebook();
-		$this->data_header['wpn_background']          = $this->_background();
-		$this->data_header['wpn_logomarca']           = $this->_logomarca();
+		$this->data_header['wpn_header_addthis']      = $this->wpanel->get_header_addthis();
+		$this->data_header['wpn_header_facebook']     = $this->wpanel->get_header_facebook();
+		$this->data_header['wpn_background']          = $this->wpanel->get_background();
+		$this->data_header['wpn_logo']                = $this->wpanel->get_logo();
 
 		$this->data_footer['wpn_copyright']           = $this->wpanel->get_config('copyright');
-		$this->data_footer['wpn_google_analytics']    = $this->_google_analytics();
+		$this->data_footer['wpn_google_analytics']    = $this->wpanel->get_google_analytics();
 
 	}
 
@@ -635,111 +635,4 @@ class main extends CI_Controller
             }
         }
     }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Métodos privados, não altere apartir daqui se não tiver certeza 
-     * do que está fazendo!
-     * ---------------------------------------------------------------------------------------------
-     */
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna uma tag <img /> com a logomarca que estiver
-     * configurada no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $var tipo descricao
-     * @return void
-     * ---------------------------------------------------------------------------------------------
-     */
-	private function _logomarca()
-	{
-		$image_properties = array(
-        	'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
-        	'class' => 'img-responsive hidden-xs'
-        );
-
-        return img($image_properties);
-	}
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna um código CSS para a exibição da imagem de 
-     * fundo (background) configurada no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-	private function _background()
-	{
-		$html  = "";
-		$html .= "<style type=\"text/css\">
-            body {
-                background-image: url('" . base_url('media') . '/' . 
-                    $this->wpanel->get_config('background') . "');
-                background-color: " . $this->wpanel->get_config('bgcolor') . ";
-            }
-        </style>";  
-		return $html;
-	}
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega a biblioteca externa do serviço AddThis(®)
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-	private function _header_addthis()
-	{
-		$html  = "";
-		$html .= "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js
-        #pubid=" . $this->wpanel->get_config('addthis_uid') . "\"></script>";  
-		return $html;
-	}
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega o cabeçalho para o funcionamento dos widgets
-     * do facebook(®) no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-	private function _header_facebook()
-	{
-		$html = "";
-		$html .= "<div id=\"fb-root\"></div>\n";
-		$html .= "\t\t<script>
-		             (function (d, s, id) {
-		                 var js, fjs = d.getElementsByTagName(s)[0];
-		                 if (d.getElementById(id))
-		                     return;
-		                 js = d.createElement(s);
-		                 js.id = id;
-		                 js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&
-                         appId=1472322323008859&version=v2.0\";
-		                 fjs.parentNode.insertBefore(js, fjs);
-		             }(document, 'script', 'facebook-jssdk'));
-		        </script>";
-		return $html;
-	}
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega o código do GoogleAnalýtics(®) no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-	private function _google_analytics()
-	{
-		return $this->wpanel->get_config('google_analytics');
-	}
-
 }	

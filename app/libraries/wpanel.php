@@ -1,16 +1,15 @@
-<?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
+ * -------------------------------------------------------------------------------------------------
  * Biblioteca reunindo as opções mais comuns e frequentemente
  * utilizadas no funcionamento do wPanel.
  *
  * @package wPanel
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @since 26/10/2014
- * */
+ * -------------------------------------------------------------------------------------------------
+ */
 class wpanel
 {
 
@@ -34,11 +33,13 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método preenche uma lista de atributos passados
      * em forma de array em um elemento HTML
      *
      * @return mixed
      * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * ---------------------------------------------------------------------------------------------
      */
     private function _attributes($attributes)
     {
@@ -55,12 +56,14 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Initialize the library loading the configuration files or
      * an array() passed on load of the class.
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $config array()
      * @return void
+     * ---------------------------------------------------------------------------------------------
      */
     public function initialize($config = array())
     {
@@ -104,11 +107,13 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método retorna o título da página.
      *
      * @return String
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
+     * ---------------------------------------------------------------------------------------------
+     */
     public function get_titulo()
     {
         if ($this->meta_title == '') {
@@ -119,12 +124,14 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método retorna um conjunto pronto de tags META para
      * ser inserido no "head" do layout do site.
      *
      * @return mixed
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
+     * ---------------------------------------------------------------------------------------------
+     */
     public function get_meta()
     {
 
@@ -167,6 +174,7 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método retorna um valor da tabela de configurações
      * ou o objeto todo para ser selecionado externamente.
      *
@@ -176,7 +184,8 @@ class wpanel
      * @return mixed
      * @param $item String
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
+     * ---------------------------------------------------------------------------------------------
+     */
     public function get_config($item = '')
     {
         $this->load->model('configuracao');
@@ -189,12 +198,14 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método carrega as bibliotecas do editor de texto preferido
      * nas telas onde são usados.
      *
      * @return Mixed
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * */
+     * ---------------------------------------------------------------------------------------------
+     */
     public function load_editor()
     {
         $str_out = '';
@@ -220,13 +231,15 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método lista as categorias a que uma postagem pertence e
      * cria o link para a listagem de cada categoria.
      *
      * @return String
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $post_id Int Código da postagem.
-     * */
+     * ---------------------------------------------------------------------------------------------
+     */
     public function categorias_do_post($post_id)
     {
         $str = '';
@@ -242,6 +255,7 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método faz a exibição de um menu usando o ID como parametro principal.
      * 
      * O menu é gerado usando "<ul></ul>" e "<li></li>", os estilos pré-definidos são
@@ -253,6 +267,7 @@ class wpanel
      * @param string $class_menu
      * @param string $class_item
      * @return string|boolean
+     * ---------------------------------------------------------------------------------------------
      */
     public function get_menu($menu_id = null, $class_menu = null, $class_item = null)
     {
@@ -302,6 +317,7 @@ class wpanel
     }
 
     /**
+     * ---------------------------------------------------------------------------------------------
      * Este método faz o carregamento das views do painel de controle seguinto o novo
      * modelo de distribuição dos arquivos.
      * 
@@ -309,6 +325,7 @@ class wpanel
      * @param string $view
      * @param array $dados
      * @return mixed
+     * ---------------------------------------------------------------------------------------------
      */
     public function load_view($view, $dados = null)
     {
@@ -323,6 +340,105 @@ class wpanel
         $query = $this->user->get_by_id($this->auth->get_userid())->row();
         return $query->$param;
     }
+
+	/**
+     * ---------------------------------------------------------------------------------------------
+     * Este método retorna uma tag <img /> com a logomarca que estiver
+     * configurada no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $var tipo descricao
+     * @return void
+     * ---------------------------------------------------------------------------------------------
+     */
+	public function get_logo()
+	{
+		$image_properties = array(
+        	'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
+        	'class' => 'img-responsive hidden-xs'
+        );
+
+        return img($image_properties);
+	}
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método retorna um código CSS para a exibição da imagem de 
+     * fundo (background) configurada no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
+	public function get_background()
+	{
+		$html  = "";
+		$html .= "<style type=\"text/css\">
+            body {
+                background-image: url('" . base_url('media') . '/' . 
+                    $this->wpanel->get_config('background') . "');
+                background-color: " . $this->wpanel->get_config('bgcolor') . ";
+            }
+        </style>";  
+		return $html;
+	}
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega a biblioteca externa do serviço AddThis(®)
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
+	public function get_header_addthis()
+	{
+		$html  = "";
+		$html .= "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js
+        #pubid=" . $this->wpanel->get_config('addthis_uid') . "\"></script>";  
+		return $html;
+	}
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega o cabeçalho para o funcionamento dos widgets
+     * do facebook(®) no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
+	public function get_header_facebook()
+	{
+		$html = "";
+		$html .= "<div id=\"fb-root\"></div>\n";
+		$html .= "\t\t<script>
+		             (function (d, s, id) {
+		                 var js, fjs = d.getElementsByTagName(s)[0];
+		                 if (d.getElementById(id))
+		                     return;
+		                 js = d.createElement(s);
+		                 js.id = id;
+		                 js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&
+                         appId=1472322323008859&version=v2.0\";
+		                 fjs.parentNode.insertBefore(js, fjs);
+		             }(document, 'script', 'facebook-jssdk'));
+		        </script>";
+		return $html;
+	}
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método carrega o código do GoogleAnalýtics(®) no site.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return String
+     * ---------------------------------------------------------------------------------------------
+     */
+	public function get_google_analytics()
+	{
+		return $this->wpanel->get_config('google_analytics');
+	}
 
 }
 

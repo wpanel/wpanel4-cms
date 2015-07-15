@@ -1,8 +1,16 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+/**
+ * -------------------------------------------------------------------------------------------------
+ * Este helper contém as funções utilitárias específicas do wPanel.
+ *
+ * Foi desenvolvido para ser usado no FrameWork CodeIgniter em conjunto
+ * com o helper HTML e URL e Bootstrap-Helper.
+ *
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since 21/10/2014
+ * -------------------------------------------------------------------------------------------------
+ */
 
 if (!function_exists('link_ativo')) {
     
@@ -20,15 +28,7 @@ if (!function_exists('link_ativo')) {
         }
     }
 }
-/**
- * Este helper contém as funções utilitárias específicas do wPanel.
- *
- * Foi desenvolvido para ser usado no FrameWork CodeIgniter em conjunto
- * com o helper HTML e URL e Bootstrap-Helper.
- *
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 21/10/2014
- * */
+
 if (!function_exists('status_post')) {
 
     /**
