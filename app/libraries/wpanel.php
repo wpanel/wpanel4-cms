@@ -154,13 +154,15 @@ class wpanel
         }
 
         $meta = array(
-            array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
+            array('name' => 'Content-type', 'content' => 'text/html; charset=' . 
+                config_item('charset'), 'type' => 'equiv'),
             array('name' => 'robots', 'content' => 'all'),
             array('name' => 'author', 'content' => config_item('meta_author')),
             array('name' => 'canonical', 'content' => $this->meta_url),
             array('name' => 'title', 'content' => $this->get_titulo()),
             array('name' => 'description', 'content' => $description),
-            array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' . $this->meta_keywords),
+            array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' . 
+                $this->meta_keywords),
             // continua...
             array('name' => 'og:locale', 'content' => config_item('meta_locale')),
             array('name' => 'og:type', 'content' => 'article'),
