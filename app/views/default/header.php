@@ -27,7 +27,7 @@
 		<div class="container wpn-corpo">
 			<div class="row">
 				<div class="col-md-12">
-					<?= $this->widgets->bootstrap_banner('slide'); ?>
+					<?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
 				</div>
 			</div>
 			<div class="row">
@@ -41,7 +41,7 @@
 							</a>
 						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<?= wpn_get_menu('1', 'nav navbar-nav navbar-left'); ?>
+							<?= $this->widget->run('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-left')); ?>
 						</div>
 					</div>
 				</nav>

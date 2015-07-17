@@ -9,8 +9,7 @@
         <div class="col-md-10">
             <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
-                <span class="visible-xs"> Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
-                <small><?php echo $this->wpanel->categorias_do_post($post->id); ?></small>
+                <span class="visible-xs"> Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?></span>
             </p>
             <?php
             if ($post->image) {

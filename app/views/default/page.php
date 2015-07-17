@@ -13,7 +13,11 @@
         <p class="text-muted">
             <span class="visible-xs"> Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
             <small>
-                <?php if ($post->page==0){ ?><span class="category"><?php echo $this->wpanel->categorias_do_post($post->id); ?></span><?php } ?>
+                <?php if ($post->page==0){ ?>
+                    <span class="category">
+                        <?= $this->widget->run('categoryfrompost', array('post_id' => $post->id)); ?>
+                    </span>
+                <?php } ?>
             </small>
         </p>
         <?php
@@ -35,7 +39,7 @@
         ?>
         <div class="row wpn-social-buttons">
             <div class="col-md-12">
-                <?= $this->widgets->addthis_buttons(); ?>          
+                <?= $this->widget->run('addthisbuttons'); ?>
             </div>
         </div>
         <?php
@@ -44,10 +48,10 @@
 
         if ($post->page==0) {
             echo '<h4>Comentarios</h4>';
-            echo $this->widgets->facebook_comments(site_url('post/'.$post->link));
+            echo $this->widget->run('facebookcomments', array('link' => site_url('post/'.$post->link)));
         }
         
-        echo $this->widgets->post_tags($post->link);
+        echo $this->widget->run('tagsfrompost', array('link'=>$post->link));
 
         ?>
     </div>

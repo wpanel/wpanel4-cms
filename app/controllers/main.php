@@ -1,4 +1,4 @@
-<?php
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class main extends CI_Controller 
 {
@@ -23,8 +23,6 @@ class main extends CI_Controller
 	{
 
 		parent::__construct();
-
-		$this->load->library('widgets');
 
         // Defini algumas variáveis usadas no header e footer do template.
         // -----------------------------------------------------------------------------------------

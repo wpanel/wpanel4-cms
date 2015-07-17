@@ -9,7 +9,7 @@
 
 <div class="row" style="margin-bottom: 10px;">
     <div class="col-md-12">
-        <?= $this->widgets->addthis_buttons(); ?>
+        <?= $this->widget->run('addthisbuttons'); ?>      
     </div>
 </div>
 
@@ -30,6 +30,6 @@
 <div class="row" style="margin-top: 20px;">
 	<div class="col-md-12">
 		<h3 class="page-header">Comentários</h3>
-        <?= $this->widgets->facebook_comments(site_url('foto/' . $foto->id)); ?>
+        <?= $this->widget->run('facebookcomments', array('link' => site_url('foto/'.$foto->id))); ?>
 	</div>
 </div>

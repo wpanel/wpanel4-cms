@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom: 10px;">
     <div class="col-md-12">
-        <?= $this->widgets->addthis_buttons(); ?>
+        <?= $this->widget->run('addthisbuttons'); ?>
     </div>
 </div>
 <div class="row">
@@ -13,6 +13,6 @@
 <div class="row">
 	<div class="col-md-12">
 		<h3>Comentários</h3>
-        <?= $this->widgets->facebook_comments(site_url('video/'.$code)); ?>
+        <?= $this->widget->run('facebookcomments', array('link' => site_url('video/'.$code))); ?>
 	</div>
 </div>

@@ -5,7 +5,7 @@
 </div>
 <div class="row wpn-social-buttons">
     <div class="col-md-12">
-        <?= $this->widgets->addthis_buttons(); ?>
+        <?= $this->widget->run('addthisbuttons'); ?>      
     </div>
 </div>
 <div class="row">

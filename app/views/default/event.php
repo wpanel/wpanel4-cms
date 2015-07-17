@@ -35,7 +35,7 @@
         ?>
         <div class="row wpn-social-buttons">
             <div class="col-md-12">
-                <?= $this->widgets->addthis_buttons(); ?>          
+                <?= $this->widget->run('addthisbuttons'); ?>
             </div>
         </div>
         <?php
@@ -47,7 +47,7 @@
             echo $this->widgets->facebook_comments(site_url('post/'.$post->link));
         }
         
-        echo $this->widgets->post_tags($post->link);
+        echo $this->widget->run('tagsfrompost', array('link'=>$post->link));
 
         ?>
     </div>

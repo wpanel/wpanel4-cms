@@ -17,7 +17,7 @@ function get_code_video($var=''){
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<?= $this->widgets->addthis_buttons(); ?>
+		<?= $this->widget->run('addthisbuttons'); ?>
 	</div>
 </div>
 <div class="row">

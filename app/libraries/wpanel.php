@@ -242,81 +242,19 @@ class wpanel
      * @param $post_id Int Código da postagem.
      * ---------------------------------------------------------------------------------------------
      */
-    public function categorias_do_post($post_id)
-    {
-        $str = '';
-        $this->load->model('categoria');
-        $this->load->model('post_categoria');
-        foreach ($this->post_categoria->list_by_post($post_id)->result() as $value)
-        {
-            $str .= anchor(
-                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
-                    ) . ' ';
-        }
-        return $str;
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método faz a exibição de um menu usando o ID como parametro principal.
-     * 
-     * O menu é gerado usando "<ul></ul>" e "<li></li>", os estilos pré-definidos são
-     * os usados pelo Bootstrap, mas pode-se deixar os parametros de estilo em
-     * branco e criar seus próprios estilos usando "ul li {}"
-     * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param int $menu_id
-     * @param string $class_menu
-     * @param string $class_item
-     * @return string|boolean
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function get_menu($menu_id = null, $class_menu = null, $class_item = null)
-    {
-        if ($menu_id == null) {
-            return false;
-        }
-        $this->load->model('menu_item');
-        $query = $this->menu_item->get_by_field('menu_id', $menu_id, array('field' => 'ordem', 'order' => 'asc'))->result();
-        //TODO Criar a seleção de tipo de impressão ou estilo, para lista, coluna, em linha etc.
-        $html = "";
-        $html .= "<ul class=\"" . $class_menu . "\">";
-        foreach ($query as $row)
-        {
-            if ($row->tipo == 'submenu') {
-                $html .= "<li class=\"" . $class_item . " dropdown\">";
-            } else {
-                $html .= "<li class=\"" . $class_item . "\">";
-            }
-            switch ($row->tipo)
-            {
-                case 'link':
-                    $html .= "<a href=\"" . $row->href . "\">" . $row->label . "</a>";
-                    break;
-                case 'post':
-                    $html .= anchor('post/' . $row->href, $row->label);
-                    break;
-                case 'posts':
-                    $html .= anchor('posts/' . $row->href, $row->label);
-                    break;
-                case 'funcional':
-                    if ($row->href == 'home') {
-                        $html .= anchor('', $row->label);
-                    } else {
-                        $html .= anchor($row->href, $row->label);
-                    }
-                    break;
-                case 'submenu':
-                    $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" >" . $row->label . " <span class=\"caret\"></span></a>";
-                    $html .= $this->get_menu($row->href, 'dropdown-menu');
-                    break;
-            }
-            $html .= "</li>";
-        }
-
-        $html .= "</ul>";
-        return $html;
-    }
+    // public function categorias_do_post($post_id)
+    // {
+    //     $str = '';
+    //     $this->load->model('categoria');
+    //     $this->load->model('post_categoria');
+    //     foreach ($this->post_categoria->list_by_post($post_id)->result() as $value)
+    //     {
+    //         $str .= anchor(
+    //                         'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
+    //                 ) . ' ';
+    //     }
+    //     return $str;
+    // }
 
     /**
      * ---------------------------------------------------------------------------------------------
@@ -412,20 +350,20 @@ class wpanel
      */
 	public function get_header_facebook()
 	{
+
 		$html = "";
 		$html .= "<div id=\"fb-root\"></div>\n";
-		$html .= "\t\t<script>
-		             (function (d, s, id) {
-		                 var js, fjs = d.getElementsByTagName(s)[0];
-		                 if (d.getElementById(id))
-		                     return;
-		                 js = d.createElement(s);
-		                 js.id = id;
-		                 js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&
-                         appId=1472322323008859&version=v2.0\";
-		                 fjs.parentNode.insertBefore(js, fjs);
-		             }(document, 'script', 'facebook-jssdk'));
-		        </script>";
+		$html .= "<script>";
+        $html .= "(function(d, s, id) {";
+        $html .= "    var js, fjs = d.getElementsByTagName(s)[0];";
+        $html .= "    if (d.getElementById(id))";
+        $html .= "        return;";
+        $html .= "    js = d.createElement(s);";
+        $html .= "    js.id = id;";
+        $html .= "    js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0\";";
+        $html .= "    fjs.parentNode.insertBefore(js, fjs);";
+        $html .= "        }(document, 'script', 'facebook-jssdk'));";
+        $html .= "</script>";
 		return $html;
 	}
 
