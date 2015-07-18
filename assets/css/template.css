@@ -1,91 +1,138 @@
 
 /**
- * Folha de estilos do layout de demonstração do Wpanel 11
+ * -------------------------------------------------------------------
+ * Folha de estilos do layout de demonstração do Wpanel CMS
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
- * 
+ * -------------------------------------------------------------------
  */
-
 
 body {
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 35px;
 }
-
-.space {
-    height: 15px;
-}
-
-/* Topo */
-
-.wpn-logomarca {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-.wpn-banner {}
-
-/* Conteúdo */
-
-.wpn-corpo {
+.navbar-default {
+    margin-top:-10px;
     background-color: #fff;
+    border-radius:0;    
+    border:0;   
 }
-
+.container-fluid > .navbar-header {
+    margin-right: 30px;
+    margin-left: 10px;
+    margin-top:20px;
+    border-radius:0;
+}
+.navbar-brand {
+  float: left;
+  height: 30px;
+  padding: 0 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
+.navbar-brand h1:hover {
+  background-color:#fff;
+}
+.menu {
+    font-size:14px;
+    float:right;
+    text-transform:uppercase;
+    font-weight:500;
+    
+}
+.menu ul.nav-tabs li {
+    color:#000; 
+}
+.nav-tabs {
+  border-bottom: 0;
+}
+.nav-tabs > li {
+  float: left;
+  margin-bottom: 0;
+}
+.nav-tabs > li > a {    
+    margin-bottom:20px;
+    margin-right: 20px;
+    line-height: 1.42857143;
+    border-bottom: 3px solid transparent;
+    border-radius:0;
+    color:#000;
+    border-top:0;
+    border-right:0;
+    border-left:0;  
+}
+.nav-tabs > li > a:hover {
+  border-color: #eee #eee #72afd2; /*#6D9C91; */
+  color: #3c8dbc;
+  border-radius:0;
+  background-color:#f9f9f9;
+  
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: #fff;
+  cursor: default;
+  background-color: #6D9C91;
+  border: 0;
+  border-bottom-color: transparent;
+  cursor:pointer;  
+}
 .page-header {
     margin-top: 15px;
 }
+.wpn-header {}
+.wpn-header .wpn-logomarca {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.wpn-banner {}
+.wpn-banner .slide {
+    background-color:#f9f9f9;
+    margin-top:-20px;
+    margin-bottom:-10px;
 
+}
+.wpn-content {
+    background-color:#f9f9f9;
+    padding:50px;    
+}
+.wpn-content  span {
+    text-transform:uppercase;
+}
+.wpn-content p {
+    margin-top:50px;
+    margin-bottom:30px;
+    color:#090909;
+}
 .wpn-postagens {}
-
 .wpn-postagens .wpn-capa {
     height:200px;
     overflow: hidden;
     margin-top:15px;
     margin-bottom:15px;
 }
-
 .wpn-postagem {}
-
 .wpn-postagem .wpn-capa {
     margin-top:15px;
     margin-bottom:15px;
 }
-
 .wpn-postagem .wpn-social-buttons {
     margin-bottom: 10px;
 }
-
-/* Sidebar */
-
 .wpn-sidebar {}
-
 .menu-sidebar {
     list-style: none;
     list-style-position: outside;
     margin: 0;
     padding: 0;
 }
-.menu-sidebar small {
-    padding-left: 20px;
+.footer {
+     background-color: #ecf0f5;
 }
-
-/* Rodapé */
-
-.wpn-rodape {
-    margin-top:20px;
-    background-color: #333;
-    color: #fff;
-    min-height: 350px;
-}
-
-.wpn-rodape .fb-like-box {
-    background-color: #fff;
-}
-
-.wpn-rodape .copyright {
+.footer .copyright {
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;

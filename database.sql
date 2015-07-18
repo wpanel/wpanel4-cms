@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `banners` (
 --
 
 INSERT INTO `banners` (`id`, `title`, `position`, `order`, `type`, `content`, `created`, `updated`, `status`, `user_id`) VALUES
-(1, 'Benner de exemplo #1', 'slide', 1, NULL, '75a85d7bed6fbba7d81ba03fca10c382.jpg', '2014-10-23 12:59:04', '2014-12-18 20:10:51', '1', 0),
-(5, 'Benner de exemplo #2', 'slide', 2, NULL, '0c94f325b87fecfb67ef14821dbe1be4.jpg', '2014-11-11 09:44:13', '2014-12-18 20:10:59', '1', 1);
+(1, 'Benner de exemplo #1', 'slide', 1, NULL, '75a85d7bed6fbba7d81ba03fca10c382.jpg', '2014-11-10 12:00:00', '2014-11-10 12:00:00', '1', 1),
+(2, 'Benner de exemplo #2', 'slide', 2, NULL, '0c94f325b87fecfb67ef14821dbe1be4.jpg', '2014-11-10 12:00:00', '2014-11-10 12:00:00', '1', 1);
 
 -- --------------------------------------------------------
 

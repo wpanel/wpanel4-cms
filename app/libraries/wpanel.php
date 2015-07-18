@@ -295,7 +295,8 @@ class wpanel
 	{
 		$image_properties = array(
         	'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
-        	'class' => 'img-responsive hidden-xs'
+        	'class' => 'img-responsive hidden-xs',
+            'width' => '200'
         );
 
         return img($image_properties);
