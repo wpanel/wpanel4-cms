@@ -1,4 +1,4 @@
-<? form_open('newsletter', array('role' => 'form')); ?>
+<?= form_open('newsletter', array('role' => 'form')); ?>
     <div class="form-group">
         <label class="control-label" for="nome">Nome</label>
         <input class="form-control" name="nome" id="nome" placeholder="Seu nome..." type="text">
