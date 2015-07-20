@@ -16,7 +16,7 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 
 ##Site de exemplo
 
-<img src="http://elieldepaula.com.br/_img_wpanel/novo-site-preview.png" alt="Site de exemplo.">
+<img src="http://elieldepaula.com.br/_img_wpanel/novo-site-preview.png" alt="Site de exemplo http://wpanelcms.com.br/demo">
 
 ###Requisitos
 
