@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class main extends CI_Controller 
+class main extends CI_Controller
 {
 
     // Define o template a ser usado.
@@ -54,14 +54,14 @@ class main extends CI_Controller
         /*
          * Este método é chamado caso seja configurado o uso de um
          * página inicial personaizada no painel de configurações.
-         * 
+         *
          * Para informações sobre como implementar um método personalizado
          * confira a documentação ou entre em contto com dev@elieldepaula.com.br>
          */
 
         echo '<meta charset="UTF-8">';
         echo '<h1>Página inicial personalizada do wPanel.</h1>';
-        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações > 
+        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações >
                 Página inicial.</p>';
 
     }
@@ -90,7 +90,6 @@ class main extends CI_Controller
                 return $this->custom();
                 break;
         }
-
 	}
 
     /**
@@ -117,10 +116,10 @@ class main extends CI_Controller
         if ($category_id == '') {
 
             $this->data_content['posts'] = $this->post->get_by_field(
-                array('page' => '0', 
+                array('page' => '0',
                     'status' => '1'
-                    ), 
-                null, 
+                    ),
+                null,
                 array('field' => 'created', 'order' => 'desc')
             );
 
@@ -137,7 +136,7 @@ class main extends CI_Controller
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('posts/' . $category_id));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
 
@@ -177,7 +176,7 @@ class main extends CI_Controller
         //------------------------------------------------------------------------------------------
         if (count($post) <= 0)
             show_404();
-        
+
         if ($post->status == 0)
             show_error('Esta página foi suspensa temporariamente', 404);
 
@@ -190,7 +189,7 @@ class main extends CI_Controller
         if ($post->image) {
             $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $post->image);
         } else {
-            $this->wpanel->set_meta_image(base_url('media') . '/' . 
+            $this->wpanel->set_meta_image(base_url('media') . '/' .
                 $this->wpanel->get_config('logomarca'));
         }
 
@@ -236,15 +235,15 @@ class main extends CI_Controller
         // Recupera a lista de eventos.
         //------------------------------------------------------------------------------------------
         $query = $this->post->get_by_field(
-            array('page' => '2', 'status' => '1'), 
-            null, 
+            array('page' => '2', 'status' => '1'),
+            null,
             array('field' => 'created', 'order' => 'desc')
         );
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('events'));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
 
@@ -290,7 +289,7 @@ class main extends CI_Controller
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_url(site_url('search'));
-        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
 
@@ -313,7 +312,7 @@ class main extends CI_Controller
      */
     public function albuns()
     {
-        
+
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
         $this->load->model('album');
@@ -324,7 +323,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
-        $this->wpanel->set_meta_image(base_url('media') . '/' . 
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
 
         // Envia os dados para a view.
@@ -372,7 +371,7 @@ class main extends CI_Controller
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->data_content['album'] = $album;
-        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, 
+        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id,
             array('field' => 'created', 'order' => 'desc'));
 
         // Exibe o template.
@@ -395,7 +394,7 @@ class main extends CI_Controller
      */
     public function foto($foto_id)
     {
-        
+
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
         $this->load->model('album');
@@ -411,7 +410,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_description($foto->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($foto->descricao);
-        $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' . 
+        $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' .
             $foto->filename);
 
         // Envia os dados para a view.
@@ -497,7 +496,7 @@ class main extends CI_Controller
 		$this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('captcha', 'Confirmação', 'required|captcha');
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', 
+        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">',
             '</span></p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -545,11 +544,11 @@ class main extends CI_Controller
             $this->email->message($msg);
 
             if ($this->email->send()) {
-                $this->session->set_flashdata('msg_contato', 
+                $this->session->set_flashdata('msg_contato',
                     'Sua mensagem foi enviada com sucesso!');
                 redirect('contato');
             } else {
-                $this->session->set_flashdata('msg_contato', 
+                $this->session->set_flashdata('msg_contato',
                     'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
                 redirect('contato');
             }
@@ -567,10 +566,10 @@ class main extends CI_Controller
      */
 	public function rss()
     {
-        
+
         $this->load->model('post');
         $query = $this->post->get_list()->result();
-        
+
         $rss = '<?xml version="1.0" encoding="utf-8"?>';
         $rss .= '<rss version="2.0">';
         $rss .= '<channel>';
@@ -578,20 +577,20 @@ class main extends CI_Controller
         $rss .= '<description>'.$this->wpanel->get_config('site_desc').'</description>';
         $rss .= '<link>'.site_url().'</link>';
         $rss .= '<language>en</language>';
-        
+
         foreach($query as $row) {
             	$rss .= '<item>';
-                $rss .= "<title>$row->title</title>"; 
-                $rss .= "<description>$row->description</description>"; 
+                $rss .= "<title>$row->title</title>";
+                $rss .= "<description>$row->description</description>";
                 $rss .= "<lastBuildDate>$row->created</lastBuildDate>";
-                $rss .= "<link>".site_url('post/'.$row->link)."</link>";  
+                $rss .= "<link>".site_url('post/'.$row->link)."</link>";
                 $rss .= '</item>';
         }
-        
+
         $rss .= '</channel></rss>';
-        
+
         echo $rss;
-        
+
     }
 
     /**
@@ -605,17 +604,17 @@ class main extends CI_Controller
      */
     public function newsletter()
     {
-        
+
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', 
+        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">',
             '</span></p>');
 
         if ($this->form_validation->run() == FALSE) {
 
         	if(print("<script>alert('Preencha os dados no final da página.');</script>"))
-        		redirect();	
-        	
+        		redirect();
+
         } else {
             $this->load->model('newsletter');
             $dados_save = array(
@@ -627,10 +626,10 @@ class main extends CI_Controller
                 print("<script>alert('Seus dados foram salvos com sucesso, obrigado!');</script>");
                 redirect('');
             } else {
-                print("<script>alert('Erro, seus dados não puderam ser salvos, tente novamente mais 
+                print("<script>alert('Erro, seus dados não puderam ser salvos, tente novamente mais
                     tarde.');</script>");
                 redirect();
             }
         }
     }
-}	
+}

@@ -37,12 +37,10 @@
 				</div>
 			</div>
 		</section>
-		<section class="wpn-banner">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
-					</div>
+		<section class="wpn-banner container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
 				</div>
 			</div>
 		</section>
