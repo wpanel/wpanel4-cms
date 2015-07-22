@@ -76,7 +76,8 @@ class main extends CI_Controller
      */
 	public function index()
 	{
-
+        // Seleciona a página inicial de acordo com as configurações.
+        //------------------------------------------------------------------------------------------
 		switch ($this->wpanel->get_config('home_tipo')) {
             case 'page':
                 $this->load->model('post');
