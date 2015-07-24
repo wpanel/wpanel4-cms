@@ -36,7 +36,7 @@ class Posts extends MX_Controller {
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				$this->wpanel->categorias_do_post($row->id),
+				$this->wpanel->category_of_post($row->id),
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações

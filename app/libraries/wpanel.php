@@ -242,19 +242,19 @@ class wpanel
      * @param $post_id Int Código da postagem.
      * ---------------------------------------------------------------------------------------------
      */
-    // public function categorias_do_post($post_id)
-    // {
-    //     $str = '';
-    //     $this->load->model('categoria');
-    //     $this->load->model('post_categoria');
-    //     foreach ($this->post_categoria->list_by_post($post_id)->result() as $value)
-    //     {
-    //         $str .= anchor(
-    //                         'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
-    //                 ) . ' ';
-    //     }
-    //     return $str;
-    // }
+    public function category_of_post($post_id)
+    {
+        $str = '';
+        $this->load->model('categoria');
+        $this->load->model('post_categoria');
+        foreach ($this->post_categoria->list_by_post($post_id)->result() as $value)
+        {
+            $str .= anchor(
+                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
+                    ) . ' ';
+        }
+        return $str;
+    }
 
     /**
      * ---------------------------------------------------------------------------------------------
