@@ -56,6 +56,7 @@ if ($row->usa_smtp == 1) {
                     <li><a href="#layout" role="tab" data-toggle="tab">Layout</a></li>
                     <li><a href="#contato" role="tab" data-toggle="tab">Contatos</a></li>
                     <li><a href="#social" role="tab" data-toggle="tab">Social e compartilhamento</a></li>
+                    <li><a href="#backup" role="tab" data-toggle="tab">Backup dos dados</a></li>
                 </ul>
                 <div class="tab-content">
                     <!--Painel de configuração geral-->
@@ -284,6 +285,17 @@ if ($row->usa_smtp == 1) {
                                 <label for="link_likebox">Link da Fan-Page do Facebook para o likebox</label>
                                 <input type="text" name="link_likebox" id="link_likebox" value="<?= $row->link_likebox ?>" class="form-control" placeholder="" />
                             </div>
+                        </div>
+                    </div>
+                    <!-- Painel de backup dos dados -->
+                    <div class="tab-pane  panel panel-default" id="backup">
+                        <div class="panel-heading">
+                            Backup dos dados
+                        </div>
+                        <div class="panel-body">
+                            <p>Clique no botão abaixo para efetuar um backup do banco de dados. Todas as informações sobre postagens, banners, configurações serão salvas.</p>
+                            <p>Para fazer um backup dos arquivos, como as imagens, faça-o usando o painel de controle do provedor. Caso não tenha acesso, contate seu webmaster.</p>
+                            <p><?= anchor('admin/backups/execute', '<span class="glyphicon glyphicon-circle-arrow-down"></span> Fazer o backup', array('class'=>'btn btn-success')); ?></p>
                         </div>
                     </div>
                 </div>
