@@ -140,6 +140,9 @@
   	        <li <?= link_ativo('albuns'); ?>  <?= 
   	        	link_ativo('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
   	        </li>
+            <li <?= link_ativo('videos'); ?>> 
+              <?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>Vídeos</span>'); ?>
+            </li>
   	        <li <?= link_ativo('menus'); ?> <?= 
   	        	link_ativo('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
   	        </li>

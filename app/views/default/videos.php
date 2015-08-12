@@ -1,15 +1,3 @@
-<?php
-
-/**
- * Esta função retorna somente o código do vídeo.
- **/
-function get_code_video($var=''){
-	$x = explode('v=', $var);
-	$y = explode('&', $x[1]);
-	return $y[0];
-}
-
-?>
 <div class="row">
 	<div class="col-md-12">
 		<h3 class="page-header">Galeria de Vídeos</h3>
@@ -24,24 +12,23 @@ function get_code_video($var=''){
 	<?php
 	$col = 1; // Contador de itens.
 	$max_col = 3; // Número máximo de ítens por linha.
-	foreach($videos as $item){
+	foreach($query as $row){
 		?>
 		<div class="col-md-4">
-			<div class="Xthumbnail">
-				<!-- 400x300 -->
-				<?php
-				if ($enclosure = $item->get_enclosure())
-				{
+			<div class="thumbnail">
+				<div class="inner-video">
+					<!-- 400x300 -->
+					<?php
 					$image_properties = array(
-						'src' => $enclosure->get_thumbnail(),
+						'src' => 'http://img.youtube.com/vi/'.$row->link.'/0.jpg',
 						'class' => 'img-responsive'
 					);
-					echo anchor('video/'.get_code_video($item->get_link()), img($image_properties));
-				}
-				?>
-				<div class="caption">
-					<h4><?= $item->get_title(); ?></h4>
+					echo anchor('video/'.$row->link, img($image_properties));
+					?>
 				</div>
+			</div>
+			<div class="caption">
+				<h4><?= $row->titulo; ?></h4>
 			</div>
 		</div>
 		<?php

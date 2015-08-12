@@ -313,6 +313,37 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Fazendo dump de dados para tabela `videos`
+--
+
+INSERT INTO `videos` (`id`, `titulo`, `descricao`, `link`, `created`, `updated`, `status`) VALUES
+(1, 'Apresentação do WPanel CMS', 'Vídeo de apresentação do WPanel CMS',  'p95Nflq_wqc',  '2015-08-12 20:04:50',  '2015-08-12 20:04:50',  1),
+(2, 'Configuração do WPanel', 'Veja como fazer a configuração básica do site pelo WPanel.', '1Dqnsva8APY',  '2015-08-12 20:11:20',  '2015-08-12 20:11:20',  1),
+(3, 'Cadastro de usuários', 'Vídeo sobre o gerenciamento básico de usuários no WPanel.',  'GquE1EVNKoc',  '2015-08-12 20:11:54',  '2015-08-12 20:11:54',  1),
+(4, 'Páginas e Postagens',  'Vídeo apresentando o gerenciamento de páginas e postagens no WPanel CMS.', 'PDArEJR3ny4',  '2015-08-12 20:13:01',  '2015-08-12 20:13:01',  1),
+(5, 'Banners',  'Vídeo sobre o gerenciamento de banners no WPanel.',  'gY46fXNbmmg',  '2015-08-12 20:14:07',  '2015-08-12 20:14:07',  1),
+(6, 'Álbum de fotos', 'Este vídeo mostra como gerenciar álbuns de fotos no WPanel CMS.',  'GVUIvYW9Z_c',  '2015-08-12 20:14:47',  '2015-08-12 20:14:47',  1);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `users`
 --
 

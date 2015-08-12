@@ -439,17 +439,18 @@ class main extends CI_Controller
     public function videos()
     {
 
-    	// Recupera a lista de vídeos com a biblioteca Simplepie.
+        // Recupera a lista de vídeos.
         //------------------------------------------------------------------------------------------
-        $this->load->library('Simplepie');
-        $this->simplepie->set_feed_url($this->wpanel->get_config('youtube_rss'));
-        $this->simplepie->set_cache_location(APPPATH . 'cache/rss');
-        $this->simplepie->init();
-        $this->simplepie->handle_content_type();
+        $this->load->model('video');
+        $query = $this->video->get_by_field(
+            'status', 
+            '1', 
+            array('field'=>'created','order'=>'desc')
+        )->result();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['videos'] = $this->simplepie->get_items();
+        $this->data_content['query'] = $query;
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
@@ -473,7 +474,8 @@ class main extends CI_Controller
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['code'] = $code;
+        $this->load->model('video');
+        $this->data_content['video'] = $this->video->get_by_field('link', $code)->row();
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
