@@ -263,4 +263,32 @@ class Dashboard extends MX_Controller {
 			}
 		}
 	}
-} //END Class dashboard.
+
+	/**
+	 * Este método executa a atualiação do banco de dados do WPanel CMS.
+	 * Execute-o durante a instalação e a cada atualização que fizer, em
+	 * seguida comente o código por segurança.
+	 */
+	public function migrate($version = null)
+	{
+		$this->load->library('migration');
+		if($version == null){
+			if($this->migration->latest())
+			{
+				redirect('admin/login');
+			} else {
+				echo $this->migration->error_string();
+			}
+		} else {
+			if($this->migration->version($version))
+			{
+				redirect('admin/login');
+			} else {
+				echo $this->migration->error_string();
+			}
+		}
+	}
+
+} 
+
+//END Class dashboard.
