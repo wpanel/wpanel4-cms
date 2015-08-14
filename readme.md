@@ -26,10 +26,12 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 
 - Faça o download ou clone este repositório;
 - Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
-- Crie uma base de dados e carregue o database.sql incluíudo, em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
-- Acesse pelo navegador, o site de exemplo já deve estar funcionando.
+- Crie uma base de dados e em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
+- Execute o migration acessando pelo navegador: http://seusite/index.php/admin/dashboard/migrate
+- Acesse o site novamente pelo navegador, o site de exemplo já deve estar funcionando.
 - Acesse o painel de controle adicionando /admin à URL.
 - Será solicitado que cadastre um administrador inicial.
+- Comente o método migrate() do controller /app/modules/admin/controller/dashboard.php se quiser evitar a execussão acidental do migrate;
 
 #Licença
 
