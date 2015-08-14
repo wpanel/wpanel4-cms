@@ -31,7 +31,7 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 - Acesse o site novamente pelo navegador, o site de exemplo já deve estar funcionando.
 - Acesse o painel de controle adicionando /admin à URL.
 - Será solicitado que cadastre um administrador inicial.
-- Comente o método migrate() do controller /app/modules/admin/controller/dashboard.php se quiser evitar a execussão acidental do migrate;
+- Comente o método migrate() do controller /app/modules/admin/controller/dashboard.php se quiser evitar a execução acidental do migrate;
 
 #Licença
 
