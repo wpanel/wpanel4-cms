@@ -6,14 +6,14 @@ if (!defined('BASEPATH'))
 class formlib 
 {
 
-    private $form_title 	= ''; // Título do form exibido no 'panel'.
-    private $form_submitaction 	= ''; // Endereço completo do action (http://endereco/completo).
-    private $form_cancelaction 	= ''; // Endereço completo do cancelamento (http://endereco/completo).
-    private $form_submit_label 	= 'Submit'; // Texto do botão de submit.
-    private $form_cancel_label 	= 'Cancel'; // Texto do botão de cancelamento.
-    private $form_type 		= 'post'; // Tipo de envio: post, get, multipart.
-    private $form_role 		= 'form'; // Tag 'role' usada pelo bootstrap.
-    private $form_itens 	= array(); // array com os itens do formulário.
+    private $form_title     = ''; // Título do form exibido no 'panel'.
+    private $form_submitaction  = ''; // Endereço completo do action (http://endereco/completo).
+    private $form_cancelaction  = ''; // Endereço completo do cancelamento (http://endereco/completo).
+    private $form_submit_label  = 'Submit'; // Texto do botão de submit.
+    private $form_cancel_label  = 'Cancel'; // Texto do botão de cancelamento.
+    private $form_type      = 'post'; // Tipo de envio: post, get, multipart.
+    private $form_role      = 'form'; // Tag 'role' usada pelo bootstrap.
+    private $form_itens     = array(); // array com os itens do formulário.
 
     public function __construct($config = array())
     {
@@ -141,11 +141,11 @@ class formlib
         $html = "";
         $html .= "<div class=\"panel panel-default\">\n";
         $html .= "<div class=\"panel-heading\">".$this->form_title."</div>\n";
-        $html .= "<div class=\"panel-body\">\n";
+        $html .= "<div class=\"panel-body\">\n\n";
         if($this->form_type == 'multipart'){
-            $html .= "<form action=\"".$this->form_submitaction."\" type=\"".$this->form_type."\" enctype=\"multipart/form-data\" role=\"".$this->form_role."\" >\n";
+            $html .= "<form action=\"".$this->form_submitaction."\" method=\"post\" enctype=\"multipart/form-data\" role=\"".$this->form_role."\" >\n";
         } else {
-            $html .= "<form action=\"".$this->form_submitaction."\" type=\"".$this->form_type."\" role=\"".$this->form_role."\" >\n";
+            $html .= "<form action=\"".$this->form_submitaction."\" method=\"".$this->form_type."\" role=\"".$this->form_role."\" >\n";
         }
         return $html;
     }
@@ -161,7 +161,7 @@ class formlib
         $html = "";
         $html .= "<button type=\"submit\" class=\"btn btn-success\">".$this->form_submit_label."</button>\n";
         $html .= "<a href=\"".$this->form_cancelaction."\" class=\"btn btn-danger\">".$this->form_cancel_label."</a>\n";
-        $html .= "\n</form>\n</div>\n</div>\n</div>";
+        $html .= "</form>\n\n</div>\n</div>\n</div>";
         return $html;
     }
 
@@ -192,7 +192,7 @@ class formlib
                 $html .= "<label for=\"".$item['id']."\">".$item['label']."</label>\n";
                 $html .= "<textarea class=\"form-control\" id=\"".$item['id']."\" name=\"".$item['name']."\" placeholder=\"".$item['placeholder']."\" rows=\"".$item['rows']."\">".$item['value']."</textarea>\n";
                 $html .= $this->show_error($item['error']);
-                $html .= "</div>\n";			
+                $html .= "</div>\n";            
                 break;
             case 'checkbox':
                 $html .= "<div class=\"checkbox\">\n<label>\n";
@@ -228,7 +228,7 @@ class formlib
                 $html .= $this->show_error($item['error']);
                 $html .= "</div>\n";
                 break;
-        }		
+        }       
         return $html;
     }
 
@@ -256,11 +256,11 @@ class formlib
      */
     public function get_form()
     {
-    	$html = "";
-    	$html .= $this->form_header();
-    	$html .= $this->get_items();
-    	$html .= $this->form_footer();
-    	return $html;
+        $html = "";
+        $html .= $this->form_header();
+        $html .= $this->get_items();
+        $html .= $this->form_footer();
+        return $html;
     }
 
 }
