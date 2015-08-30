@@ -26,7 +26,6 @@ class main extends CI_Controller
 
         // Defini algumas variáveis usadas no header e footer do template.
         // -----------------------------------------------------------------------------------------
-		$this->data_header['wpn_meta']                = $this->wpanel->get_meta();
 		$this->data_header['wpn_title']               = $this->wpanel->get_titulo();
 		$this->data_header['wpn_assets']              = base_url('assets');
 		$this->data_header['wpn_header_addthis']      = $this->wpanel->get_header_addthis();
@@ -140,6 +139,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
@@ -193,6 +193,7 @@ class main extends CI_Controller
             $this->wpanel->set_meta_image(base_url('media') . '/' .
                 $this->wpanel->get_config('logomarca'));
         }
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
@@ -247,6 +248,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -293,6 +295,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
@@ -326,6 +329,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_title('Álbuns de fotos');
         $this->wpanel->set_meta_image(base_url('media') . '/' .
             $this->wpanel->get_config('logomarca'));
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -368,6 +372,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($album->titulo);
         $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $album->capa);
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -413,6 +418,7 @@ class main extends CI_Controller
         $this->wpanel->set_meta_title($foto->descricao);
         $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' .
             $foto->filename);
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -448,6 +454,16 @@ class main extends CI_Controller
             array('field'=>'created','order'=>'desc')
         )->result();
 
+        // Seta as variáveis 'meta'.
+        //------------------------------------------------------------------------------------------
+        $this->wpanel->set_meta_url(site_url('videos'));
+        $this->wpanel->set_meta_description('Lista de vídeos');
+        $this->wpanel->set_meta_keywords(' videos, filmes');
+        $this->wpanel->set_meta_title('Vídeos');
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
+            $this->wpanel->get_config('logomarca'));
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->data_content['query'] = $query;
@@ -472,10 +488,24 @@ class main extends CI_Controller
     public function video($code)
     {
 
+        // Recupera os dados do vídeo.
+        //------------------------------------------------------------------------------------------
+        $query = $this->video->get_by_field('link', $code)->row();
+
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->load->model('video');
-        $this->data_content['video'] = $this->video->get_by_field('link', $code)->row();
+        $this->data_content['video'] = $query;
+
+        // Seta as variáveis 'meta'.
+        //------------------------------------------------------------------------------------------
+        $this->wpanel->set_meta_url(site_url('video/'.$code));
+        $this->wpanel->set_meta_description($query->titulo);
+        $this->wpanel->set_meta_keywords(' videos, filmes');
+        $this->wpanel->set_meta_title($query->titulo);
+        $this->wpanel->set_meta_image(base_url('media') . '/' .
+            $this->wpanel->get_config('logomarca'));
+        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o template.
         //------------------------------------------------------------------------------------------
@@ -504,9 +534,23 @@ class main extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
 
+            // Seta as variáveis 'meta'.
+            //--------------------------------------------------------------------------------------
+            $this->wpanel->set_meta_url(site_url('contato'));
+            $this->wpanel->set_meta_description('Formulário de contato');
+            $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
+            $this->wpanel->set_meta_title('Contato');
+            $this->wpanel->set_meta_image(base_url('media') . '/' .
+                $this->wpanel->get_config('logomarca'));
+            $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+
+            // Recupera a imagem de captcha.
+            //--------------------------------------------------------------------------------------
         	$this->data_content['contact_content'] = $this->wpanel->get_config('texto_contato');
             $this->data_content['captcha'] = $this->form_validation->get_captcha();
 
+            // Exibe o template.
+            //--------------------------------------------------------------------------------------
 			$this->load->view($this->template.'/header', $this->data_header);
 			$this->load->view($this->template.'/contact', $this->data_content);
 			$this->load->view($this->template.'/footer', $this->data_footer);
