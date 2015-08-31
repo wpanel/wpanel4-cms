@@ -69,7 +69,6 @@ class Configuracoes extends MX_Controller {
 			$dados_save['copyright'] = $this->input->post('copyright');
 			$dados_save['addthis_uid'] = $this->input->post('addthis_uid');
 			$dados_save['texto_contato'] = $this->input->post('texto_contato');
-			$dados_save['youtube_rss'] = $this->input->post('youtube_rss');
 			$dados_save['google_analytics'] = $this->input->post('google_analytics');
 			$dados_save['bgcolor'] = $this->input->post('bgcolor');
 

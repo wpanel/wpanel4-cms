@@ -266,10 +266,6 @@ if ($row->usa_smtp == 1) {
                                 <input type="text" name="addthis_uid" id="addthis_uid" value="<?= $row->addthis_uid ?>" class="form-control" placeholder="" />
                             </div>
                             <div class="form-group">
-                                <label for="youtube_rss">RSS do Youtube para exibição de vídeos</label>
-                                <input type="text" name="youtube_rss" id="youtube_rss" value="<?= $row->youtube_rss ?>" class="form-control" placeholder="" />
-                            </div>
-                            <div class="form-group">
                                 <label for="link_instagram">Link para a conta do Instagram</label>
                                 <input type="text" name="link_instagram" id="link_instagram" value="<?= $row->link_instagram ?>" class="form-control" placeholder="" />
                             </div>
