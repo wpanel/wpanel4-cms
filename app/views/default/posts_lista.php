@@ -1,10 +1,18 @@
-<h3 class="page-header">Eventos</h3>
-<?php foreach ($posts->result() as $post) { ?>
+<?php
+
+if ($titulo_view) {
+    echo '<h3 class="page-header">'.$titulo_view.'</h3>';
+    echo '<p>'.$descricao_view.'</p>';
+}
+
+foreach ($posts->result() as $post) {
+    ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
             <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
-                <span><b>Data</b> <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> | <b>Local</b> <?php echo $post->description; ?><br/></span>
+                <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
+                <small><?= $this->widget->run('categoryfrompost', array('post_id' => $post->id)); ?></small>
             </p>
             <?php
             if ($post->image) {

@@ -6,6 +6,10 @@ class main extends CI_Controller
     // Define o template a ser usado.
 	var $template = 'default';
 
+    // Definições da listagem de postagens.
+    var $default_posts_view = 'lista';
+    var $num_cols_mosaico = 2;
+
     // Define as variáveis mais usadas no controller.
 	var $data_header = array();
 	var $data_content = array();
@@ -59,6 +63,7 @@ class main extends CI_Controller
          */
 
         echo '<meta charset="UTF-8">';
+        echo '<title>Página inicial personalizada</title>';
         echo '<h1>Página inicial personalizada do wPanel.</h1>';
         echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações >
                 Página inicial.</p>';
@@ -127,10 +132,13 @@ class main extends CI_Controller
 
             $qry_category = $this->categoria->get_by_id($category_id)->row();
             $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc');
-            $view = strtolower($qry_category->view);
             $this->data_content['titulo_view'] = $qry_category->title;
             $this->data_content['descricao_view'] = $qry_category->description;
 
+            // Configurações da view estilo mosaico:
+            //--------------------------------------------------------------------------------------
+            $this->default_posts_view = strtolower($qry_category->view);
+            $this->data_content['max_cols'] = $this->num_cols_mosaico;
         }
 
         // Seta as variáveis 'meta'.
@@ -144,7 +152,7 @@ class main extends CI_Controller
         // Exibe o template.
         //------------------------------------------------------------------------------------------
         $this->load->view($this->template.'/header', $this->data_header);
-		$this->load->view($this->template.'/posts', $this->data_content);
+		$this->load->view($this->template.'/posts_' . $this->default_posts_view, $this->data_content);
 		$this->load->view($this->template.'/footer', $this->data_footer);
 
     }
