@@ -56,8 +56,8 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="image">Foto do usuário</label>
-                            <input type="file" name="image" class="form-control" />
+                            <label for="userfile">Foto do usuário</label>
+                            <input type="file" name="userfile" class="form-control" />
                             <div class="checkbox">
                                 <label>
                                     <?= form_checkbox('alterar_imagem', '1', false); ?>
@@ -68,7 +68,11 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <img src="<?= base_url('media/avatar') . '/'.$row->image; ?>" class="img-responsive" width="120" />
+                        <?php if($row->image){ ?>
+                            <img src="<?= base_url('media/avatar') . '/'.$row->image; ?>" class="img-responsive" width="120" />
+                        <?php } else { ?>
+                            <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" width="120" />
+                        <?php } ?>
                     </div>
                      <div class="col-md-2">
                         <div class="form-group">

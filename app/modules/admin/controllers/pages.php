@@ -77,7 +77,7 @@ class Pages extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['image'] = $this->upload();
+			$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
 			$dados_save['page'] = '1';
@@ -145,8 +145,9 @@ class Pages extends MX_Controller {
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
-				$this->remove_image($id);
-				$dados_save['image'] = $this->upload();
+				$postagem = $this->post->get_by_id($id)->row();
+				$this->post->remove_media('capas/' . $postagem->image);
+				$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
 			}
 
 			$upd_post = $this->post->update($id, $dados_save);
@@ -185,7 +186,8 @@ class Pages extends MX_Controller {
 
 		$this->load->model('post');
 
-		$this->remove_image($id);
+		$postagem = $this->post->get_by_id($id)->row();
+		$this->post->remove_media('capas/' . $postagem->image);
 
 		if($this->post->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Página excluída com sucesso.');
@@ -195,54 +197,5 @@ class Pages extends MX_Controller {
 			redirect('admin/pages');
 		}
 	}
-
-	private function upload()
-	{
-
-		$config['upload_path'] = './media/capas/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '1000';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-		$config['remove_spaces'] = TRUE;
-		$config['file_name'] = md5(date('YmdHis'));
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload())
-		{
-			$upload_data = array();
-			$upload_data = $this->upload->data();
-			return $upload_data['file_name'];
-		} else {
-			return false;
-		}
-
-	}
-
-	/**
-	 * Este método faz a exclusão de uma imagem de capa.
-	 *
-	 * @return boolean
-	 * @param $id Integer ID da postagem.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	private function remove_image($id)
-    {
-    	$this->load->model('post');
-        $post = $this->post->get_by_id($id)->row();
-        $filename = './media/capas/' . $post->image;
-        if(file_exists($filename))
-        {
-            if(unlink($filename))
-            {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
 
 }

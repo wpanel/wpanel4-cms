@@ -160,5 +160,4 @@ class Configuracoes extends MX_Controller {
 			return FALSE;
 		}
 	}
-
 }

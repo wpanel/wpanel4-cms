@@ -52,7 +52,7 @@ class Usuarios extends MX_Controller {
 			$dados_save['name'] = $this->input->post('name');
 			$dados_save['email'] = $this->input->post('email');
 			$dados_save['skin'] = $this->input->post('skin');
-			$dados_save['image'] = $this->upload('image', 'nome');
+			$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
 			$dados_save['username'] = $this->input->post('username');
 			$dados_save['password'] = $this->input->post('password');
 			$dados_save['role'] = $this->input->post('role');
@@ -115,7 +115,9 @@ class Usuarios extends MX_Controller {
 
 			// Verifica se altera a imagem
 			if($this->input->post('alterar_imagem') == '1'){
-				$dados_save['image'] = $this->upload('image', $this->input->post('username'));
+				$query = $this->user->get_by_id($id)->row();
+				$this->user->remove_media('avatar/' . $query->image);
+				$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
 			}
 
 			// Verifica se altera a senha.
@@ -156,31 +158,6 @@ class Usuarios extends MX_Controller {
 			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir o usuário.');
 			redirect('admin/usuarios');
 		}
-	}
-
-	private function upload($field_name, $username) {
-
-		$config['upload_path'] = './media/avatar/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = '2000';
-		$config['max_width'] = '0';
-		$config['max_height'] = '0';
-		$config['remove_spaces'] = TRUE;
-		$config['overwrite'] = TRUE;
-		$config['file_name'] = $username;
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload($field_name)) {
-			$upload_data = array();
-			$upload_data = $this->upload->data();
-			return $upload_data['file_name'];
-		} else {
-			//$error = array('error' => $this->upload->display_errors());
-			return false;
-			//die(print_r($error));
-		}
-
 	}
 }
 

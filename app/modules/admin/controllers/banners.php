@@ -64,7 +64,7 @@ class banners extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['content'] = $this->upload();
+			$dados_save['content'] = $this->banner->upload_media('banners', 'gif|jpg|png');
 
 			$new_post = $this->banner->save($dados_save);
 
@@ -115,8 +115,10 @@ class banners extends MX_Controller {
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
-				$this->remove_image($id);
-				$dados_save['content'] = $this->upload();
+				$banner = $this->banner->get_by_id($id)->row();
+				$this->banner->remove_media('banners/' . $banner->content);
+
+				$dados_save['content'] = $this->banner->upload_media('banners', 'gif|jpg|png');
 			}
 
 			$new_post = $this->banner->update($id, $dados_save);
@@ -141,9 +143,10 @@ class banners extends MX_Controller {
 			redirect('admin/banners');
 		}
 
+		// Remove o arquivo do banner.
 		$this->load->model('banner');
-
-		$this->remove_image($id);
+		$banner = $this->banner->get_by_id($id)->row();
+		$this->banner->remove_media('banners/' . $banner->content);
 
 		if($this->banner->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Banner excluído com sucesso.');
@@ -153,54 +156,5 @@ class banners extends MX_Controller {
 			redirect('admin/banners');
 		}
 	}
-
-	private function upload()
-	{
-
-		$config['upload_path'] = './media/banners/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '2000';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-		$config['remove_spaces'] = TRUE;
-		$config['file_name'] = md5(date('YmdHis'));
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload())
-		{
-			$upload_data = array();
-			$upload_data = $this->upload->data();
-			return $upload_data['file_name'];
-		} else {
-			return false;
-		}
-
-	}
-
-	/**
-	 * Este método faz a exclusão de uma imagem de banner.
-	 *
-	 * @return boolean
-	 * @param $id Integer ID do banner.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	private function remove_image($id)
-    {
-    	$this->load->model('banner');
-        $banner = $this->banner->get_by_id($id)->row();
-        $filename = './media/banners/' . $banner->content;
-        if(file_exists($filename))
-        {
-            if(unlink($filename))
-            {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
 
 }

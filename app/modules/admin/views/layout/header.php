@@ -32,10 +32,10 @@
   }
 
   $avatar = $this->wpanel->get_from_user('image');
-  if($avatar == ''){
-    $avatar = base_url('lib/img') . '/no-user.jpg';
-  } else {
+  if($avatar){
     $avatar = base_url('media/avatar') . '/'.$avatar;
+  } else {
+    $avatar = base_url('lib/img') . '/no-user.jpg';
   }
 
   $msg_sistema = $this->session->flashdata('msg_sistema'); 

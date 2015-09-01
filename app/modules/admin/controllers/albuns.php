@@ -71,7 +71,7 @@ class albuns extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['capa'] = $this->upload();
+			$dados_save['capa'] = $this->album->upload_media('capas', 'gif|png|jpg');
 
 			$new_post = $this->album->save($dados_save);
 			mkdir('./media/albuns/'.$new_post);
@@ -119,8 +119,9 @@ class albuns extends MX_Controller {
 			
 			if($this->input->post('alterar_imagem')=='1')
 			{
-				$this->remove_image($id);
-				$dados_save['capa'] = $this->upload();
+				$query = $this->album->get_by_id($id)->row();
+				$this->album->remove_media('capas/' . $query->capa);
+				$dados_save['capa'] = $this->album->upload_media('capas', 'gif|png|jpg');
 			}
 
 			$new_post = $this->album->update($id, $dados_save);
@@ -146,7 +147,8 @@ class albuns extends MX_Controller {
 
 		$this->load->model('album');
 
-		$this->remove_image($id);
+		$query = $this->album->get_by_id($id)->row();
+		$this->album->remove_media('capas/' . $query->capa);
 
 		if($this->album->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Album excluído com sucesso.');
@@ -156,45 +158,4 @@ class albuns extends MX_Controller {
 			redirect('admin/albuns');
 		}
 	}
-
-	private function upload()
-	{
-
-		$config['upload_path'] = './media/capas/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '2000';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-		$config['remove_spaces'] = TRUE;
-		$config['file_name'] = md5(date('YmdHis'));
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload())
-		{
-			$upload_data = array();
-			$upload_data = $this->upload->data();
-			return $upload_data['file_name'];
-		} else {
-			return false;
-		}
-	}
-
-	private function remove_image($id)
-    {
-    	$this->load->model('album');
-        $album = $this->album->get_by_id($id)->row();
-        $filename = './media/capas/' . $album->capa;
-        if(file_exists($filename))
-        {
-            if(unlink($filename))
-            {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
 }

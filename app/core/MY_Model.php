@@ -157,6 +157,62 @@ class MY_Model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    /**
+     * Este método faz o upload de um arquivo de media de acordo
+     * com as variáveis informadas.
+     * 
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $path String - Caminho onde o arquivo será salvo.
+     * @param $types String - Tipos permitidos conforme a documentação do CI gif|png|jpg ...
+     * @param $fieldname - Nome do campo do formulário que estará enviando o arquivo.
+     * @return mixed
+     */
+    public function upload_media($path, $types, $fieldname = 'userfile')
+    {
+
+        $config['upload_path'] = './media/' . $path . '/';
+        $config['allowed_types'] = $types;
+        $config['remove_spaces'] = TRUE;
+        $config['file_name'] = md5(date('YmdHis'));
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload($fieldname))
+        {
+            $upload_data = array();
+            $upload_data = $this->upload->data();
+            return $upload_data['file_name'];
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Este método remove um arquivo físico de media.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $file String - Caminho/Nome do arquivo a ser excluído.
+     * @return boolean
+     */
+    public function remove_media($file)
+    {
+
+        $filename = './media/' . $file;
+
+        if(file_exists($filename))
+        {
+            if(unlink($filename))
+            {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
 }
 
 // End class MY_Model

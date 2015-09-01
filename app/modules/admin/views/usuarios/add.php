@@ -50,8 +50,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="image">Foto do usuário</label>
-                            <input type="file" name="image" class="form-control" />
+                            <label for="userfile">Foto do usuário</label>
+                            <input type="file" name="userfile" class="form-control" />
                             <?= form_error('image'); ?>
                         </div>
                     </div>

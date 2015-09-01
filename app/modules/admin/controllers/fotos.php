@@ -5,7 +5,8 @@ class fotos extends MX_Controller {
 	function __construct()
 	{
 		$this->auth->protect('admin');
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', 
+			'</span></p>');
 	}
 
 	public function index($album_id)
@@ -21,9 +22,15 @@ class fotos extends MX_Controller {
 		// $query_album = $this->album->get_by_id($album_id)->row();
 
 		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">'));
+		$this->table->set_template(
+			array('table_open'  => '<table id="grid" class="table table-striped">')
+		);
 		$this->table->set_heading('#', 'Imagem', 'Descricao', 'Data', 'Status', 'Ações');
-		$query = $this->foto->get_by_field('album_id', $album_id, array('field'=>'created', 'order'=>'desc'));
+		$query = $this->foto->get_by_field(
+			'album_id', 
+			$album_id, 
+			array('field'=>'created', 'order'=>'desc')
+		);
 
 		foreach($query->result() as $row)
 		{
@@ -43,8 +50,11 @@ class fotos extends MX_Controller {
 				mdate('%d/%m/%Y - %H:%i', strtotime($row->created)),
 				status_post($row->status),
 				div(array('class'=>'btn-group btn-group-sm')).
-				anchor('admin/fotos/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/fotos/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
+				anchor('admin/fotos/edit/'.$row->id, glyphicon('edit'), 
+					array('class' => 'btn btn-default')).
+				'<button class="btn btn-default" onClick="return confirmar(\'' . 
+					site_url('admin/fotos/delete/' . $row->id) . '\');">' . 
+			glyphicon('trash').'</button>' .
 				div(null,true)
 				);
 		}
@@ -75,7 +85,7 @@ class fotos extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['filename'] = $this->upload($album_id);
+			$dados_save['filename'] = $this->foto->upload_media('albuns/'.$album_id, 'gif|png|jpg');
 
 			$new_post = $this->foto->save($dados_save);
 
@@ -119,7 +129,8 @@ class fotos extends MX_Controller {
       for($i = 0; $i < sizeof($fotos); $i++)
       {
 
-        $nome = $album_id . '_' . time() . '_' . str_replace(array(' ', ',', '-'), '', $fotos["name"][$i]);
+        $nome = $album_id . '_' . time() . '_' . str_replace(array(' ', ',', '-'), '', 
+        	$fotos["name"][$i]);
         $tmpname = $fotos["tmp_name"][$i];
         $caminho = $pasta . $nome;
 
@@ -180,8 +191,9 @@ class fotos extends MX_Controller {
 
 			if($this->input->post('alterar_imagem')=='1')
 			{
-				$this->remove_image($id);
-				$dados_save['filename'] = $this->upload($row->album_id);
+				$query = $this->foto->get_by_id($id)->row();
+				$this->foto->remove_media('albuns/' . $query->album_id . '/' . $query->filename);
+				$dados_save['filename'] = $this->foto->upload_media('albuns/' . $query->album_id . '/', 'gif|png|jpg');
 			}
 
 			$new_post = $this->foto->update($id, $dados_save);
@@ -207,7 +219,7 @@ class fotos extends MX_Controller {
 
 		$this->load->model('foto');
 		$qry_foto = $this->foto->get_by_id($id)->row();
-		$this->remove_image($id);
+		$this->foto->remove_media('albuns/' . $qry_foto->album_id . '/' . $qry_foto->filename);
 
 		if($this->foto->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Foto excluída com sucesso.');
@@ -217,52 +229,4 @@ class fotos extends MX_Controller {
 			redirect('admin/fotos/index/'.$qry_foto->album_id);
 		}
 	}
-
-	private function upload($album_id)
-	{
-
-		$config['upload_path'] = './media/albuns/'.$album_id.'/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '2000';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-		$config['remove_spaces'] = TRUE;
-		$config['file_name'] = md5(date('YmdHis'));
-
-		$this->load->library('upload', $config);
-
-		if ($this->upload->do_upload())
-		{
-			$upload_data = array();
-			$upload_data = $this->upload->data();
-			return $upload_data['file_name'];
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Este método faz a exclusão de uma imagem de banner.
-	 *
-	 * @return boolean
-	 * @param $id Integer ID do banner.
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	private function remove_image($id)
-    {
-    	$this->load->model('foto');
-        $qry_foto = $this->foto->get_by_id($id)->row();
-        $filename = './media/albuns/' . $qry_foto->album_id . '/' . $qry_foto->filename;
-        if(file_exists($filename))
-        {
-            if(unlink($filename))
-            {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
 }
