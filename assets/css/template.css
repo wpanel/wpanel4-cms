@@ -64,7 +64,7 @@ body {
     border-left:0;  
 }
 .nav-tabs > li > a:hover {
-  border-color: #eee #eee #72afd2; /*#6D9C91; */
+  border-color: #eee #eee #72afd2;
   color: #3c8dbc;
   border-radius:0;
   background-color:#f9f9f9;
@@ -103,8 +103,8 @@ body {
     text-transform:uppercase;
 }
 .wpn-content p {
-    margin-top:50px;
-    margin-bottom:30px;
+    /*margin-top:50px;*/
+    /*margin-bottom:30px;*/
     color:#090909;
 }
 .wpn-postagens {}
