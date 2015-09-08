@@ -3076,6 +3076,58 @@ table.text-center th {
   margin: 10px 0;
 }
 /*
+ * Page: Setup WPanel CMS
+ * ----------------------
+ */
+.setup-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+.setup-logo a,
+.register-logo a {
+  color: #444;
+}
+.setup-page,
+.register-page {
+  background: #d2d6de;
+}
+.setup-box,
+.register-box {
+  width: 560px;
+  margin: 7% auto;
+}
+@media (max-width: 768px) {
+  .setup-box,
+  .register-box {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+.setup-box-body,
+.register-box-body {
+  background: #fff;
+  padding: 20px;
+  color: #444;
+  border-top: 0;
+  color: #666;
+}
+.setup-box-body .form-control-feedback,
+.register-box-body .form-control-feedback {
+  color: #777;
+}
+.setup-box-msg,
+.register-box-msg {
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+}
+.social-auth-links {
+  margin: 10px 0;
+}
+/*
  * Page: 400 and 500 error pages
  * ------------------------------
  */

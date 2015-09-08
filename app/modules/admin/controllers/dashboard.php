@@ -51,9 +51,6 @@ class Dashboard extends MX_Controller {
 		$content_vars['total_posts'] = $this->db->count_all('posts');
 		//----------------------------------------------------------------------------------------------------
 
-		//$layout_vars['content'] = $this->load->view('dashboard', $content_vars, TRUE);
-
-		//$this->load->view('layout', $layout_vars);
 		$this->wpanel->load_view('dashboard/index', $content_vars);
 
 	}
@@ -67,10 +64,8 @@ class Dashboard extends MX_Controller {
 	public function login()
 	{
 		$this->load->model('user');
-		if ($this->user->inicial_user() == false)
-		{
-			redirect('admin/dashboard/firstadmin');
-		}
+		
+		if ($this->user->inicial_user() == false) redirect('admin/dashboard/firstadmin');
 
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('password', 'Senha', 'required');
@@ -78,9 +73,7 @@ class Dashboard extends MX_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->load->view('layout/login');
-		} 
-		else 
-		{
+		} else {
 			$conf_login = array('user_field' => $_POST['email'],'pass_field' => $_POST['password']);
 			$this->auth->login($conf_login);
 		}
@@ -95,63 +88,6 @@ class Dashboard extends MX_Controller {
 	public function logout()
 	{
 		$this->auth->logout();
-	}
-
-	/**
-	 * Este método faz o cadastro do primeiro administrador do wpanel.
-	 *
-	 * @return void
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
-	public function firstadmin()
-	{
-
-		$this->load->model('user');
-		if ($this->user->inicial_user() == true)
-		{
-			redirect('admin/dashboard/login');
-		}
-		
-		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
-		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
-		$this->form_validation->set_rules('name', 'Nome completo', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-
-		if ($this->form_validation->run() == FALSE)
-		{
-
-			$layout_vars = array();
-			$content_vars = array();
-
-			$this->load->view('/dashboard/firstadmin', $layout_vars);
-
-		} 
-		else 
-		{
-
-			$dados_save = array(
-				'name' => $this->input->post('name'),
-				'email' => $this->input->post('email'),
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
-				'skin' => 'blue',
-				'role' => 'admin',
-				'created' => date('Y-m-d H:i:s'),
-				'updated' => date('Y-m-d H:i:s'),
-				'status' => 1
-			);
-
-			if($this->user->save($dados_save))
-			{
-				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-				redirect('admin/dashboard/login');
-			} 
-			else 
-			{
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-				redirect('admin/dashboard/firstadmin');
-			}
-		}
 	}
 	
 	/**
@@ -183,9 +119,7 @@ class Dashboard extends MX_Controller {
 			if($recovery_key == null)
 			{
 				$this->load->view('dashboard/recovery');
-			}
-			else
-			{
+			} else {
 
 				$this->load->model('user');
 				$chave	= explode(',', base64_decode(strrev($recovery_key)));
@@ -217,16 +151,12 @@ class Dashboard extends MX_Controller {
 
 					$this->session->set_flashdata('msg_auth', 'Sua senha foi redefinida e enviamos seus novos dados de acesso para seu email, caso não receba verifique sua caixa de SPAM.');
 					redirect('admin/login');
-				}
-				else
-				{
+				} else {
 					$this->session->set_flashdata('msg_recover', 'Houve um problema e sua senha não pode ser redefinida, entre em contato conosco pelo email <b>'.$this->wpanel->get_config('site_contato').'</b>.');
 					redirect('admin/repass');
 				}
 			}
-		}
-		else
-		{
+		} else {
 
 			$this->load->model('user');
 
@@ -255,40 +185,12 @@ class Dashboard extends MX_Controller {
 
 				$this->session->set_flashdata('msg_auth', 'Enviamos as instruções para redefinição de sua senha no seu email informado no cadastro.');
 				redirect('admin/login');
-			}
-			else
-			{
+			} else {
 				$this->session->set_flashdata('msg_recover', 'Usuário inexistente.');
 				redirect('admin/repass');
 			}
 		}
 	}
-
-	/**
-	 * Este método executa a atualiação do banco de dados do WPanel CMS.
-	 * Execute-o durante a instalação e a cada atualização que fizer, em
-	 * seguida comente o código por segurança.
-	 */
-	public function migrate($version = null)
-	{
-		$this->load->library('migration');
-		if($version == null){
-			if($this->migration->latest())
-			{
-				redirect('admin/login');
-			} else {
-				echo $this->migration->error_string();
-			}
-		} else {
-			if($this->migration->version($version))
-			{
-				redirect('admin/login');
-			} else {
-				echo $this->migration->error_string();
-			}
-		}
-	}
-
 } 
 
 //END Class dashboard.
