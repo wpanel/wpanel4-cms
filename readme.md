@@ -3,12 +3,14 @@
 
 Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para sites que eu desenvolvi para meus projetos de sites em PHP.
 
-A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos e plugins de terçeiros intermináveis que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, robusto e muito rápido, além de ser
+A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos e intermináveis plugins de terçeiros que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, robusto e muito rápido, além de ser
 muito popular, ter uma ótima documentação e uma boa comunidade.
 
-Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo já com uma otimização básica do SEO.
+Há muito o que fazer principalmente sobre a documentação, mas o projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo já com uma boa otimização SEO.
 
-É sem dúvida um bom ponto de partida para qualquer projeto. Não é uma obrigação, mas ficaria feliz em saber e contribuir nos projetos que forem desenvolvidos apartir do wpanel. :)
+É sem dúvida um bom ponto de partida para qualquer projeto. 
+
+Se gostar do CMS e resolver adotá-lo, envie-me um link com seus projetos desenvolvidos para adicionar ao 'Show-Case' em http://wpanelcms.com.br
 
 ##Painel de controle
 
@@ -21,17 +23,18 @@ Ainda há muito o que fazer, mas o projeto já está estável e funcionando bem,
 ###Requisitos
 
 - Servidor com PHP 5 e MySql.
+- Biblioteca Mcrypt.
 
 ###Instalação
 
 - Faça o download ou clone este repositório;
 - Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
-- Crie uma base de dados e em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que esteje usando;
-- Execute o migration acessando pelo navegador: http://seusite/index.php/admin/dashboard/migrate
+- Crie uma base de dados e em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que estiver usando;
+- Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup
+- Na tela seguinte, crie o usuário administrador inicial.
 - Acesse o site novamente pelo navegador, o site de exemplo já deve estar funcionando.
 - Acesse o painel de controle adicionando /admin à URL.
-- Será solicitado que cadastre um administrador inicial.
-- Comente o método migrate() do controller /app/modules/admin/controller/dashboard.php se quiser evitar a execução acidental do migrate;
+- É recomendável que remova ou renomeie o controller /app/controllers/setup.php
 
 #Licença
 
