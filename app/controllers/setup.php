@@ -8,18 +8,80 @@ class Setup extends CI_Controller
 
 	function __construct()
 	{
-
 		parent::__construct();
-
-		$this->load->library('migration');
-		$this->load->model('user');
-
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
 	public function index()
 	{
 
-		$this->load->view('setup/index', $this->layout_vars);
+		$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
+		$this->form_validation->set_rules('databasename', 'Base de dados', 'required');
+		$this->form_validation->set_rules('username', 'Usuário', 'required');
+		$this->form_validation->set_rules('password', 'Senha', 'required');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+
+			$this->load->view('setup/index', $this->layout_vars);
+
+		} else {
+
+			$this->load->helper('file');
+
+			$data = "";
+			$data .= "<?php if(!defined('BASEPATH')) exit('No direct script access allowed');\n\n";
+
+			$data .= "\$active_group = ENVIRONMENT;\n";
+			$data .= "\$active_record = TRUE;\n\n";
+
+			$data .= "/**\n";
+			$data .= " * Configurações para o ambiente de desenvolvimento.\n";
+			$data .= " */\n";
+			$data .= "\$db['development']['hostname'] = '".$this->input->post('servername')."';\n";
+			$data .= "\$db['development']['username'] = '".$this->input->post('username')."';\n";
+			$data .= "\$db['development']['password'] = '".$this->input->post('password')."';\n";
+			$data .= "\$db['development']['database'] = '".$this->input->post('databasename')."';\n";
+			$data .= "\$db['development']['dbdriver'] = 'mysql';\n";
+			$data .= "\$db['development']['dbprefix'] = '';\n";
+			$data .= "\$db['development']['pconnect'] = TRUE;\n";
+			$data .= "\$db['development']['db_debug'] = TRUE;\n";
+			$data .= "\$db['development']['cache_on'] = FALSE;\n";
+			$data .= "\$db['development']['cachedir'] = '';\n";
+			$data .= "\$db['development']['char_set'] = 'utf8';\n";
+			$data .= "\$db['development']['dbcollat'] = 'utf8_general_ci';\n";
+			$data .= "\$db['development']['swap_pre'] = '';\n";
+			$data .= "\$db['development']['autoinit'] = TRUE;\n";
+			$data .= "\$db['development']['stricton'] = FALSE;\n\n";
+
+			$data .= "/**\n";
+			$data .= " * Configurações para o ambiente de produção.\n";
+			$data .= " */\n";
+			$data .= "\$db['production']['hostname'] = '';\n";
+			$data .= "\$db['production']['username'] = '';\n";
+			$data .= "\$db['production']['password'] = '';\n";
+			$data .= "\$db['production']['database'] = '';\n";
+			$data .= "\$db['production']['dbdriver'] = 'mysql';\n";
+			$data .= "\$db['production']['dbprefix'] = '';\n";
+			$data .= "\$db['production']['pconnect'] = TRUE;\n";
+			$data .= "\$db['production']['db_debug'] = TRUE;\n";
+			$data .= "\$db['production']['cache_on'] = FALSE;\n";
+			$data .= "\$db['production']['cachedir'] = '';\n";
+			$data .= "\$db['production']['char_set'] = 'utf8';\n";
+			$data .= "\$db['production']['dbcollat'] = 'utf8_general_ci';\n";
+			$data .= "\$db['production']['swap_pre'] = '';\n";
+			$data .= "\$db['production']['autoinit'] = TRUE;\n";
+			$data .= "\$db['production']['stricton'] = FALSE;\n\n";
+
+			if ( ! write_file('./app/config/database.php', $data))
+			{
+				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: Verifique se você deu permissão de escrita na pasta /app/config');
+				redirect('setup');
+
+			} else {
+				redirect('setup/migrate');
+			}
+		}
 
 	}
 
@@ -29,21 +91,22 @@ class Setup extends CI_Controller
 	 */
 	public function migrate($version = null)
 	{
+		$this->load->library('migration');
 		if($version == null){
 			if($this->migration->latest())
 			{
 				redirect('setup/firstadmin');
 			} else {
-				echo '<h2>Ocorreram erros:</h2>';
-				echo $this->migration->error_string();
+				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: ' . $this->migration->error_string());
+				redirect('setup');
 			}
 		} else {
 			if($this->migration->version($version))
 			{
 				redirect('setup/firstadmin');
 			} else {
-				echo '<h2>Ocorreram erros:</h2>';
-				echo $this->migration->error_string();
+				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: ' . $this->migration->error_string());
+				redirect('setup');
 			}
 		}
 	}
@@ -56,6 +119,8 @@ class Setup extends CI_Controller
 	 **/
 	public function firstadmin()
 	{
+
+		$this->load->model('user');
 
 		/**
 		 * Verifica se já existe algum usuário cadastrado.

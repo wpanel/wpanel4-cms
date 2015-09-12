@@ -2,7 +2,7 @@
 	    </div>
 	    <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Versão</b> 2.0 | Página renderizada em <strong>{elapsed_time}</strong> segundos.
+          <b>Versão</b> 1.2.2 | Página renderizada em <strong>{elapsed_time}</strong> segundos.
         </div>
         <strong>Copyright &copy; <?= date('Y') ?> <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</strong>
       </footer>
