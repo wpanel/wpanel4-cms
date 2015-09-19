@@ -6,7 +6,7 @@ if ($titulo_view) {
 }
 
 ?>
-<div class="row wpn-postagens">
+<div class="row">
 	<?php
 	$x = 1;
 	foreach ($posts->result() as $post) {
@@ -14,7 +14,7 @@ if ($titulo_view) {
 		Configurar o valor da coluna do bootstrap de acordo com o total de colunas da view.
 		*/
 		?>
-	    <div class="col-md-6">
+	    <div class="col-md-6 wpn-postagens">
 	        <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
 	        <p class="text-muted">
 	            <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
@@ -40,6 +40,7 @@ if ($titulo_view) {
 	        }
 	        ?>
 	        <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+	        <p><?= anchor('post/'.$post->link, 'Continuar lendo...'); ?></p>
 	    </div>
 		<?php
 		if($max_cols == $x){ echo '</div><div class="row wpn-postagens">'; $x = 1; } else { $x = $x+1; }

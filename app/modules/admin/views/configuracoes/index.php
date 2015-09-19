@@ -217,9 +217,9 @@ if ($row->usa_smtp == 1) {
                             </div>
                             <h4 style="margin-top:20px;">Configurações de SMTP</h4>
                             <hr/>
-                            <div class="radio">
+                            <div class="checkbox">
                                 <label>
-                                    <input type="radio" name="usa_smtp" value="1" <?= $smtp_checked; ?> class="radio" />
+                                    <input type="checkbox" name="usa_smtp" value="1" <?= $smtp_checked; ?> class="checkbox" />
                                     Usar um SMTP próprio para enviar as mensagens de contato.
                                 </label>
                             </div>

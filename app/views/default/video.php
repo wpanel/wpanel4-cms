@@ -3,7 +3,7 @@
 		<h3 class="page-header"><?= $video->titulo; ?></h3>
 	</div>
 </div>
-<div class="row" style="margin-bottom: 10px;">
+<div class="row wpn-social-buttons">
     <div class="col-md-12">
         <?= $this->widget->run('addthisbuttons'); ?>
     </div>

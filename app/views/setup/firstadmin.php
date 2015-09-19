@@ -30,7 +30,8 @@
 
 				$msg_sistema = $this->session->flashdata('msg_auth');
 
-				if ($msg_sistema) echo alerts($msg_sistema, 'warning', true);
+				if ($msg_sistema) 
+					echo alerts($msg_sistema, 'warning', true);
 
 				$input_open = '<div class="form-group">';
 				$input_close = '</div>';

@@ -10,11 +10,9 @@
 	</ol>
 </section>
 <section class="content">
-
 	<div class="panel panel-default">
 		<div class="panel-heading">Novo cadastro de Videos</div>
 			<div class="panel-body">
-
 				<form action="<?= site_url('admin/videos/add'); ?>" method="post" role="form" >
 					<div class="form-group">
 						<label for="titulo">Titulo</label>
@@ -32,8 +30,8 @@
 						<?php
                         // Status do usuário
                         $options = array(
-                          '0'  => 'Indisponível',
-                          '1'    => 'Publicado'
+							'0'  => 'Indisponível',
+							'1'    => 'Publicado'
                         );
                         ?>
                         <label for="status">Status</label>
@@ -42,7 +40,6 @@
 					<button type="submit" class="btn btn-success">Salvar</button>
 					<a href="<?= site_url('admin/videos'); ?>" class="btn btn-danger">Cancelar</a>
 				</form>
-
 			</div>
 		</div>
 	</div>

@@ -496,13 +496,14 @@ class main extends CI_Controller
     public function video($code)
     {
 
+        $this->load->model('video');
+
         // Recupera os dados do vídeo.
         //------------------------------------------------------------------------------------------
         $query = $this->video->get_by_field('link', $code)->row();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->load->model('video');
         $this->data_content['video'] = $query;
 
         // Seta as variáveis 'meta'.
@@ -579,7 +580,7 @@ class main extends CI_Controller
             $msg .= "------------------------------------------------------\n\n";
             $msg .= "$mensagem";
             $msg .= "\n\n";
-            $msg .= "wPanel 11\n";
+            $msg .= "Enviado pelo WPanel CMS\n";
 
             $this->load->library('email');
             // Verifica se usa SMTP ou não
@@ -591,11 +592,14 @@ class main extends CI_Controller
                 $conf_email['smtp_user'] = $this->wpanel->get_config('smtp_usuario');
                 $conf_email['smtp_pass'] = $this->wpanel->get_config('smtp_senha');
                 $this->email->initialize($conf_email);
+                $this->email->from($this->wpanel->get_config('smtp_usuario'), 'Formulário de contato');
+            } else { 
+                $this->email->from($email, $nome); 
             }
+
             // Envia o email
-            $this->email->from($email, $nome);
             $this->email->to($this->wpanel->get_config('site_contato'));
-            $this->email->subject('[Mensagem do site]');
+            $this->email->subject('Mensagem do site - ['.$this->wpanel->get_titulo().']');
             $this->email->message($msg);
 
             if ($this->email->send()) {

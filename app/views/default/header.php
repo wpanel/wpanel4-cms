@@ -15,36 +15,45 @@
         <?= $wpn_background; ?>
     </head>
     <body>
-    	<section class="wpn-header">
-			<div class="container">
-				<div class="row">
-					<nav class="navbar navbar-default">
-						<div class="container">
-							<div class="navbar-header">
-								<a class="navbar-brand" href="<?= site_url(); ?>">
-									<!-- Use uma logomarca ou o título -->
-									<?= $wpn_logo; ?>
-									<?php //= $wpn_title; ?>
-								</a>
-							</div>
-							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-								<div class="menu">
-									<?= $this->widget->run('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav nav-tabs navbar-left')); ?>
-								</div>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</section>
-		<section class="wpn-banner container-fluid">
-			<div class="row">
-				<div class="col-md-12">
-					<?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
-				</div>
-			</div>
-		</section>
-		<section class="wpn-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-9">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="<?= site_url(); ?>">
+                                <?php 
+
+                                /*
+
+                                    Use uma logomarca ou o título!
+
+                                    Para imprimir a logomarca carregada no painel de controle
+                                    use o código:
+
+                                    echo $wpn_logo;
+
+                                    Para imprimir somente o título do site, geralmente usado
+                                    somente na navbar do bootstrap, use o código:
+
+                                    echo $wpn_title;
+
+                                */
+
+                                echo $wpn_title;
+
+                                ?>
+                            </a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <div class="menu">
+                                <?= $this->widget->run('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
+            </div>
+            <div class="row">
+                <div class="col-md-9">

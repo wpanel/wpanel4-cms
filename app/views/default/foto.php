@@ -1,4 +1,4 @@
-<div class="row" style="margin-bottom: 30px;">
+<div class="row">
 	<div class="col-md-12">
 		<h3 class="page-header"><?= $album->titulo; ?></h3>
 		<p><?= $album->descricao; ?></p>

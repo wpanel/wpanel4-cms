@@ -1,5 +1,5 @@
 <!-- Banner begin -->
-<div class="container <?= $class_name; ?>">
+<div class="<?= $class_name; ?>">
     <div id="carousel-widget" data-interval="false" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <?php

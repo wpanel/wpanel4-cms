@@ -7,8 +7,8 @@ if ($titulo_view) {
 
 foreach ($posts->result() as $post) {
     ?>
-    <div class="row wpn-postagens">
-        <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 wpn-postagens">
             <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
                 <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
@@ -34,6 +34,7 @@ foreach ($posts->result() as $post) {
             }
             ?>
             <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+            <p><?= anchor('post/'.$post->link, 'Continuar lendo...'); ?></p>
         </div>
     </div>
     <?php

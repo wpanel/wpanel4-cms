@@ -18,7 +18,6 @@ class Setup extends CI_Controller
 		$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
 		$this->form_validation->set_rules('databasename', 'Base de dados', 'required');
 		$this->form_validation->set_rules('username', 'Usuário', 'required');
-		$this->form_validation->set_rules('password', 'Senha', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{

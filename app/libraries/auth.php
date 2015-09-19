@@ -113,6 +113,7 @@ class Auth
 		else
 		{
 			$this->db->where($this->auth_username_field, $user);
+			$this->db->or_where('username', $user);
 			$this->db->where($this->auth_password_field, md5($pass));
 			$user_data = $this->db->get($this->auth_table_name)->row();
 			if ($user_data->{$this->auth_table_key})

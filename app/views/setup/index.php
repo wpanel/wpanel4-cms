@@ -29,9 +29,8 @@
 				<p>Crie uma base de dados em branco no seu servidor. Caso tenha dúvidas, <a href="http://wpanelcms.com.br/post/criando-um-novo-banco-de-dados-mysql-no-cpanel.html" target="_blank">assista este tutorial</a>. Em seguida preencha os campos abaixo com os dados da base de dados que você acabou de criar.</p>
 				<?php
 				$msg_setup = $this->session->flashdata('msg_setup');
-				if ($msg_setup) {
+				if ($msg_setup)
 					echo alerts($msg_setup, 'warning', true);
-				}
 			    ?>
 				<form action="<?= site_url('setup'); ?>" method="post" role="form" class="form-horizontal">
 					<div class="form-group">
