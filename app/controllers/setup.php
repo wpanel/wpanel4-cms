@@ -1,5 +1,22 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * -------------------------------------------------------------------------------------------------
+ * Classe Setup()
+ * 
+ * Esta classe faz a instalação (configuração) inicial do Wpanel CMS
+ * seguindo os seguintes passos:
+ *
+ * 1- Mostra um formulário para o usuário informar os dados da conexão;
+ * 2- Gera o arquivo /app/config/database.php com os dados informados;
+ * 3- Mostra um formulário para o usuário cadastrar o primeiro administrador;
+ * 4- Salva os dados do administrador e direciona o usuário para a tela de login;
+ *
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.2.2
+ * -------------------------------------------------------------------------------------------------
+ */
+
 class Setup extends CI_Controller
 {
 
@@ -12,20 +29,36 @@ class Setup extends CI_Controller
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * Este método mostra o formulário de configuração da conexão com
+	 * o banco de dados e efetua o processo de gerar o arquivo de
+	 * configuração da conexão do wpanelcms.
+	 *
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 * @return mixed
+	 * ---------------------------------------------------------------------------------------------
+	 */
 	public function index()
 	{
 
+		/*
+		 * -----------------------------------------------------------------------------------------
+		 * Defini as regras de validação do formulário
+		 * * ---------------------------------------------------------------------------------------
+		 */
 		$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
 		$this->form_validation->set_rules('databasename', 'Base de dados', 'required');
 		$this->form_validation->set_rules('username', 'Usuário', 'required');
 
 		if ($this->form_validation->run() == FALSE)
-		{
-
 			$this->load->view('setup/index', $this->layout_vars);
-
-		} else {
-
+		else {
+			/*
+			 * -------------------------------------------------------------------------------------
+			 * Gera o arquivo de configuração.
+			 * ---------------------------------------------------------------------------------------------
+			 */
 			$this->load->helper('file');
 
 			$data = "";
@@ -76,17 +109,21 @@ class Setup extends CI_Controller
 			{
 				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: Verifique se você deu permissão de escrita na pasta /app/config');
 				redirect('setup');
-
 			} else {
 				redirect('setup/migrate');
 			}
 		}
-
 	}
 
 	/**
+	 * ---------------------------------------------------------------------------------------------
 	 * Este método executa a atualiação do banco de dados do WPanel CMS.
 	 * Execute-o durante a instalação e a cada atualização que fizer.
+	 *
+	 * @author Eliel de Paula <dev@elieldepaula.com.br>
+	 * @param $version integer Número da versão de migrate.
+	 * @return mixed
+	 * ---------------------------------------------------------------------------------------------
 	 */
 	public function migrate($version = null)
 	{
@@ -126,7 +163,7 @@ class Setup extends CI_Controller
 		 */
 		if ($this->user->inicial_user() == true)
 		{
-			redirect('admin/dashboard/login');
+			redirect('admin/login');
 		}
 		
 		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
@@ -156,10 +193,10 @@ class Setup extends CI_Controller
 			if($this->user->save($dados_save))
 			{
 				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-				redirect('admin/dashboard/login');
+				redirect('admin/login');
 			} else {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-				redirect('admin/dashboard/firstadmin');
+				redirect('setup/firstadmin');
 			}
 		}
 	}

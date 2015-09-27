@@ -33,7 +33,7 @@
 				echo form_open('admin/login', array('role' => 'form'));
 				?>
 					<div class="form-group has-feedback">
-						<input type="email" name="email" class="form-control" placeholder="Nome de usuário ou email"/>
+						<input type="text" name="email" class="form-control" placeholder="Nome de usuário ou email"/>
 						<?= form_error('email'); ?>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
