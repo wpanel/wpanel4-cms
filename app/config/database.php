@@ -1,15 +1,15 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 $active_group = ENVIRONMENT;
 $active_record = TRUE;
 
 /**
- * Configurações para o ambiente development.
+ * Configurações para o ambiente de desenvolvimento.
  */
 $db['development']['hostname'] = 'localhost';
-$db['development']['username'] = ''; 
-$db['development']['password'] = ''; 
-$db['development']['database'] = ''; 
+$db['development']['username'] = 'root';
+$db['development']['password'] = 'root';
+$db['development']['database'] = 'wpanel_dev';
 $db['development']['dbdriver'] = 'mysql';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
@@ -23,12 +23,12 @@ $db['development']['autoinit'] = TRUE;
 $db['development']['stricton'] = FALSE;
 
 /**
- * Configurações para o ambiente production.
+ * Configurações para o ambiente de produção.
  */
-$db['production']['hostname'] = 'localhost';
-$db['production']['username'] = ''; 
-$db['production']['password'] = ''; 
-$db['production']['database'] = ''; 
+$db['production']['hostname'] = '';
+$db['production']['username'] = '';
+$db['production']['password'] = '';
+$db['production']['database'] = '';
 $db['production']['dbdriver'] = 'mysql';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;
@@ -41,6 +41,3 @@ $db['production']['swap_pre'] = '';
 $db['production']['autoinit'] = TRUE;
 $db['production']['stricton'] = FALSE;
 
-
-/* End of file database.php */
-/* Location: ./application/config/database.php */

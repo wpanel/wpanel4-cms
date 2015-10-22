@@ -32,7 +32,7 @@ class Logon extends MX_Controller {
 		if ($this->form_validation->run() == FALSE)
 			$this->load->load->view('logon/index');
 		else {
-			$conf_login = array('user_field' => $_POST['email'],'pass_field' => $_POST['password']);
+			$conf_login = array('user_field' => $this->input->post('email'),'pass_field' => $this->input->post('password'));
 			$this->auth->login($conf_login);
 		}
 	}

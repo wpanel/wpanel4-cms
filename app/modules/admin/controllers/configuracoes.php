@@ -13,6 +13,7 @@
 class Configuracoes extends MX_Controller {
 
 	function __construct() {
+		$this->auth->protect('configuracoes');
 		$this->load->model('configuracao');
 	}
 

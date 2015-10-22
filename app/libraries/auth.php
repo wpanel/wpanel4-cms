@@ -20,6 +20,7 @@ class Auth
 	var $auth_password_field 	= 'password';
 	var $auth_status_field 		= 'status';
 	var $auth_role_field 		= 'role';
+	var $auth_permissions_field	= 'permissions';
 	var $auth_login_redirect 	= '';
 	var $auth_logout_redirect	= '';
 	var $auth_msg_erro_login 	= 'You need login to access.';
@@ -115,6 +116,7 @@ class Auth
 			$this->db->where($this->auth_username_field, $user);
 			$this->db->or_where('username', $user);
 			$this->db->where($this->auth_password_field, md5($pass));
+			$this->db->where($this->auth_status_field, 1);
 			$user_data = $this->db->get($this->auth_table_name)->row();
 			if ($user_data->{$this->auth_table_key})
 			{
@@ -122,6 +124,7 @@ class Auth
 					$this->auth_table_key => $user_data->{$this->auth_table_key},
 					$this->auth_username_field => $user_data->{$this->auth_username_field},
 					$this->auth_role_field => $user_data->{$this->auth_role_field},
+					$this->auth_permissions_field => $user_data->{$this->auth_permissions_field},
 					$this->auth_name_field => $user_data->{$this->auth_name_field},
 					'logged_in' => TRUE
 				);
@@ -148,6 +151,7 @@ class Auth
 			$this->auth_table_key => null,
 			$this->auth_username_field => null,
 			$this->auth_role_field => null,
+			$this->auth_permissions_field => null,
 			$this->auth_name_field => null,
 			'logged_in' => TRUE
 		);
@@ -156,18 +160,21 @@ class Auth
 	}
 
 	/**
-	 * Protect some area checking the login and the role of the user
+	 * Protect some area checking the login and the role permissions of the user
 	 * in the CodeIgnitter Session.
 	 *
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 * @param $role String
+	 * @param $modulename String Name of the module in /app/config/modules.php
 	 * @return mixed
 	 */
-	public function protect($role = 'user')
+	public function protect($modulename = '')
 	{
 		if ($this->session->userdata('logged_in'))
 		{
-			if ($this->session->userdata($this->auth_role_field) != $role)
+			if (
+				($this->session->userdata($this->auth_role_field) == 'user') and 
+				(!in_array($modulename, unserialize($this->session->userdata($this->auth_permissions_field))))
+				)
 			{
 				$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_role);
 				return redirect($this->auth_logout_redirect);

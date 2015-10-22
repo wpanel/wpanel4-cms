@@ -16,7 +16,7 @@ class Dashboard extends MX_Controller {
 	public function index()
 	{
 
-		$this->auth->protect('admin');
+		$this->auth->protect('dashboard');
 		
 		$layout_vars = array();
 		$content_vars = array();

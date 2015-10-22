@@ -14,7 +14,7 @@ class Usuarios extends MX_Controller {
 
 	function __construct()
 	{
-		$this->auth->protect('admin');
+		$this->auth->protect('usuarios');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
@@ -59,6 +59,7 @@ class Usuarios extends MX_Controller {
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['status'] = $this->input->post('status');
+			$dados_save['permissions'] = serialize($this->input->post('permissions'));
 				
 
 			if($this->user->save($dados_save))
@@ -112,6 +113,7 @@ class Usuarios extends MX_Controller {
 			$dados_save['role'] = $this->input->post('role');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['status'] = $this->input->post('status');
+			$dados_save['permissions'] = serialize($this->input->post('permissions'));
 
 			// Verifica se altera a imagem
 			if($this->input->post('alterar_imagem') == '1'){

@@ -4,7 +4,7 @@ class banners extends MX_Controller {
 	
 	function __construct()
 	{
-		$this->auth->protect('admin');
+		$this->auth->protect('banners');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 

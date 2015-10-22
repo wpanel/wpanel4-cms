@@ -128,6 +128,29 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-12">
+                        <h4>Permissões de acesso para usuários comuns.</h4>
+                        <?php
+
+                        foreach(config_item('modules') as $mod)
+                        {
+                            $marcado = '';
+                            if(in_array($mod['modulename'], unserialize($row->permissions)))
+                            {
+                                $marcado = ' checked="checked"';
+                            }
+                            ?>
+                            <label class="btn btn-default">
+                                <input type="checkbox" id="permissions" name="permissions[]" value="<?= $mod['modulename']; ?>" <?= $marcado; ?> /> <?= $mod['description']; ?>
+                            </label>
+                            <?php 
+                        }
+
+                        ?>
+                        <hr/>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar alterações</button>
                         <?= anchor('admin/usuarios', 'Cancelar', array('class'=>'btn btn-danger')); ?>

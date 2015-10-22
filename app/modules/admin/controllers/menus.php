@@ -8,7 +8,7 @@ class menus extends MX_Controller
 
     function __construct()
     {
-        $this->auth->protect('admin');
+        $this->auth->protect('menus');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         $this->load->model('menu');
     }

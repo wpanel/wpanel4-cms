@@ -8,7 +8,7 @@ class newsletters extends MX_Controller
 
     function __construct()
     {
-        $this->auth->protect('admin');
+        $this->auth->protect('newsletters');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
     }
 
