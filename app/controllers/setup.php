@@ -185,6 +185,7 @@ class Setup extends CI_Controller
 				'password' => $this->input->post('password'),
 				'skin' => 'blue',
 				'role' => 'admin',
+				'permissions' => serialize(array()),
 				'created' => date('Y-m-d H:i:s'),
 				'updated' => date('Y-m-d H:i:s'),
 				'status' => 1
