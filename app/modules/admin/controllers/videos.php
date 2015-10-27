@@ -56,6 +56,7 @@ class Videos extends MX_Controller {
 		} else {
 
 			$dados = array();
+			$dados['user_id'] = $this->auth->get_userid();
 			$dados['titulo'] = $this->input->post('titulo');
 			$dados['descricao'] = $this->input->post('descricao');
 			$dados['link'] = $this->get_youtube_code($this->input->post('link'));

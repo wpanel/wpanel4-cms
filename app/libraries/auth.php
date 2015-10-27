@@ -12,7 +12,7 @@
  */
 class Auth 
 {
-
+	
 	var $auth_table_name 		= 'users';
 	var $auth_table_key 		= 'id';
 	var $auth_name_field 		= 'name';
@@ -114,7 +114,7 @@ class Auth
 		else
 		{
 			$this->db->where($this->auth_username_field, $user);
-			$this->db->or_where('username', $user);
+			$this->db->or_where('username', $user); // Modificação para o wpanel.
 			$this->db->where($this->auth_password_field, md5($pass));
 			$this->db->where($this->auth_status_field, 1);
 			$user_data = $this->db->get($this->auth_table_name)->row();

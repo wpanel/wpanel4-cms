@@ -171,6 +171,7 @@ class Migration_Database_inicial extends CI_Migration {
 		/* videos */
 
 		$this->dbforge->add_field("id");
+		$this->dbforge->add_field("`user_id` int(11) NOT NULL");
 		$this->dbforge->add_field("`titulo` varchar(255) NOT NULL");
 		$this->dbforge->add_field("`descricao` text NOT NULL");
 		$this->dbforge->add_field("`link` varchar(200) NOT NULL");
