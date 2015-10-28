@@ -161,7 +161,71 @@ class Usuarios extends MX_Controller {
 			redirect('admin/usuarios');
 		}
 	}
-}
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/usuarios.php */
+	public function profile()
+	{
+
+		$this->load->model('user');
+		$id = $this->wpanel->get_from_user('id');
+
+		// Verifica se altera a senha
+		if($this->input->post('alterar_senha') == '1'){
+			$this->form_validation->set_rules('password', 'Senha', 'required|md5');
+		}
+		
+		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
+		$this->form_validation->set_rules('name', 'Nome completo', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+
+			if($id == null){
+				$this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
+				redirect('admin/dashboard');
+			}
+
+			$layout_vars = array();
+			$content_vars = array();
+
+			$content_vars['id'] = $id;
+			$content_vars['row'] = $this->user->get_by_id($id)->row();
+			$this->wpanel->load_view('usuarios/profile', $content_vars);
+
+		} else {
+
+			$dados_save = array();
+			$dados_save['name'] = $this->input->post('name');
+			$dados_save['email'] = $this->input->post('email');
+			$dados_save['skin'] = $this->input->post('skin');
+			$dados_save['username'] = $this->input->post('username');
+			$dados_save['updated'] = date('Y-m-d H:i:s');
+
+			// Verifica se altera a imagem
+			if($this->input->post('alterar_imagem') == '1'){
+				$query = $this->user->get_by_id($id)->row();
+				$this->user->remove_media('avatar/' . $query->image);
+				$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
+			}
+
+			// Verifica se altera a senha.
+			if($this->input->post('alterar_senha') == '1'){
+				$dados_save['password'] = $this->input->post('password');
+			}
+
+			if($this->user->update($id, $dados_save))
+			{
+				if($this->input->post('alterar_senha') == '1'){
+					redirect('admin/logout');
+				} else {
+					$this->session->set_flashdata('msg_sistema', 'Seus dados foram salvos com sucesso.');
+					redirect('admin/usuarios/profile');
+				}
+			} else {
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
+				redirect('admin/usuarios/profile');
+			}
+
+		}
+	}
+}

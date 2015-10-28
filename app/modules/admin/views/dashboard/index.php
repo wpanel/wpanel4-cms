@@ -1,7 +1,19 @@
+<?php
+
+// Captura o avatar do usuário.
+
+$avatar = $this->wpanel->get_from_user('image');
+if($avatar)
+	$avatar = base_url('media/avatar') . '/'.$avatar;
+else
+	$avatar = base_url('lib/img') . '/no-user.jpg';
+
+?>
+
 <section class="content-header">
 	<h1>
 		Dashboard
-		<small>Seja bem vindo ao painel de controle do WPanel CMS.</small>
+		<small>Seja bem vindo ao WPanel CMS.</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><i class="fa fa-dashboard"></i> Dashboard</li>
@@ -10,6 +22,46 @@
 <section class="content">
 	<div class="box">
 		<div class="box-body">
+			<div class="row">
+				<div class="col-md-3"><img src="<?= $avatar; ?>" class="user-image" alt="<?= $this->auth->get_name(); ?>"/></div>
+				<div class="col-md-4">
+					<h2>Olá <?php echo $this->wpanel->get_from_user('name'); ?>.</h2>
+					<p><?php echo $this->wpanel->get_from_user('name'); ?> - <?php echo $this->wpanel->get_from_user('email'); ?></p>
+					<p>Cadastrado em <?php echo datetime_for_user($this->wpanel->get_from_user('created'), 0); ?></p>
+					<p><?php echo anchor('admin/usuarios/profile', 'Alterar meus dados', array('class'=>'btn btn-primary')); ?></p>
+				</div>
+				<div class="col-md-5">
+					<h4>Resumo do seu conteúdo</h4>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<td>Postagens</td>
+								<td><?php echo badge($total_posts); ?></td>
+							</tr>
+							<tr>
+								<td>Páginas</td>
+								<td><?php echo badge($total_paginas); ?></td>
+							</tr>
+							<tr>
+								<td>Banners</td>
+								<td><?php echo badge($total_banners); ?></td>
+							</tr>
+							<tr>
+								<td>Agendas</td>
+								<td><?php echo badge($total_agendas); ?></td>
+							</tr>
+							<tr>
+								<td>Álbuns e foto</td>
+								<td><?php echo badge($total_albuns); ?></td>
+							</tr>
+							<tr>
+								<td>Vídeos</td>
+								<td><?php echo badge($total_videos); ?></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-4" style="margin-top:10px;">
 					<a 
@@ -103,44 +155,7 @@
 					echo form_close();
 					?>
 				</div>
-				<div class="col-md-3">
-					<h4>Páginas e postagens</h4>
-					<table class="table table-striped">
-						<tbody>
-							<tr>
-								<td>Postagens cadastradas</td>
-								<td><?= badge($total_posts); ?></td>
-							</tr>
-							<tr>
-								<td>Postagens publicadas</td>
-								<td><?= badge($total_posts_publicados); ?></td>
-							</tr>
-							<tr>
-								<td>Postagens desativadas</td>
-								<td><?= badge($total_posts_rascunhos); ?></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="col-md-3">
-					<h4>Banners</h4>
-					<table class="table table-striped">
-						<tbody>
-							<tr>
-								<td>Banners cadastrados</td>
-								<td><?= badge($total_banners); ?></td>
-							</tr>
-							<tr>
-								<td>Banners publicados</td>
-								<td><?= badge($total_banners_publicados); ?></td>
-							</tr>
-							<tr>
-								<td>Banners desativados</td>
-								<td><?= badge($total_banners_rascunhos); ?></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<!-- /.../ -->
 			</div>
 		</div>
 	</div>

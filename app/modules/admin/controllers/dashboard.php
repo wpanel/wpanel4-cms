@@ -16,15 +16,19 @@ class Dashboard extends MX_Controller {
 	public function index()
 	{
 
-		$this->auth->protect('dashboard');
+		// $this->auth->protect('dashboard'); // Protege a dashboard (???)
 		
 		$layout_vars = array();
 		$content_vars = array();
 
+		/**
+		Fazer o resumo por usuário.
+		*/
+
 		//----------------------------------------------------------------------------------------------------
 		// Calcula os totais dos banners
 		//----------------------------------------------------------------------------------------------------
-		$this->db->like('status', '1');
+		/*$this->db->where('user_id', $this->wpanel->get_from_user('id'));
 		$this->db->from('banners');
 		$total_banners_publicados = $this->db->count_all_results();
 
@@ -44,15 +48,34 @@ class Dashboard extends MX_Controller {
 
 		$this->db->like('status', '0');
 		$this->db->from('posts');
-		$total_posts_rascunhos = $this->db->count_all_results();
+		$total_posts_rascunhos = $this->db->count_all_results();*/
 
-		$content_vars['total_posts_publicados'] = $total_posts_publicados;
-		$content_vars['total_posts_rascunhos'] = $total_posts_rascunhos;
-		$content_vars['total_posts'] = $this->db->count_all('posts');
+		//$this->db->where('user_id', $this->wpanel->get_from_user('id'));
+
+		$content_vars['total_posts'] = $this->calcula_totais('posts', '0');
+		$content_vars['total_paginas'] = $this->calcula_totais('posts', '1');
+		$content_vars['total_agendas'] = $this->calcula_totais('posts', '2');
+		$content_vars['total_banners'] = $this->calcula_totais('banners');
+		$content_vars['total_albuns'] = $this->calcula_totais('albuns');
+		$content_vars['total_videos'] = $this->calcula_totais('videos');
 		//----------------------------------------------------------------------------------------------------
 
 		$this->wpanel->load_view('dashboard/index', $content_vars);
 
+	}
+
+	private function calcula_totais($modulo, $tipo = 0)
+	{
+
+		
+
+		$this->db->where('user_id', $this->wpanel->get_from_user('id'));
+
+		if($modulo == 'posts')
+			$this->db->where('page', $tipo);
+		
+		$this->db->from($modulo);
+		return $this->db->count_all_results();
 	}
 } 
 

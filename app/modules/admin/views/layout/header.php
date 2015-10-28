@@ -80,7 +80,7 @@
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<?= anchor('admin/usuarios/edit/' . $this->auth->get_userid(), glyphicon('user') . 'Perfil', array('class'=>'btn btn-primary btn-flat')); ?>
+										<?= anchor('admin/usuarios/profile', glyphicon('user') . 'Perfil', array('class'=>'btn btn-primary btn-flat')); ?>
 									</div>
 									<div class="pull-right">
 										<?= anchor('/admin/logout', glyphicon('off') . 'Sair', array('class'=>'btn btn-danger btn-flat')); ?>
