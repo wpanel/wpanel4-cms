@@ -67,13 +67,6 @@ $config['modules'] = array(
 							'visible' => True, 
 							),
 						array(
-							'modulename' => 'dashboard',
-							'label' => 'Dashboard',
-							'link' => 'dashboard',
-							'description' => 'Página inicial do WPanel.',
-							'visible' => True, 
-							),
-						array(
 							'modulename' => 'menus',
 							'label' => 'Menus',
 							'link' => 'menus',

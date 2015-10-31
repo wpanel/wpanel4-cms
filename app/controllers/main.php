@@ -665,14 +665,27 @@ class main extends CI_Controller
     {
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[newsletter_email.email]');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">',
             '</span></p>');
 
         if ($this->form_validation->run() == FALSE) {
 
-        	if(print("<script>alert('Preencha os dados no final da página.');</script>"))
-        		redirect();
+        	// Seta as variáveis 'meta'.
+            //--------------------------------------------------------------------------------------
+            $this->wpanel->set_meta_url(site_url('contato'));
+            $this->wpanel->set_meta_description('Newsletter');
+            $this->wpanel->set_meta_keywords(' Cadastro, Newsletter');
+            $this->wpanel->set_meta_title('Newsletter');
+            $this->wpanel->set_meta_image(base_url('media') . '/' .
+                $this->wpanel->get_config('logomarca'));
+            $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+
+            // Exibe o template.
+            //--------------------------------------------------------------------------------------
+            $this->load->view($this->template.'/header', $this->data_header);
+            $this->load->view($this->template.'/newsletter', $this->data_content);
+            $this->load->view($this->template.'/footer', $this->data_footer);
 
         } else {
             $this->load->model('newsletter');
@@ -682,12 +695,11 @@ class main extends CI_Controller
                 'created' => date('Y-m-d H:i:s')
             );
             if ($this->newsletter->save($dados_save)) {
-                print("<script>alert('Seus dados foram salvos com sucesso, obrigado!');</script>");
-                redirect('');
+               $this->session->set_flashdata('msg_newsletter', 'Seus dados foram salvos com sucesso, obrigado!');
+                redirect('newsletter');
             } else {
-                print("<script>alert('Erro, seus dados não puderam ser salvos, tente novamente mais
-                    tarde.');</script>");
-                redirect();
+                $this->session->set_flashdata('msg_newsletter', 'Não foi possível salvar seus dados, verifique os erros e tente novamente.');
+                redirect('newsletter');
             }
         }
     }

@@ -9,7 +9,6 @@ else
 	$avatar = base_url('lib/img') . '/no-user.jpg';
 
 ?>
-
 <section class="content-header">
 	<h1>
 		Dashboard
@@ -23,7 +22,7 @@ else
 	<div class="box">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-3"><img src="<?= $avatar; ?>" class="user-image" alt="<?= $this->auth->get_name(); ?>"/></div>
+				<div class="col-md-3 hidden-xs"><img src="<?= $avatar; ?>" class="img-responsive" alt="<?= $this->auth->get_name(); ?>"/></div>
 				<div class="col-md-4">
 					<h2>Olá <?php echo $this->wpanel->get_from_user('name'); ?>.</h2>
 					<p><?php echo $this->wpanel->get_from_user('name'); ?> - <?php echo $this->wpanel->get_from_user('email'); ?></p>
@@ -119,11 +118,13 @@ else
 				<div class="col-md-6">
 					<h4>Postagem rápida</h4>
 					<?php
+
 					/**
 					* Este bloco traz um formulário compacto
 					* para o cadastro de novas postagens no
 					* site.
 					*/
+
 					echo form_open_multipart('admin/posts/add', array('role'=>'form'));
 					echo div(array('class'=>'form-group'));
 					echo form_input(array('name'=>'title', 'class'=>'form-control', 'placeholder'=>'Digite o título da postagem'));
@@ -153,6 +154,7 @@ else
 					);
 					echo close_div(2);
 					echo form_close();
+
 					?>
 				</div>
 				<!-- /.../ -->

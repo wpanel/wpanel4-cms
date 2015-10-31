@@ -16,41 +16,8 @@ class Dashboard extends MX_Controller {
 	public function index()
 	{
 
-		// $this->auth->protect('dashboard'); // Protege a dashboard (???)
-		
 		$layout_vars = array();
 		$content_vars = array();
-
-		/**
-		Fazer o resumo por usuário.
-		*/
-
-		//----------------------------------------------------------------------------------------------------
-		// Calcula os totais dos banners
-		//----------------------------------------------------------------------------------------------------
-		/*$this->db->where('user_id', $this->wpanel->get_from_user('id'));
-		$this->db->from('banners');
-		$total_banners_publicados = $this->db->count_all_results();
-
-		$this->db->like('status', '0');
-		$this->db->from('banners');
-		$total_banners_rascunhos = $this->db->count_all_results();
-
-		$content_vars['total_banners_publicados'] = $total_banners_publicados;
-		$content_vars['total_banners_rascunhos'] = $total_banners_rascunhos;
-		$content_vars['total_banners'] = $this->db->count_all('banners');
-		//----------------------------------------------------------------------------------------------------
-		// Calcula os totais das postagens
-		//----------------------------------------------------------------------------------------------------
-		$this->db->like('status', '1');
-		$this->db->from('posts');
-		$total_posts_publicados = $this->db->count_all_results();
-
-		$this->db->like('status', '0');
-		$this->db->from('posts');
-		$total_posts_rascunhos = $this->db->count_all_results();*/
-
-		//$this->db->where('user_id', $this->wpanel->get_from_user('id'));
 
 		$content_vars['total_posts'] = $this->calcula_totais('posts', '0');
 		$content_vars['total_paginas'] = $this->calcula_totais('posts', '1');

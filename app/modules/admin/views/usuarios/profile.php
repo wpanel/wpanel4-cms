@@ -152,7 +152,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar alterações</button>
-                        <?= anchor('admin/usuarios', 'Cancelar', array('class'=>'btn btn-danger')); ?>
+                        <?= anchor('admin/dashboard', 'Cancelar', array('class'=>'btn btn-danger')); ?>
                     </div>
                 </div>
             <?= form_close(); ?>
