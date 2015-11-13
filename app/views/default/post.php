@@ -1,4 +1,3 @@
-<!-- Postagem. -->
 <div class="row wpn-postagem">
     <div class="col-md-12">
         <h1><?php echo $post->title; ?></h1>
@@ -48,4 +47,17 @@
         ?>
     </div>
 </div>
-<!-- end - Postagem. -->
+<div class="row wpn-ads">
+    <div class="col-md-12">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- WPanel CMS -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-0286050943868335"
+             data-ad-slot="6888761431"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>

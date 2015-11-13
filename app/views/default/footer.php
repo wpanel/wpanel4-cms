@@ -31,6 +31,20 @@
                     <?= $this->widget->run('likebox'); ?>
                 </div>
                 <div class="col-md-12 wpn-copyright">
+
+                    <div class="wpn-ads">
+                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- WPanel CMS -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-0286050943868335"
+                             data-ad-slot="6888761431"
+                             data-ad-format="auto"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+
                     <p><?= $wpn_copyright; ?></p>
                 </div>
 			</div>

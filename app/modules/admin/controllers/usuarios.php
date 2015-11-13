@@ -2,8 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Este é o controller de usuários, usado principalmente
-| no painel de controle do site.
+| Este é o controller de usuários, usado no painel de controle do site.
 |
 | @author Eliel de Paula <elieldepaula@gmail.com>
 | @since 20/10/2014
@@ -14,13 +13,13 @@ class Usuarios extends MX_Controller {
 
 	function __construct()
 	{
-		$this->auth->protect('usuarios');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+		$this->load->model('user');
 	}
 
 	public function index()
 	{
-		$this->load->model('user');
+		$this->auth->protect('usuarios');
 		$layout_vars = array();
 		$content_vars = array();
 
@@ -30,7 +29,7 @@ class Usuarios extends MX_Controller {
 
 	public function add()
 	{
-		
+		$this->auth->protect('usuarios');
 		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
 		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
 		$this->form_validation->set_rules('name', 'Nome completo', 'required');
@@ -46,8 +45,6 @@ class Usuarios extends MX_Controller {
 
 		} else {
 
-			$this->load->model('user');
-
 			$dados_save = array();
 			$dados_save['name'] = $this->input->post('name');
 			$dados_save['email'] = $this->input->post('email');
@@ -60,7 +57,6 @@ class Usuarios extends MX_Controller {
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['permissions'] = serialize($this->input->post('permissions'));
-				
 
 			if($this->user->save($dados_save))
 			{
@@ -70,14 +66,13 @@ class Usuarios extends MX_Controller {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
 				redirect('admin/usuarios');
 			}
-
 		}
-
 	}
 
 	public function edit($id = null)
 	{
-		$this->load->model('user');
+
+		$this->auth->protect('usuarios');
 
 		// Verifica se altera a senha
 		if($this->input->post('alterar_senha') == '1'){
@@ -139,19 +134,18 @@ class Usuarios extends MX_Controller {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
 				redirect('admin/usuarios');
 			}
-
 		}
-
 	}
 
 	public function delete($id = null)
 	{
+
+		$this->auth->protect('usuarios');
+
 		if($id == null){
 			$this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
 			redirect('admin/usuarios');
 		}
-
-		$this->load->model('user');
 
 		if($this->user->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Usuário excluído com sucesso.');
@@ -164,8 +158,7 @@ class Usuarios extends MX_Controller {
 
 	public function profile()
 	{
-
-		$this->load->model('user');
+		
 		$id = $this->wpanel->get_from_user('id');
 
 		// Verifica se altera a senha
@@ -225,7 +218,6 @@ class Usuarios extends MX_Controller {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
 				redirect('admin/usuarios/profile');
 			}
-
 		}
 	}
 }

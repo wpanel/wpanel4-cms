@@ -10,12 +10,13 @@
  * -------------------------------------------------------------------------------------------------
  */
 
-class Migration_Database_inicial extends CI_Migration {
+class Migration_Database_inicial extends CI_Migration 
+{
 
 	public function up()
 	{
 
-		/* Albuns */
+		/* albuns */
 
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("user_id int(11) DEFAULT NULL");
@@ -28,13 +29,13 @@ class Migration_Database_inicial extends CI_Migration {
 
 		$this->dbforge->create_table('albuns', true);
 
-		/* Banners */
+		/* banners */
 
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("user_id int(11) DEFAULT NULL");
 		$this->dbforge->add_field("title varchar(100) NOT NULL");
 		$this->dbforge->add_field("position varchar(20) DEFAULT NULL");
-		$this->dbforge->add_field("`order` int(11) DEFAULT NULL");
+		$this->dbforge->add_field("order int(11) DEFAULT NULL");
 		$this->dbforge->add_field("type varchar(20) DEFAULT NULL");
 		$this->dbforge->add_field("content mediumtext DEFAULT NULL");
 		$this->dbforge->add_field("created datetime DEFAULT NULL");
@@ -43,7 +44,7 @@ class Migration_Database_inicial extends CI_Migration {
 
 		$this->dbforge->create_table('banners', true);
 
-		/* Captcha */
+		/* captcha */
 
 		$this->dbforge->add_field("captcha_id int(11) unsigned NOT NULL AUTO_INCREMENT");
 		$this->dbforge->add_field("captcha_time int(10) unsigned NOT NULL");
@@ -64,9 +65,7 @@ class Migration_Database_inicial extends CI_Migration {
 		
 		$this->dbforge->create_table('categories', true);
 
-		
-
-		/* configurações */
+		/* configuracoes */
 
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("`site_titulo` varchar(100) DEFAULT NULL");
@@ -226,5 +225,4 @@ class Migration_Database_inicial extends CI_Migration {
 		$this->dbforge->drop_table('videos');
 		$this->dbforge->drop_table('users');
 	}
-
 }

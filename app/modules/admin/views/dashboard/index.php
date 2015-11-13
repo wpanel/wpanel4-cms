@@ -1,7 +1,6 @@
 <?php
 
 // Captura o avatar do usuário.
-
 $avatar = $this->wpanel->get_from_user('image');
 if($avatar)
 	$avatar = base_url('media/avatar') . '/'.$avatar;
@@ -112,52 +111,6 @@ else
 						<span class="glyphicon glyphicon-globe"></span> Visualizar o site
 					</a>
 				</div>
-			</div>
-			<div class="row" style="margin-top: 15px;">
-
-				<div class="col-md-6">
-					<h4>Postagem rápida</h4>
-					<?php
-
-					/**
-					* Este bloco traz um formulário compacto
-					* para o cadastro de novas postagens no
-					* site.
-					*/
-
-					echo form_open_multipart('admin/posts/add', array('role'=>'form'));
-					echo div(array('class'=>'form-group'));
-					echo form_input(array('name'=>'title', 'class'=>'form-control', 'placeholder'=>'Digite o título da postagem'));
-					echo form_error('title');
-					echo close_div();
-					echo div(array('class'=>'form-group'));
-					echo form_textarea(array('name'=>'content', 'rows'=>'5', 'class'=>'form-control ckeditor', 'placeholder'=>'Digite o texto da postagem', 'id'=>'editor'));
-					echo form_error('content');
-					echo close_div();
-					echo row();
-					echo col(4);
-					// Opções de status
-					$options = array(
-						'0'  => 'Rascunho',
-						'1'  => 'Publicado'
-					);
-					echo form_dropdown('status', $options, null, null, 'form-control');
-					echo close_div();
-					echo col(4);
-					echo form_button(
-						array(
-							'type'=>'submit', 
-							'name'=>'submit', 
-							'content'=>'<span class="glyphicon glyphicon-floppy-disk"></span> Cadastrar a postagem', 
-							'class'=>'btn btn-primary'
-						)
-					);
-					echo close_div(2);
-					echo form_close();
-
-					?>
-				</div>
-				<!-- /.../ -->
 			</div>
 		</div>
 	</div>

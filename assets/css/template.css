@@ -17,6 +17,10 @@ body {
 .wpn-social-buttons {
     margin-bottom: 10px;
 }
+.wpn-ads {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 /* Estilos das listas de postagens */
 .wpn-postagens {}
