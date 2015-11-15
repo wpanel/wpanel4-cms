@@ -18,6 +18,9 @@ class Migration_Novadashboard extends CI_Migration {
 			'user_id' => array('type' => 'int(11)', 'after'=>'id')
 		);
 		$this->dbforge->add_column('videos', $fields);
+
+		$this->db->query("UPDATE `videos` SET `user_id` = 1;");
+
 	}
 
 	public function down()

@@ -59,6 +59,7 @@ class Agendas extends MX_Controller {
 		$content_vars = array();
 
 		$this->form_validation->set_rules('title', 'Título', 'required');
+		$this->form_validation->set_rules('created', 'Data', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -112,6 +113,7 @@ class Agendas extends MX_Controller {
 		$content_vars = array();
 
 		$this->form_validation->set_rules('title', 'Título', 'required');
+		$this->form_validation->set_rules('created', 'Data', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{

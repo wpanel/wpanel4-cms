@@ -121,9 +121,6 @@
 					<li <?= link_ativo('agendas'); ?>>
 						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>Agenda de eventos</span>'); ?>
 					</li>
-					<li <?= link_ativo('categorias'); ?>>
-					<?= anchor('admin/categorias', '<i class="fa fa-tag"></i> <span>Categorias de posts</span>'); ?>
-					</li>
 					<li <?= link_ativo('banners'); ?>>
 						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>Banners</span>'); ?>
 					</li>
