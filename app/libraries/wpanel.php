@@ -224,16 +224,11 @@ class wpanel
             $str_out .= '});</script>';
             return $str_out;
         } elseif (config_item('text_editor') == 'ckeditor') {
-            $str_out .= '<script type="text/javascript" src="' . base_url('') . 'lib/plugins/ckeditor/ckeditor.js"></script>';
-            $str_out .= '<script>
-            var roxyFileman = \''.FCPATH.'lib/plugins/fileman/index.html?integration=ckeditor\'; 
-            CKEDITOR.replace("editor", {
-                                filebrowserBrowseUrl: roxyFileman,
-                                filebrowserImageBrowseUrl: roxyFileman + \'?type=image\',
-                                removeDialogTabs: \'link:upload;image:upload\'
-                            });
-            </script>';
+
+            $str_out .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('') . "lib/plugins/ckeditor/ckeditor.js\"></script>\n";
+
             return $str_out;
+
         } else {
             return false;
         }

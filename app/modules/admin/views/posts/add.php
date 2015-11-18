@@ -37,7 +37,7 @@ echo $this->wpanel->load_editor();
 
             echo div(array('class'=>'form-group'));
             echo form_label('Conteúdo', 'content');
-            echo form_textarea(array('name'=>'content', 'value'=> set_value('content'), 'class'=>'form-control ckeditor', 'id'=>'editor'));
+            echo form_textarea(array('name'=>'content', 'value'=> set_value('content'), 'class'=>'form-control', 'id'=>'editor'));
             echo form_error('content');
             echo close_div();
 

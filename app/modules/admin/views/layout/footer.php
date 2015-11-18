@@ -26,5 +26,13 @@
     <script src="<?= base_url('lib/js') ?>/app.min.js" type="text/javascript"></script>
     <!-- WPanel JS -->
     <script src="<?= base_url('lib/js') ?>/wpanel.js"></script>
+    <script>
+    var roxyFileman = '<?= base_url(); ?>fileman/index.html';
+    CKEDITOR.replace( 'editor', {
+        filebrowserBrowseUrl:roxyFileman,
+        filebrowserImageBrowseUrl:roxyFileman+'?type=image',
+        removeDialogTabs: 'link:upload;image:upload'
+    });
+    </script>
   </body>
 </html>
