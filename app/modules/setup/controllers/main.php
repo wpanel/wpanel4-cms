@@ -17,7 +17,7 @@
  * -------------------------------------------------------------------------------------------------
  */
 
-class Setup extends CI_Controller
+class Main extends CI_Controller
 {
 
 	var $layout_vars = array();

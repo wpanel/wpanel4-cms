@@ -29,6 +29,7 @@ class MY_Model extends CI_Model
      **/
     function __construct() 
     {
+        $this->load->database();
         parent::__construct();
     }
 

@@ -16,7 +16,7 @@
 			</div>
 			<div class="setup-box-body">
 				<p class="setup-box-msg"><b>Seja bem vindo à instalação inicial do WPanel CMS.</b></p>
-				<p>Crie uma base de dados em branco no seu servidor. Caso tenha dúvidas, <a href="http://wpanelcms.com.br/post/criando-um-novo-banco-de-dados-mysql-no-cpanel.html" target="_blank">assista este tutorial</a>. Em seguida preencha os campos abaixo com os dados da base de dados que você acabou de criar.</p>
+				<p>Crie uma base de dados em branco no seu servidor. Caso tenha dúvidas, <a href="http://wpanelcms.com.br/post/criando-um-novo-banco-de-dados-mysql-no-cpanel.html" target="_blank">veja este tutorial</a>. Em seguida preencha os campos abaixo com os dados da base de dados que você acabou de criar.</p>
 				<?php
 				$msg_setup = $this->session->flashdata('msg_setup');
 				if ($msg_setup)
@@ -53,7 +53,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-9">
-							<button type="submit" class="btn btn-primary">Proseguir >></button>
+							<button type="submit" class="btn btn-primary">Proseguir <span class="glyphicon glyphicon-chevron-right"></span></button>
 						</div>
 					</div>
 				</form>
