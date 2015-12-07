@@ -1,0 +1,17 @@
+{
+	"name": "elieldepaula/wpanelcms",
+	"homepage": "http://wpanelcms.com.br",
+    "license": "MIT",
+    "type": "project",
+    "description": "WPanel CMS is a Content Manager System for websites and small applications written in PHP over CodeIgniter 2.2.x .",
+    "authors": [
+        {
+            "name": "Eliel de Paula",
+            "email": "dev@elieldepaula.com.br"
+        }
+    ],
+	"require": {
+		"php": ">=5.3.0",
+		"elieldepaula/ci_core": "dev-master"
+	}
+}

@@ -1,0 +1,35 @@
+[
+    {
+        "name": "elieldepaula/ci_core",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/elieldepaula/ci_core.git",
+            "reference": "4eaadb8235cf730c9318998588b7c053471023b7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/elieldepaula/ci_core/zipball/4eaadb8235cf730c9318998588b7c053471023b7",
+            "reference": "4eaadb8235cf730c9318998588b7c053471023b7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-12-07 14:10:20",
+        "type": "package",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Eliel de Paula",
+                "email": "dev@elieldepaula.com.br"
+            }
+        ],
+        "description": "ci_core is the core of CodeIfniter Framework original from codeigniter.com."
+    }
+]

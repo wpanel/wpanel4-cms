@@ -52,7 +52,7 @@
 				echo form_error('password');
 				echo $input_close;
 
-				echo form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Cadastrar', 'class'=>'btn btn-primary'));
+				echo form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>'Cadastrar <span class="glyphicon glyphicon-chevron-right"></span>', 'class'=>'btn btn-primary'));
 
 				echo form_close();
 
