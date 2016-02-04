@@ -4,7 +4,7 @@
     "license": "MIT",
     "type": "project",
     "keywords": ["wpanel", "cms", "codeigniter", "wpanelcms"],
-    "description": "WPanel CMS is a Content Manager System for websites and small applications written in PHP over CodeIgniter 2.2.x .",
+    "description": "WPanel CMS is a Content Manager System for blogs, websites and small applications written in PHP over CodeIgniter 2.2.x .",
     "authors": [
         {
             "name": "Eliel de Paula",
@@ -12,7 +12,9 @@
         }
     ],
 	"require": {
-		"php": ">=5.3.0",
-		"elieldepaula/ci_core": "1.*"
-	}
+		"php": ">=5.3.0"
+	},
+    "config": {
+        "vendor-dir": "./app/libraries"
+    }
 }

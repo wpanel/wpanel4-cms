@@ -1,40 +1,60 @@
 #Wpanel CMS
-##Um CMS desenvolvido com CodeIgniter 2.2.0 fácil de usar.
+##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 2.2.0.
 
-Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para sites que eu desenvolvi para meus projetos de sites em PHP.
+Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
 
-A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos e intermináveis plugins de terçeiros que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, robusto e muito rápido, além de ser
+A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos intermináveis e plugins de terçeiros que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, e muito rápido, além de ser
 muito popular, ter uma ótima documentação e uma boa comunidade.
 
-Há muito o que fazer principalmente sobre a documentação, mas o projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo já com uma boa otimização SEO.
+O projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo e com uma otimização SEO básica.
 
 É sem dúvida um bom ponto de partida para qualquer projeto. 
 
-Se gostar do CMS e resolver adotá-lo, envie-me um link com seus projetos desenvolvidos para adicionar ao 'Show-Case' em http://wpanelcms.com.br
-
-##Painel de controle
-
-<img src="http://elieldepaula.com.br/_img_wpanel/dashboard.png" alt="Wpanel 12 dashboard.">
-
-##Site de exemplo
-
-<img src="http://elieldepaula.com.br/_img_wpanel/novo-site-preview.png" alt="Site de exemplo http://wpanelcms.com.br/demo">
+Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com seus projetos desenvolvidos para adicionar ao 'Show-Case' em http://wpanelcms.com.br
 
 ###Requisitos
 
-- Servidor com PHP 5 e MySql.
-- Biblioteca Mcrypt.
+- PHP >= 5.3.*
+- MySql
+- Biblioteca Mcrypt ativada.
 
 ###Instalação
 
-- Faça o download ou clone este repositório;
-- Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
-- Crie uma base de dados e em seguida configure os dados da conexão no arquivo '/app/config/database.php' de acordo com o 'ENVIROMENT' que estiver usando;
-- Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup
-- Na tela seguinte, crie o usuário administrador inicial.
-- Acesse o site novamente pelo navegador, o site de exemplo já deve estar funcionando.
-- Acesse o painel de controle adicionando /admin à URL.
-- É recomendável que remova ou renomeie o controller /app/controllers/setup.php
+#### Via Composer
+
+1. Execute o comando:
+
+	```
+	composer create-project "elieldepaula/wpanelcms" Blog
+	```
+	Isto criará uma cópia do Wpanel CMS em um diretório 'Blog'
+2. Crie uma base de dados MySql;
+3. Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup;
+4. Informe os dados de conexão com a base de dados recém criada;
+5. Na tela seguinte, crie o usuário administrador inicial;
+6. Faça seu primeiro login no painel de controle;
+7. Na Dashboard do painel de controle, clique na opção 'Visualizar Site', o site de exemplo já deve estar funcionando.
+8. É recomendável que remova ou renomeie o modulo /app/modules/setup;
+
+#### Download do projeto
+
+1. Faça o download do último release em: <https://github.com/elieldepaula/wpanel/releases>;
+2. Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
+3. Crie uma base de dados MySql;
+4. Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup;
+5. Informe os dados de conexão com a base de dados recém criada;
+6. Na tela seguinte, crie o usuário administrador inicial;
+7. Faça seu primeiro login no painel de controle;
+8. Na Dashboard do painel de controle, clique na opção 'Visualizar Site', o site de exemplo será aberto em uma nova aba ou janela dependendo do seu navegador.
+9. É recomendável que remova ou renomeie o modulo /app/modules/setup;
+
+# Contribuindo com o projeto
+## Desenvolvendo
+Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repositório e enviando seus 'Pull-Requests'. Envie-me um email em dev[arroba]elieldepaula.com.br para trocarmos informações e manter um contato maior, mesmo que seja uma opinião ou uma dica já estará contribuindo.
+##Doando
+Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto e não ter que dividor o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
+
+Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <http://wpanelcms.com.br/#download>
 
 #Licença
 

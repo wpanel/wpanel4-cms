@@ -64,7 +64,7 @@ if (defined('ENVIRONMENT')) {
  * as this file.
  *
  */
-$system_path = '../vendor/elieldepaula/ci_core';
+$system_path = '../sys';
 
 /*
  *---------------------------------------------------------------
@@ -193,7 +193,7 @@ if (is_dir($application_folder)) {
  * LOAD THE COMPOSER AUTOLOAD FILE
  * --------------------------------------------------------------------
  */
-require_once BASEPATH . '../../autoload.php';
+require_once APPPATH . 'libraries/autoload.php';
 
 /*
  * --------------------------------------------------------------------
