@@ -49,10 +49,12 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 9. É recomendável que remova ou renomeie o modulo /app/modules/setup;
 
 # Contribuindo com o projeto
+
 ## Desenvolvendo
+
 Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repositório e enviando seus 'Pull-Requests'. Envie-me um email em dev[arroba]elieldepaula.com.br para trocarmos informações e manter um contato maior, mesmo que seja uma opinião ou uma dica já estará contribuindo.
 ##Doando
-Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto e não ter que dividor o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
+Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto evitando ter que dividir o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
 
 Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <http://wpanelcms.com.br/#download>
 
