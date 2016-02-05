@@ -41,7 +41,7 @@ define('ENVIRONMENT', 'development');
 if (defined('ENVIRONMENT')) {
 	switch (ENVIRONMENT) {
 		case 'development':
-			error_reporting(1);
+			error_reporting(E_ALL);
 			break;
 
 		case 'testing':

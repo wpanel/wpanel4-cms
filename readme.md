@@ -1,4 +1,5 @@
 #Wpanel CMS
+
 ##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 2.2.0.
 
 Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
@@ -53,7 +54,9 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 ## Desenvolvendo
 
 Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repositório e enviando seus 'Pull-Requests'. Envie-me um email em dev[arroba]elieldepaula.com.br para trocarmos informações e manter um contato maior, mesmo que seja uma opinião ou uma dica já estará contribuindo.
+
 ##Doando
+
 Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto evitando ter que dividir o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
 
 Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <http://wpanelcms.com.br/#download>

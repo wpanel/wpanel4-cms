@@ -194,7 +194,7 @@ class wpanel
         if ($item == '') {
             return $this->configuracao->get_by_id('1')->row();
         } else {
-            $query = $this->configuracao->get_by_id('1')->row();
+            $query = $this->configuracao->get_by_id('1', null, null, $item)->row();
             return $query->$item;
         }
     }

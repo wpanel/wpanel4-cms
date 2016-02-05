@@ -39,10 +39,15 @@ class MY_Model extends CI_Model
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $order array - Array com a ordenação dos resultados.
      * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
+     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
      * @return mixed
      **/
-    public function get_list($order = array(), $limit = array())
+    public function get_list($order = array(), $limit = array(), $select = null)
     {
+        if ($select != null) 
+        {
+            $this->db->select($select);
+        }
         if ((is_array($order)) and (count($order)!=0)) 
         {
             $this->db->order_by($order['field'], $order['order']);
@@ -69,13 +74,19 @@ class MY_Model extends CI_Model
      * Este método retorna um registro de indicando o valor de sua chave-primária.
      * 
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $id int - Valor da chave-primaria
+     * @param $value int - Valor da chave-primaria
+     * @param $order array - Array com a ordenação dos resultados.
+     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
+     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
      * @return mixed
      **/
-    public function get_by_id($id) 
+    public function get_by_id($value = null, $order = array(), $limit = array(), $select = null) 
     {
-        $this->db->where($this->primary_key, $id);
-        return $this->db->get($this->table_name);
+        if($value == null){
+            return FALSE;
+        } else {
+            return $this->get_by_field($this->primary_key, $value, $order, $limit, $select);
+        }
     }
 
     /**
@@ -87,10 +98,15 @@ class MY_Model extends CI_Model
      * @param $value string - Valor a ser filtrado, caso o parametro $field seja um array este parâmetro não será utilizado.
      * @param $order array - Array com a ordenação dos resultados.
      * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
+     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
      * @return mixed
      **/
-    public function get_by_field($field, $value = null, $order = array(), $limit = array())
+    public function get_by_field($field, $value = null, $order = array(), $limit = array(), $select = null)
     {
+        if ($select != null) 
+        {
+            $this->db->select($select);
+        }
         if (is_array($field))
         {
             foreach ($field as $key => $val) 
@@ -163,21 +179,25 @@ class MY_Model extends CI_Model
      * com as variáveis informadas.
      * 
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $path String - Caminho onde o arquivo será salvo.
-     * @param $types String - Tipos permitidos conforme a documentação do CI gif|png|jpg ...
-     * @param $fieldname - Nome do campo do formulário que estará enviando o arquivo.
+     * @param $path String Caminho onde o arquivo será salvo.
+     * @param $types String Tipos permitidos conforme a documentação do CI gif|png|jpg ...
+     * @param $fieldname String Nome do campo do formulário que estará enviando o arquivo.
+     * @param $filename String Informa um nome para o arquivo, caso não seja informado nomeia-se automaticamente.
      * @return mixed
      */
-    public function upload_media($path, $types, $fieldname = 'userfile')
+    public function upload_media($path, $types = null, $fieldname = 'userfile', $filename = null)
     {
-
         $config['upload_path'] = './media/' . $path . '/';
-        $config['allowed_types'] = $types;
         $config['remove_spaces'] = TRUE;
-        $config['file_name'] = md5(date('YmdHis'));
-
+        if($types != null){
+            $config['allowed_types'] = $types;
+        }
+        if($filename == null){
+            $config['file_name'] = md5(date('YmdHis'));
+        } else {
+            $config['file_name'] = $filename;
+        }
         $this->load->library('upload', $config);
-
         if ($this->upload->do_upload($fieldname))
         {
             $upload_data = array();
@@ -186,7 +206,6 @@ class MY_Model extends CI_Model
         } else {
             return false;
         }
-
     }
 
     /**
@@ -198,9 +217,7 @@ class MY_Model extends CI_Model
      */
     public function remove_media($file)
     {
-
         $filename = './media/' . $file;
-
         if(file_exists($filename))
         {
             if(unlink($filename))

@@ -15,6 +15,9 @@ class main extends CI_Controller
 	var $data_content = array();
 	var $data_footer = array();
 
+    // Ativa o profiler do CodeIgniter.
+    var $profiler = TRUE;
+
     /**
      * ---------------------------------------------------------------------------------------------
      * Método construtor da classe.
@@ -27,6 +30,8 @@ class main extends CI_Controller
 	{
 
 		parent::__construct();
+
+        $this->output->enable_profiler($this->profiler);
 
         // Defini algumas variáveis usadas no header e footer do template.
         // -----------------------------------------------------------------------------------------
