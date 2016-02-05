@@ -120,6 +120,7 @@ class main extends CI_Controller
         $this->load->model('post');
         $this->load->model('categoria');
         $this->load->model('post_categoria');
+        $titulo_view = '';
 
         // Envia os dados para a view de acordo com a categoria.
         //------------------------------------------------------------------------------------------
@@ -139,6 +140,7 @@ class main extends CI_Controller
             $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc');
             $this->data_content['titulo_view'] = $qry_category->title;
             $this->data_content['descricao_view'] = $qry_category->description;
+            $titulo_view = $qry_category->title;
 
             // Configurações da view estilo mosaico:
             //--------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 class Slidebanner extends Widget {
 
 	private $position = '';
-	private $classname = '';
+	private $class_name = '';
 	private $interval = '5000';
 	private $cycle = 'true';
 
@@ -35,7 +35,7 @@ class Slidebanner extends Widget {
     	$this->position = $var;
     }
 
-    public function set_classname($var)
+    public function set_class_name($var)
     {
     	$this->classname = $var;
     }
@@ -58,7 +58,7 @@ class Slidebanner extends Widget {
 
 		$data = array(
 			'banners' => $query,
-			'classname' => $this->classname
+			'class_name' => $this->class_name
 		);
 		$this->load->view('widgets/slidebanner', $data);
 	}

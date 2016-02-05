@@ -27,7 +27,7 @@ class Addthisbuttons extends Widget {
 
     public function run()
 	{
-		$this->load->view('widgets/addthisbuttons', $data);
+		$this->load->view('widgets/addthisbuttons');
 	}
 
 }

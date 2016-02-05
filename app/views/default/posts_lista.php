@@ -1,6 +1,6 @@
 <?php
 
-if ($titulo_view) {
+if (isset($titulo_view)) {
     echo '<h3 class="page-header">'.$titulo_view.'</h3>';
     echo '<p>'.$descricao_view.'</p>';
 }
