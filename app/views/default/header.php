@@ -52,14 +52,14 @@
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div class="menu">
-                                <?= $this->widget->run('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
+                                <?= $this->widget->runit('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
                             </div>
                         </div>
                     </div>
                 </nav>
             </div>
             <div class="row">
-                <?= $this->widget->run('slidebanner', array('position'=>'slide')); ?>
+                <?= $this->widget->runit('slidebanner', array('position'=>'slide')); ?>
             </div>
             <div class="row">
                 <div class="col-md-9">

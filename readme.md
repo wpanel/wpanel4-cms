@@ -21,6 +21,9 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 
 ###Instalação
 
+**Importante:**
+Não use o repositório master em produção, ele é apenas para desenvolvimento. Para uso em produção use sempre o release mais atual.
+
 #### Via Composer
 
 1. Execute o comando:

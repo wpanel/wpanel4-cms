@@ -1,7 +1,8 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-$active_group = ENVIRONMENT;
-$active_record = TRUE;
+$active_group  = ENVIRONMENT;
+// $active_record = TRUE;
+$query_builder = TRUE;
 
 /**
  * Configurações para o ambiente de desenvolvimento.
@@ -9,8 +10,8 @@ $active_record = TRUE;
 $db['development']['hostname'] = 'localhost';
 $db['development']['username'] = 'root';
 $db['development']['password'] = 'root';
-$db['development']['database'] = 'wpanel.dev';
-$db['development']['dbdriver'] = 'mysql';
+$db['development']['database'] = 'wpanel_dev';
+$db['development']['dbdriver'] = 'mysqli';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
 $db['development']['db_debug'] = TRUE;
@@ -29,7 +30,7 @@ $db['production']['hostname'] = '';
 $db['production']['username'] = '';
 $db['production']['password'] = '';
 $db['production']['database'] = '';
-$db['production']['dbdriver'] = 'mysql';
+$db['production']['dbdriver'] = 'mysqli';
 $db['production']['dbprefix'] = '';
 $db['production']['pconnect'] = TRUE;
 $db['production']['db_debug'] = TRUE;
@@ -40,4 +41,3 @@ $db['production']['dbcollat'] = 'utf8_general_ci';
 $db['production']['swap_pre'] = '';
 $db['production']['autoinit'] = TRUE;
 $db['production']['stricton'] = FALSE;
-

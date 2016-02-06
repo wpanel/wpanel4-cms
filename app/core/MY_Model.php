@@ -185,7 +185,7 @@ class MY_Model extends CI_Model
      * @param $filename String Informa um nome para o arquivo, caso não seja informado nomeia-se automaticamente.
      * @return mixed
      */
-    public function upload_media($path, $types = null, $fieldname = 'userfile', $filename = null)
+    public function upload_media($path, $types = null, $fieldname = 'userfile')//, $filename = null)
     {
         $config['upload_path'] = './media/' . $path . '/';
         $config['remove_spaces'] = TRUE;
