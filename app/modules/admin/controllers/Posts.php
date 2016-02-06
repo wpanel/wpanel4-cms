@@ -29,7 +29,7 @@ class Posts extends MX_Controller {
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
 		$this->table->set_heading('#', 'Título', 'Categoria(s)', 'Data', 'Status', 'Ações');
-		$query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));//, array('offset'=>'0','limit'=>'2'));
+		$query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));
 
 		foreach($query->result() as $row)
 		{
@@ -87,7 +87,7 @@ class Posts extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+			$dados_save['image'] = $this->post->upload_media('capas');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
 			$dados_save['page'] = '0';
@@ -175,7 +175,7 @@ class Posts extends MX_Controller {
 			{
 				$postagem = $this->post->get_by_id($id)->row();
 				$this->post->remove_media('capas/' . $postagem->image);
-				$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+				$dados_save['image'] = $this->post->upload_media('capas');
 			}
 
 			$upd_post = $this->post->update($id, $dados_save);

@@ -49,7 +49,7 @@ class Usuarios extends MX_Controller {
 			$dados_save['name'] = $this->input->post('name');
 			$dados_save['email'] = $this->input->post('email');
 			$dados_save['skin'] = $this->input->post('skin');
-			$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
+			$dados_save['image'] = $this->user->upload_media('avatar');
 			$dados_save['username'] = $this->input->post('username');
 			$dados_save['password'] = $this->input->post('password');
 			$dados_save['role'] = $this->input->post('role');
@@ -114,7 +114,7 @@ class Usuarios extends MX_Controller {
 			if($this->input->post('alterar_imagem') == '1'){
 				$query = $this->user->get_by_id($id)->row();
 				$this->user->remove_media('avatar/' . $query->image);
-				$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
+				$dados_save['image'] = $this->user->upload_media('avatar');
 			}
 
 			// Verifica se altera a senha.
@@ -198,7 +198,7 @@ class Usuarios extends MX_Controller {
 			if($this->input->post('alterar_imagem') == '1'){
 				$query = $this->user->get_by_id($id)->row();
 				$this->user->remove_media('avatar/' . $query->image);
-				$dados_save['image'] = $this->user->upload_media('avatar', 'gif|jpg|png|jpeg');
+				$dados_save['image'] = $this->user->upload_media('avatar');
 			}
 
 			// Verifica se altera a senha.

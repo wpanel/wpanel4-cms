@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://wpanel.dev/';
+$config['base_url'] = 'http://wpanel-elieldepaula.c9.io/public/';
 
 /*
 |--------------------------------------------------------------------------

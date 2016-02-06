@@ -85,7 +85,7 @@ class fotos extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['filename'] = $this->foto->upload_media('albuns/'.$album_id, 'gif|png|jpg');
+			$dados_save['filename'] = $this->foto->upload_media('albuns/'.$album_id);
 
 			$new_post = $this->foto->save($dados_save);
 
@@ -193,7 +193,7 @@ class fotos extends MX_Controller {
 			{
 				$query = $this->foto->get_by_id($id)->row();
 				$this->foto->remove_media('albuns/' . $query->album_id . '/' . $query->filename);
-				$dados_save['filename'] = $this->foto->upload_media('albuns/' . $query->album_id . '/', 'gif|png|jpg');
+				$dados_save['filename'] = $this->foto->upload_media('albuns/' . $query->album_id . '/');
 			}
 
 			$new_post = $this->foto->update($id, $dados_save);

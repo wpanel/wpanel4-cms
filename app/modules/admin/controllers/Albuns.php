@@ -71,7 +71,7 @@ class albuns extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['capa'] = $this->album->upload_media('capas', 'gif|png|jpg');
+			$dados_save['capa'] = $this->album->upload_media('capas');
 
 			$new_post = $this->album->save($dados_save);
 			mkdir('./media/albuns/'.$new_post);
@@ -121,7 +121,7 @@ class albuns extends MX_Controller {
 			{
 				$query = $this->album->get_by_id($id)->row();
 				$this->album->remove_media('capas/' . $query->capa);
-				$dados_save['capa'] = $this->album->upload_media('capas', 'gif|png|jpg');
+				$dados_save['capa'] = $this->album->upload_media('capas');
 			}
 
 			$new_post = $this->album->update($id, $dados_save);
