@@ -25,6 +25,7 @@
                         <th>#</th>
                         <th>Nome</th>
                         <th>Email</th>
+                        <th>Grupo</th>
                         <th>Status</th>
                         <th>Ações</th>
                     </tr>
@@ -36,6 +37,7 @@
                             <td><?= $row->id; ?></td>
                             <td><?= $row->name; ?></td>
                             <td><?= $row->email; ?></td>
+                            <td><?= $roles[$row->role]; ?></td>
                             <td>
                                 <?php
                                 echo status_user($row->status);

@@ -57,9 +57,7 @@ class Main extends MY_Controller {
         //------------------------------------------------------------------------------------------
         switch ($this->wpanel->get_config('home_tipo')) {
             case 'page':
-                $this->load->model('post');
-                $query_post = $this->post->get_by_id($this->wpanel->get_config('home_id'))->row();
-                $this->post($query_post->link);
+                $this->post($this->wpanel->get_config('home_id'), true);
                 break;
             case 'category':
                 $this->posts($this->wpanel->get_config('home_id'));
@@ -132,10 +130,11 @@ class Main extends MY_Controller {
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $link String Link para exibição da postagem.
+     * @param $use_id boolean Indica se busca o post pelo link ou pelo ID.
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function post($link = '') {
+    public function post($link = '', $use_id = false) {
 
         // Verifica se foi informado um link.
         //------------------------------------------------------------------------------------------
@@ -145,7 +144,12 @@ class Main extends MY_Controller {
         // Prepara e envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->load->model('post');
-        $post = $this->post->get_by_field('link', $link)->row();
+        if($use_id){
+            $post = $this->post->get_by_id($link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
+        } else {
+            $post = $this->post->get_by_field('link', $link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
+        }
+
         $this->data_content['post'] = $post;
 
         // Verifica a existência e disponibilidade do post.

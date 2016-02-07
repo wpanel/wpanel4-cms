@@ -100,15 +100,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <?php
-                            // Opções de grupo
-                            $options = array(
-                              'admin'  => 'Administrador',
-                              'user'    => 'Usuário comum'
-                            );
-                            ?>
                             <label for="role">Tipo do usuário</label>
-                            <?= form_dropdown('role', $options, array($row->role), null, 'form-control'); ?>
+                            <?= form_dropdown('role', config_item('users_role'), array($row->role), null, 'form-control'); ?>
                             <?= form_error('role'); ?>
                         </div>
                     </div>

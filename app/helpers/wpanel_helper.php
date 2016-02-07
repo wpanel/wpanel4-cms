@@ -12,7 +12,7 @@
  * -------------------------------------------------------------------------------------------------
  */
 
-if(!function_exists('get_asset'))
+if(!function_exists('wpn_asset'))
 {
     /**
      * Esta função retorna o código de inclusão de umas
@@ -22,7 +22,7 @@ if(!function_exists('get_asset'))
      * @param $filename string Nome do arquivo a ser incluso. 
      * @return String 
      */
-    function get_asset($type, $filename)
+    function wpn_asset($type, $filename)
     {
         switch ($type) {
             case 'css':
@@ -35,6 +35,23 @@ if(!function_exists('get_asset'))
                 return $filename;
                 break;
         }
+    }
+}
+
+if(!function_exists('wpn_config')){
+
+    /**
+     * Esta função retorna um item de configuração do arquivo
+     * config.json, ele funciona como um atalho para o método
+     * $CI->wpanel->get_config()
+     *
+     * @param $item mixed Item de configuração.
+     * @return mixed 
+     */
+    function wpn_config($item = null)
+    {
+        $CI =& get_instance();
+        return $CI->wpanel->get_config($item);
     }
 }
 

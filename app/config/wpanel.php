@@ -16,11 +16,6 @@
 $config['meta_locale'] = 'pt_BR';
 
 /**
- * Defini as views disponíveis para a exibição das listas de postagens.
- */
-$config['posts_views'] = array('lista' => 'main_posts', 'mosaico' => 'main_posts_mosaico');
-
-/**
  * Defini qual editor online usará no painel de controle.
  * As opções são: 'tinymce' ou 'ckeditor'
  */
@@ -31,8 +26,29 @@ $config['text_editor'] = 'ckeditor';
  */
 $config['meta_author'] = 'Eliel de Paula <dev@elieldepaula.com.br>';
 
+
+//---- daqui para baixo permanece ----//
+
+/**
+ * Defini os idiomas disponíveis. 
+ */
+$config['available_languages'] = [
+    'english'    =>['locale' => 'en', 'label' => 'Inglês'], 
+    'portuguese' =>['locale' => 'pt_BR', 'label' => 'Português']
+];
+
+/**
+ * Defini os tipos de usuário serão permitidos no site. 
+ */
+$config['users_role'] = ['user' => 'Usuário comum', 'admin' => 'Administrador'];
+
+/**
+ * Defini as views disponíveis para a exibição das listas de postagens.
+ */
+$config['posts_views'] = ['list' => 'Listagem', 'mosaic' => 'Mosaico'];
+
 /**
  * Defini as posições dos banners no site para serem listados no 
  * painel de contorle.
  */
-$config['pos_banners'] = array('slide' => 'Slide', 'sidebar' => 'Sidebar');
+$config['banner_positions'] = ['slide' => 'Slide-Show', 'sidebar' => 'Barra lateral'];

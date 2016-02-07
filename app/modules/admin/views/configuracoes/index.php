@@ -1,39 +1,4 @@
-<?php 
-
-if (!defined('BASEPATH')) exit('No direct script access allowed');
-
-echo $this->wpanel->load_editor();
-
-$category_check = '';
-$page_check = '';
-$smtp_checked = '';
-
-switch ($row->home_tipo) {
-    case 'category':
-        $category_check = 'checked';
-        $page_check = '';
-        $custom_check = '';
-        break;
-    case 'page':
-        $category_check = '';
-        $page_check = 'checked';
-        $custom_check = '';
-        break;
-    default:
-        $category_check = '';
-        $page_check = '';
-        $custom_check = 'checked';
-        break;
-}
-
-if ($row->usa_smtp == 1) {
-    $smtp_checked = 'checked';
-} else {
-    $smtp_checked = '';
-}
-
-?>
-
+<?= $editor; ?>
 <section class="content-header">
     <h1>
         Configurações
@@ -74,16 +39,23 @@ if ($row->usa_smtp == 1) {
                                 <textarea name="site_desc" id="site_desc" class="form-control" placeholder="Digite uma descrição para melhorar a visibilidade do site nos mecanismos de busca..."><?= $row->site_desc; ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="google_analytics">Código do Google Analýtics</label>
-                                <input type="text" name="google_analytics" id="google_analytics" value="<?= $row->google_analytics ?>" class="form-control" placeholder="Digite o código de rastreio do Googel analytics..." />
-                            </div>
-                            <div class="form-group">
                                 <label for="site_tags">Palavras-chave do site</label>
                                 <input type="text" name="site_tags" id="site_tags" value="<?= $row->site_tags ?>" class="form-control" placeholder="Digite as palavras-chave para seu site..." />
                             </div>
                             <div class="form-group">
                                 <label for="copyright">Nota de rodapé (Copyright)</label>
                                 <input type="text" name="copyright" id="copyright" value="<?= $row->copyright ?>" class="form-control" placeholder="Digite uma nota para o rodapé do seu site..." />
+                            </div>
+                            <hr/>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="home_category">Idioma</label>
+                                    <select name="language" class="form-control">
+                                        <?php foreach(config_item('available_languages') as $key => $item){ ?>
+                                            <option value="<?= $key; ?>" <?php if($row->language == $key){ echo 'selected'; } ?> ><?= $item['label']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -101,7 +73,7 @@ if ($row->usa_smtp == 1) {
                             </div>
                             <div class="form-group">
                                 <label for="home_category">Categorias disponíveis</label>
-                                <?= form_dropdown('home_category', $opt_categoria, $row->home_id, null, 'form-control'); ?>
+                                <?= form_dropdown('home_category', $opt_categoria, $row->home_id, array('class'=>'form-control')); ?>
                             </div>
                             <div class="radio">
                                 <label>
@@ -111,7 +83,7 @@ if ($row->usa_smtp == 1) {
                             </div>
                             <div class="form-group">
                                 <label for="home_post">Páginas e postagens disponíveis</label>
-                                <?= form_dropdown('home_post', $opt_posts, $row->home_id, null, 'form-control'); ?>
+                                <?= form_dropdown('home_post', $opt_posts, $row->home_id, array('class'=>'form-control')); ?>
                             </div>
                             <div class="radio">
                                 <label>
@@ -262,24 +234,28 @@ if ($row->usa_smtp == 1) {
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <label for="addthis_uid">Profile ID do AddThis (Compartilhamento social e estatísticas do <a href="https://www.addthis.com" target="_blank">Add This</a>)</label>
-                                <input type="text" name="addthis_uid" id="addthis_uid" value="<?= $row->addthis_uid ?>" class="form-control" placeholder="" />
+                                <label for="google_analytics">Código do <a href="http://analytics.google.com" target="_blank">Google Analytics</a></label>
+                                <input type="text" name="google_analytics" id="google_analytics" value="<?= $row->google_analytics ?>" class="form-control" placeholder="Digite o código de rastreio do Googel Analytics..." />
+                            </div>
+                            <div class="form-group">
+                                <label for="addthis_uid">Código "Profile ID" do <a href="https://www.addthis.com" target="_blank">AddThis</a></label>
+                                <input type="text" name="addthis_uid" id="addthis_uid" value="<?= $row->addthis_uid ?>" class="form-control" placeholder="Digite seu código de usuário do AddThis.com" />
                             </div>
                             <div class="form-group">
                                 <label for="link_instagram">Link para a conta do Instagram</label>
-                                <input type="text" name="link_instagram" id="link_instagram" value="<?= $row->link_instagram ?>" class="form-control" placeholder="" />
+                                <input type="text" name="link_instagram" id="link_instagram" value="<?= $row->link_instagram ?>" class="form-control" placeholder="Informe o linkn da sua conta no Instagram." />
                             </div>
                             <div class="form-group">
                                 <label for="link_twitter">Link para a conta do Twitter</label>
-                                <input type="text" name="link_twitter" id="link_twitter" value="<?= $row->link_twitter ?>" class="form-control" placeholder="" />
+                                <input type="text" name="link_twitter" id="link_twitter" value="<?= $row->link_twitter ?>" class="form-control" placeholder="Informe o link da sua conta no Twitter." />
                             </div>
                             <div class="form-group">
                                 <label for="link_facebook">Link para o perfil no Facebook</label>
-                                <input type="text" name="link_facebook" id="link_facebook" value="<?= $row->link_facebook ?>" class="form-control" placeholder="" />
+                                <input type="text" name="link_facebook" id="link_facebook" value="<?= $row->link_facebook ?>" class="form-control" placeholder="Informe o link do seu perfil no Facebook." />
                             </div>
                             <div class="form-group">
                                 <label for="link_likebox">Link da Fan-Page do Facebook para o likebox</label>
-                                <input type="text" name="link_likebox" id="link_likebox" value="<?= $row->link_likebox ?>" class="form-control" placeholder="" />
+                                <input type="text" name="link_likebox" id="link_likebox" value="<?= $row->link_likebox ?>" class="form-control" placeholder="Informe o link da sua Fan-Page no Facebook." />
                             </div>
                         </div>
                     </div>

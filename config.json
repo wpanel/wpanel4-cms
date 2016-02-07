@@ -13,6 +13,7 @@
     "texto_contato": "<p>Esta mensagem pode ser modificada no painel de controle em &quot;Dashboard &gt; Configura&ccedil;&otilde;es &gt; Contatos&quot;<\/p>\r\n",
     "google_analytics": "",
     "bgcolor": "",
+    "language": "english",
     "home_tipo": "page",
     "home_id": "1",
     "usa_smtp": null,

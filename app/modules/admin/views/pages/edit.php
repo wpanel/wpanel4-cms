@@ -45,7 +45,7 @@ echo $this->wpanel->load_editor();
             echo col(5);
             echo div(array('class'=>'form-group'));
             echo form_label('Imagem de capa', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file'));
+            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
             if ($row->image) {
               echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
             }
@@ -69,7 +69,7 @@ echo $this->wpanel->load_editor();
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, null, 'form-control');
+            echo form_dropdown('status', $options, [$row->status], array('class'=>'form-control'));
             echo close_div(3);
 
             echo hr();
@@ -86,7 +86,7 @@ echo $this->wpanel->load_editor();
                     );
             echo nbs(); // &nbsp;
             echo anchor('admin/pages', 'Cancelar', array('class'=>'btn btn-danger'));
-            echo close_div(3);
+            echo close_div(2);
 
             echo form_close();
             ?>

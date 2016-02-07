@@ -34,13 +34,13 @@
             echo form_error('order');
             echo close_div(2);
 
-            $options = config_item('pos_banners');
+            $options = config_item('banner_positions');
 
             echo col(2);
             echo div(array('class'=>'form-group'));
             echo form_label('Posição', 'position');
             //echo form_input(array('name'=>'position', 'class'=>'form-control'));
-            echo form_dropdown('position', $options, null, null, 'form-control');
+            echo form_dropdown('position', $options, null, array('class'=>'form-control'));
             echo form_error('position');
             echo close_div(2);
 
@@ -54,12 +54,12 @@
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, null, null, 'form-control');
+            echo form_dropdown('status', $options, null, array('class'=>'form-control'));
             echo close_div(3);
 
             echo div(array('class'=>'form-group'));
             echo form_label('Imagem do banner', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file'));
+            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
             echo close_div();
 
             echo hr();

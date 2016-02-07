@@ -127,7 +127,7 @@ class Wpanel {
      *
      * @return mixed
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * ---------------------------------------------------------------------------------------------
+     * @todo Não estou gostando deste método, tenho que melhorar a composição das tags 'meta'.
      */
     public function get_meta() {
 
@@ -135,6 +135,10 @@ class Wpanel {
         $sitename = "";
         $url = "";
         $og_title = "";
+        
+        // temporario...
+        $available_languages = config_item('available_languages');
+        $locale = $available_languages[$this->get_config('language')]['locale'];
 
         // Trata a descrição.
         if ($this->meta_description == '') {
@@ -154,18 +158,18 @@ class Wpanel {
                 config_item('charset'), 'type' => 'equiv'),
             array('name' => 'robots', 'content' => 'all'),
             array('name' => 'author', 'content' => config_item('meta_author')),
-            array('name' => 'canonical', 'content' => $this->meta_url),
+            array('name' => 'canonical', 'content' => current_url()),
             array('name' => 'title', 'content' => $this->get_titulo()),
             array('name' => 'description', 'content' => $description),
             array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' .
                 $this->meta_keywords),
             // continua...
-            array('name' => 'og:locale', 'content' => config_item('meta_locale')),
+            array('name' => 'og:locale', 'content' => $locale),
             array('name' => 'og:type', 'content' => 'article'),
             array('name' => 'og:image', 'content' => $this->meta_image),
             array('name' => 'og:title', 'content' => $og_title),
             array('name' => 'og:description', 'content' => $description),
-            array('name' => 'og:url', 'content' => $this->meta_url),
+            array('name' => 'og:url', 'content' => current_url()),
             array('name' => 'og:site_name', 'content' => $this->get_config('site_titulo')),
         );
         return meta($meta);
@@ -185,8 +189,12 @@ class Wpanel {
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * ---------------------------------------------------------------------------------------------
      */
-    public function get_config($item = '') {
-        return $this->wpanel_config->$item;
+    public function get_config($item = null) {
+        if($item){
+            return $this->wpanel_config->$item;
+        } else {
+            return $this->wpanel_config;
+        }
     }
 
     /**

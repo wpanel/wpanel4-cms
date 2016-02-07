@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
 
@@ -17,8 +17,6 @@ class MY_Controller extends CI_Controller {
 
 		$this->output->enable_profiler($this->wpn_profiler);
 
-		$this->data_header['wpn_title'] = $this->wpanel->get_titulo();
-        $this->data_header['wpn_assets'] = base_url('assets');
         $this->data_header['wpn_header_addthis'] = $this->wpanel->get_header_addthis();
         $this->data_header['wpn_header_facebook'] = $this->wpanel->get_header_facebook();
         $this->data_header['wpn_background'] = $this->wpanel->get_background();

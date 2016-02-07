@@ -1,5 +1,4 @@
-<?php if (!defined('BASEPATH')) {exit('No direct script access allowed');
-}
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Este é o controller de categorias, usado principalmente
@@ -9,20 +8,24 @@
  * @since 21/10/2014
  */
 
-class Categorias extends MX_Controller {
+class Categorias extends MX_Controller 
+{
 
-	function __construct() {
+	function __construct() 
+    {
 		$this->auth->protect('posts');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
-	public function index() {
+	public function index() 
+    {
 
 		$this->load->model('categoria');
 		$this->load->library('table');
 
 		$layout_vars = array();
 		$content_vars = array();
+        $posts_views = config_item('posts_views');
 
 		// Template da tabela
 		$this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
@@ -34,7 +37,7 @@ class Categorias extends MX_Controller {
 				$row->id,
 				$row->title,
 				$this->categoria->get_title_by_id($row->category_id),
-				$row->view,
+				$posts_views[$row->view],
 				div(array('class' => 'btn-group btn-group-sm')) .
 				anchor('admin/categorias/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
 				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/categorias/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
@@ -46,7 +49,8 @@ class Categorias extends MX_Controller {
 		$this->wpanel->load_view('categorias/index', $content_vars);
 	}
 
-	public function add() {
+	public function add() 
+    {
 		$this->load->model('categoria');
 		$layout_vars = array();
 		$content_vars = array();
@@ -84,7 +88,8 @@ class Categorias extends MX_Controller {
 		}
 	}
 
-	public function edit($id = null) {
+	public function edit($id = null) 
+    {
 		$this->load->model('categoria');
 		$layout_vars = array();
 		$content_vars = array();
@@ -129,7 +134,8 @@ class Categorias extends MX_Controller {
 		}
 	}
 
-	public function delete($id = null) {
+	public function delete($id = null) 
+    {
 		if ($id == null) {
 			$this->session->set_flashdata('msg_sistema', 'Categoria inexistente.');
 			redirect('admin/categorias');

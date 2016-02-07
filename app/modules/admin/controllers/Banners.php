@@ -15,6 +15,7 @@ class banners extends MX_Controller {
 
 		$layout_vars = array();
 		$content_vars = array();
+        $options = config_item('banner_positions');
 
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
@@ -26,7 +27,7 @@ class banners extends MX_Controller {
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				$row->position,
+				$options[$row->position],
 				$row->order,
 				status_post($row->status), 
 				div(array('class'=>'btn-group btn-group-sm')).

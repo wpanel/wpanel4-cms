@@ -35,19 +35,16 @@
 
             echo div(array('class'=>'form-group'));
             echo form_label('Categoria-pai', 'category_id');
-            echo form_dropdown('category_id', $options, '', null, 'form-control');
+            echo form_dropdown('category_id', $options, '', array('class'=>'form-control'));
 
             echo close_div(2);
             echo col(6);
-
-            $options_view = array(
-                    'Lista'=>'Lista',
-                    'Mosaico'=>'Mosaico'
-            );
+            
+            $options = config_item('posts_views');
 
             echo div(array('class'=>'form-group'));
             echo form_label('Tipo de visualização', 'view');
-            echo form_dropdown('view', $options_view, '', null, 'form-control');
+            echo form_dropdown('view', $options, '', array('class'=>'form-control'));
 
             echo close_div(3);
 

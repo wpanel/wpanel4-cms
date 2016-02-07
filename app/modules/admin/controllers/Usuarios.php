@@ -22,8 +22,10 @@ class Usuarios extends MX_Controller {
 		$this->auth->protect('usuarios');
 		$layout_vars = array();
 		$content_vars = array();
+        $roles = config_item('users_role');
 
 		$content_vars['usuarios'] = $this->user->get_list()->result();
+        $content_vars['roles'] = $roles;
 		$this->wpanel->load_view('usuarios/index', $content_vars);
 	}
 

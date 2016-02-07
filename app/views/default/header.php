@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?= $wpn_title; ?></title>
+        <title><?= wpn_config('site_titulo'); ?></title>
         <?= $wpn_meta; ?>
         <!-- Bootstrap -->
-        <?= get_asset('css', 'bootstrap.min.css'); ?>
+        <?= wpn_asset('css', 'bootstrap.min.css'); ?>
         <!-- Estilo do layout -->
-        <?= get_asset('css', 'template.css'); ?>
+        <?= wpn_asset('css', 'template.css'); ?>
         <!-- jQuery -->
-        <?= get_asset('js', 'jquery-2.1.4.min.js'); ?>
-        <?= get_asset('js', 'bootstrap.min.js'); ?>
+        <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
+        <?= wpn_asset('js', 'bootstrap.min.js'); ?>
         <?= $wpn_header_addthis; ?>
         <?= $wpn_header_facebook; ?>
         <?= $wpn_background; ?>
@@ -27,27 +27,7 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="<?= site_url(); ?>">
-                                <?php 
-
-                                /*
-
-                                    Use uma logomarca ou o título!
-
-                                    Para imprimir a logomarca carregada no painel de controle
-                                    use o código:
-
-                                    echo $wpn_logo;
-
-                                    Para imprimir somente o título do site, geralmente usado
-                                    somente na navbar do bootstrap, use o código:
-
-                                    echo $wpn_title;
-
-                                */
-
-                                echo $wpn_title;
-
-                                ?>
+                                <?= wpn_config('site_titulo'); ?>
                             </a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
