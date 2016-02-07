@@ -7,9 +7,9 @@ $query_builder = TRUE;
  * Configurações para o ambiente de desenvolvimento.
  */
 $db['development']['hostname'] = 'localhost';
-$db['development']['username'] = 'elieldepaula';
-$db['development']['password'] = '';
-$db['development']['database'] = 'c9';
+$db['development']['username'] = 'root';
+$db['development']['password'] = 'root';
+$db['development']['database'] = 'wpanel_dev';
 $db['development']['dbdriver'] = 'mysqli';
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
