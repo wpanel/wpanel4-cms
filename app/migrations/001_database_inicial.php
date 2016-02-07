@@ -7,6 +7,7 @@
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @version 0.1
+ * @todo Mudar a estrutura do dbforge para array.
  * -------------------------------------------------------------------------------------------------
  */
 
@@ -17,6 +18,13 @@ class Migration_Database_inicial extends CI_Migration
 	{
 
 		/* albuns */
+		
+		// $albuns = [
+		// 	'id', 
+		// 	'user_id' => ['type'=>'INT','constraint'=>11,'null'=>true],
+		// 	'titulo' => ['type'=>'varchar','constraint'=>'200','null'=>false],
+		// 	'descricao' => ['type'=>'text','null'=>true],
+		// ];
 
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("user_id int(11) DEFAULT NULL");
@@ -45,13 +53,37 @@ class Migration_Database_inicial extends CI_Migration
 		$this->dbforge->create_table('banners', true);
 
 		/* captcha */
-
-		$this->dbforge->add_field("captcha_id int(11) unsigned NOT NULL AUTO_INCREMENT");
-		$this->dbforge->add_field("captcha_time int(10) unsigned NOT NULL");
-		$this->dbforge->add_field("ip_address varchar(16) NOT NULL DEFAULT '0'");
-		$this->dbforge->add_field("word varchar(20) NOT NULL");
+		
+		$fields = array(
+		        'captcha_id' => array(
+		                'type' => 'INT',
+		                'constraint' => 11,
+		                'unsigned' => TRUE,
+		                'null' => FALSE,
+		                'auto_increment' => TRUE
+		        ),
+		        'captcha_time' => array(
+		                'type' => 'INT',
+		                'constraint' => 10,
+		                 'unsigned' => TRUE,
+		                'null' => FALSE
+		        ),
+		        'ip_address' => array(
+		                'type' =>'varchar',
+		                'constraint' => '45',
+		                'null' => FALSE
+		        ),
+		        'word' => array(
+		                'type' => 'varchar',
+		                'constraint' => '20',
+		                'null' => FALSE
+		        ),
+		);
+		
+		$this->dbforge->add_field($fields);
 
 		$this->dbforge->add_key('captcha_id', TRUE);
+		$this->dbforge->add_key('word');
 		$this->dbforge->create_table('captcha', true);
 
 		/* categories */

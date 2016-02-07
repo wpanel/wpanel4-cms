@@ -89,7 +89,7 @@ class Agendas extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = datetime_for_mysql($this->input->post('created') . ' 12:00:00'); //date('Y-m-d H:i:s', strtotime($this->input->post('created')));
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+			$dados_save['image'] = $this->post->upload_media('capas', '*', 'userfile', date('YmdHis'));
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página, 2=Agenda
 			$dados_save['page'] = '2';
@@ -169,7 +169,7 @@ class Agendas extends MX_Controller {
 			{
 				$postagem = $this->post->get_by_id($id)->row();
 				$this->post->remove_media('capas/' . $postagem->image);
-				$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+				$dados_save['image'] = $this->post->upload_media('capas', '*', 'userfile', date('YmdHis'));
 			}
 
 			$upd_post = $this->post->update($id, $dados_save);

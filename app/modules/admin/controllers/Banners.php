@@ -64,7 +64,7 @@ class banners extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['content'] = $this->banner->upload_media('banners', 'gif|jpg|png');
+			$dados_save['content'] = $this->banner->upload_media('banners');
 
 			$new_post = $this->banner->save($dados_save);
 
@@ -118,7 +118,7 @@ class banners extends MX_Controller {
 				$banner = $this->banner->get_by_id($id)->row();
 				$this->banner->remove_media('banners/' . $banner->content);
 
-				$dados_save['content'] = $this->banner->upload_media('banners', 'gif|jpg|png');
+				$dados_save['content'] = $this->banner->upload_media('banners');
 			}
 
 			$new_post = $this->banner->update($id, $dados_save);

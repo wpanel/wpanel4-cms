@@ -77,7 +77,7 @@ class Pages extends MX_Controller {
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+			$dados_save['image'] = $this->post->upload_media('capas');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
 			$dados_save['page'] = '1';
@@ -147,7 +147,7 @@ class Pages extends MX_Controller {
 			{
 				$postagem = $this->post->get_by_id($id)->row();
 				$this->post->remove_media('capas/' . $postagem->image);
-				$dados_save['image'] = $this->post->upload_media('capas', 'gif|png|jpg');
+				$dados_save['image'] = $this->post->upload_media('capas');
 			}
 
 			$upd_post = $this->post->update($id, $dados_save);

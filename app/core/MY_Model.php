@@ -185,19 +185,21 @@ class MY_Model extends CI_Model
      * @param $filename String Informa um nome para o arquivo, caso não seja informado nomeia-se automaticamente.
      * @return mixed
      */
-    public function upload_media($path, $types = null, $fieldname = 'userfile')//, $filename = null)
+    public function upload_media($path, $types = '*', $fieldname = 'userfile', $filename = null)
     {
         $config['upload_path'] = './media/' . $path . '/';
         $config['remove_spaces'] = TRUE;
-        if($types != null){
-            $config['allowed_types'] = $types;
-        }
+        $config['file_ext_tolower'] = TRUE;
+        $config['allowed_types'] = $types;
+        
         if($filename == null){
             $config['file_name'] = md5(date('YmdHis'));
         } else {
             $config['file_name'] = $filename;
         }
+        
         $this->load->library('upload', $config);
+        
         if ($this->upload->do_upload($fieldname))
         {
             $upload_data = array();

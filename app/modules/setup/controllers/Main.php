@@ -65,7 +65,7 @@ class Main extends CI_Controller
 			$data .= "<?php if(!defined('BASEPATH')) exit('No direct script access allowed');\n\n";
 
 			$data .= "\$active_group = ENVIRONMENT;\n";
-			$data .= "\$active_record = TRUE;\n\n";
+			$data .= "\$query_builder = TRUE;\n\n";
 
 			$data .= "/**\n";
 			$data .= " * Configurações para o ambiente de desenvolvimento.\n";
@@ -74,7 +74,7 @@ class Main extends CI_Controller
 			$data .= "\$db['development']['username'] = '".$this->input->post('username')."';\n";
 			$data .= "\$db['development']['password'] = '".$this->input->post('password')."';\n";
 			$data .= "\$db['development']['database'] = '".$this->input->post('databasename')."';\n";
-			$data .= "\$db['development']['dbdriver'] = 'mysql';\n";
+			$data .= "\$db['development']['dbdriver'] = 'mysqli';\n";
 			$data .= "\$db['development']['dbprefix'] = '';\n";
 			$data .= "\$db['development']['pconnect'] = TRUE;\n";
 			$data .= "\$db['development']['db_debug'] = TRUE;\n";
@@ -93,7 +93,7 @@ class Main extends CI_Controller
 			$data .= "\$db['production']['username'] = '';\n";
 			$data .= "\$db['production']['password'] = '';\n";
 			$data .= "\$db['production']['database'] = '';\n";
-			$data .= "\$db['production']['dbdriver'] = 'mysql';\n";
+			$data .= "\$db['production']['dbdriver'] = 'mysqli';\n";
 			$data .= "\$db['production']['dbprefix'] = '';\n";
 			$data .= "\$db['production']['pconnect'] = TRUE;\n";
 			$data .= "\$db['production']['db_debug'] = TRUE;\n";
