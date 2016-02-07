@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * -------------------------------------------------------------------------------------------------
@@ -11,6 +11,32 @@
  * @since 21/10/2014
  * -------------------------------------------------------------------------------------------------
  */
+
+if(!function_exists('get_asset'))
+{
+    /**
+     * Esta função retorna o código de inclusão de umas
+     * biblioteca CSS ou Java-Script. 
+     *
+     * @param $type string Tipo de bliblioteca, CSS ou JS.
+     * @param $filename string Nome do arquivo a ser incluso. 
+     * @return String 
+     */
+    function get_asset($type, $filename)
+    {
+        switch ($type) {
+            case 'css':
+                return "<link href=\"".base_url('assets')."/css/".$filename."\" rel=\"stylesheet\">\n";
+                break;
+            case 'js':
+                return "<script src=\"".base_url('assets')."/js/".$filename."\" type=\"text/javascript\"></script>\n";
+                break;
+            case 'custom':
+                return $filename;
+                break;
+        }
+    }
+}
 
 if (!function_exists('link_ativo')) {
     

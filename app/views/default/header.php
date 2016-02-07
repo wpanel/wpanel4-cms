@@ -4,12 +4,12 @@
         <title><?= $wpn_title; ?></title>
         <?= $wpn_meta; ?>
         <!-- Bootstrap -->
-        <link href="<?= $wpn_assets; ?>/css/bootstrap.min.css" rel="stylesheet">
+        <?= get_asset('css', 'bootstrap.min.css'); ?>
         <!-- Estilo do layout -->
-        <link href="<?= $wpn_assets; ?>/css/template.css" rel="stylesheet">
+        <?= get_asset('css', 'template.css'); ?>
         <!-- jQuery -->
-        <script src="<?= $wpn_assets; ?>/js/jquery-2.1.4.min.js"></script>
-        <script src="<?= $wpn_assets; ?>/js/bootstrap.min.js" type="text/javascript"></script>
+        <?= get_asset('js', 'jquery-2.1.4.min.js'); ?>
+        <?= get_asset('js', 'bootstrap.min.js'); ?>
         <?= $wpn_header_addthis; ?>
         <?= $wpn_header_facebook; ?>
         <?= $wpn_background; ?>

@@ -1,21 +1,6 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
-
-class Main extends CI_Controller {
-
-    // Define o template a ser usado.
-    protected $template = 'default';
-    // Definições da listagem de postagens.
-    protected $default_posts_view = 'lista';
-    protected $num_cols_mosaico = 2;
-    // Define as variáveis mais usadas no controller.
-    protected $data_header = array();
-    protected $data_content = array();
-    protected $data_footer = array();
-    // Ativa o profiler do CodeIgniter.
-    protected $enable_profiler = TRUE;
+class Main extends MY_Controller {
 
     /**
      * ---------------------------------------------------------------------------------------------
@@ -27,21 +12,10 @@ class Main extends CI_Controller {
      */
     function __construct() {
 
+        $this->wpn_profiler = true;
+
         parent::__construct();
 
-        $this->output->enable_profiler($this->enable_profiler);
-
-        // Defini algumas variáveis usadas no header e footer do template.
-        // -----------------------------------------------------------------------------------------
-        $this->data_header['wpn_title'] = $this->wpanel->get_titulo();
-        $this->data_header['wpn_assets'] = base_url('assets');
-        $this->data_header['wpn_header_addthis'] = $this->wpanel->get_header_addthis();
-        $this->data_header['wpn_header_facebook'] = $this->wpanel->get_header_facebook();
-        $this->data_header['wpn_background'] = $this->wpanel->get_background();
-        $this->data_header['wpn_logo'] = $this->wpanel->get_logo();
-
-        $this->data_footer['wpn_copyright'] = $this->wpanel->get_config('copyright');
-        $this->data_footer['wpn_google_analytics'] = $this->wpanel->get_google_analytics();
     }
 
     /**
@@ -135,8 +109,8 @@ class Main extends CI_Controller {
 
             // Configurações da view estilo mosaico:
             //--------------------------------------------------------------------------------------
-            $this->default_posts_view = strtolower($qry_category->view);
-            $this->data_content['max_cols'] = $this->num_cols_mosaico;
+            $this->wpn_posts_view = strtolower($qry_category->view);
+            $this->data_content['max_cols'] = $this->wpn_cols_mosaico;
         }
 
         // Seta as variáveis 'meta'.
@@ -146,9 +120,9 @@ class Main extends CI_Controller {
         $this->wpanel->set_meta_title($titulo_view);
         $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
-        $this->render('posts_' . $this->default_posts_view);
+        $this->render('posts_' . $this->wpn_posts_view);
     }
 
     /**
@@ -195,9 +169,9 @@ class Main extends CI_Controller {
         }
         $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         // //------------------------------------------------------------------------------------------
-        // $this->load->view($this->template.'/header', $this->data_header);
+        // $this->load->view($this->wpn_template.'/header', $this->data_header);
         // Seleciona a view específica de cada tipo de post.
         //------------------------------------------------------------------------------------------
         switch ($post->page) {
@@ -249,7 +223,7 @@ class Main extends CI_Controller {
         //------------------------------------------------------------------------------------------
         $this->data_content['posts'] = $query;
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('events');
     }
@@ -287,7 +261,7 @@ class Main extends CI_Controller {
         $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
         $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('search');
     }
@@ -320,7 +294,7 @@ class Main extends CI_Controller {
         //------------------------------------------------------------------------------------------
         $this->data_content['albuns'] = $this->album->get_list();
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('albuns');
     }
@@ -359,7 +333,7 @@ class Main extends CI_Controller {
         $this->data_content['album'] = $album;
         $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, array('field' => 'created', 'order' => 'desc'));
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('album');
     }
@@ -399,7 +373,7 @@ class Main extends CI_Controller {
         $this->data_content['album'] = $this->album->get_by_id($foto->album_id)->row();
         $this->data_content['foto'] = $foto;
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('foto');
     }
@@ -435,7 +409,7 @@ class Main extends CI_Controller {
         //------------------------------------------------------------------------------------------
         $this->data_content['query'] = $query;
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('videos');
     }
@@ -470,7 +444,7 @@ class Main extends CI_Controller {
                 $this->wpanel->get_config('logomarca'));
         $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-        // Exibe o template.
+        // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
         $this->render('video');
     }
@@ -506,7 +480,7 @@ class Main extends CI_Controller {
             $this->data_content['contact_content'] = $this->wpanel->get_config('texto_contato');
             $this->data_content['captcha'] = $this->form_validation->get_captcha();
 
-            // Exibe o template.
+            // Exibe o wpn_template.
             //--------------------------------------------------------------------------------------
             $this->render('contact');
         } else {
@@ -619,7 +593,7 @@ class Main extends CI_Controller {
                     $this->wpanel->get_config('logomarca'));
             $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-            // Exibe o template.
+            // Exibe o wpn_template.
             //--------------------------------------------------------------------------------------
             $this->render('newsletter');
             
@@ -638,15 +612,6 @@ class Main extends CI_Controller {
                 redirect('newsletter');
             }
         }
-    }
-
-    private function render($view) {
-        
-        $this->wpanel->set_meta_url(current_url());
-        
-        $this->load->view($this->template . '/header', $this->data_header);
-        $this->load->view($this->template . '/' . $view, $this->data_content);
-        $this->load->view($this->template . '/footer', $this->data_footer);
     }
 
 }
