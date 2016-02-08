@@ -17,6 +17,9 @@ class Configuracoes extends MX_Controller
         $this->auth->protect('configuracoes');
     }
 
+    /**
+     * @todo Resolver a questão de enviar 2 uploads no mesmo formulário.
+     */
     public function index()
     {
 
@@ -109,6 +112,8 @@ class Configuracoes extends MX_Controller
             $dados_save['google_analytics'] = $this->input->post('google_analytics');
             $dados_save['bgcolor'] = $this->input->post('bgcolor');
             $dados_save['language'] = $this->input->post('language');
+            $dados_save['text_editor'] = $this->input->post('text_editor');
+            $dados_save['author'] = $this->input->post('author');
 
             // Configurações da página inicial do site.
             $dados_save['home_tipo'] = $this->input->post('home_tipo');

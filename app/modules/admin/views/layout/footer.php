@@ -4,7 +4,7 @@
         <div class="pull-right hidden-xs">
           Página renderizada em <strong>{elapsed_time}</strong> segundos.
         </div>
-        <strong>Copyright &copy; <?= date('Y') ?> - by <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</strong>
+        <p>&copy; WpanelCMS <?= date('Y') ?>, <a href="http://wpanelcms.com.br/post/licenca.html" target="_blank">Licença e termos de uso</a>. Desenvolvido por <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</p>
       </footer>
     </div>
     <!-- ./wrapper -->

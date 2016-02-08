@@ -20,17 +20,14 @@ class MY_Controller extends CI_Controller {
         $this->data_header['wpn_header_addthis'] = $this->wpanel->get_header_addthis();
         $this->data_header['wpn_header_facebook'] = $this->wpanel->get_header_facebook();
         $this->data_header['wpn_background'] = $this->wpanel->get_background();
-        $this->data_header['wpn_logo'] = $this->wpanel->get_logo();
 
-        $this->data_footer['wpn_copyright'] = $this->wpanel->get_config('copyright');
+        // $this->data_footer['wpn_copyright'] = $this->wpanel->get_config('copyright');
         $this->data_footer['wpn_google_analytics'] = $this->wpanel->get_google_analytics();
 
 	}
 
 	public function render($view) {
-        
-        $this->wpanel->set_meta_url(current_url());
-        
+                
         $this->load->view($this->wpn_template . '/header', $this->data_header);
         $this->load->view($this->wpn_template . '/' . $view, $this->data_content);
         $this->load->view($this->wpn_template . '/footer', $this->data_footer);

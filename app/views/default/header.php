@@ -27,7 +27,8 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="<?= site_url(); ?>">
-                                <?= wpn_config('site_titulo'); ?>
+                                <?php //= wpn_config('site_titulo'); ?>
+                                <?= $this->widget->runit('logomarca', ['class_name'=>'img-responsive hidden-xs', 'width'=>'200']); ?>
                             </a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

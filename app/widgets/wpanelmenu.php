@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Wpanelmenu extends Widget {
 
@@ -31,7 +31,7 @@ class Wpanelmenu extends Widget {
 
     public function run()
 	{
-		return $this->get_menu($this->menu_id, $this->class_menu, $this->class_item);
+		return $this->get_menu();
 	}
 
     /**
@@ -49,22 +49,22 @@ class Wpanelmenu extends Widget {
      * @return string|boolean
      * ---------------------------------------------------------------------------------------------
      */
-    public function get_menu($menu_id = null, $class_menu = null, $class_item = null)
+    private function get_menu()
     {
-        if ($menu_id == null) {
+        if ($this->menu_id == null) {
             return false;
         }
         $this->load->model('menu_item');
-        $query = $this->menu_item->get_by_field('menu_id', $menu_id, array('field' => 'ordem', 'order' => 'asc'))->result();
+        $query = $this->menu_item->get_by_field('menu_id', $this->menu_id, array('field' => 'ordem', 'order' => 'asc'))->result();
         //TODO Criar a seleção de tipo de impressão ou estilo, para lista, coluna, em linha etc.
         $html = "";
-        $html .= "<ul class=\"" . $class_menu . "\">";
+        $html .= "<ul class=\"" . $this->class_menu . "\">";
         foreach ($query as $row)
         {
             if ($row->tipo == 'submenu') {
-                $html .= "<li class=\"" . $class_item . " dropdown\">";
+                $html .= "<li class=\"" . $this->class_item . " dropdown\">";
             } else {
-                $html .= "<li class=\"" . $class_item . "\">";
+                $html .= "<li class=\"" . $this->class_item . "\">";
             }
             switch ($row->tipo)
             {

@@ -45,7 +45,7 @@
                         </script>
                     </div>
 
-                    <p><?= $wpn_copyright; ?></p>
+                    <p><?= wpn_config('copyright'); ?></p>
                 </div>
 			</div>
 		</div>

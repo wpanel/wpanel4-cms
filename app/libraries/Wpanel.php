@@ -13,16 +13,17 @@ if (!defined('BASEPATH'))
  * @since 26/10/2014
  * -------------------------------------------------------------------------------------------------
  */
-class Wpanel {
+class Wpanel 
+{
 
     protected $wpanel_config;
-    protected $meta_url = '';
     protected $meta_description = '';
     protected $meta_image = '';
     protected $meta_keywords = '';
     protected $meta_title = '';
 
-    public function __construct($config = array()) {
+    public function __construct($config = array()) 
+    {
         
         if (count($config) > 0) {
             $this->initialize($config);
@@ -35,7 +36,8 @@ class Wpanel {
         
     }
 
-    public function __get($var) {
+    public function __get($var) 
+    {
         return get_instance()->$var;
     }
 
@@ -48,7 +50,8 @@ class Wpanel {
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * ---------------------------------------------------------------------------------------------
      */
-    private function _attributes($attributes) {
+    private function _attributes($attributes) 
+    {
         if (is_array($attributes)) {
             $atr = '';
             foreach ($attributes as $key => $value) {
@@ -70,7 +73,8 @@ class Wpanel {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function initialize($config = array()) {
+    public function initialize($config = array()) 
+    {
         foreach ($config as $key => $val) {
             if (isset($this->$key)) {
                 $method = 'set_' . $key;
@@ -82,10 +86,6 @@ class Wpanel {
             }
         }
         return $this;
-    }
-
-    public function set_meta_url($value) {
-        $this->meta_url = $value;
     }
 
     public function set_meta_description($value) {
@@ -112,7 +112,7 @@ class Wpanel {
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * ---------------------------------------------------------------------------------------------
      */
-    public function get_titulo() {
+    public function x_get_titulo() {
         if ($this->meta_title == '') {
             return $this->get_config('site_titulo');
         } else {
@@ -157,9 +157,9 @@ class Wpanel {
             array('name' => 'Content-type', 'content' => 'text/html; charset=' .
                 config_item('charset'), 'type' => 'equiv'),
             array('name' => 'robots', 'content' => 'all'),
-            array('name' => 'author', 'content' => config_item('meta_author')),
+            array('name' => 'author', 'content' => $this->get_config('author')),
             array('name' => 'canonical', 'content' => current_url()),
-            array('name' => 'title', 'content' => $this->get_titulo()),
+            array('name' => 'title', 'content' => $this->get_config('site_titulo')),
             array('name' => 'description', 'content' => $description),
             array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' .
                 $this->meta_keywords),
@@ -189,7 +189,8 @@ class Wpanel {
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * ---------------------------------------------------------------------------------------------
      */
-    public function get_config($item = null) {
+    public function get_config($item = null) 
+    {
         if($item){
             return $this->wpanel_config->$item;
         } else {
@@ -198,35 +199,36 @@ class Wpanel {
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
      * Este método carrega as bibliotecas do editor de texto preferido
      * nas telas onde são usados.
      *
      * @return Mixed
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * ---------------------------------------------------------------------------------------------
+     * @todo Revisar este código de 'invocaçao' do editor.
      */
-    public function load_editor() {
-        $str_out = '';
-        if (config_item('text_editor') == 'tinymce') {
-            $str_out .= '<script src="' . base_url() . 'lib/plugins/tinymce/tinymce.min.js"></script>';
-            $str_out .= '<script>tinymce.init({selector:\'textarea#editor\',';
-            $str_out .= '        plugins: [';
-            $str_out .= '            "advlist autolink lists link image charmap print preview anchor",';
-            $str_out .= '            "searchreplace visualblocks code fullscreen",';
-            $str_out .= '            "insertdatetime media table contextmenu paste"';
-            $str_out .= '        ],';
-            $str_out .= '        menubar: false,';
-            $str_out .= '        toolbar: " bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"';
-            $str_out .= '});</script>';
-            return $str_out;
-        } elseif (config_item('text_editor') == 'ckeditor') {
-
-            $str_out .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('') . "lib/plugins/ckeditor/ckeditor.js\"></script>\n";
-
-            return $str_out;
-        } else {
-            return false;
+    public function load_editor() 
+    {
+        $html = '';
+        switch ($this->get_config('text_editor')) {
+            case 'ckeditor':
+                $html .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('') . "lib/plugins/ckeditor/ckeditor.js\"></script>\n";
+                return $html;
+                break;
+            case 'tinymce':
+                $html .= '<script src="' . base_url() . 'lib/plugins/tinymce/tinymce.min.js"></script>';
+                $html .= '<script>tinymce.init({selector:\'textarea#editor\',';
+                $html .= '        plugins: [';
+                $html .= '            "advlist autolink lists link image charmap print preview anchor",';
+                $html .= '            "searchreplace visualblocks code fullscreen",';
+                $html .= '            "insertdatetime media table contextmenu paste"';
+                $html .= '        ],';
+                $html .= '        menubar: false,';
+                $html .= '        toolbar: " bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"';
+                $html .= '});</script>';
+                return $html;
+                break;
+            default:
+                return false;
+                break;
         }
     }
 
@@ -252,28 +254,7 @@ class Wpanel {
         return $str;
     }
 
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método faz o carregamento das views do painel de controle seguinto o novo
-     * modelo de distribuição dos arquivos.
-     * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param string $view
-     * @param array $dados
-     * @return mixed
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function load_view($view, $dados = null) {
-        $this->load->view('layout/header');
-        $this->load->view($view, $dados);
-        $this->load->view('layout/footer');
-    }
-
-    public function get_from_user($param) {
-        $this->load->model('user');
-        $query = $this->user->get_by_id($this->auth->get_userid())->row();
-        return $query->$param;
-    }
+    
 
     /**
      * ---------------------------------------------------------------------------------------------
@@ -285,7 +266,7 @@ class Wpanel {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function get_logo() {
+    public function x_get_logo() {
         $image_properties = array(
             'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
             'class' => 'img-responsive hidden-xs',
@@ -368,6 +349,31 @@ class Wpanel {
      */
     public function get_google_analytics() {
         return $this->wpanel->get_config('google_analytics');
+    }
+
+    /* ----- Métodos usados no painel de controle. ----- */
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método faz o carregamento das views do painel de controle seguinto o novo
+     * modelo de distribuição dos arquivos.
+     * 
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param string $view
+     * @param array $dados
+     * @return mixed
+     * ---------------------------------------------------------------------------------------------
+     */
+    public function load_view($view, $dados = null) {
+        $this->load->view('layout/header');
+        $this->load->view($view, $dados);
+        $this->load->view('layout/footer');
+    }
+
+    public function get_from_user($param) {
+        $this->load->model('user');
+        $query = $this->user->get_by_id($this->auth->get_userid())->row();
+        return $query->$param;
     }
 
 }
