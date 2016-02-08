@@ -26,10 +26,10 @@ if(!function_exists('wpn_asset'))
     {
         switch ($type) {
             case 'css':
-                return "<link href=\"".base_url('assets')."/css/".$filename."\" rel=\"stylesheet\">\n";
+                return "<link href=\"".base_url('assets/css/'.$filename)."\" rel=\"stylesheet\">\n";
                 break;
             case 'js':
-                return "<script src=\"".base_url('assets')."/js/".$filename."\" type=\"text/javascript\"></script>\n";
+                return "<script src=\"".base_url('assets/js/'.$filename)."\" type=\"text/javascript\"></script>\n";
                 break;
             case 'custom':
                 return $filename;
@@ -54,6 +54,41 @@ if(!function_exists('wpn_config')){
         return $CI->wpanel->get_config($item);
     }
 }
+
+if(!function_exists('wpn_meta')){
+
+    /**
+     * Esta função retorna um item de configuração do arquivo
+     * config.json, ele funciona como um atalho para o método
+     * $CI->wpanel->get_config()
+     *
+     * @return mixed 
+     */
+    function wpn_meta()
+    {
+        $CI =& get_instance();
+        return $CI->wpanel->get_meta();
+    }
+}
+
+if(!function_exists('wpn_widget')){
+
+    /**
+     * Esta função retorna um widget, ela funciona como um atalho
+     * para o método $this->widget->runit();
+     *
+     * @param $widget_name string Nome do widget.
+     * @param $args array Parametros do widget.
+     * @return mixed 
+     */
+    function wpn_widget($widget_name, $args = [])
+    {
+        $CI =& get_instance();
+        return $CI->widget->runit($widget_name, $args);
+    }
+}
+
+/* ----- Funções usadas somente no painel de controle ----- */
 
 if (!function_exists('link_ativo')) {
     

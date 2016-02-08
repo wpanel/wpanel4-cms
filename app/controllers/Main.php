@@ -91,11 +91,8 @@ class Main extends MY_Controller {
         // Envia os dados para a view de acordo com a categoria.
         //------------------------------------------------------------------------------------------
         if ($category_id == '') {
-
             $this->data_content['posts'] = $this->post->get_by_field(
-                    array('page' => '0',
-                'status' => '1'
-                    ), null, array('field' => 'created', 'order' => 'desc')
+                ['page' => '0', 'status' => '1'], null, ['field' => 'created', 'order' => 'desc']
             );
         } else {
 
@@ -113,10 +110,7 @@ class Main extends MY_Controller {
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -165,17 +159,10 @@ class Main extends MY_Controller {
         $this->wpanel->set_meta_description($post->description);
         $this->wpanel->set_meta_keywords($post->tags);
         $this->wpanel->set_meta_title($post->title);
-        if ($post->image) {
-            $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $post->image);
-        } else {
-            $this->wpanel->set_meta_image(base_url('media') . '/' .
-                    $this->wpanel->get_config('logomarca'));
-        }
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
-        // Exibe o wpn_template.
-        // //------------------------------------------------------------------------------------------
-        // $this->load->view($this->wpn_template.'/header', $this->data_header);
+        if ($post->image)
+            $this->wpanel->set_meta_image(base_url('media/capas/'.$post->image));
+
         // Seleciona a view específica de cada tipo de post.
         //------------------------------------------------------------------------------------------
         switch ($post->page) {
@@ -202,7 +189,7 @@ class Main extends MY_Controller {
      */
     public function events() {
 
-        $titulo_view = '';
+        $titulo_view = 'Eventos';
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
@@ -213,15 +200,14 @@ class Main extends MY_Controller {
         // Recupera a lista de eventos.
         //------------------------------------------------------------------------------------------
         $query = $this->post->get_by_field(
-                array('page' => '2', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc')
+                ['page' => '2', 'status' => '1'], null, ['field' => 'created', 'order' => 'desc']
         );
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title($titulo_view);
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+        $this->wpanel->set_meta_description('Lista de eventos');
+        $this->wpanel->set_meta_keywords(' eventos, agenda');
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -260,10 +246,7 @@ class Main extends MY_Controller {
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
         $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -290,9 +273,6 @@ class Main extends MY_Controller {
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -329,13 +309,12 @@ class Main extends MY_Controller {
         $this->wpanel->set_meta_description($album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($album->titulo);
-        $this->wpanel->set_meta_image(base_url('media/capas') . '/' . $album->capa);
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+        $this->wpanel->set_meta_image(base_url('media/capas'.'/'.$album->capa));
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->data_content['album'] = $album;
-        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, array('field' => 'created', 'order' => 'desc'));
+        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, ['field' => 'created', 'order' => 'desc']);
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -366,11 +345,9 @@ class Main extends MY_Controller {
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($foto->descricao);
-        $this->wpanel->set_meta_keywords(' album, fotos');
+        $this->wpanel->set_meta_keywords('album, fotos');
         $this->wpanel->set_meta_title($foto->descricao);
-        $this->wpanel->set_meta_image(base_url('media/albuns/' . $foto->album_id) . '/' .
-                $foto->filename);
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+        $this->wpanel->set_meta_image(base_url('media/albuns/'.$foto->album_id.'/'.$foto->filename));
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -396,18 +373,13 @@ class Main extends MY_Controller {
         // Recupera a lista de vídeos.
         //------------------------------------------------------------------------------------------
         $this->load->model('video');
-        $query = $this->video->get_by_field(
-                        'status', '1', array('field' => 'created', 'order' => 'desc')
-                )->result();
+        $query = $this->video->get_by_field('status', '1', ['field' => 'created', 'order' => 'desc'])->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description('Lista de vídeos');
-        $this->wpanel->set_meta_keywords(' videos, filmes');
+        $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title('Vídeos');
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
@@ -442,11 +414,9 @@ class Main extends MY_Controller {
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($query->titulo);
-        $this->wpanel->set_meta_keywords(' videos, filmes');
+        $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title($query->titulo);
-        $this->wpanel->set_meta_image(base_url('media') . '/' .
-                $this->wpanel->get_config('logomarca'));
-        $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
+        $this->wpanel->set_meta_image('http://img.youtube.com/vi/'.$code.'/0.jpg');
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -475,9 +445,6 @@ class Main extends MY_Controller {
             $this->wpanel->set_meta_description('Formulário de contato');
             $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
             $this->wpanel->set_meta_title('Contato');
-            $this->wpanel->set_meta_image(base_url('media') . '/' .
-                    $this->wpanel->get_config('logomarca'));
-            $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
             // Recupera a imagem de captcha.
             //--------------------------------------------------------------------------------------
@@ -487,6 +454,7 @@ class Main extends MY_Controller {
             // Exibe o wpn_template.
             //--------------------------------------------------------------------------------------
             $this->render('contact');
+
         } else {
 
             $nome = $this->input->post('nome');
@@ -591,11 +559,8 @@ class Main extends MY_Controller {
             // Seta as variáveis 'meta'.
             //--------------------------------------------------------------------------------------
             $this->wpanel->set_meta_description('Newsletter');
-            $this->wpanel->set_meta_keywords(' Cadastro, Newsletter');
+            $this->wpanel->set_meta_keywords('Cadastro, Newsletter');
             $this->wpanel->set_meta_title('Newsletter');
-            $this->wpanel->set_meta_image(base_url('media') . '/' .
-                    $this->wpanel->get_config('logomarca'));
-            $this->data_header['wpn_meta'] = $this->wpanel->get_meta();
 
             // Exibe o wpn_template.
             //--------------------------------------------------------------------------------------

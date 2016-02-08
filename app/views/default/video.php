@@ -5,7 +5,7 @@
 </div>
 <div class="row wpn-social-buttons">
     <div class="col-md-12">
-        <?= $this->widget->runit('addthisbuttons'); ?>
+        <?= wpn_widget('addthisbuttons'); ?>
     </div>
 </div>
 <div class="row">
@@ -24,6 +24,6 @@
 <div class="row">
 	<div class="col-md-12">
 		<h3>Comentários</h3>
-        <?= $this->widget->runit('facebookcomments', array('link' => site_url('video/'.$video->link))); ?>
+        <?= wpn_widget('facebookcomments', array('link' => site_url('video/'.$video->link))); ?>
 	</div>
 </div>

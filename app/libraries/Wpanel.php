@@ -1,7 +1,4 @@
-<?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * -------------------------------------------------------------------------------------------------
@@ -10,7 +7,7 @@ if (!defined('BASEPATH'))
  *
  * @package wPanel
  * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 26/10/2014
+ * @since 26/10/2014 - alterado em 8/02/2016
  * -------------------------------------------------------------------------------------------------
  */
 class Wpanel 
@@ -24,16 +21,12 @@ class Wpanel
 
     public function __construct($config = array()) 
     {
-        
-        if (count($config) > 0) {
+        if (count($config) > 0)
             $this->initialize($config);
-        }
-
+        
         $this->load->model('configuracao');
         $this->wpanel_config = $this->configuracao->load_config();
-
         log_message('debug', "Wpanel Class Initialized");
-        
     }
 
     public function __get($var) 
@@ -58,9 +51,9 @@ class Wpanel
                 $atr .= $key . "=\"" . $value . "\" ";
             }
             return $atr;
-        } elseif (is_string($attributes) and strlen($attributes) > 0) {
+        } elseif (is_string($attributes) and strlen($attributes) > 0)
             $atr = ' ' . $attributes;
-        }
+        
     }
 
     /**
@@ -78,46 +71,47 @@ class Wpanel
         foreach ($config as $key => $val) {
             if (isset($this->$key)) {
                 $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
+                if (method_exists($this, $method))
                     $this->$method($val);
-                } else {
+                else
                     $this->$key = $val;
-                }
+                
             }
         }
         return $this;
     }
 
+    // ----- Encapsulamento das variáveis META ----- //
     public function set_meta_description($value) {
         $this->meta_description = $value;
+    }
+
+    public function get_meta_description() {
+        return $this->meta_description;
     }
 
     public function set_meta_image($value) {
         $this->meta_image = $value;
     }
 
+    public function get_meta_image() {
+        return $this->meta_image;
+    }
+
     public function set_meta_keywords($value) {
         $this->meta_keywords = $value;
     }
 
-    public function set_meta_title($value) {
-        $this->meta_title = $value;
+    public function get_meta_keywords() {
+        return $this->meta_keywords;
     }
 
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna o título da página.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function x_get_titulo() {
-        if ($this->meta_title == '') {
-            return $this->get_config('site_titulo');
-        } else {
-            return $this->get_config('site_titulo') . ' - ' . $this->meta_title;
-        }
+    public function set_meta_title($value) {
+        $this->meta_title = $this->get_config('site_titulo') . ' | ' . $value;
+    }
+
+    public function get_meta_title(){
+        return $this->meta_title;
     }
 
     /**
@@ -127,51 +121,41 @@ class Wpanel
      *
      * @return mixed
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @todo Não estou gostando deste método, tenho que melhorar a composição das tags 'meta'.
      */
     public function get_meta() {
-
-        $description = "";
-        $sitename = "";
-        $url = "";
-        $og_title = "";
         
-        // temporario...
+        // Recupera a variável 'Locale'.
         $available_languages = config_item('available_languages');
         $locale = $available_languages[$this->get_config('language')]['locale'];
 
-        // Trata a descrição.
-        if ($this->meta_description == '') {
-            $description = $this->get_config('site_desc');
-        } else {
-            $description = $this->meta_description;
-        }
+        // Trata a variável 'Description'.
+        if (!$this->meta_description)
+            $this->meta_description = $this->get_config('site_desc');
 
-        if ($this->meta_title == '') {
-            $og_title = $this->get_config('site_titulo');
-        } else {
-            $og_title = $this->meta_title;
-        }
+        // Trata a imagem de exibição.
+        if(!$this->meta_image)
+            $this->meta_image = base_url('media/'.$this->get_config('logomarca'));
 
-        $meta = array(
-            array('name' => 'Content-type', 'content' => 'text/html; charset=' .
-                config_item('charset'), 'type' => 'equiv'),
-            array('name' => 'robots', 'content' => 'all'),
-            array('name' => 'author', 'content' => $this->get_config('author')),
-            array('name' => 'canonical', 'content' => current_url()),
-            array('name' => 'title', 'content' => $this->get_config('site_titulo')),
-            array('name' => 'description', 'content' => $description),
-            array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ',' .
-                $this->meta_keywords),
+        $meta = [
+            ['name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'],
+            ['name' => 'robots', 'content' => 'all'],
+            ['name' => 'author', 'content' => $this->get_config('author')],
+            ['name' => 'canonical', 'content' => current_url()],
+            ['name' => 'title', 'content' => $this->meta_title],
+            ['name' => 'description', 'content' => $this->meta_description],
+            ['name' => 'keywords', 'content' => $this->get_config('site_tags') . ', ' . $this->meta_keywords],
+            
             // continua...
-            array('name' => 'og:locale', 'content' => $locale),
-            array('name' => 'og:type', 'content' => 'article'),
-            array('name' => 'og:image', 'content' => $this->meta_image),
-            array('name' => 'og:title', 'content' => $og_title),
-            array('name' => 'og:description', 'content' => $description),
-            array('name' => 'og:url', 'content' => current_url()),
-            array('name' => 'og:site_name', 'content' => $this->get_config('site_titulo')),
-        );
+            //TODO Adicionar meta para o twitter e outras redes sociais.
+
+            ['name' => 'og:locale', 'content' => $locale],
+            ['name' => 'og:type', 'content' => 'article'],
+            ['name' => 'og:image', 'content' => $this->meta_image],
+            ['name' => 'og:title', 'content' => $this->meta_title],
+            ['name' => 'og:description', 'content' => $this->meta_description],
+            ['name' => 'og:url', 'content' => current_url()],
+            ['name' => 'og:site_name', 'content' => $this->get_config('site_titulo')],
+        ];
         return meta($meta);
     }
 
@@ -191,12 +175,36 @@ class Wpanel
      */
     public function get_config($item = null) 
     {
-        if($item){
+        if($item)
             return $this->wpanel_config->$item;
-        } else {
+        else
             return $this->wpanel_config;
-        }
+        
     }
+
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * Este método lista as categorias a que uma postagem pertence e
+     * cria o link para a listagem de cada categoria.
+     *
+     * @return String
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $post_id Int Código da postagem.
+     * ---------------------------------------------------------------------------------------------
+     */
+    public function category_of_post($post_id) {
+        $str = '';
+        $this->load->model('categoria');
+        $this->load->model('post_categoria');
+        foreach ($this->post_categoria->list_by_post($post_id)->result() as $value) {
+            $str .= anchor(
+                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
+                    ) . ' ';
+        }
+        return $str;
+    }
+
+    /* ----- Métodos usados no painel de controle. ----- */
 
     /**
      * Este método carrega as bibliotecas do editor de texto preferido
@@ -234,127 +242,6 @@ class Wpanel
 
     /**
      * ---------------------------------------------------------------------------------------------
-     * Este método lista as categorias a que uma postagem pertence e
-     * cria o link para a listagem de cada categoria.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $post_id Int Código da postagem.
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function category_of_post($post_id) {
-        $str = '';
-        $this->load->model('categoria');
-        $this->load->model('post_categoria');
-        foreach ($this->post_categoria->list_by_post($post_id)->result() as $value) {
-            $str .= anchor(
-                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
-                    ) . ' ';
-        }
-        return $str;
-    }
-
-    
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna uma tag <img /> com a logomarca que estiver
-     * configurada no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $var tipo descricao
-     * @return void
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function x_get_logo() {
-        $image_properties = array(
-            'src' => base_url() . '/media/' . $this->wpanel->get_config('logomarca'),
-            'class' => 'img-responsive hidden-xs',
-            'width' => '200'
-        );
-
-        return img($image_properties);
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna um código CSS para a exibição da imagem de 
-     * fundo (background) configurada no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function get_background() {
-        $html = "";
-        $html .= "<style type=\"text/css\">
-            body {
-                background-image: url('" . base_url('media') . '/' .
-                $this->wpanel->get_config('background') . "');
-                background-color: " . $this->wpanel->get_config('bgcolor') . ";
-            }
-        </style>";
-        return $html;
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega a biblioteca externa do serviço AddThis(®)
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function get_header_addthis() {
-        $html = "";
-        $html .= "<script type=\"text/javascript\" src=\"//s7.addthis.com/js/300/addthis_widget.js
-        #pubid=" . $this->wpanel->get_config('addthis_uid') . "\"></script>";
-        return $html;
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega o cabeçalho para o funcionamento dos widgets
-     * do facebook(®) no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function get_header_facebook() {
-
-        $html = "";
-        $html .= "<div id=\"fb-root\"></div>\n";
-        $html .= "<script>";
-        $html .= "(function(d, s, id) {";
-        $html .= "    var js, fjs = d.getElementsByTagName(s)[0];";
-        $html .= "    if (d.getElementById(id))";
-        $html .= "        return;";
-        $html .= "    js = d.createElement(s);";
-        $html .= "    js.id = id;";
-        $html .= "    js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0\";";
-        $html .= "    fjs.parentNode.insertBefore(js, fjs);";
-        $html .= "        }(document, 'script', 'facebook-jssdk'));";
-        $html .= "</script>";
-        return $html;
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método carrega o código do GoogleAnalýtics(®) no site.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return String
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function get_google_analytics() {
-        return $this->wpanel->get_config('google_analytics');
-    }
-
-    /* ----- Métodos usados no painel de controle. ----- */
-
-    /**
-     * ---------------------------------------------------------------------------------------------
      * Este método faz o carregamento das views do painel de controle seguinto o novo
      * modelo de distribuição dos arquivos.
      * 
@@ -364,13 +251,15 @@ class Wpanel
      * @return mixed
      * ---------------------------------------------------------------------------------------------
      */
-    public function load_view($view, $dados = null) {
+    public function load_view($view, $dados = null) 
+    {
         $this->load->view('layout/header');
         $this->load->view($view, $dados);
         $this->load->view('layout/footer');
     }
 
-    public function get_from_user($param) {
+    public function get_from_user($param) 
+    {
         $this->load->model('user');
         $query = $this->user->get_by_id($this->auth->get_userid())->row();
         return $query->$param;

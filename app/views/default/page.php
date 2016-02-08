@@ -6,7 +6,7 @@
             <small>
                 <?php if ($post->page==0){ ?>
                     <span class="category">
-                        <?= $this->widget->runit('categoryfrompost', array('post_id' => $post->id)); ?>
+                        <?= wpn_widget('categoryfrompost', array('post_id' => $post->id)); ?>
                     </span>
                 <?php } ?>
             </small>
@@ -30,7 +30,7 @@
         ?>
         <div class="row wpn-social-buttons">
             <div class="col-md-12">
-                <?= $this->widget->runit('addthisbuttons'); ?>
+                <?= wpn_widget('addthisbuttons'); ?>
             </div>
         </div>
         <?php
@@ -39,10 +39,10 @@
 
         if ($post->page==0) {
             echo '<h4>Comentarios</h4>';
-            echo $this->widget->runit('facebookcomments', array('link' => site_url('post/'.$post->link)));
+            echo wpn_widget('facebookcomments', array('link' => site_url('post/'.$post->link)));
         }
         
-        echo $this->widget->runit('tagsfrompost', array('link'=>$post->link));
+        echo wpn_widget('tagsfrompost', array('link'=>$post->link));
 
         ?>
     </div>

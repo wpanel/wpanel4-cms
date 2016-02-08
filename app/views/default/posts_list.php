@@ -12,7 +12,7 @@ foreach ($posts->result() as $post) {
             <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
                 <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
-                <small><?= $this->widget->runit('categoryfrompost', array('post_id' => $post->id)); ?></small>
+                <small><?= wpn_widget('categoryfrompost', array('post_id' => $post->id)); ?></small>
             </p>
             <?php
             if ($post->image) {

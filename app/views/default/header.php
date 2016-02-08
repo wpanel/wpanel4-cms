@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?= wpn_config('site_titulo'); ?></title>
-        <?= $wpn_meta; ?>
+        <?= wpn_widget('wpntitle'); ?>
+        <?= wpn_meta(); ?>
         <!-- Bootstrap -->
         <?= wpn_asset('css', 'bootstrap.min.css'); ?>
-        <!-- Estilo do layout -->
+        <!-- Estilo do template -->
         <?= wpn_asset('css', 'template.css'); ?>
         <!-- jQuery -->
         <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
         <?= wpn_asset('js', 'bootstrap.min.js'); ?>
-        <?= $wpn_header_addthis; ?>
-        <?= $wpn_header_facebook; ?>
-        <?= $wpn_background; ?>
+
+        <?= wpn_widget('facebookheader'); ?>
+        <?= wpn_widget('addthisheader'); ?>
+        <?= wpn_widget('background'); ?>
+
     </head>
     <body>
         <div class="container">
@@ -27,20 +29,20 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="<?= site_url(); ?>">
-                                <?php //= wpn_config('site_titulo'); ?>
-                                <?= $this->widget->runit('logomarca', ['class_name'=>'img-responsive hidden-xs', 'width'=>'200']); ?>
+                                <span class="visible-xs"><?= wpn_config('site_titulo'); ?></span>
+                                <?= wpn_widget('logomarca', ['class_name'=>'img-responsive hidden-xs', 'width'=>'200']); ?>
                             </a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div class="menu">
-                                <?= $this->widget->runit('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
+                                <?= wpn_widget('wpanelmenu', ['menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right']); ?>
                             </div>
                         </div>
                     </div>
                 </nav>
             </div>
             <div class="row">
-                <?= $this->widget->runit('slidebanner', array('position'=>'slide')); ?>
+                <?= wpn_widget('slidebanner', ['position'=>'slide']); ?>
             </div>
             <div class="row">
                 <div class="col-md-9">
