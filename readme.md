@@ -15,7 +15,7 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 
 ###Requisitos
 
-- PHP >= 5.3.*
+- PHP >= 5.4.*
 - MySql
 - Biblioteca Mcrypt ativada.
 
