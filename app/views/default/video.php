@@ -24,6 +24,20 @@
 <div class="row">
 	<div class="col-md-12">
 		<h3>Comentários</h3>
-        <?= wpn_widget('facebookcomments', array('link' => site_url('video/'.$video->link))); ?>
+        <?= wpn_widget('facebookcomments', array('link' => site_url('video/'.$video->link.'/'.wpn_fakelink($video->titulo)))); ?>
 	</div>
+</div>
+
+<div class="row wpn-ads">
+    <div class="col-md-12">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-0286050943868335"
+             data-ad-slot="6888761431"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 </div>

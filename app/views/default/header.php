@@ -3,6 +3,7 @@
     <head>
         <?= wpn_widget('wpntitle'); ?>
         <?= wpn_meta(); ?>
+        <link rel="canonical" href="<?= current_url(); ?>" />
         <!-- Bootstrap -->
         <?= wpn_asset('css', 'bootstrap.min.css'); ?>
         <!-- Estilo do template -->
@@ -10,11 +11,9 @@
         <!-- jQuery -->
         <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
         <?= wpn_asset('js', 'bootstrap.min.js'); ?>
-
         <?= wpn_widget('facebookheader'); ?>
         <?= wpn_widget('addthisheader'); ?>
         <?= wpn_widget('background'); ?>
-
     </head>
     <body>
         <div class="container">

@@ -37,7 +37,7 @@ class Post extends MY_Model {
 	 * @return mixed
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function busca_posts($search = '')
+	public function busca_posts($search = null)
 	{
 		if ($search) {
 			$this->db->like('title', $search, 'both');

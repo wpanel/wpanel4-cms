@@ -1,20 +1,26 @@
-<h3>Fale conosco</h3>
-<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-header">Fale conosco</h3>
+    </div>
+</div>
+
 <?php
-
-// Mensagens do sistema;
+/**
+ * Mostra a mensagem de retorno de sucesso ou erro
+ * ao enviar a mensagem.
+ */
 $msg_contato = $this->session->flashdata('msg_contato');
-
 if($msg_contato){
     echo alerts($msg_contato, 'warning', true);
 }
-
 ?>
+
 <div class="row">
     <div class="col-sm-offset-2 col-md-10">
         <?= $contact_content; ?>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         <?= form_open('contato', array('class'=>'form-horizontal', 'role'=>'form')); ?>

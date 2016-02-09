@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller {
 	var $wpn_profiler = FALSE;
 	var $wpn_template = 'default';
 	var $wpn_posts_view = 'list';
-    var $wpn_cols_mosaico = 2;
+    var $wpn_cols_mosaic = 2;
     // Define as variáveis mais usadas no controller.
     var $data_header = array();
     var $data_content = array();
@@ -22,9 +22,9 @@ class MY_Controller extends CI_Controller {
 	public function render($view) 
     {
                 
-        $this->load->view($this->wpn_template . '/header', $this->data_header);
-        $this->load->view($this->wpn_template . '/' . $view, $this->data_content);
-        $this->load->view($this->wpn_template . '/footer', $this->data_footer);
+        $this->load->view($this->wpn_template.'/header', $this->data_header);
+        $this->load->view($this->wpn_template.'/'.$view, $this->data_content);
+        $this->load->view($this->wpn_template.'/footer', $this->data_footer);
 
     }
 

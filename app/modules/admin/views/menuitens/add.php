@@ -82,7 +82,7 @@
                         <option value="contato">Página de contato</option>
                         <option value="albuns">Galeria de fotos</option>
                         <option value="videos">Galeria de videos</option>
-                        <option value="eventos">Lista de eventos</option>
+                        <option value="events">Lista de eventos</option>
                         <option value="rss">Página de RSS</option>
                     </select>
                 </div>

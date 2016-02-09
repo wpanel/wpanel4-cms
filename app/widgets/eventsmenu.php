@@ -60,7 +60,7 @@ class Eventsmenu extends Widget {
         $html .= '<ul ' . $this->_attributes($this->attributes) . '>';
         foreach ($query->result() as $key => $row)
         {
-            $html .= '<li>' . anchor('/post/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '<br/><small>' . $row->description . '</small><br/><small>' . date('d/m/Y', strtotime($row->created)) . '</small></li>';
+            $html .= '<li>' . anchor('event/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '<br/><small>' . $row->description . '</small><br/><small>' . date('d/m/Y', strtotime($row->created)) . '</small></li>';
         }
         $html .= '</ul>';
         return $html;

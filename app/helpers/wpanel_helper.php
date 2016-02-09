@@ -88,6 +88,14 @@ if(!function_exists('wpn_widget')){
     }
 }
 
+if(!function_exists('wpn_fakelink')){
+
+    function wpn_fakelink($var)
+    {
+        return strtolower(url_title(convert_accented_characters($var)));
+    }
+}
+
 /* ----- Funções usadas somente no painel de controle ----- */
 
 if (!function_exists('link_ativo')) {

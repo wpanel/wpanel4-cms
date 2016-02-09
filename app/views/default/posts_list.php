@@ -1,24 +1,24 @@
+<!-- Mostra o título da categoria caso esteja listando uma. -->
+<?php if (isset($view_title)) { ?>
+    <h3 class="page-header"><?= $view_title; ?></h3>
+    <p><?= $view_description; ?></p>
+<?php } ?>
+<!-- Mostra a lista de postagens. -->
 <?php
-
-if (isset($titulo_view)) {
-    echo '<h3 class="page-header">'.$titulo_view.'</h3>';
-    echo '<p>'.$descricao_view.'</p>';
-}
-
-foreach ($posts->result() as $post) {
+foreach($posts as $post){
     ?>
     <div class="row">
         <div class="col-md-12 wpn-postagens">
-            <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
+            <h3><?= anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
-                <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
+                <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
                 <small><?= wpn_widget('categoryfrompost', array('post_id' => $post->id)); ?></small>
             </p>
             <?php
-            if ($post->image) {
+            // Exibe a imagem de capa caso ela exista.
+            if (file_exists('./media/capas/'.$post->image)) {
                 ?>
                 <div class="wpn-capa">
-                    <!-- Largura mínima de 700px -->
                     <?php
                     $img_data = array(
                         'src'=>'media/capas/'.$post->image, 
@@ -33,7 +33,7 @@ foreach ($posts->result() as $post) {
                 <?php
             }
             ?>
-            <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+            <p><?= word_limiter(strip_tags($post->content), 60); ?></p>
             <p><?= anchor('post/'.$post->link, 'Continuar lendo...'); ?></p>
         </div>
     </div>

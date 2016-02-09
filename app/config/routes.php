@@ -31,15 +31,17 @@ $route['setup/firstadmin'] 		= 'setup/main/firstadmin';
 | -------------------------------------------------------------------
 */
 $route['posts'] 				= 'main/posts';
+$route['posts/(:any)'] 			= 'main/posts/$1';
 $route['posts/(:any)/(:any)'] 	= 'main/posts/$1';
 $route['post/(:any)'] 			= 'main/post/$1';
-$route['eventos']				= 'main/events';
+$route['events']				= 'main/events';
+$route['event/(:any)'] 			= 'main/post/$1';
 $route['search']				= 'main/search';
 $route['albuns'] 				= 'main/albuns';
-$route['album/(:any)'] 			= 'main/album/$1';
-$route['foto/(:any)'] 			= 'main/foto/$1';
+$route['album/(:any)/(:any)'] 	= 'main/album/$1';
+$route['foto/(:any)/(:any)'] 	= 'main/foto/$2';
 $route['videos'] 				= 'main/videos';
-$route['video/(:any)'] 			= 'main/video/$1';
+$route['video/(:any)/(:any)'] 	= 'main/video/$1';
 $route['newsletter'] 			= 'main/newsletter';
 $route['contato'] 				= 'main/contato';
 $route['rss']               	= 'main/rss';

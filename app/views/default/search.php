@@ -1,32 +1,33 @@
-<h3 class="page-header">Resultados da busca por: <?= $termos_busca; ?> </h3>
-<?php foreach ($posts->result() as $post) { ?>
+<h3 class="page-header">Resultados da busca por: <?= $search_terms; ?></h3>
+<!-- Mostra a lista de resultados. -->
+<?php foreach ($results as $row) { ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
-            <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
+            <h3><?= anchor('post/'.$row->link, $row->title); ?></h3>
             <p class="text-muted">
-                <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
-                <small><?= wpn_widget('categoryfrompost', array('post_id' => $post->id)); ?></small>
+                <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($row->created)); ?> <br/></span>
+                <small><?= wpn_widget('categoryfrompost', array('post_id' => $row->id)); ?></small>
             </p>
             <?php
-            if ($post->image) {
+            // Exibe a imagem de capa caso ela exista.
+            if (file_exists('./media/capas/'.$row->image)) {
             ?>
             <div class="wpn-capa">
-                <!-- Largura mínima de 700px -->
                 <?php
                 $img_data = array(
-                    'src'=>'media/capas/'.$post->image, 
+                    'src'=>'media/capas/'.$row->image, 
                     'class'=>'img-responsive', 
                     'style'=>'margin-top:5px;', 
-                    'alt'=>$post->title, 
-                    'title'=>$post->title
+                    'alt'=>$row->title, 
+                    'title'=>$row->title
                 );
-                echo anchor('post/'.$post->link, img($img_data));
+                echo anchor('post/'.$row->link, img($img_data));
                 ?>
             </div>
             <?php
             }
             ?>
-            <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+            <p><?= word_limiter(strip_tags($row->content), 60); ?></p>
         </div>
     </div>
     <?php

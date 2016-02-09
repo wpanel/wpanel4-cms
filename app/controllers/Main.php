@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main extends MY_Controller {
+class Main extends MY_Controller 
+{
 
     /**
      * ---------------------------------------------------------------------------------------------
@@ -10,9 +11,11 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    function __construct() {
+    function __construct() 
+    {
 
-        $this->wpn_profiler = true;
+        // $this->wpn_profiler = true;
+        $this->wpn_cols_mosaic = 4;
 
         parent::__construct();
 
@@ -27,7 +30,8 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function custom() {
+    public function custom() 
+    {
 
         /*
          * Este método é chamado caso seja configurado o uso de um
@@ -52,7 +56,8 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function index() {
+    public function index() 
+    {
         // Seleciona a página inicial de acordo com as configurações.
         //------------------------------------------------------------------------------------------
         switch ($this->wpanel->get_config('home_tipo')) {
@@ -78,9 +83,11 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function posts($category_id = '') {
+    public function posts($category_id = null) 
+    {
 
-        $titulo_view = '';
+        $view_title = '';
+        $view_description = '';
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
@@ -89,32 +96,32 @@ class Main extends MY_Controller {
 
         // Envia os dados para a view de acordo com a categoria.
         //------------------------------------------------------------------------------------------
-        if ($category_id == '') {
+        if ($category_id == null) {
             $this->data_content['posts'] = $this->post->get_by_field(
                 ['page' => '0', 'status' => '1'], 
                 null, 
                 ['field' => 'created', 'order' => 'desc'], 
                 null, 
                 'id, title, description, content, link, image, created'
-            );
-            $titulo_view = 'Todas as postagens';
+            )->result();
+            $view_title = 'Todas as postagens';
         } else {
 
             $qry_category = $this->categoria->get_by_id($category_id, null, null, 'title, description, view')->row();
-            $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc');
-            $this->data_content['titulo_view'] = $qry_category->title;
-            $this->data_content['descricao_view'] = $qry_category->description;
-            $titulo_view = $qry_category->title;
+            $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc')->result();
+            $this->data_content['view_title'] = $qry_category->title;
+            $this->data_content['view_description'] = $qry_category->description;
+            $view_title = $qry_category->title;
 
             // Configurações da view estilo mosaico:
             //--------------------------------------------------------------------------------------
             $this->wpn_posts_view = strtolower($qry_category->view);
-            $this->data_content['max_cols'] = $this->wpn_cols_mosaico;
+            $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
         }
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_title($titulo_view);
+        $this->wpanel->set_meta_title($view_title);
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -132,7 +139,8 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function post($link = '', $use_id = false) {
+    public function post($link = '', $use_id = false) 
+    {
 
         // Verifica se foi informado um link.
         //------------------------------------------------------------------------------------------
@@ -164,7 +172,7 @@ class Main extends MY_Controller {
         $this->wpanel->set_meta_keywords($query->tags);
         $this->wpanel->set_meta_title($query->title);
 
-        if ($query->image)
+        if(file_exists('./media/capas/'.$query->image))
             $this->wpanel->set_meta_image(base_url('media/capas/'.$query->image));
 
         // Seleciona a view específica de cada tipo de post.
@@ -191,31 +199,30 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function events() {
+    public function events() 
+    {
 
-        $titulo_view = 'Eventos';
+        $view_title = 'Eventos';
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
         $this->load->model('post');
-        $this->load->model('categoria');
-        $this->load->model('post_categoria');
 
         // Recupera a lista de eventos.
         //------------------------------------------------------------------------------------------
         $query = $this->post->get_by_field(
                 ['page' => '2', 'status' => '1'], null, ['field' => 'created', 'order' => 'desc']
-        );
+        )->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_title($titulo_view);
+        $this->wpanel->set_meta_title($view_title);
         $this->wpanel->set_meta_description('Lista de eventos');
         $this->wpanel->set_meta_keywords(' eventos, agenda');
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['posts'] = $query;
+        $this->data_content['events'] = $query;
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -231,26 +238,25 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function search() {
+    public function search() 
+    {
 
         // Recebe os termos da busca.
         //------------------------------------------------------------------------------------------
-        $termos_busca = $this->input->post('search');
+        $search_terms = $this->input->post('search');
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
         $this->load->model('post');
-        $this->load->model('categoria');
-        $this->load->model('post_categoria');
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['termos_busca'] = $termos_busca;
-        $this->data_content['posts'] = $this->post->busca_posts($termos_busca);
+        $this->data_content['search_terms'] = $search_terms;
+        $this->data_content['results'] = $this->post->busca_posts($search_terms)->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_title('Resultados da busca por ' . $termos_busca);
+        $this->wpanel->set_meta_title('Resultados da busca por ' . $search_terms);
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -266,11 +272,16 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function albuns() {
+    public function albuns() 
+    {
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
         $this->load->model('album');
+
+        $query = $this->album->get_by_field(
+            'status', 1, ['field'=>'created', 'order'=>'desc'], 'titulo, capa, created'
+        )->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
@@ -280,7 +291,8 @@ class Main extends MY_Controller {
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['albuns'] = $this->album->get_list();
+        $this->data_content['albuns'] = $query;
+        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -297,7 +309,11 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function album($album_id) {
+    public function album($album_id = null) 
+    {
+
+        if ($album_id == null)
+            show_404();
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
@@ -306,19 +322,40 @@ class Main extends MY_Controller {
 
         // Recupera os detalhes do álbum.
         //------------------------------------------------------------------------------------------
-        $album = $this->album->get_by_id($album_id)->row();
+        $query_album = $this->album->get_by_id(
+            $album_id, 
+            null, 
+            null, 
+            'id, titulo, descricao, capa, created, status'
+        )->row();
+
+        if (count($query_album) <= 0)
+            show_404();
+
+        if ($query_album->status == 0)
+            show_error('Este álbum foi suspenso temporariamente', 404);
+
+        $query_pictures = $this->foto->get_by_field(
+            ['album_id'=>$album_id, 'status'=>1], 
+            null, 
+            ['field' => 'created', 'order' => 'desc'],
+            null,
+            'id, filename, descricao'
+        )->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_description($album->descricao);
+        $this->wpanel->set_meta_description($query_album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
-        $this->wpanel->set_meta_title($album->titulo);
-        $this->wpanel->set_meta_image(base_url('media/capas'.'/'.$album->capa));
+        $this->wpanel->set_meta_title($query_album->titulo);
+        if(file_exists('./media/capas/'.$query_album->capa))
+            $this->wpanel->set_meta_image(base_url('media/capas'.'/'.$query_album->capa));
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['album'] = $album;
-        $this->data_content['fotos'] = $this->foto->get_by_field('album_id', $album_id, ['field' => 'created', 'order' => 'desc']);
+        $this->data_content['album']    = $query_album;
+        $this->data_content['pictures'] = $query_pictures;
+        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -328,14 +365,18 @@ class Main extends MY_Controller {
     /**
      * ---------------------------------------------------------------------------------------------
      * O metodo foto() faz a exibição de uma foto de algum ámbum, indicada
-     * pelo parâmmetro $foto_id
+     * pelo parâmmetro $query_picture_id
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $foto_id Int ID da foto para exibição.
+     * @param $picture_id Int ID da foto para exibição.
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function foto($foto_id) {
+    public function foto($picture_id = null)
+    {
+
+        if ($picture_id == null)
+            show_404();
 
         // Carrega os models necessários.
         //------------------------------------------------------------------------------------------
@@ -344,19 +385,33 @@ class Main extends MY_Controller {
 
         // Recupera os detalhes da foto.
         //------------------------------------------------------------------------------------------
-        $foto = $this->foto->get_by_id($foto_id)->row();
+        $query_picture = $this->foto->get_by_id($picture_id, null, null, 'id, album_id, filename, descricao, status')->row();
+
+        $query_album = $this->album->get_by_id(
+            $query_picture->album_id, 
+            null, 
+            null, 
+            'id, titulo, descricao, capa, created, status'
+        )->row();
+
+        if (count($query_picture) <= 0)
+            show_404();
+
+        if ($query_picture->status == 0)
+            show_error('Esta foto foi suspensa temporariamente', 404);
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_description($foto->descricao);
+        $this->wpanel->set_meta_description($query_picture->descricao);
         $this->wpanel->set_meta_keywords('album, fotos');
-        $this->wpanel->set_meta_title($foto->descricao);
-        $this->wpanel->set_meta_image(base_url('media/albuns/'.$foto->album_id.'/'.$foto->filename));
+        $this->wpanel->set_meta_title($query_picture->descricao);
+        if(file_exists('./media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename))
+            $this->wpanel->set_meta_image(base_url('media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename));
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['album'] = $this->album->get_by_id($foto->album_id)->row();
-        $this->data_content['foto'] = $foto;
+        $this->data_content['album']    = $query_album;
+        $this->data_content['picture']  = $query_picture;
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -372,12 +427,19 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function videos() {
+    public function videos() 
+    {
 
         // Recupera a lista de vídeos.
         //------------------------------------------------------------------------------------------
         $this->load->model('video');
-        $query = $this->video->get_by_field('status', '1', ['field' => 'created', 'order' => 'desc'])->result();
+        $query_videos = $this->video->get_by_field(
+            'status', 
+            1, 
+            ['field' => 'created', 'order' => 'desc'],
+            null,
+            'link, titulo'
+        )->result();
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
@@ -387,7 +449,8 @@ class Main extends MY_Controller {
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['query'] = $query;
+        $this->data_content['videos']   = $query_videos;
+        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
 
         // Exibe o wpn_template.
         //------------------------------------------------------------------------------------------
@@ -403,23 +466,39 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function video($code) {
+    public function video($code = null) 
+    {
+
+        if ($code == null)
+            show_404();
 
         $this->load->model('video');
 
         // Recupera os dados do vídeo.
         //------------------------------------------------------------------------------------------
-        $query = $this->video->get_by_field('link', $code)->row();
+        $query_video = $this->video->get_by_field(
+            ['link'=>$code,'status'=>1], 
+            null,
+            null,
+            null,
+            'titulo, descricao, link, status'
+        )->row();
+
+        if (count($query_video) <= 0)
+            show_404();
+
+        if ($query_video->status == 0)
+            show_error('Este vídeo foi suspenso temporariamente', 404);
 
         // Envia os dados para a view.
         //------------------------------------------------------------------------------------------
-        $this->data_content['video'] = $query;
+        $this->data_content['video'] = $query_video;
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_description($query->titulo);
+        $this->wpanel->set_meta_description($query_video->titulo);
         $this->wpanel->set_meta_keywords('videos, filmes');
-        $this->wpanel->set_meta_title($query->titulo);
+        $this->wpanel->set_meta_title($query_video->titulo);
         $this->wpanel->set_meta_image('http://img.youtube.com/vi/'.$code.'/0.jpg');
 
         // Exibe o wpn_template.
@@ -435,7 +514,8 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function contato() {
+    public function contato() 
+    {
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -512,33 +592,37 @@ class Main extends MY_Controller {
      * O método rss() gera a página padrão XML para os leitores de RSS
      * com as postagens disponíveis no site.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @todo Criar o metodo de categorizar esta lista de feed.
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function rss() {
+    public function rss()
+    {
 
         $this->load->model('post');
-        $query = $this->post->get_list()->result();
+        $query = $this->post->get_list(['field'=>'created', 'order'=>'desc'], null, '')->result();
 
-        $rss = '<?xml version="1.0" encoding="utf-8"?>';
-        $rss .= '<rss version="2.0">';
-        $rss .= '<channel>';
-        $rss .= '<title>' . $this->wpanel->get_titulo() . '</title>';
-        $rss .= '<description>' . $this->wpanel->get_config('site_desc') . '</description>';
-        $rss .= '<link>' . site_url() . '</link>';
-        $rss .= '<language>en</language>';
+        $available_languages = config_item('available_languages');
+        $locale = $available_languages[wpn_config('language')]['locale'];
+
+        $rss = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+        $rss .= "<rss version=\"2.0\">\n";
+        $rss .= "\t<channel>\n";
+        $rss .= "\t\t<title>" . wpn_config('site_titulo') . "</title>\n";
+        $rss .= "\t\t<description>" . $this->wpanel->get_config('site_desc') . "</description>\n";
+        $rss .= "\t\t<link>" . site_url() . "</link>\n";
+        $rss .= "\t\t<language>".$locale."</language>\n";
 
         foreach ($query as $row) {
-            $rss .= '<item>';
-            $rss .= "<title>$row->title</title>";
-            $rss .= "<description>$row->description</description>";
-            $rss .= "<lastBuildDate>$row->created</lastBuildDate>";
-            $rss .= "<link>" . site_url('post/' . $row->link) . "</link>";
-            $rss .= '</item>';
+            $rss .= "\t\t<item>\n";
+            $rss .= "\t\t\t<title>".$row->title."</title>\n";
+            $rss .= "\t\t\t<description>".$row->description."</description>\n";
+            $rss .= "\t\t\t<lastBuildDate>".$row->created."</lastBuildDate>\n";
+            $rss .= "\t\t\t<link>" . site_url('post/' . $row->link) . "</link>\n";
+            $rss .= "\t\t</item>\n";
         }
 
-        $rss .= '</channel></rss>';
+        $rss .= "\t</channel>\n</rss>\n";
 
         echo $rss;
     }
@@ -552,7 +636,8 @@ class Main extends MY_Controller {
      * @return void
      * ---------------------------------------------------------------------------------------------
      */
-    public function newsletter() {
+    public function newsletter()
+    {
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[newsletter_email.email]');
@@ -586,5 +671,4 @@ class Main extends MY_Controller {
             }
         }
     }
-
 }

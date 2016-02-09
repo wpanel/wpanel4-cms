@@ -1,31 +1,32 @@
 <h3 class="page-header">Eventos</h3>
-<?php foreach ($posts->result() as $post) { ?>
+<!-- Mostra a lista de eventos. -->
+<?php foreach($events as $event){ ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
-            <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
+            <h3><?= anchor('event/'.$event->link, $event->title); ?></h3>
             <p class="text-muted">
-                <span><b>Data</b> <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> | <b>Local</b> <?php echo $post->description; ?><br/></span>
+                <span><b>Data</b> <?= mdate('%d/%m/%Y', strtotime($event->created)); ?> | <b>Local</b> <?= $event->description; ?><br/></span>
             </p>
             <?php
-            if ($post->image) {
+            // Exibe a imagem de capa caso ela exista.
+            if (file_exists('./media/capas/'.$event->image)) {
                 ?>
                 <div class="wpn-capa">
-                    <!-- Largura mínima de 700px -->
                     <?php
                     $img_data = array(
-                        'src'=>'media/capas/'.$post->image, 
+                        'src'=>'media/capas/'.$event->image, 
                         'class'=>'img-responsive', 
                         'style'=>'margin-top:5px;', 
-                        'alt'=>$post->title, 
-                        'title'=>$post->title
+                        'alt'=>$event->title, 
+                        'title'=>$event->title
                     );
-                    echo anchor('post/'.$post->link, img($img_data));
+                    echo anchor('event/'.$event->link, img($img_data));
                     ?>
                 </div>
                 <?php
             }
             ?>
-            <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+            <p><?= word_limiter(strip_tags($event->content), 60); ?></p>
         </div>
     </div>
     <?php

@@ -1,30 +1,32 @@
-<?php
-
-if ($titulo_view) {
-    echo '<h3 class="page-header">'.$titulo_view.'</h3>';
-    echo '<p>'.$descricao_view.'</p>';
-}
-
-?>
+<!-- Mostra o título da categoria caso esteja listando uma. -->
+<?php if (isset($view_title)) { ?>
+    <h3 class="page-header"><?= $view_title; ?></h3>
+    <p><?= $view_description; ?></p>
+<?php } ?>
+<!-- Mostra a lista de postagens em formato de mosaico. -->
 <div class="row">
 	<?php
-	$x = 1;
-	foreach ($posts->result() as $post) {
-		/**
-		Configurar o valor da coluna do bootstrap de acordo com o total de colunas da view.
-		*/
+	$num_cols = 1;
+	foreach ($posts as $post) {
+		
+		/*
+		 * Faz um calculo simples para adequar o total
+		 * de colunas à class do bootstrap.
+		 */
+		$col = 12 / $max_cols;
+
 		?>
-	    <div class="col-md-6 wpn-postagens">
-	        <h3><?php echo anchor('post/'.$post->link, $post->title); ?></h3>
+	    <div class="col-md-<?= $col; ?> wpn-postagens">
+	        <h3><?= anchor('post/'.$post->link, $post->title); ?></h3>
 	        <p class="text-muted">
-	            <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
+	            <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($post->created)); ?> <br/></span>
 	            <small><?= wpn_widget('categoryfrompost', array('post_id' => $post->id)); ?></small>
 	        </p>
 	        <?php
-	        if ($post->image) {
+	        // Exibe a imagem de capa caso ela exista.
+	        if (file_exists('./media/capas/'.$post->image)) {
 		        ?>
 		        <div class="wpn-capa">
-		            <!-- Largura mínima de 700px -->
 		            <?php
 		            $img_data = array(
 		                'src'=>'media/capas/'.$post->image, 
@@ -39,11 +41,14 @@ if ($titulo_view) {
 		        <?php
 	        }
 	        ?>
-	        <p><?php echo word_limiter(strip_tags($post->content), 60); ?></p>
+	        <p><?= word_limiter(strip_tags($post->content), 60); ?></p>
 	        <p><?= anchor('post/'.$post->link, 'Continuar lendo...'); ?></p>
 	    </div>
 		<?php
-		if($max_cols == $x){ echo '</div><div class="row wpn-postagens">'; $x = 1; } else { $x = $x+1; }
+		if($num_cols == $max_cols){ 
+			echo '</div><div class="row wpn-postagens">'; 
+			$num_cols = 1; 
+		} else $num_cols = $num_cols ++;
 	}
 	?>
 </div>

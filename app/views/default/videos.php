@@ -10,30 +10,52 @@
 </div>
 <div class="row">
 	<?php
-	$col = 1; // Contador de itens.
-	$max_col = 3; // Número máximo de ítens por linha.
-	foreach($query as $row){
+	$num_cols = 1;
+	foreach($videos as $video){
+
+		/*
+		 * Faz um calculo simples para adequar o total
+		 * de colunas à class do bootstrap.
+		 */
+		$col = 12 / $max_cols;
+
 		?>
-		<div class="col-md-4">
+		<div class="col-md-<?= $col; ?>">
 			<div class="thumbnail">
 				<div class="inner-video">
-					<!-- 400x300 -->
 					<?php
 					$image_properties = array(
-						'src' => 'http://img.youtube.com/vi/'.$row->link.'/0.jpg',
+						'src' => 'http://img.youtube.com/vi/'.$video->link.'/0.jpg',
 						'class' => 'img-responsive'
 					);
-					echo anchor('video/'.$row->link, img($image_properties));
+					echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
 					?>
 				</div>
 			</div>
 			<div class="caption">
-				<h4><?= $row->titulo; ?></h4>
+				<h4><?= $video->titulo; ?></h4>
 			</div>
 		</div>
 		<?php
 		// Cria uma nova linha de acordo com a quantidade de ítens por linha.
-		if($col == $max_col){ echo '</div><div class="row">'; $col = 1; } else { $col = $col +1; }
+		if($num_cols == $max_cols){ 
+			echo '</div><div class="row">'; 
+			$num_cols = 1; 
+		} else $num_cols = $num_cols ++;
 	}
 ?>
+</div>
+
+<div class="row wpn-ads">
+    <div class="col-md-12">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-0286050943868335"
+             data-ad-slot="6888761431"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 </div>
