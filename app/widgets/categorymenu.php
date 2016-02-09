@@ -1,10 +1,10 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Categorymenu extends Widget {
 
-    private $category_id = '';
-    private $attributes = '';
-    private $item = '';
+    private $inicial_id = '0';
+    private $main_attr = '';
+    private $item_attr = '';
 
 	function __construct($config = array())
 	{
@@ -45,22 +45,25 @@ class Categorymenu extends Widget {
 
     public function run()
 	{
-		return $this->get_category($this->category_id, $this->attributes, $this->item);
+		return $this->get_category($this->inicial_id);
 	}
 
-    private function get_category($id = 0, $attributes = array(), $item = array())
+    private function get_category($id)
     {
+
         $this->load->model('categoria');
-        $str = '';
-        $str .= '<ul ' . $this->_attributes($attributes) . '>';
-        $query = $this->categoria->get_by_field('category_id', $id);
-        foreach ($query->result() as $key => $value)
-        {
-            $str .= '<li ' . $this->_attributes($item) . '>' . anchor('/posts/' . $value->id . '/' . $value->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $value->title) . '</li>';
-            $str .= $this->get_category($value->id, $attributes, $item);
+        $query = $this->categoria->get_by_field('category_id', $id, ['field'=>'title', 'order'=>'asc'], null, 'id, title, link')->result();
+
+        $html = '';
+        $html .= '<ul ' . $this->_attributes($this->main_attr) . '>';
+        foreach ($query as $row){
+            $html .= '<li ' . $this->_attributes($this->item_attr) . '>' . anchor('/posts/' . $row->id . '/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '</li>';
+            $html .= $this->get_category($row->id);
         }
-        $str .= '</ul>';
-        return $str;
+        $html .= '</ul>';
+
+        return $html;
+
     }
 
 }

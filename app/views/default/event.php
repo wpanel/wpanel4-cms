@@ -38,7 +38,7 @@
             echo $this->widgets->facebook_comments(site_url('post/'.$post->link));
         }
         
-        echo wpn_widget('tagsfrompost', array('link'=>$post->link));
+        echo wpn_widget('tagsfrompost', array('tags'=>$post->tags));
 
         ?>
     </div>

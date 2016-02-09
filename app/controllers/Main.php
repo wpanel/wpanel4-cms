@@ -86,17 +86,21 @@ class Main extends MY_Controller {
         //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $this->load->model('categoria');
-        $this->load->model('post_categoria');
 
         // Envia os dados para a view de acordo com a categoria.
         //------------------------------------------------------------------------------------------
         if ($category_id == '') {
             $this->data_content['posts'] = $this->post->get_by_field(
-                ['page' => '0', 'status' => '1'], null, ['field' => 'created', 'order' => 'desc']
+                ['page' => '0', 'status' => '1'], 
+                null, 
+                ['field' => 'created', 'order' => 'desc'], 
+                null, 
+                'id, title, description, content, link, image, created'
             );
+            $titulo_view = 'Todas as postagens';
         } else {
 
-            $qry_category = $this->categoria->get_by_id($category_id)->row();
+            $qry_category = $this->categoria->get_by_id($category_id, null, null, 'title, description, view')->row();
             $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc');
             $this->data_content['titulo_view'] = $qry_category->title;
             $this->data_content['descricao_view'] = $qry_category->description;
@@ -138,34 +142,34 @@ class Main extends MY_Controller {
         // Prepara e envia os dados para a view.
         //------------------------------------------------------------------------------------------
         $this->load->model('post');
-        if($use_id){
-            $post = $this->post->get_by_id($link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
-        } else {
-            $post = $this->post->get_by_field('link', $link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
-        }
+        if($use_id)
+            $query = $this->post->get_by_id($link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
+        else 
+            $query = $this->post->get_by_field('link', $link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
+        
 
-        $this->data_content['post'] = $post;
+        $this->data_content['post'] = $query;
 
         // Verifica a existência e disponibilidade do post.
         //------------------------------------------------------------------------------------------
-        if (count($post) <= 0)
+        if (count($query) <= 0)
             show_404();
 
-        if ($post->status == 0)
+        if ($query->status == 0)
             show_error('Esta página foi suspensa temporariamente', 404);
 
         // Seta as variáveis 'meta'.
         //------------------------------------------------------------------------------------------
-        $this->wpanel->set_meta_description($post->description);
-        $this->wpanel->set_meta_keywords($post->tags);
-        $this->wpanel->set_meta_title($post->title);
+        $this->wpanel->set_meta_description($query->description);
+        $this->wpanel->set_meta_keywords($query->tags);
+        $this->wpanel->set_meta_title($query->title);
 
-        if ($post->image)
-            $this->wpanel->set_meta_image(base_url('media/capas/'.$post->image));
+        if ($query->image)
+            $this->wpanel->set_meta_image(base_url('media/capas/'.$query->image));
 
         // Seleciona a view específica de cada tipo de post.
         //------------------------------------------------------------------------------------------
-        switch ($post->page) {
+        switch ($query->page) {
             case '1':
                 $this->render('page');
                 break;

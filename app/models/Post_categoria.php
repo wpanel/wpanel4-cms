@@ -14,16 +14,4 @@ class Post_categoria extends MY_Model {
         return $this->db->affected_rows();
 	}
 
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function list_by_post($post_id)
-	{
-		$this->db->where('post_id', $post_id);
-        return $this->db->get($this->table_name);
-	}
-
 }

@@ -1,8 +1,8 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tagsfrompost extends Widget {
 
-    private $link = '';
+    private $tags = '';
     private $pre = '<span class="label label-primary">';
     private $pos = '</span>';
 
@@ -29,27 +29,10 @@ class Tagsfrompost extends Widget {
         return $this;
     }
 
-    public function set_link($var)
-    {
-        $this->link = $var;
-    }
-
-    public function set_pre($var)
-    {
-        $this->pre = $var;
-    }
-
-    public function set_pos($var)
-    {
-        $this->pos = $var;
-    }
-
     public function run()
     {
-        $this->load->model('post');
-        $query = $this->post->get_by_field('link', $this->link)->row();
         $str = '';
-        $x = explode(',', $query->tags);
+        $x = explode(',', $this->tags);
         foreach ($x as $value)
         {
             $str .= $this->pre . $value . $this->pos . ' ';

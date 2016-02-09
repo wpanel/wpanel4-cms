@@ -45,8 +45,12 @@ echo $this->wpanel->load_editor();
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Imagem de capa', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file'));
-            echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
+            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
+            if(file_exists('./media/capas/'.$row->image)){
+                echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
+            } else {
+                echo '<p>Arquivo inexistente</p>';
+            }
             echo div(array('class'=>'checkbox'));
             echo '<label>';
             echo form_checkbox(array('name'=>'alterar_imagem', 'value'=>'1', 'class'=>'checkbox'));
@@ -74,7 +78,7 @@ echo $this->wpanel->load_editor();
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, null, 'form-control');
+            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
             echo close_div(3);
 
             echo hr();

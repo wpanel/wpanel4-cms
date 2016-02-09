@@ -31,7 +31,7 @@ $route['setup/firstadmin'] 		= 'setup/main/firstadmin';
 | -------------------------------------------------------------------
 */
 $route['posts'] 				= 'main/posts';
-$route['posts/(:any)'] 			= 'main/posts/$1';
+$route['posts/(:any)/(:any)'] 	= 'main/posts/$1';
 $route['post/(:any)'] 			= 'main/post/$1';
 $route['eventos']				= 'main/events';
 $route['search']				= 'main/search';

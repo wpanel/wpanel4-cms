@@ -82,6 +82,7 @@ class Wpanel
     }
 
     // ----- Encapsulamento das variáveis META ----- //
+    
     public function set_meta_description($value) {
         $this->meta_description = $value;
     }
@@ -107,7 +108,7 @@ class Wpanel
     }
 
     public function set_meta_title($value) {
-        $this->meta_title = $this->get_config('site_titulo') . ' | ' . $value;
+        $this->meta_title = $value .' | '. $this->get_config('site_titulo');
     }
 
     public function get_meta_title(){
@@ -180,28 +181,6 @@ class Wpanel
         else
             return $this->wpanel_config;
         
-    }
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método lista as categorias a que uma postagem pertence e
-     * cria o link para a listagem de cada categoria.
-     *
-     * @return String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $post_id Int Código da postagem.
-     * ---------------------------------------------------------------------------------------------
-     */
-    public function category_of_post($post_id) {
-        $str = '';
-        $this->load->model('categoria');
-        $this->load->model('post_categoria');
-        foreach ($this->post_categoria->list_by_post($post_id)->result() as $value) {
-            $str .= anchor(
-                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
-                    ) . ' ';
-        }
-        return $str;
     }
 
     /* ----- Métodos usados no painel de controle. ----- */

@@ -22,7 +22,7 @@
 
             echo div(array('class'=>'form-group'));
             echo form_label('Selecione a imagem', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file'));
+            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
             echo '<p style="margin-top:15px;"><b>Pré-visualização da imagem:</b></p>';
             echo img(array('src'=>'media/albuns/'.$row->album_id.'/'.$row->filename, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
             echo div(array('class'=>'checkbox'));
@@ -48,7 +48,7 @@
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, null, 'form-control');
+            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
             echo close_div(3);
 
             echo hr();

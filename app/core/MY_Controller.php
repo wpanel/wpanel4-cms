@@ -4,7 +4,7 @@ class MY_Controller extends CI_Controller {
 
 	var $wpn_profiler = FALSE;
 	var $wpn_template = 'default';
-	var $wpn_posts_view = 'lista';
+	var $wpn_posts_view = 'list';
     var $wpn_cols_mosaico = 2;
     // Define as variáveis mais usadas no controller.
     var $data_header = array();

@@ -46,8 +46,10 @@ echo $this->wpanel->load_editor();
             echo div(array('class'=>'form-group'));
             echo form_label('Imagem de capa', 'userfile');
             echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
-            if ($row->image) {
-              echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
+            if(file_exists('./media/capas/'.$row->image)){
+                echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
+            } else {
+                echo '<p>Arquivo inexistente</p>';
             }
             echo div(array('class'=>'checkbox'));
             echo '<label>';

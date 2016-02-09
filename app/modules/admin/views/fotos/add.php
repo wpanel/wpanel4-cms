@@ -22,7 +22,7 @@
 
             echo div(array('class'=>'form-group'));
             echo form_label('Selecione a imagem', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file'));
+            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
             echo form_error('userfile');
             echo close_div();
 
@@ -43,7 +43,7 @@
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, null, null, 'form-control');
+            echo form_dropdown('status', $options, null, array('class'=>'form-control'));
             echo close_div(3);
 
             echo hr();

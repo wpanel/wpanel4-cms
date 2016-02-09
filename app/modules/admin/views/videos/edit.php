@@ -37,7 +37,7 @@
                 );
                 ?>
                 <label for="status">Status</label>
-                <?= form_dropdown('status', $options, array($row->status), null, 'form-control'); ?>
+                <?= form_dropdown('status', $options, array($row->status), array('class'=>'form-control')); ?>
 			</div>
 			<div class="form-group">
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $row->link; ?>" frameborder="0" allowfullscreen></iframe>

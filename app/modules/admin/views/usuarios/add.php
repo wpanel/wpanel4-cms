@@ -75,14 +75,14 @@
                             );
                             ?>
                             <label for="skin">Estilo de cor</label>
-                            <?= form_dropdown('skin', $options, null, null, 'form-control'); ?>
+                            <?= form_dropdown('skin', $options, null, array('class'=>'form-control')); ?>
                             <?= form_error('skin'); ?>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="role">Tipo do usuário</label>
-                            <?= form_dropdown('role', config_item('users_role'), 'large', null, 'form-control'); ?>
+                            <?= form_dropdown('role', config_item('users_role'), 'large', array('class'=>'form-control')); ?>
                             <?= form_error('role'); ?>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                             );
                             ?>
                             <label for="status">Status</label>
-                            <?= form_dropdown('status', $options, 'large', null, 'form-control'); ?>
+                            <?= form_dropdown('status', $options, 'large', array('class'=>'form-control')); ?>
                             <?= form_error('status'); ?>
                         </div>
                     </div>

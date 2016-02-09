@@ -44,6 +44,9 @@ class Migration_Noconfiguration extends CI_Migration {
         $this->dbforge->add_field("`home_id` varchar(10) DEFAULT NULL");
 
         $this->dbforge->create_table('configuracoes', true);
+        //TODO Restaurar os dados do arquivo config.json nesta inclusão de retorno.
+        $this->db->query("INSERT INTO `configuracoes` (`id`, `site_titulo`, `site_desc`, `site_tags`, `site_contato`, `site_telefone`, `link_instagram`, `link_twitter`, `link_facebook`, `link_likebox`, `copyright`, `addthis_uid`, `logomarca`, `background`, `bgcolor`, `texto_contato`, `usa_smtp`, `smtp_servidor`, `smtp_porta`, `smtp_usuario`, `smtp_senha`, `google_analytics`, `home_tipo`, `home_id`) VALUES (1, 'WPanel CMS', 'Este é um site-exemplo usando WPanel CMS', 'wpanel, cms, codeigniter, demonstração', 'contato@seusite.com', '', '', '', '', 'http://facebook.com/wpanelcms', '® 2015 wPanel - Direitos reservados', '', 'logomarca.png', 'background.jpg', '', '<p>Esta &eacute; uma mensagem adicional &agrave; p&aacute;gina de contato, use-a para passar maiores informa&ccedil;&otilde;es de contato como endere&ccedil;o, telefones adicionais etc.</p>\n', 0, 'mail.seusite.com', 25, '', '', '', 'category', '');");
+
     }
 
 }

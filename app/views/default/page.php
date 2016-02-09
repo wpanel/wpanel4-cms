@@ -42,7 +42,7 @@
             echo wpn_widget('facebookcomments', array('link' => site_url('post/'.$post->link)));
         }
         
-        echo wpn_widget('tagsfrompost', array('link'=>$post->link));
+        echo wpn_widget('tagsfrompost', array('tags'=>$post->tags));
 
         ?>
     </div>

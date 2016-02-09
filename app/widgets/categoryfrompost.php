@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Categoryfrompost extends Widget {
 
@@ -8,54 +8,34 @@ class Categoryfrompost extends Widget {
 
 	function __construct($config = array())
 	{
-		if (count($config) > 0) {
+		if (count($config) > 0)
             $this->initialize($config);
-        }
 	}
 
     public function initialize($config = array())
     {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key)) {
+        foreach ($config as $key => $val){
+            if (isset($this->$key)){
                 $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
+                if (method_exists($this, $method))
                     $this->$method($val);
-                } else {
+                else
                     $this->$key = $val;
-                }
             }
         }
         return $this;
     }
 
-    public function set_post_id($var)
-    {
-        $this->post_id = $var;
-    }
-
-    public function set_pre($var)
-    {
-        $this->pre = $var;
-    }
-
-    public function set_pos($var)
-    {
-        $this->pos = $var;
-    }
-
     public function run()
     {
-        $str = '';
+        $html = '';
         $this->load->model('categoria');
-        $this->load->model('post_categoria');
-        foreach ($this->post_categoria->list_by_post($this->post_id)->result() as $value)
-        {
-            $str .= anchor(
-                            'posts/' . $value->category_id, $this->categoria->get_title_by_id($value->category_id), array('class' => 'label label-warning')
-                    ) . ' ';
+        $query = $this->categoria->get_by_post($this->post_id)->result();
+
+        foreach ($query as $row){
+            $html .= anchor('posts/'.$row->id.'/'.$row->link, $row->title, ['class' => 'label label-warning', 'style'=>'margin-right:5px;']);
         }
-        return $str;
+        return $html;
     }
 
 }

@@ -1,11 +1,15 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Esta classe é uma extensão para a classe de validação do  CodeIgniter
  * validar campos de confirmação 'Captcha'.
  *
- * @author Desconhecido (pesquisar e informar aqui.)
- **/
+ * ATENÇÃO!!!
+ * ----------
+ * Certifique-se de ter a biblioteca GD instlada no seu ambiente de desenvolvimento
+ * caso contrário ocorrerá um erro na geração do captcha.
+ *
+ */
 class MY_Form_validation extends CI_Form_validation {
 
 	/**
@@ -41,11 +45,17 @@ class MY_Form_validation extends CI_Form_validation {
 		$vals = array(
 			'word' => $this->gen_rand_shortcode(6),
 			'img_path' => './captcha/',
-			'img_url' => base_url() . '/captcha/',
+			'img_url' => base_url('captcha').'/',
 			'font_path'  => './lib/fonts/essai.ttf',
 			'img_width' => '150',
-			'img_height' => 50,
-			'expiration' => 7200
+			'img_height' => '50',
+			'expiration' => 7200,
+			'colors'        => array(
+                'background' => array(255, 100, 80),
+                'border' => array(0, 0, 80),
+                'text' => array(40, 40, 40),
+                'grid' => array(255, 40, 40)
+        	)
 		);
 
 		$cap = create_captcha($vals);

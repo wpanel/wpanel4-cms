@@ -13,7 +13,7 @@
                     <h4 class="page-header">
                         <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Categorias
                     </h4>
-                    <?= wpn_widget('categorymenu', ['category_id'=>0, 'attributes'=> ['class' => 'menu-sidebar']]); ?>
+                    <?= wpn_widget('categorymenu', ['inicial_id' => 0, 'main_attr' => ['class' => 'menu-sidebar']]); ?>
 
                 </div>
             </div>

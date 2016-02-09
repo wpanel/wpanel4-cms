@@ -42,6 +42,7 @@ class Wpanelmenu extends Widget {
      * os usados pelo Bootstrap, mas pode-se deixar os parametros de estilo em
      * branco e criar seus próprios estilos usando "ul li {}"
      * 
+     * @todo Criar a seleção de tipo de impressão ou estilo, para lista, coluna, em linha etc.
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param int $menu_id
      * @param string $class_menu
@@ -51,12 +52,18 @@ class Wpanelmenu extends Widget {
      */
     private function get_menu()
     {
-        if ($this->menu_id == null) {
+        if ($this->menu_id == null)
             return false;
-        }
+        
         $this->load->model('menu_item');
-        $query = $this->menu_item->get_by_field('menu_id', $this->menu_id, array('field' => 'ordem', 'order' => 'asc'))->result();
-        //TODO Criar a seleção de tipo de impressão ou estilo, para lista, coluna, em linha etc.
+        $query = $this->menu_item->get_by_field(
+            'menu_id', 
+            $this->menu_id, 
+            array('field' => 'ordem', 'order' => 'asc'),
+            null,
+            'tipo, href, label'
+        )->result();
+        
         $html = "";
         $html .= "<ul class=\"" . $this->class_menu . "\">";
         foreach ($query as $row)

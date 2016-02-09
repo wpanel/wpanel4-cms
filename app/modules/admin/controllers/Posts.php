@@ -36,7 +36,8 @@ class Posts extends MX_Controller {
 			$this->table->add_row(
 				$row->id, 
 				$row->title, 
-				$this->wpanel->category_of_post($row->id),
+				// Usando o widget para mostrar as categorias do post.
+				wpn_widget('categoryfrompost', array('post_id' => $row->id)),
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações

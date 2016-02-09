@@ -35,7 +35,7 @@
                     );
                     ?>
                     <label for="status">Status</label>
-                    <?= form_dropdown('status', $options, null, null, 'form-control'); ?>
+                    <?= form_dropdown('status', $options, null, array('class'=>'form-control')); ?>
 				</div>
 				<button type="submit" class="btn btn-success">Salvar</button>
 				<a href="<?= site_url('admin/videos'); ?>" class="btn btn-danger">Cancelar</a>

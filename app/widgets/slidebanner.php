@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Slidebanner extends Widget {
 
@@ -30,31 +30,17 @@ class Slidebanner extends Widget {
         return $this;
     }
 
-    public function set_position($var)
-    {
-    	$this->position = $var;
-    }
-
-    public function set_class_name($var)
-    {
-    	$this->classname = $var;
-    }
-
-    public function set_interval($var)
-    {
-    	$this->interval = $var;
-    }
-
-    public function set_cycle($var)
-    {
-    	$this->cycle = $var;
-    }
-
 	public function run()
 	{
 
 		$this->load->model('banner');
-        $query = $this->banner->get_banners($this->position)->result();
+        $query = $this->banner->get_by_field(
+            ['position' => $this->position, 'status' => 1],
+            null,
+            ['field' => 'order', 'order' => 'asc'],
+            null,
+            'content'
+        )->result();
 
 		$data = array(
 			'banners' => $query,

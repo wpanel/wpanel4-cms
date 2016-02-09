@@ -43,21 +43,27 @@ class Eventsmenu extends Widget {
 
     public function run()
 	{
-		return $this->get_menu($this->attributes);
+		return $this->get_menu();
 	}
 
-    private function get_menu($attributes = array())
+    private function get_menu()
     {
         $this->load->model('post');
-        $query = $this->post->get_by_field(array('page' => '2', 'status' => '1'), null, array('field' => 'created', 'order' => 'desc'));
-        $str = '';
-        $str .= '<ul ' . $this->_attributes($attributes) . '>';
-        foreach ($query->result() as $key => $value)
+        $query = $this->post->get_by_field(
+            array('page' => '2', 'status' => '1'), 
+            null, 
+            array('field' => 'created', 'order' => 'desc'),
+            null,
+            'title, link, description, created'
+        );
+        $html = '';
+        $html .= '<ul ' . $this->_attributes($this->attributes) . '>';
+        foreach ($query->result() as $key => $row)
         {
-            $str .= '<li>' . anchor('/post/' . $value->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $value->title) . '<br/><small>' . $value->description . '</small><br/><small>' . date('d/m/Y', strtotime($value->created)) . '</small></li>';
+            $html .= '<li>' . anchor('/post/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '<br/><small>' . $row->description . '</small><br/><small>' . date('d/m/Y', strtotime($row->created)) . '</small></li>';
         }
-        $str .= '</ul>';
-        return $str;
+        $html .= '</ul>';
+        return $html;
     }
 
 }
