@@ -63,44 +63,27 @@ class Main extends MY_Controller
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Método 'custom', onde o desenvolvedor cria uma página inicial
-     * personalizada.
+     * You can use this method to create 'custom' home page to your site and
+     * then select the 'custom' page in the admin configuration panel.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function custom() 
     {
-
-        /*
-         * Este método é chamado caso seja configurado o uso de um
-         * página inicial personaizada no painel de configurações.
-         *
-         * Para informações sobre como implementar um método personalizado
-         * confira a documentação ou entre em contto com dev@elieldepaula.com.br>
-         */
-
         echo '<meta charset="UTF-8">';
-        echo '<title>Página inicial personalizada</title>';
-        echo '<h1>Página inicial personalizada do wPanel.</h1>';
-        echo '<p>Você pode alterar esta página pelo painel de controle indo em Configurações >
-                Página inicial.</p>';
+        echo '<title>Custom Home Page</title>';
+        echo '<h1>This is a custom home-page of Wpanel CMS.</h1>';
+        echo '<p>You can change this in the control panel following: 
+            Configurations > Home Page.</p>';
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Método index() que faz o funcionamento da página inicial do site.
+     * The method index() select the configured home page of the site.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function index() 
     {
-        // Seleciona a página inicial de acordo com as configurações.
-        //------------------------------------------------------------------------------------------
         switch ($this->wpanel->get_config('home_tipo')) {
             case 'page':
                 $this->post($this->wpanel->get_config('home_id'), true);
@@ -115,28 +98,19 @@ class Main extends MY_Controller
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método posts() gera uma listagem das postagens disponíveis
-     * para exibição no site.
+     * The method posts() retuns a list of posts, it can be categoryzed and
+     * can be a list or mosaic view.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $category_id Int ID da categoria para listagem.
+     * @param $category_id Int Category ID.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function posts($category_id = null) 
     {
-
         $view_title = '';
         $view_description = '';
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         $this->load->model('categoria');
-
-        // Envia os dados para a view de acordo com a categoria.
-        //------------------------------------------------------------------------------------------
+        // Check if is a categoryzed list.
         if ($category_id == null) {
             $this->data_content['posts'] = $this->post->get_by_field(
                 ['page' => '0', 'status' => '1'], 
@@ -147,77 +121,58 @@ class Main extends MY_Controller
             )->result();
             $view_title = 'Todas as postagens';
         } else {
-
             $qry_category = $this->categoria->get_by_id($category_id, null, null, 'title, description, view')->row();
             $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc')->result();
             $this->data_content['view_title'] = $qry_category->title;
             $this->data_content['view_description'] = $qry_category->description;
             $view_title = $qry_category->title;
-
             // Configurações da view estilo mosaico:
-            //--------------------------------------------------------------------------------------
+            //todo Conferir este pedaço código, talvez tenha que ser fora da condição...
             $this->wpn_posts_view = strtolower($qry_category->view);
             $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
         }
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_title($view_title);
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('posts_' . $this->wpn_posts_view);
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método post() faz a exibição de uma postagem ou página que for
-     * indicada pelo parametro $link.
+     * The method post() shows a post by link or by ID if $use_id = True.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $link String Link para exibição da postagem.
-     * @param $use_id boolean Indica se busca o post pelo link ou pelo ID.
+     * @param $link mixed Link or ID field of the post.
+     * @param $use_id boolean Indicates if $link is a ID.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function post($link = '', $use_id = false) 
     {
-
-        // Verifica se foi informado um link.
-        //------------------------------------------------------------------------------------------
         if ($link == '')
             show_404();
-
-        // Prepara e envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->load->model('post');
         if($use_id)
-            $query = $this->post->get_by_id($link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
+            $query = $this->post->get_by_id(
+                $link, 
+                null, 
+                null, 
+                'id, title, description, content, link, image, tags, created, page, status'
+            )->row();
         else 
-            $query = $this->post->get_by_field('link', $link, null, null, 'id, title, description, content, link, image, tags, created, page, status')->row();
-        
-
+            $query = $this->post->get_by_field(
+                'link', 
+                $link, 
+                null, 
+                null, 
+                'id, title, description, content, link, image, tags, created, page, status'
+            )->row();
         $this->data_content['post'] = $query;
-
-        // Verifica a existência e disponibilidade do post.
-        //------------------------------------------------------------------------------------------
         if (count($query) <= 0)
             show_404();
-
         if ($query->status == 0)
             show_error('Esta página foi suspensa temporariamente', 404);
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($query->description);
         $this->wpanel->set_meta_keywords($query->tags);
         $this->wpanel->set_meta_title($query->title);
-
         if(file_exists('./media/capas/'.$query->image))
             $this->wpanel->set_meta_image(base_url('media/capas/'.$query->image));
-
-        // Seleciona a view específica de cada tipo de post.
-        //------------------------------------------------------------------------------------------
+        // Select the spacific type of view according to type of post.
         switch ($query->page) {
             case '1':
                 $this->render('page');
@@ -232,150 +187,85 @@ class Main extends MY_Controller
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método events() faz uma listagem dos eventos disponíveis para
-     * exibição no site.
+     * The method events() shows a list of posts typed as 'event'.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function events() 
     {
-
         $view_title = 'Eventos';
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('post');
-
-        // Recupera a lista de eventos.
-        //------------------------------------------------------------------------------------------
         $query = $this->post->get_by_field(
-                ['page' => '2', 'status' => '1'], null, ['field' => 'created', 'order' => 'desc']
+                ['page' => '2', 'status' => '1'], 
+                null, 
+                ['field' => 'created', 'order' => 'desc']
         )->result();
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_title($view_title);
         $this->wpanel->set_meta_description('Lista de eventos');
         $this->wpanel->set_meta_keywords(' eventos, agenda');
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['events'] = $query;
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('events');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método search() realiza uma busca por termos indicados no formulário
-     * no título, descrição e conteúdo das postagens independente do seu tipo.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * The method search() make a simple search function into the Posts.
+     * 
+     * @todo Melhorar a view de resultados usando um estilo de tabela.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function search() 
     {
-
-        // Recebe os termos da busca.
-        //------------------------------------------------------------------------------------------
         $search_terms = $this->input->post('search');
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('post');
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['search_terms'] = $search_terms;
         $this->data_content['results'] = $this->post->busca_posts($search_terms)->result();
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_title('Resultados da busca por ' . $search_terms);
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('search');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método albuns() faz uma listagem de albuns de foto disponíveis
-     * para exibição no site.
+     * The method albuns() list all the available galeries of the site.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function albuns() 
     {
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('album');
-
         $query = $this->album->get_by_field(
-            'status', 1, ['field'=>'created', 'order'=>'desc'], 'titulo, capa, created'
+            'status', 1, 
+            ['field'=>'created', 'order'=>'desc'], 
+            'titulo, capa, created'
         )->result();
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['albuns'] = $query;
         $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('albuns');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método album() faz a exibição das fotos de um determinado álbum
-     * indicado pelo parametro $album_id
+     * The method album() shows a list of pictures of a galery selected by $album_id.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $album_id Int ID do álbum para exibição.
+     * @param $album_id Int ID of the galery.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function album($album_id = null) 
     {
-
         if ($album_id == null)
             show_404();
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('album');
         $this->load->model('foto');
-
-        // Recupera os detalhes do álbum.
-        //------------------------------------------------------------------------------------------
         $query_album = $this->album->get_by_id(
             $album_id, 
             null, 
             null, 
             'id, titulo, descricao, capa, created, status'
         )->row();
-
         if (count($query_album) <= 0)
             show_404();
-
         if ($query_album->status == 0)
             show_error('Este álbum foi suspenso temporariamente', 404);
-
         $query_pictures = $this->foto->get_by_field(
             ['album_id'=>$album_id, 'status'=>1], 
             null, 
@@ -383,96 +273,63 @@ class Main extends MY_Controller
             null,
             'id, filename, descricao'
         )->result();
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($query_album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($query_album->titulo);
         if(file_exists('./media/capas/'.$query_album->capa))
             $this->wpanel->set_meta_image(base_url('media/capas'.'/'.$query_album->capa));
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['album']    = $query_album;
         $this->data_content['pictures'] = $query_pictures;
         $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('album');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O metodo foto() faz a exibição de uma foto de algum ámbum, indicada
-     * pelo parâmmetro $query_picture_id
+     * The method foto() shows the picture selected by $picture_id, it only works
+     * if you are not using the lightbox plugin.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $picture_id Int ID da foto para exibição.
+     * @param $picture_id Int Id of the picture.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function foto($picture_id = null)
     {
-
         if ($picture_id == null)
             show_404();
-
-        // Carrega os models necessários.
-        //------------------------------------------------------------------------------------------
         $this->load->model('album');
         $this->load->model('foto');
-
-        // Recupera os detalhes da foto.
-        //------------------------------------------------------------------------------------------
-        $query_picture = $this->foto->get_by_id($picture_id, null, null, 'id, album_id, filename, descricao, status')->row();
-
+        $query_picture = $this->foto->get_by_id(
+            $picture_id, null, null, 
+            'id, album_id, filename, descricao, status'
+        )->row();
         $query_album = $this->album->get_by_id(
             $query_picture->album_id, 
             null, 
             null, 
             'id, titulo, descricao, capa, created, status'
         )->row();
-
         if (count($query_picture) <= 0)
             show_404();
-
         if ($query_picture->status == 0)
             show_error('Esta foto foi suspensa temporariamente', 404);
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($query_picture->descricao);
         $this->wpanel->set_meta_keywords('album, fotos');
         $this->wpanel->set_meta_title($query_picture->descricao);
         if(file_exists('./media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename))
             $this->wpanel->set_meta_image(base_url('media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename));
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['album']    = $query_album;
         $this->data_content['picture']  = $query_picture;
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('foto');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método videos() faz a exibição da lista de vídeos de um canal do
-     * Youtube(®) pelo método de RSS.
+     * The method videos() shows a list of videos from youtube. The videos is not
+     * loaded automaticaly from the channel, it must be inserted into the control
+     * panel by the manager.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function videos() 
     {
-
-        // Recupera a lista de vídeos.
-        //------------------------------------------------------------------------------------------
         $this->load->model('video');
         $query_videos = $this->video->get_by_field(
             'status', 
@@ -481,42 +338,25 @@ class Main extends MY_Controller
             null,
             'link, titulo'
         )->result();
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description('Lista de vídeos');
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title('Vídeos');
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['videos']   = $query_videos;
         $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('videos');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método video() faz a exibição do vídeo indicado pelo parametro $code.
+     * The method video() shows a video selected by $code.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $code string Código do vídeo no youtube.
+     * @param $code string Youtube code for the video.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function video($code = null) 
     {
-
         if ($code == null)
             show_404();
-
         $this->load->model('video');
-
-        // Recupera os dados do vídeo.
-        //------------------------------------------------------------------------------------------
         $query_video = $this->video->get_by_field(
             ['link'=>$code,'status'=>1], 
             null,
@@ -524,69 +364,44 @@ class Main extends MY_Controller
             null,
             'titulo, descricao, link, status'
         )->row();
-
         if (count($query_video) <= 0)
             show_404();
-
         if ($query_video->status == 0)
             show_error('Este vídeo foi suspenso temporariamente', 404);
-
-        // Envia os dados para a view.
-        //------------------------------------------------------------------------------------------
         $this->data_content['video'] = $query_video;
-
-        // Seta as variáveis 'meta'.
-        //------------------------------------------------------------------------------------------
         $this->wpanel->set_meta_description($query_video->titulo);
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title($query_video->titulo);
         $this->wpanel->set_meta_image('http://img.youtube.com/vi/'.$code.'/0.jpg');
-
-        // Exibe o wpn_template.
-        //------------------------------------------------------------------------------------------
         $this->render('video');
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método contato() faz o funcionamento da página de contato do site.
+     * The methoc contato() creates a full functional 'Contact Page' for the site.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @todo Criar a opção de inserir a mensagem no banco de dados e no painel de contorle.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function contato() 
     {
-
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('captcha', 'Confirmação', 'required|captcha');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-
         if ($this->form_validation->run() == FALSE) {
-
-            // Seta as variáveis 'meta'.
-            //--------------------------------------------------------------------------------------
             $this->wpanel->set_meta_description('Formulário de contato');
             $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
             $this->wpanel->set_meta_title('Contato');
-
-            // Recupera a imagem de captcha.
-            //--------------------------------------------------------------------------------------
             $this->data_content['contact_content'] = $this->wpanel->get_config('texto_contato');
             $this->data_content['captcha'] = $this->form_validation->get_captcha();
-
-            // Exibe o wpn_template.
-            //--------------------------------------------------------------------------------------
             $this->render('contact');
-
         } else {
-
+            // Receive the values of the form.
             $nome = $this->input->post('nome');
             $email = $this->input->post('email');
             $telefone = $this->input->post('telefone');
             $mensagem = $this->input->post('mensagem');
-
+            // Make a message string.
             $msg = "";
             $msg .= "Mensagem enviada pelo site.\n\n";
             $msg .= "Nome: $nome\n";
@@ -597,9 +412,9 @@ class Main extends MY_Controller
             $msg .= "$mensagem";
             $msg .= "\n\n";
             $msg .= "Enviado pelo WPanel CMS\n";
-
+            // Load the library.
             $this->load->library('email');
-            // Verifica se usa SMTP ou não
+            // Check if use SMTP.
             if ($this->wpanel->get_config('usa_smtp') == 1) {
                 $conf_email = array();
                 $conf_email['protocol'] = 'smtp';
@@ -612,12 +427,11 @@ class Main extends MY_Controller
             } else {
                 $this->email->from($email, $nome);
             }
-
-            // Envia o email
+            // Send the message.
             $this->email->to($this->wpanel->get_config('site_contato'));
             $this->email->subject('Mensagem do site - [' . $this->wpanel->get_titulo() . ']');
             $this->email->message($msg);
-
+            // Verify the succes of the send.
             if ($this->email->send()) {
                 $this->session->set_flashdata('msg_contato', 'Sua mensagem foi enviada com sucesso!');
                 redirect('contato');
@@ -629,23 +443,17 @@ class Main extends MY_Controller
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método rss() gera a página padrão XML para os leitores de RSS
-     * com as postagens disponíveis no site.
-     *
+     * The method rss() creates a XML page to Feed Readers with a list of posts.
+     * 
      * @todo Criar o metodo de categorizar esta lista de feed.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function rss()
     {
-
         $this->load->model('post');
         $query = $this->post->get_list(['field'=>'created', 'order'=>'desc'], null, '')->result();
-
         $available_languages = config_item('available_languages');
         $locale = $available_languages[wpn_config('language')]['locale'];
-
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         $rss .= "<rss version=\"2.0\">\n";
         $rss .= "\t<channel>\n";
@@ -653,7 +461,6 @@ class Main extends MY_Controller
         $rss .= "\t\t<description>" . $this->wpanel->get_config('site_desc') . "</description>\n";
         $rss .= "\t\t<link>" . site_url() . "</link>\n";
         $rss .= "\t\t<language>".$locale."</language>\n";
-
         foreach ($query as $row) {
             $rss .= "\t\t<item>\n";
             $rss .= "\t\t\t<title>".$row->title."</title>\n";
@@ -662,40 +469,26 @@ class Main extends MY_Controller
             $rss .= "\t\t\t<link>" . site_url('post/' . $row->link) . "</link>\n";
             $rss .= "\t\t</item>\n";
         }
-
         $rss .= "\t</channel>\n</rss>\n";
-
         echo $rss;
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * O método newsletter() faz o cadastro de um email para o coletor
-     * de contatos do WPanel.
+     * The method newsletter() show a form to insert contact for newsletter.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @Enviar uma mensagem de confirmação do cadastro para o email.
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function newsletter()
     {
-
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[newsletter_email.email]');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-
         if ($this->form_validation->run() == FALSE) {
-
-            // Seta as variáveis 'meta'.
-            //--------------------------------------------------------------------------------------
             $this->wpanel->set_meta_description('Newsletter');
             $this->wpanel->set_meta_keywords('Cadastro, Newsletter');
             $this->wpanel->set_meta_title('Newsletter');
-
-            // Exibe o wpn_template.
-            //--------------------------------------------------------------------------------------
             $this->render('newsletter');
-            
         } else {
             $this->load->model('newsletter');
             $dados_save = array(
