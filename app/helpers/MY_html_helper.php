@@ -87,9 +87,9 @@ if ( ! function_exists('head'))
 	function head($close = FALSE)
 	{
 		$str = '';
-		if($close){
+		if($close)
 			$str = "</head>\n";
-		} else {
+		else
 			$str = "<head>\n";
 		return $str;
 	}
@@ -100,11 +100,10 @@ if ( ! function_exists('body'))
 	function body($attributes = '', $close = FALSE)
 	{
 		$str = '';
-		if($close){
+		if($close)
 			$str = "\n</body>\n";
-		} else {
+		else
 			$str = "<body"._attributes($attributes).">\n";
-		}
 		return $str;
 	}
 }
@@ -114,11 +113,10 @@ if ( ! function_exists('div'))
 	function div($attributes = '', $close = FALSE)
 	{
 		$str = '';
-		if($close){
+		if($close)
 			$str = "\n</div>\n";
-		} else {
+		else
 			$str = "<div"._attributes($attributes).">\n";
-		}
 		return $str;
 	}
 }
@@ -149,8 +147,6 @@ if ( ! function_exists('_attributes'))
 			return $atr;
 		} 
 		elseif (is_string($attributes) and strlen($attributes) > 0) 
-		{
 			$atr = ' ' . $attributes;
-		}
 	}
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
@@ -35,24 +36,60 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * -------------------------------------------------------------------------------------------------
- * Biblioteca reunindo as opções mais comuns e frequentemente
- * utilizadas no funcionamento do wPanel.
+ * Wpanel Library Class
  *
- * @package wPanel
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 26/10/2014 - alterado em 8/02/2016
- * -------------------------------------------------------------------------------------------------
+ * This class maintain the methods widely used in WpanelCms.
+ *
+ * @package     WpanelCms
+ * @subpackage  Libraries
+ * @category    Libraries
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        https://wpanelcms.com.br
+ * @version     0.0.1
  */
 class Wpanel 
 {
 
+    /**
+     * Config itens from config.json.
+     * 
+     * @var $wpanel_config mixed
+     */
     protected $wpanel_config;
+    
+    /**
+     * Description for meta tags.
+     * 
+     * @var $meta_description String
+     */
     protected $meta_description = '';
+    
+    /**
+     * Image for meta tags.
+     * 
+     * @var $meta_image string
+     */
     protected $meta_image = '';
+    
+    /**
+     * Key words for meta tags
+     * 
+     * @var $meta_keywords string
+     */ 
     protected $meta_keywords = '';
+    
+    /**
+     * Title for meta tags.
+     * 
+     * @var $meta_title string
+     */
     protected $meta_title = '';
 
+    /**
+     * Class constructor.
+     * 
+     * @return void
+     */
     public function __construct($config = array()) 
     {
         if (count($config) > 0)
@@ -63,6 +100,11 @@ class Wpanel
         log_message('debug', "Wpanel Class Initialized");
     }
 
+    /**
+     * Get the instance of CI.
+     * 
+     * @return mixed
+     */
     public function __get($var) 
     {
         return get_instance()->$var;
@@ -91,14 +133,11 @@ class Wpanel
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
      * Initialize the library loading the configuration files or
      * an array() passed on load of the class.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param $config array()
      * @return void
-     * ---------------------------------------------------------------------------------------------
      */
     public function initialize($config = array()) 
     {
@@ -115,62 +154,66 @@ class Wpanel
         return $this;
     }
 
-    // ----- Encapsulamento das variáveis META ----- //
-    
-    public function set_meta_description($value) {
+    // ----- Encapsulation for meta tags | begin. ----- //
+    public function set_meta_description($value)
+    {
         $this->meta_description = $value;
     }
 
-    public function get_meta_description() {
+    public function get_meta_description() 
+    {
         return $this->meta_description;
     }
 
-    public function set_meta_image($value) {
+    public function set_meta_image($value) 
+    {
         $this->meta_image = $value;
     }
 
-    public function get_meta_image() {
+    public function get_meta_image() 
+    {
         return $this->meta_image;
     }
 
-    public function set_meta_keywords($value) {
+    public function set_meta_keywords($value) 
+    {
         $this->meta_keywords = $value;
     }
 
-    public function get_meta_keywords() {
+    public function get_meta_keywords() 
+    {
         return $this->meta_keywords;
     }
 
-    public function set_meta_title($value) {
+    public function set_meta_title($value) 
+    {
         $this->meta_title = $value .' | '. $this->get_config('site_titulo');
     }
 
-    public function get_meta_title(){
+    public function get_meta_title()
+    {
         return $this->meta_title;
     }
+    // ----- Encapsulation for meta tags | end. ----- //
 
+    /* ----- Methods for the Website. ----- */
+    
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna um conjunto pronto de tags META para
-     * ser inserido no "head" do layout do site.
+     * Return a full meta-tag to be inserted into the <head> of the site.
      *
      * @return mixed
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      */
-    public function get_meta() {
-        
+    public function get_meta() 
+    {
         // Recupera a variável 'Locale'.
         $available_languages = config_item('available_languages');
         $locale = $available_languages[$this->get_config('language')]['locale'];
-
         // Trata a variável 'Description'.
         if (!$this->meta_description)
             $this->meta_description = $this->get_config('site_desc');
-
         // Trata a imagem de exibição.
         if(!$this->meta_image)
             $this->meta_image = base_url('media/'.$this->get_config('logomarca'));
-
         $meta = [
             ['name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'],
             ['name' => 'robots', 'content' => 'all'],
@@ -179,10 +222,8 @@ class Wpanel
             ['name' => 'title', 'content' => $this->meta_title],
             ['name' => 'description', 'content' => $this->meta_description],
             ['name' => 'keywords', 'content' => $this->get_config('site_tags') . ', ' . $this->meta_keywords],
-            
             // continua...
             //TODO Adicionar meta para o twitter e outras redes sociais.
-
             ['name' => 'og:locale', 'content' => $locale],
             ['name' => 'og:type', 'content' => 'article'],
             ['name' => 'og:image', 'content' => $this->meta_image],
@@ -195,18 +236,10 @@ class Wpanel
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método retorna um valor da tabela de configurações
-     * ou o objeto todo para ser selecionado externamente.
+     * Return a key value from the config.json file, or all the object if $item = null.
      *
-     * Adicionado o recurso de retornar uma configuração do 
-     * arquivo 'config/wpanel.php'
-     *
-     * @todo Mudar esta função para um helper.
-     * @return mixed
      * @param $item String
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * ---------------------------------------------------------------------------------------------
+     * @return mixed
      */
     public function get_config($item = null) 
     {
@@ -217,14 +250,14 @@ class Wpanel
         
     }
 
-    /* ----- Métodos usados no painel de controle. ----- */
+    /* ----- Methods for the Control Panel. ----- */
 
     /**
-     * Este método carrega as bibliotecas do editor de texto preferido
-     * nas telas onde são usados.
+     * Return the code needed to load the configured editor.
      *
-     * @return Mixed
+     * @return string
      * @todo Revisar este código de 'invocaçao' do editor.
+     * @todo Adicionar o filemanager no tinyMCE.
      */
     public function load_editor() 
     {
@@ -254,15 +287,11 @@ class Wpanel
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método faz o carregamento das views do painel de controle seguinto o novo
-     * modelo de distribuição dos arquivos.
+     * Load the group of views to the control panel.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param string $view
      * @param array $dados
      * @return mixed
-     * ---------------------------------------------------------------------------------------------
      */
     public function load_view($view, $dados = null) 
     {
@@ -271,13 +300,17 @@ class Wpanel
         $this->load->view('layout/footer');
     }
 
+    /**
+     * Return some data from the user.
+     * 
+     * @mudar este metodo para melhorar a performance.
+     * @param $param
+     * @return mixed
+     */
     public function get_from_user($param) 
     {
         $this->load->model('user');
         $query = $this->user->get_by_id($this->auth->get_userid())->row();
         return $query->$param;
     }
-
 }
-
-// END class wpanel

@@ -41,6 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * This helper contains some aditional functions to 
  * Date Helper of Codeigniter to Wpanel CMS.
  *
+ * @todo        Alterar para usar a função mdate() do CodeIgniter.
  * @package     WpanelCms
  * @subpackage  Helpers
  * @category    Helpers
