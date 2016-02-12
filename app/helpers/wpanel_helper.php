@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
@@ -35,15 +36,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * -------------------------------------------------------------------------------------------------
- * Este helper contém as funções utilitárias específicas do wPanel.
+ * Wpanel CMS general helper.
  *
- * Foi desenvolvido para ser usado no FrameWork CodeIgniter em conjunto
- * com o helper HTML e URL e Bootstrap-Helper.
+ * This helper contains the common functions to Wpanel CMS.
  *
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 21/10/2014
- * -------------------------------------------------------------------------------------------------
+ * @package     WpanelCms
+ * @subpackage  Helpers
+ * @category    Helpers
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        http://elieldepaula.com.br
  */
 
 if(!function_exists('wpn_asset'))
@@ -52,8 +53,8 @@ if(!function_exists('wpn_asset'))
      * Esta função retorna o código de inclusão de umas
      * biblioteca CSS ou Java-Script. 
      *
-     * @param $type string Tipo de bliblioteca, CSS ou JS.
-     * @param $filename string Nome do arquivo a ser incluso. 
+     * @param $type string Type of library, CSS, JS or Custom.
+     * @param $filename string File name to be included.
      * @return String 
      */
     function wpn_asset($type, $filename)
@@ -72,14 +73,13 @@ if(!function_exists('wpn_asset'))
     }
 }
 
-if(!function_exists('wpn_config')){
+if(!function_exists('wpn_config'))
+{
 
     /**
-     * Esta função retorna um item de configuração do arquivo
-     * config.json, ele funciona como um atalho para o método
-     * $CI->wpanel->get_config()
+     * Return a config item from config.json.
      *
-     * @param $item mixed Item de configuração.
+     * @param $item mixed Config item.
      * @return mixed 
      */
     function wpn_config($item = null)
@@ -89,12 +89,11 @@ if(!function_exists('wpn_config')){
     }
 }
 
-if(!function_exists('wpn_meta')){
+if(!function_exists('wpn_meta'))
+{
 
     /**
-     * Esta função retorna um item de configuração do arquivo
-     * config.json, ele funciona como um atalho para o método
-     * $CI->wpanel->get_config()
+     * Return a full Meta-Tag to header of the site.
      *
      * @return mixed 
      */
@@ -105,14 +104,15 @@ if(!function_exists('wpn_meta')){
     }
 }
 
-if(!function_exists('wpn_widget')){
+if(!function_exists('wpn_widget'))
+{
 
     /**
-     * Esta função retorna um widget, ela funciona como um atalho
-     * para o método $this->widget->runit();
+     * Return a Widget Module. In fact, this is a shortcut to
+     * the method $this->widget->runit();
      *
-     * @param $widget_name string Nome do widget.
-     * @param $args array Parametros do widget.
+     * @param $widget_name string Widget name.
+     * @param $args array Widget parammeters.
      * @return mixed 
      */
     function wpn_widget($widget_name, $args = [])
@@ -122,69 +122,72 @@ if(!function_exists('wpn_widget')){
     }
 }
 
-if(!function_exists('wpn_fakelink')){
+if(!function_exists('wpn_fakelink'))
+{
 
+    /**
+    * This produces a link based on the string $var
+    *
+    * @return string
+    */
     function wpn_fakelink($var)
     {
         return strtolower(url_title(convert_accented_characters($var)));
     }
 }
 
-/* ----- Funções usadas somente no painel de controle ----- */
+/* ----- Functions used only on the control panel. ----- */
 
-if (!function_exists('link_ativo')) {
+if (!function_exists('active_link')) 
+{
     
     /**
-     * Este helper retorna uma class de ativação dos links do bootstrap.
+     * This helper return class 'active' for bootstrap menus in the control panel.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param string $link
      * @return string class="active"
      */
-    function link_ativo($link) {
+    function active_link($link)
+    {
         $CI =& get_instance();
-        if ($CI->uri->segment(2) == $link) {
+        if ($CI->uri->segment(2) == $link)
             return ' class="active"';
-        }
     }
 }
 
-if (!function_exists('status_post')) {
+if (!function_exists('status_post')) 
+{
 
     /**
-     * Esta função gera um label do bootstrap 3 de acordo com o status do post.
+     * Return a bootstrap label tag according to the post status.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $status int - Status do post.
+     * @param $status int Post status.
      * @return string
      * */
     function status_post($status)
     {
-        if ($status == '1') {
+        if ($status == '1')
             return '<span class="label label-success">Publicado</span>';
-        } else {
+        else
             return '<span class="label label-danger">Indisponível</span>';
-        }
     }
-
 }
 
-if (!function_exists('status_user')) {
+if (!function_exists('status_user')) 
+{
 
     /**
-     * Esta função gera um label de acordo com o status do usuário.
+     * Return a bootstrap label tag according to the user status.
      *
      * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $status int - Status do usuário
+     * @param $status int - User status
      * @return string
      * */
     function status_user($status)
     {
-        if ($status == '1') {
+        if ($status == '1')
             return '<span class="label label-success">Ativo</span>';
-        } else {
+        else
             return '<span class="label label-danger">Bloqueado</span>';
-        }
     }
-
 }

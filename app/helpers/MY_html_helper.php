@@ -1,4 +1,5 @@
 <?php 
+
 /**
  * WPanel CMS
  *
@@ -35,11 +36,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Extensão para o helper HTML nativo do CodeIgniter.
+ * Wpanel aditional html helper.
  *
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 20/10/2014
- **/
+ * This helper contains some aditional functions to 
+ * Html Helper of Codeigniter to Wpanel CMS.
+ *
+ * @package     WpanelCms
+ * @subpackage  Helpers
+ * @category    Helpers
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        http://elieldepaula.com.br
+ */
 
 
 if ( ! function_exists('html_comment'))
@@ -67,11 +74,10 @@ if ( ! function_exists('html'))
 	function html($close = FALSE)
 	{
 		$str = '';
-		if($close){
+		if($close)
 			$str = "\n</html>";
-		} else {
+		 else
 			$str = "<html>\n";
-		}
 		return $str;
 	}
 }
@@ -85,7 +91,6 @@ if ( ! function_exists('head'))
 			$str = "</head>\n";
 		} else {
 			$str = "<head>\n";
-		}
 		return $str;
 	}
 }

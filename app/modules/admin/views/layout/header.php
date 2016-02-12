@@ -109,36 +109,36 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">OPÇÕES PRINCIPAIS</li>
-					<li <?= link_ativo('dashboard'); ?>>
+					<li <?= active_link('dashboard'); ?>>
 						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>Dashboard</span>'); ?>
 					</li>
-					<li <?= link_ativo('posts'); ?>>
+					<li <?= active_link('posts'); ?>>
 						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>Postagens</span>'); ?>
 					</li>
-					<li <?= link_ativo('pages'); ?>>
+					<li <?= active_link('pages'); ?>>
 						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>Páginas</span>'); ?>
 					</li>
-					<li <?= link_ativo('agendas'); ?>>
+					<li <?= active_link('agendas'); ?>>
 						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>Agenda de eventos</span>'); ?>
 					</li>
-					<li <?= link_ativo('banners'); ?>>
+					<li <?= active_link('banners'); ?>>
 						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>Banners</span>'); ?>
 					</li>
-					<li <?= link_ativo('albuns'); ?>
-						<?= link_ativo('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
+					<li <?= active_link('albuns'); ?>
+						<?= active_link('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
 					</li>
-					<li <?= link_ativo('videos'); ?>> 
+					<li <?= active_link('videos'); ?>> 
 						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>Vídeos</span>'); ?>
 					</li>
-					<li <?= link_ativo('menus'); ?> <?= link_ativo('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
+					<li <?= active_link('menus'); ?> <?= active_link('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
 					</li>
-					<li <?= link_ativo('newsletters'); ?>>
+					<li <?= active_link('newsletters'); ?>>
 						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>Newsletters</span>'); ?>
 					</li>
-					<li <?= link_ativo('usuarios'); ?>>
+					<li <?= active_link('usuarios'); ?>>
 						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>Usuários</span>'); ?>
 					</li>
-					<li <?= link_ativo('configuracoes'); ?>>
+					<li <?= active_link('configuracoes'); ?>>
 						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>Configurações</span>'); ?>
 					</li>
 				</ul>

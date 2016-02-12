@@ -35,31 +35,36 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Esta classe faz uma extensão ao CodeIgniter com os métodos mais usados
- * nos meus projetos.
- * 
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 04/10/2014
+ * MY_Model Model Class
+ *
+ * This class maintain the common code for the WpanelCMS Models.
+ *
+ * @package     WpanelCms
+ * @subpackage  Core
+ * @category    Core
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        https://wpanelcms.com.br
+ * @version     0.0.1
  */
 class MY_Model extends CI_Model
 {
     /**
-     * Esta variável recebe o nome da tabela do banco de dados.
+     * The name of table in the database.
      *
      * @var $table_name string
      **/
     public $table_name;
 
     /**
-     * Esta variável recebe o nome da chave-primária da tabela.
+     * The name of primary-key of the table.
      *
      * @var $primary_key string
      **/
     public $primary_key;
     
     /**
-     * Construtor da classe.
-     **/
+     * Class constructor.
+     */
     function __construct() 
     {
         $this->load->database();
@@ -67,79 +72,60 @@ class MY_Model extends CI_Model
     }
 
     /**
-     * Este método retorna todos os registros da tabela.
+     * This method returns a list of content.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $order array - Array com a ordenação dos resultados.
-     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
-     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
+     * @param $order array Order results: ['field'=>'field name', 'order'=>'asc/desc'].
+     * @param $limit array Limit results: ['offset'=>'0', 'limit'=>'10'].
+     * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
-     **/
-    public function get_list($order = array(), $limit = array(), $select = null)
+     */
+    public function get_list($order = [], $limit = [], $select = null)
     {
-        if ($select != null) 
-        {
+        if ($select != null)
             $this->db->select($select);
-        }
+        
         if ((is_array($order)) and (count($order)!=0)) 
-        {
             $this->db->order_by($order['field'], $order['order']);
-        }
+
         if((is_array($limit)) and (count($limit) != 0))
-        {
             $this->db->limit($limit['limit'], $limit['offset']);
-        }
+        
         return $this->db->get($this->table_name);
     }
     
     /**
-     * Este método retorna o total de registros da tabela.
-     *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return int
-     **/
-    public function count_all() 
-    {
-        return $this->db->count_all($this->table_name);
-    }
-    
-    /**
-     * Este método retorna um registro de indicando o valor de sua chave-primária.
+     * This method returns a record indicated by the primary key.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $value int - Valor da chave-primaria
-     * @param $order array - Array com a ordenação dos resultados.
-     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
-     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
+     * @param $value int - The primary key value.
+     * @param $order array Order results: ['field'=>'field name', 'order'=>'asc/desc'].
+     * @param $limit array Limit results: ['offset'=>'0', 'limit'=>'10'].
+     * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
-     **/
-    public function get_by_id($value = null, $order = array(), $limit = array(), $select = null) 
+     */
+    public function get_by_id($value = null, $order = [], $limit = [], $select = null) 
     {
-        if($value == null){
+        if($value == null)
             return FALSE;
-        } else {
+        else
             return $this->get_by_field($this->primary_key, $value, $order, $limit, $select);
-        }
     }
 
     /**
-     * Este método é semelhante ao get_by_id() com a diferença que com ele
-     * informamos o campo que será usado como filtro.
+     * This method is similar to get_by_id () except that with 
+     * him, we inform the field that will be used as a filter.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $field string - Campo que será usado como filtro ou array com múltiplas condições.
-     * @param $value string - Valor a ser filtrado, caso o parametro $field seja um array este parâmetro não será utilizado.
-     * @param $order array - Array com a ordenação dos resultados.
-     * @param $limit array Um array com os detalhes de limite, Ex: array('offset'=>'0', 'limit'=>'10')
-     * @param $select string Lista dos campos que serão retornados, Ex: "nome, endereco, telfone"
+     * @param $field string - Field that will be used as a filter.
+     * @param $value string - Value to be filtred. If $field is an array(), this param must be null.
+     * @param $order array Order results: ['field'=>'field name', 'order'=>'asc/desc'].
+     * @param $limit array Limit results: ['offset'=>'0', 'limit'=>'10'].
+     * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
-     **/
-    public function get_by_field($field, $value = null, $order = array(), $limit = array(), $select = null)
+     */
+    public function get_by_field($field, $value = null, $order = [], $limit = [], $select = null)
     {
         if ($select != null) 
-        {
             $this->db->select($select);
-        }
+        
         if (is_array($field))
         {
             foreach ($field as $key => $val) 
@@ -148,28 +134,33 @@ class MY_Model extends CI_Model
             }
         } 
         else 
-        {
             $this->db->where($field, $value);
-        }
+
         if ((is_array($order)) and (count($order)!=0)) 
-        {
             $this->db->order_by($order['field'], $order['order']);
-        }
+
         if((is_array($limit)) and (count($limit) != 0))
-        {
             $this->db->limit($limit['limit'], $limit['offset']);
-        }
+
         return $this->db->get($this->table_name);
+    }
+
+    /**
+     * This method returns the total number of table records.
+     *
+     * @return int
+     */
+    public function count_all() 
+    {
+        return $this->db->count_all($this->table_name);
     }
     
     /**
-     * Este método salva um novo registro na tabela usando um
-     * array para transmitir os dados.
+     * Save a new record.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $dados array - Array com os dados que serão salvos.
+     * @param $dados array Array data..
      * @return mixed
-     **/
+     */
     public function save($dados)
     {
         $this->db->insert($this->table_name, $dados);
@@ -177,12 +168,10 @@ class MY_Model extends CI_Model
     }
     
     /**
-     * Este método faz a alteração de um registro infornando o valor
-     * se sua chave-primária e um array com os novos dados.
+     * Update a record.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $id int - Valor da chave primária.
-     * @param $dados array - Array com os novos dados.
+     * @param $id int - Primary-key value.
+     * @param $dados array Array data.
      * @return mixed
      **/
     public function update($id, $dados)
@@ -193,11 +182,9 @@ class MY_Model extends CI_Model
     }
 
     /**
-     * Este método exclui um registro da tabela infornando
-     * o valor de sua chave-primária.
+     * Delete a record.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $id int - Valor da chave-primária.
+     * @param $id int Primary-key.
      * @return mixed
      */
     public function delete($id)
@@ -208,64 +195,51 @@ class MY_Model extends CI_Model
     }
 
     /**
-     * Este método faz o upload de um arquivo de media de acordo
-     * com as variáveis informadas.
+     * Upload a file.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $path String Caminho onde o arquivo será salvo.
-     * @param $types String Tipos permitidos conforme a documentação do CI gif|png|jpg ...
-     * @param $fieldname String Nome do campo do formulário que estará enviando o arquivo.
-     * @param $filename String Informa um nome para o arquivo, caso não seja informado nomeia-se automaticamente.
+     * @param $path String Path where the file must be saved.
+     * @param $types String File type: gif|jpg|png.
+     * @param $fieldname String Field name of the form.
+     * @param $filename String Optional file name..
      * @return mixed
      */
     public function upload_media($path, $types = '*', $fieldname = 'userfile', $filename = null)
     {
-        $config['upload_path'] = './media/' . $path . '/';
+        $config['upload_path'] = './media/'.$path.'/';
         $config['remove_spaces'] = TRUE;
         $config['file_ext_tolower'] = TRUE;
         $config['allowed_types'] = $types;
-        
-        if($filename == null){
+        if($filename == null)
             $config['file_name'] = md5(date('YmdHis'));
-        } else {
+        else
             $config['file_name'] = $filename;
-        }
         
         $this->load->library('upload', $config);
-        
         if ($this->upload->do_upload($fieldname))
         {
             $upload_data = array();
             $upload_data = $this->upload->data();
             return $upload_data['file_name'];
-        } else {
+        } else
             return false;
-        }
     }
 
     /**
-     * Este método remove um arquivo físico de media.
+     * Remove an uploaded file.
      *
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @param $file String - Caminho/Nome do arquivo a ser excluído.
+     * @param $file String - Full path to the file.
      * @return boolean
      */
     public function remove_media($file)
     {
-        $filename = './media/' . $file;
+        $filename = './media/'.$file;
         if(file_exists($filename))
         {
             if(unlink($filename))
-            {
                 return TRUE;
-            } else {
+             else
                 return FALSE;
-            }
-        } else {
+        } else
             return FALSE;
-        }
     }
-
 }
-
-// End class MY_Model

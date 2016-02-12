@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Main Controller Class
  *
- * This class maintain the methods of the basic website. It was thinked that
+ * This class maintain the methods of the basic website. It was thought that
  * you add more resources to your project creating new Controller Classes
  * extending MY_Controller Class to get the common features.
  *
@@ -59,6 +59,16 @@ class Main extends MY_Controller
      */
     function __construct() 
     {
+        /*
+        * Here are some options provided by the MY_Controller class, you
+        * can adjust as you need to your project.
+        */
+        // Enable the CodeIgniter Profile.
+        // $this->wpn_profiler = FALSE;
+        // Chose the template folder.
+        // $this->wpn_template = 'default';
+        // Setup the 'col' number of the mosaic views.
+        // $this->wpn_cols_mosaic = 3;
         parent::__construct();
     }
 
@@ -126,11 +136,11 @@ class Main extends MY_Controller
             $this->data_content['view_title'] = $qry_category->title;
             $this->data_content['view_description'] = $qry_category->description;
             $view_title = $qry_category->title;
-            // Configurações da view estilo mosaico:
-            //todo Conferir este pedaço código, talvez tenha que ser fora da condição...
             $this->wpn_posts_view = strtolower($qry_category->view);
-            $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
         }
+        // Send $max_cols if the view is mosaic type.
+        if($this->wpn_posts_view == 'mosaic')
+            $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
         $this->wpanel->set_meta_title($view_title);
         $this->render('posts_' . $this->wpn_posts_view);
     }
@@ -377,7 +387,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The methoc contato() creates a full functional 'Contact Page' for the site.
+     * The method contato() creates a full functional 'Contact Page' for the site.
      *
      * @todo Criar a opção de inserir a mensagem no banco de dados e no painel de contorle.
      * @return void
@@ -476,7 +486,7 @@ class Main extends MY_Controller
     /**
      * The method newsletter() show a form to insert contact for newsletter.
      *
-     * @Enviar uma mensagem de confirmação do cadastro para o email.
+     * @todo Enviar uma mensagem de confirmação do cadastro para o email.
      * @return void
      */
     public function newsletter()
