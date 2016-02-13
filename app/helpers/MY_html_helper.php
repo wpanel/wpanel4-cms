@@ -36,10 +36,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Wpanel aditional html helper.
- *
- * This helper contains some aditional functions to 
- * Html Helper of Codeigniter to Wpanel CMS.
+ * Aditional Html Helper of Codeigniter to WpanelCms.
  *
  * @package     WpanelCms
  * @subpackage  Helpers
@@ -132,9 +129,6 @@ if ( ! function_exists('hr'))
 if ( ! function_exists('_attributes'))
 {
 
-	/*
-	| Passa os atributos passados em forma de array.
-	*/
 	function _attributes($attributes)
 	{
 		if(is_array($attributes))

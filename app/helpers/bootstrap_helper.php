@@ -36,41 +36,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Este helper gera os elementos do bootstrap 3 usando PHP
- * ao invés de HTML puro.
- *
- * Foi desenvolvido para ser usado no FrameWork CodeIgniter em conjunto
- * com o helper HTML e URL.
+ * Twitter Bootstrap 3 Helper for CodeIgniter.
  * 
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @since 20/10/2014
- **/
+ * @author 		Eliel de Paula <dev@elieldepaula.com.br>
+ * @package     WpanelCms
+ * @subpackage  Helpers
+ * @category    Helpers
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        http://elieldepaula.com.br
+ */
 
-if ( ! function_exists('load_bootsrap'))
+if (!function_exists('_attributes'))
 {
 	/**
-	 * Carrega o bootstrap.
-	 **/
-	function load_bootsrap()
-	{
-
-		$link = array(
-			'href' => 'lib/css/bootstrap.css',
-			'rel' => 'stylesheet',
-			'type' => 'text/css'
-		);
-
-		return link_tag($link)."\n";
-
-	}
-}
-
-if ( ! function_exists('_attributes'))
-{
-
-	/**
-	 * Passa os atributos passados em forma de array.
-	 **/
+	 * Return the attributes.
+	 * 
+	 * @param $attributes Array of attributes: ['class'=>'row' ... ]
+	 * @return string
+	 */
 	function _attributes($attributes)
 	{
 		if(is_array($attributes))
@@ -83,71 +66,105 @@ if ( ! function_exists('_attributes'))
 			return $atr;
 		} 
 		elseif (is_string($attributes) and strlen($attributes) > 0) 
-		{
 			$atr = ' ' . $attributes;
-		}
 	}
 }
 
-if ( ! function_exists('container'))
+if (!function_exists('load_bootsrap'))
 {
 	/**
-	 * Abre um container
-	 **/
+	 * Load the bootstrap css file.
+	 *
+	 * @param $filename string Name of the css file.
+	 * @return string
+	 */
+	function load_bootsrap($filename = 'bootstrap.min.css')
+	{
+		$link = array(
+			'href' => 'assets/css/'.$filename,
+			'rel' => 'stylesheet',
+			'type' => 'text/css'
+		);
+		return link_tag($link)."\n";
+	}
+}
+
+if (!function_exists('container'))
+{
+	/**
+	 * Open a container.
+	 *
+	 * @param $class string class name
+	 * @param $id string Html object Id
+	 * @param $fluid boolean Defines if the cntainer is fluid.
+	 * @return string
+	 */
 	function container($class = '', $id = '', $fluid = false)
 	{
 		$str = '';
 		if($fluid)
-		{
 			$str = "container-fluid";
-		} else {
+		else
 			$str = "container";
-		}
-
 		return "<div class=\"".$str." ".$class."\" id=\"".$id."\">\n";
-
 	}
 }
 
-if ( ! function_exists('row'))
+if (!function_exists('row'))
 {
 	/**
-	 * Abre uma linha - row
-	 **/
+	 * Open a row line.
+	 * 
+	 * @param $class string Class name
+	 * @param $id string Html object Id
+	 * @return string
+	 */
 	function row($class = '', $id = '')
 	{
 		return "<div class=\"row ".$class."\" id=\"".$id."\">\n";
 	}
 }
 
-if ( ! function_exists('col'))
+if (!function_exists('col'))
 {
 	/**
-	 * Abre uma coluna - col-md-12
-	 **/
+	 * Return a col tag: <div class="col-md-12">
+	 *
+	 * @param $num string Number of cols.
+	 * @param $size string Size of the col: xs, sm, md ...
+	 * @param $class string Extra class name.
+	 * @param $id string Html object ID.
+	 * @return string
+	 */
 	function col($num = '12', $size = 'md', $class = '', $id = '')
 	{
 		return "<div class=\"col-".$size."-".$num." ".$class."\" id=\"".$id."\">\n";
 	}
 }
 
-if ( ! function_exists('close_div'))
+if (!function_exists('close_div'))
 {
 	/**
-	 * Fecha uma ou mais divs
-	 **/
+	 * Close a div tag: </div>
+	 *
+	 * @param $num int Num of tags.
+	 * @return string
+	 */
 	function close_div($num = 1)
 	{
 		return str_repeat("</div>\n", $num);
 	}
 }
 
-if ( ! function_exists('smalltext'))
+if (!function_exists('small_text'))
 {
 	/**
-	 * Gera um texto <small>
-	 **/
-	function smalltext($text)
+	 * Return a small tag: <small>Some text</small>
+	 *
+	 * @param $text string Some text.
+	 * @return string
+	 */
+	function small_text($text = '&nbsp;')
 	{
 		$str = "";
 		$str = "<small>".$text."</small>\n";
@@ -155,10 +172,14 @@ if ( ! function_exists('smalltext'))
 	}
 }
 
-if ( ! function_exists('button'))
+if (!function_exists('button'))
 {
 	/**
-	 * Gera um botão
+	 * Return a button tag.
+	 *
+	 * @param $caption string Caption to the button.
+	 * @param $attributes array Attributes to the buttom: ['class'=>'some_class', ... ]
+	 * @return string
 	 **/
 	function button($caption, $attributes = array())
 	{
@@ -168,7 +189,7 @@ if ( ! function_exists('button'))
 	}
 }
 
-if ( ! function_exists('context_color'))
+if (!function_exists('context_color'))
 {
 	/**
 	 * Gera um parágrafo com as cores padrões do bootstrap.
@@ -181,7 +202,7 @@ if ( ! function_exists('context_color'))
 	}
 }
 
-if ( ! function_exists('context_bg'))
+if (!function_exists('context_bg'))
 {
 	/**
 	 * Gera um parágrafo com as cores de fundo padrões do bootstrap.
@@ -194,7 +215,7 @@ if ( ! function_exists('context_bg'))
 	}
 }
 
-if ( ! function_exists('clearfix'))
+if (!function_exists('clearfix'))
 {
 
 	/**
@@ -206,7 +227,7 @@ if ( ! function_exists('clearfix'))
 	}
 }
 
-if ( ! function_exists('glyphicon'))
+if (!function_exists('glyphicon'))
 {
 
 	/**
@@ -218,7 +239,7 @@ if ( ! function_exists('glyphicon'))
 	}
 }
 
-if ( ! function_exists('bread_crumb'))
+if (!function_exists('bread_crumb'))
 {
 	/**
 	 * Gera um navegador estilo breadcrumb.
@@ -254,7 +275,7 @@ if ( ! function_exists('bread_crumb'))
 	}
 }
 
-if ( ! function_exists('labels'))
+if (!function_exists('labels'))
 {
 
 	/**
@@ -266,7 +287,7 @@ if ( ! function_exists('labels'))
 	}
 }
 
-if ( ! function_exists('badge'))
+if (!function_exists('badge'))
 {
 
 	/**
@@ -278,7 +299,7 @@ if ( ! function_exists('badge'))
 	}
 }
 
-if ( ! function_exists('page_header'))
+if (!function_exists('page_header'))
 {
 
 	/**
@@ -295,7 +316,7 @@ if ( ! function_exists('page_header'))
 	}
 }
 
-if ( ! function_exists('alerts'))
+if (!function_exists('alerts'))
 {
 
 	/**
