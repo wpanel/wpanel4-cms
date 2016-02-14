@@ -1,16 +1,52 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
 
 /**
- * -------------------------------------------------------------------------------------------------
- * Este arquivo de migração contém a base de dados inicial do WPanel CMS. Usando este recurso 
- * o controle de versão fica mais fácil.
- * 
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * @version 0.1
- * @todo Mudar a estrutura do dbforge para array.
- * -------------------------------------------------------------------------------------------------
+ * WPanel CMS
+ *
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package     WpanelCms
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://wpanelcms.com.br
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Migration class.
+ *
+ * This class creates a initial database to WpanelCms.
+ *
+ * @package     WpanelCms
+ * @subpackage  Migrations
+ * @category    Migrations
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @link        https://wpanelcms.com.br
+ * @version     0.0.1
+ */
 class Migration_Database_inicial extends CI_Migration 
 {
 
@@ -19,13 +55,6 @@ class Migration_Database_inicial extends CI_Migration
 
 		/* albuns */
 		
-		// $albuns = [
-		// 	'id', 
-		// 	'user_id' => ['type'=>'INT','constraint'=>11,'null'=>true],
-		// 	'titulo' => ['type'=>'varchar','constraint'=>'200','null'=>false],
-		// 	'descricao' => ['type'=>'text','null'=>true],
-		// ];
-
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("user_id int(11) DEFAULT NULL");
 		$this->dbforge->add_field("titulo varchar(200) NOT NULL");
@@ -53,35 +82,13 @@ class Migration_Database_inicial extends CI_Migration
 		$this->dbforge->create_table('banners', true);
 
 		/* captcha */
-		
-		$fields = array(
-		        'captcha_id' => array(
-		                'type' => 'INT',
-		                'constraint' => 11,
-		                'unsigned' => TRUE,
-		                'null' => FALSE,
-		                'auto_increment' => TRUE
-		        ),
-		        'captcha_time' => array(
-		                'type' => 'INT',
-		                'constraint' => 10,
-		                 'unsigned' => TRUE,
-		                'null' => FALSE
-		        ),
-		        'ip_address' => array(
-		                'type' =>'varchar',
-		                'constraint' => '45',
-		                'null' => FALSE
-		        ),
-		        'word' => array(
-		                'type' => 'varchar',
-		                'constraint' => '20',
-		                'null' => FALSE
-		        ),
-		);
-		
-		$this->dbforge->add_field($fields);
 
+		$this->dbforge->add_field(array('captcha_id' => array('type'=>'INT','constraint'=>11,'unsigned'=>TRUE,'null'=>FALSE,'auto_increment'=>TRUE)));
+		$this->dbforge->add_field(array('captcha_time' => array('type'=>'INT','constraint'=>10,'unsigned'=>TRUE,'null'=>FALSE)));
+		$this->dbforge->add_field(array('ip_address' => array('type' =>'varchar','constraint'=>'45','null'=>FALSE)));
+		$this->dbforge->add_field(array('word' => array('type'=>'varchar','constraint'=>'20','null'=>FALSE)));
+
+	
 		$this->dbforge->add_key('captcha_id', TRUE);
 		$this->dbforge->add_key('word');
 		$this->dbforge->create_table('captcha', true);
@@ -230,7 +237,7 @@ class Migration_Database_inicial extends CI_Migration
 		/* Insere os dados iniciais */
 
 		$this->db->query("INSERT INTO `configuracoes` (`id`, `site_titulo`, `site_desc`, `site_tags`, `site_contato`, `site_telefone`, `link_instagram`, `link_twitter`, `link_facebook`, `link_likebox`, `copyright`, `addthis_uid`, `logomarca`, `background`, `bgcolor`, `texto_contato`, `usa_smtp`, `smtp_servidor`, `smtp_porta`, `smtp_usuario`, `smtp_senha`, `google_analytics`, `home_tipo`, `home_id`) VALUES (1, 'WPanel CMS', 'Este é um site-exemplo usando WPanel CMS', 'wpanel, cms, codeigniter, demonstração', 'contato@seusite.com', '', '', '', '', 'http://facebook.com/wpanelcms', '® 2015 wPanel - Direitos reservados', '', 'logomarca.png', 'background.jpg', '', '<p>Esta &eacute; uma mensagem adicional &agrave; p&aacute;gina de contato, use-a para passar maiores informa&ccedil;&otilde;es de contato como endere&ccedil;o, telefones adicionais etc.</p>\n', 0, 'mail.seusite.com', 25, '', '', '', 'category', '');");
-		$this->db->query("INSERT INTO `categories` (`id`, `title`, `link`, `description`, `category_id`, `view`) VALUES (1, 'Categoria de exemplo', 'Categoria-de-exemplo', '', 0, 'Lista'), (2, 'Sub-categoria de exemplo', 'Sub-categoria-de-exemplo', '', 1, 'Lista');");
+		$this->db->query("INSERT INTO `categories` (`id`, `title`, `link`, `description`, `category_id`, `view`) VALUES (1, 'Categoria de exemplo', 'Categoria-de-exemplo', '', 0, 'list'), (2, 'Sub-categoria de exemplo', 'Sub-categoria-de-exemplo', '', 1, 'list');");
 		$this->db->query("INSERT INTO `menus` (`id`, `user_id`, `nome`, `slug`, `posicao`, `estilo`, `created`, `updated`) VALUES (1, 1, 'Menu principal', 'menu-principal', 'topo', 'lista', '2015-06-01 11:30:39', '2015-06-01 11:37:01');");
 		$this->db->query("INSERT INTO `menu_itens` (`id`, `menu_id`, `label`, `tipo`, `href`, `slug`, `ordem`, `created`, `updated`) VALUES (1, 1, 'Início', 'funcional', 'home', '', 1, '2015-06-01 13:08:00', '2015-06-02 16:02:10'), (2, 1, 'Fotos', 'funcional', 'albuns', '', 3, '2015-06-01 18:03:37', '2015-06-02 15:55:28'), (3, 1, 'Sobre', 'post', 'pagina-inicial', '', 5, '2015-06-01 22:40:27', '2015-06-02 17:14:47'), (4, 1, 'Postagens', 'posts', '1', '', 2, '2015-06-02 14:08:34', '2015-06-02 17:14:13'), (5, 1, 'Fale conosco', 'funcional', 'contato', '', 6, '2015-06-02 17:15:01', '2015-06-02 17:15:01'), (6, 1, 'Vídeos', 'funcional', 'videos', '', 4, '2015-06-02 17:14:36', '2015-06-02 17:14:36');");
 		$this->db->query("INSERT INTO `posts` (`id`, `title`, `description`, `link`, `content`, `created`, `updated`, `image`, `tags`, `status`, `user_id`, `page`) VALUES (1, 'Página inicial', 'Página inicial de exemplo do WPanel', 'pagina-inicial', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n', '2014-11-09 23:17:53', '2014-12-18 20:09:59', '0', 'wpanel, bem vindo, exemplo', '1', 1, 1), (2, 'Sobre', 'Um exemplo de página específica para o menu.', 'sobre', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', '2014-11-09 23:29:16', '2014-11-09 23:29:16', '0', 'exemplo, pagina, sobre', '1', 1, 1), (3, 'Postagem de exemplo', 'Exemplo de postagem', 'postagem-de-exemplo', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', '2014-11-08 23:46:38', '2014-11-10 00:04:22', '9dabbecde6cea5563d45809bfa5f1697.jpg', 'demo, post, wpanel', '1', 1, 0), (4, 'Segunda postagem de exemplo', 'Postagem de exemplo do Wpanel', 'segunda-postagem-de-exemplo', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', '2014-11-09 23:47:15', '2014-11-10 01:12:01', 'c691918e299d4d793a0838fba6738a6d.jpg', 'demo, post, exemplo, wpanel', '1', 1, 0);");
