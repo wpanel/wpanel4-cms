@@ -299,18 +299,4 @@ class Wpanel
         $this->load->view($view, $dados);
         $this->load->view('layout/footer');
     }
-
-    /**
-     * Return some data from the user.
-     * 
-     * @mudar este metodo para melhorar a performance.
-     * @param $param
-     * @return mixed
-     */
-    public function get_from_user($param) 
-    {
-        $this->load->model('user');
-        $query = $this->user->get_by_id($this->auth->get_userid())->row();
-        return $query->$param;
-    }
 }

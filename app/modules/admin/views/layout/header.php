@@ -23,12 +23,11 @@
 	</head>
 
 	<?php 
-
-	$skin = $this->wpanel->get_from_user('skin');
+	$skin = login_userobject('skin');
 	if($skin == '')
 		$skin = 'blue';
 
-	$avatar = $this->wpanel->get_from_user('image');
+	$avatar = login_userobject('image');
 	if($avatar)
 		$avatar = base_url('media/avatar') . '/'.$avatar;
 	else
@@ -65,16 +64,16 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="<?= $avatar; ?>" class="user-image" alt="<?= $this->auth->get_name(); ?>"/>
-								<span class="hidden-xs"><?= $this->auth->get_name(); ?></span>
+								<img src="<?= $avatar; ?>" class="user-image" alt="<?= login_userobject('name'); ?>"/>
+								<span class="hidden-xs"><?= login_userobject('name'); ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header">
-									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= $this->auth->get_name(); ?>" />
+									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
 									<p>
-										<?= $this->auth->get_name(); ?>
-										<small>Cadastrado em <?= datetime_for_user($this->wpanel->get_from_user('created'), false); ?></small>
+										<?= login_userobject('name'); ?>
+										<small>Cadastrado em <?= datetime_for_user(login_userobject('created'), false); ?></small>
 									</p>
 								</li>
 								<!-- Menu Footer-->
@@ -100,10 +99,10 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= $this->auth->get_name(); ?>" />
+						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
 					</div>
 					<div class="pull-left info">
-						<p><?= $this->auth->get_name(); ?></p>
+						<p><?= login_userobject('name'); ?></p>
 					</div>
 				</div>
 				<!-- sidebar menu: : style can be found in sidebar.less -->

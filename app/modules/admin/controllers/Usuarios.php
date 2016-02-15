@@ -186,7 +186,7 @@ class Usuarios extends MX_Controller {
 	public function profile()
 	{
 		
-		$id = $this->wpanel->get_from_user('id');
+		$id = login_userobject('id');
 
 		// Verifica se altera a senha
 		if($this->input->post('alterar_senha') == '1'){

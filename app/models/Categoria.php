@@ -34,7 +34,8 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categoria extends MY_Model {
+class Categoria extends MY_Model 
+{
 
 	public $table_name = 'categories';
 	public $primary_key = 'id';

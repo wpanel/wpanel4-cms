@@ -35,7 +35,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Menu_item extends MY_Model {
+class Menu_item extends MY_Model 
+{
 
     public $table_name = 'menu_itens';
     public $primary_key = 'id';

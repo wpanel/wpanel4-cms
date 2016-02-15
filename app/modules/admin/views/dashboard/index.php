@@ -1,7 +1,7 @@
 <?php
 
 // Captura o avatar do usuário.
-$avatar = $this->wpanel->get_from_user('image');
+$avatar = login_userobject('image');
 if($avatar)
 	$avatar = base_url('media/avatar') . '/'.$avatar;
 else
@@ -21,12 +21,12 @@ else
 	<div class="box">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-3 hidden-xs"><img src="<?= $avatar; ?>" class="img-responsive" alt="<?= $this->auth->get_name(); ?>"/></div>
+				<div class="col-md-3 hidden-xs"><img src="<?= $avatar; ?>" class="img-responsive" alt="<?= login_userobject('name'); ?>"/></div>
 				<div class="col-md-4">
-					<h2>Olá <?php echo $this->wpanel->get_from_user('name'); ?>.</h2>
-					<p><?php echo $this->wpanel->get_from_user('name'); ?> - <?php echo $this->wpanel->get_from_user('email'); ?></p>
-					<p>Cadastrado em <?php echo datetime_for_user($this->wpanel->get_from_user('created'), 0); ?></p>
-					<p><?php echo anchor('admin/usuarios/profile', 'Alterar meus dados', array('class'=>'btn btn-primary')); ?></p>
+					<h2>Olá <?= login_userobject('name'); ?>.</h2>
+					<p><?= login_userobject('name'); ?> - <?= login_userobject('email'); ?></p>
+					<p>Cadastrado em <?= datetime_for_user(login_userobject('created'), 0); ?></p>
+					<p><?= anchor('admin/usuarios/profile', 'Alterar meus dados', array('class'=>'btn btn-primary')); ?></p>
 				</div>
 				<div class="col-md-5">
 					<h4>Resumo do seu conteúdo</h4>

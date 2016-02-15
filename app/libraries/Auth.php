@@ -46,20 +46,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Auth 
 {
-	
-	var $auth_table_name 		= 'users';
-	var $auth_table_key 		= 'id';
-	var $auth_name_field 		= 'name';
-	var $auth_username_field 	= 'username';
-	var $auth_password_field 	= 'password';
-	var $auth_status_field 		= 'status';
-	var $auth_role_field 		= 'role';
-	var $auth_permissions_field	= 'permissions';
-	var $auth_login_redirect 	= '';
-	var $auth_logout_redirect	= '';
-	var $auth_msg_erro_login 	= 'You need login to access.';
-	var $auth_msg_erro_fail 	= 'Login failed, try again.';
-	var $auth_msg_erro_role 	= 'You need the right permission to access this area.';
 
 	public function __construct($config = array()) 
 	{
@@ -132,8 +118,8 @@ class Auth
 	{
 		if (count($options)<=0) 
 		{
-			$user = $this->input->post($this->auth_username_field);
-			$pass = $this->input->post($this->auth_password_field);
+			$user = $this->input->post('email');
+			$pass = $this->input->post('password');
 		}
 		else
 		{
@@ -142,33 +128,34 @@ class Auth
 		}
 		if (!$user && !$pass)
 		{
-			$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_fail);
-			return redirect($this->auth_logout_redirect);
+			$this->session->set_flashdata('msg_auth', 'Seu login falhou, tente novamente.');
+			return redirect('/admin/login');
 		}
 		else
 		{
-			$this->db->where($this->auth_username_field, $user);
-			$this->db->or_where('username', $user); // Modificação para o wpanel.
-			$this->db->where($this->auth_password_field, md5($pass));
-			$this->db->where($this->auth_status_field, 1);
-			$user_data = $this->db->get($this->auth_table_name)->row();
-			if ($user_data->{$this->auth_table_key})
+			$this->db->where('email', $user);
+			$this->db->or_where('username', $user);
+			$this->db->where('password', md5($pass));
+			$this->db->where('status', 1);
+			$user_data = $this->db->get('users')->row();
+			if ($user_data->id)
 			{
 				$session_data = array(
-					$this->auth_table_key => $user_data->{$this->auth_table_key},
-					$this->auth_username_field => $user_data->{$this->auth_username_field},
-					$this->auth_role_field => $user_data->{$this->auth_role_field},
-					$this->auth_permissions_field => $user_data->{$this->auth_permissions_field},
-					$this->auth_name_field => $user_data->{$this->auth_name_field},
+					'id' => $user_data->id,
+					'email' => $user_data->email,
+					'role' => $user_data->role,
+					'permissions' => $user_data->permissions,
+					'name' => $user_data->name,
+                                        'user_object' => $user_data,
 					'logged_in' => TRUE
 				);
 				$this->session->set_userdata($session_data);
-				return redirect($this->auth_login_redirect);
+				return redirect('/admin');
 			}
 			else
 			{
-				$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_fail);
-				return redirect($this->auth_logout_redirect);
+				$this->session->set_flashdata('msg_auth', 'Seu login falhou, tente novamente.');
+				return redirect('/admin/login');
 			}
 		}
 	}
@@ -182,15 +169,16 @@ class Auth
 	public function logout()
 	{
 		$session_data = array(
-			$this->auth_table_key => null,
-			$this->auth_username_field => null,
-			$this->auth_role_field => null,
-			$this->auth_permissions_field => null,
-			$this->auth_name_field => null,
+			'id' => null,
+			'email' => null,
+			'role' => null,
+			'permissions' => null,
+			'name' => null,
+                        'user_object' => null,
 			'logged_in' => TRUE
 		);
 		$this->session->unset_userdata($session_data);
-		return redirect($this->auth_logout_redirect);
+		return redirect('/admin/login');
 	}
 
 	/**
@@ -206,18 +194,18 @@ class Auth
 		if ($this->session->userdata('logged_in'))
 		{
 			if (
-				($this->session->userdata($this->auth_role_field) == 'user') and 
-				(!in_array($modulename, unserialize($this->session->userdata($this->auth_permissions_field))))
+				($this->session->userdata('role') == 'user') and 
+				(!in_array($modulename, unserialize($this->session->userdata('permissions'))))
 				)
 			{
-				$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_role);
-				return redirect($this->auth_logout_redirect);
+				$this->session->set_flashdata('msg_auth', 'Você não tem permissão para acessar esta área.');
+				return $this->logout();
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('msg_auth', $this->auth_msg_erro_login);
-			return redirect($this->auth_logout_redirect);
+			$this->session->set_flashdata('msg_auth', 'Você precisa logar para acessar.');
+			return redirect('/admin/login');
 		}
 	}
 
@@ -229,7 +217,7 @@ class Auth
 	 */
 	public function get_userid()
 	{
-		return $this->session->userdata($this->auth_table_key);
+		return $this->session->userdata('id');
 	}
 
 	/**
@@ -240,12 +228,7 @@ class Auth
 	 */
 	public function get_username()
 	{
-		return $this->session->userdata($this->auth_username_field);
-	}
-
-	public function get_name()
-	{
-		return $this->session->userdata($this->auth_name_field);
+		return $this->session->userdata('name');
 	}
 
 	/**
@@ -256,6 +239,6 @@ class Auth
 	 */
 	public function get_role()
 	{
-		return $this->session->userdata($this->auth_role_field);
+		return $this->session->userdata('role');
 	}
 }

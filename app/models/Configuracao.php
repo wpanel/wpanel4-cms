@@ -34,7 +34,8 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Configuracao extends MY_Model {
+class Configuracao extends MY_Model 
+{
 
     public function load_config($conf_item = null)
     {

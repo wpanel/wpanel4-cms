@@ -34,12 +34,13 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dash extends MY_Model {
+class Dash extends MY_Model 
+{
 
 	public function calcula_totais($modulo, $tipo = 0)
 	{
 
-		$this->db->where('user_id', $this->wpanel->get_from_user('id'));
+		$this->db->where('user_id', login_userobject('id'));
 
 		if($modulo == 'posts')
 			$this->db->where('page', $tipo);
