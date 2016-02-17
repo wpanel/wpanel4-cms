@@ -16,6 +16,7 @@
         <?= wpn_widget('background'); ?>
     </head>
     <body>
+        <div class="wpn-spacer hidden-xs"></div>
         <div class="container">
             <div class="row">
                 <nav class="navbar navbar-default">
@@ -28,8 +29,8 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <a class="navbar-brand" href="<?= site_url(); ?>">
-                                <span class="visible-xs"><?= wpn_config('site_titulo'); ?></span>
-                                <?= wpn_widget('logomarca', ['class_name'=>'img-responsive hidden-xs', 'width'=>'200']); ?>
+                                <!--<span class="visible-xs"><?= wpn_config('site_titulo'); ?></span>-->
+                                <?= wpn_widget('logomarca', ['class_name'=>'img-responsive']); ?>
                             </a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,7 +41,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="row">
+            <div class="row hidden-xs">
                 <?= wpn_widget('slidebanner', ['position'=>'slide']); ?>
             </div>
             <div class="row">

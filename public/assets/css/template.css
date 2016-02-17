@@ -1,18 +1,24 @@
-
 /**
- * -------------------------------------------------------------------
- * Folha de estilos do layout de demonstração do Wpanel CMS
- * 
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- * -------------------------------------------------------------------
+ * Default stylesheet to Wpanel Cms demo-website.
  */
 
-/* Estilos gerais */
+/**
+* Use this if you are using brand-image.
+*/
+.navbar-brand {
+    padding: 5px 5px;
+}
+
+/**
+* General styles.
+*/
 body {
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    margin-top: 35px;
+}
+.wpn-spacer {
+    height: 20px;
 }
 .wpn-social-buttons {
     margin-bottom: 10px;
@@ -21,8 +27,6 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
-/* Estilos das listas de postagens */
 .wpn-postagens {}
 .wpn-postagens .wpn-capa {
     height:200px;
@@ -30,15 +34,11 @@ body {
     margin-top:15px;
     margin-bottom:15px;
 }
-
-/* Estilos da exibição de postagem */
 .wpn-postagem {}
 .wpn-postagem .wpn-capa {
     margin-top:15px;
     margin-bottom:15px;
 }
-
-/* Estilos da sidebar */
 .wpn-sidebar {}
 .menu-sidebar {
     list-style: none;
@@ -46,8 +46,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
-/* Estilos do rodapé */
 .wpn-footer {}
 .wpn-footer .wpn-copyright {
   border-top: solid 1px #ccc;
