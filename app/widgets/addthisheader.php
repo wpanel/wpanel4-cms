@@ -43,5 +43,4 @@ class Addthisheader extends Widget {
         #pubid=" . wpn_config('addthis_uid') . "\"></script>";
         return $html;
 	}
-
 }

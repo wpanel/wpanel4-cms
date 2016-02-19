@@ -71,5 +71,4 @@ class Categoryfrompost extends Widget {
         }
         return $html;
     }
-
 }

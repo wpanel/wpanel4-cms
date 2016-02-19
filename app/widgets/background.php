@@ -48,5 +48,4 @@ class Background extends Widget {
         $html .= "\t</style>\n";
         return $html;
 	}
-
 }
