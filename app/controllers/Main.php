@@ -502,9 +502,10 @@ class Main extends MY_Controller
         } else {
             $this->load->model('newsletter');
             $dados_save = array(
-                'nome' => $this->input->post('nome'),
-                'email' => $this->input->post('email'),
-                'created' => date('Y-m-d H:i:s')
+                'nome' => $this->input->post('nome', true),
+                'email' => $this->input->post('email', true),
+                'created' => date('Y-m-d H:i:s'),
+                'user_ip' => $this->input->server('REMOTE_ADDR', true)
             );
             if ($this->newsletter->save($dados_save)) {
                 $this->session->set_flashdata('msg_newsletter', 'Seus dados foram salvos com sucesso, obrigado!');

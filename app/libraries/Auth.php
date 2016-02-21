@@ -118,8 +118,8 @@ class Auth
 	{
 		if (count($options)<=0) 
 		{
-			$user = $this->input->post('email');
-			$pass = $this->input->post('password');
+			$user = $this->input->post('email', true);
+			$pass = $this->input->post('password', true);
 		}
 		else
 		{
@@ -146,7 +146,7 @@ class Auth
 					'role' => $user_data->role,
 					'permissions' => $user_data->permissions,
 					'name' => $user_data->name,
-                                        'user_object' => $user_data,
+                    'user_object' => $user_data,
 					'logged_in' => TRUE
 				);
 				$this->session->set_userdata($session_data);
@@ -174,7 +174,7 @@ class Auth
 			'role' => null,
 			'permissions' => null,
 			'name' => null,
-                        'user_object' => null,
+            'user_object' => null,
 			'logged_in' => TRUE
 		);
 		$this->session->unset_userdata($session_data);

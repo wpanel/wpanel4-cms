@@ -150,7 +150,7 @@ class Logon extends MX_Controller {
 
 			$this->load->model('user');
 
-			$query = $this->user->get_by_field('email', $this->input->post('email'))->row();
+			$query = $this->user->get_by_field('email', $this->input->post('email', true))->row();
 
 			if(count($query) >= 1)
 			{
