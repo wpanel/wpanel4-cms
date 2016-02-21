@@ -108,36 +108,36 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
 					<li class="header">OPÇÕES PRINCIPAIS</li>
-					<li <?= active_link('dashboard'); ?>>
+					<li <?= wpn_activelink('dashboard'); ?>>
 						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>Dashboard</span>'); ?>
 					</li>
-					<li <?= active_link('posts'); ?>>
+					<li <?= wpn_activelink('posts'); ?>>
 						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>Postagens</span>'); ?>
 					</li>
-					<li <?= active_link('pages'); ?>>
+					<li <?= wpn_activelink('pages'); ?>>
 						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>Páginas</span>'); ?>
 					</li>
-					<li <?= active_link('agendas'); ?>>
+					<li <?= wpn_activelink('agendas'); ?>>
 						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>Agenda de eventos</span>'); ?>
 					</li>
-					<li <?= active_link('banners'); ?>>
+					<li <?= wpn_activelink('banners'); ?>>
 						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>Banners</span>'); ?>
 					</li>
-					<li <?= active_link('albuns'); ?>
-						<?= active_link('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
+					<li <?= wpn_activelink('albuns'); ?>
+						<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
 					</li>
-					<li <?= active_link('videos'); ?>> 
+					<li <?= wpn_activelink('videos'); ?>> 
 						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>Vídeos</span>'); ?>
 					</li>
-					<li <?= active_link('menus'); ?> <?= active_link('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
+					<li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
 					</li>
-					<li <?= active_link('newsletters'); ?>>
+					<li <?= wpn_activelink('newsletters'); ?>>
 						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>Newsletters</span>'); ?>
 					</li>
-					<li <?= active_link('usuarios'); ?>>
+					<li <?= wpn_activelink('usuarios'); ?>>
 						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>Usuários</span>'); ?>
 					</li>
-					<li <?= active_link('configuracoes'); ?>>
+					<li <?= wpn_activelink('configuracoes'); ?>>
 						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>Configurações</span>'); ?>
 					</li>
 				</ul>

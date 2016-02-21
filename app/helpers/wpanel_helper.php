@@ -138,20 +138,23 @@ if(!function_exists('wpn_fakelink'))
 
 /* ----- Functions used only on the control panel. ----- */
 
-if (!function_exists('active_link')) 
+if (!function_exists('wpn_activelink')) 
 {
     
     /**
-     * This helper return class 'active' for bootstrap menus in the control panel.
+     * This helper return class 'active' for bootstrap menus in the control panel and
+     * could be used into the site as well.
      * 
-     * @param string $link
-     * @return string class="active"
+     * @param $link string Link param to check.
+     * @param $segment integer Segment of the URL to be checked, default 2 to Control Panel.
+     * @param $return string Code returned case is active, default: class="active".
+     * @return string
      */
-    function active_link($link)
+    function wpn_activelink($link, $segment = 2, $return = ' class="active"')
     {
         $CI =& get_instance();
         if ($CI->uri->segment(2) == $link)
-            return ' class="active"';
+            return $return;
     }
 }
 
