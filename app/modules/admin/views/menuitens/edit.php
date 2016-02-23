@@ -16,7 +16,7 @@
             <h3 class="box-title">Alteração de ítem de menu</h3>
         </div>
         <div class="box-body">
-            <form method="post" action="<?= site_url('admin/menuitens/edit/' . $row->id); ?>" role="form">
+            <?= form_open('admin/menuitens/edit/' . $row->id, array('role'=>'form')); ?>
                 <input type="hidden" name="menu_id" value="<?= $row->menu_id; ?>" />
                 <div class="form-group">
                     <label for="label">Label do link</label>

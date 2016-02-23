@@ -16,7 +16,7 @@
             <h3 class="box-title">Cadastro de ítem de menu</h3>
         </div>
         <div class="box-body">
-            <form method="post" action="<?= site_url('admin/menuitens/add/' . $menu_id); ?>" role="form">
+            <?= form_open('admin/menuitens/add/' . $menu_id, array('role'=>'form')); ?>
                 <div class="form-group">
                     <label for="label">Label do link</label>
                     <input type="text" name="label" id="label" class="form-control" />
