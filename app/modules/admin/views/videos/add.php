@@ -13,7 +13,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Novo cadastro de Videos</div>
 		<div class="panel-body">
-			<form action="<?= site_url('admin/videos/add'); ?>" method="post" role="form" >
+			<?= form_open('admin/videos/add', array('role'=>'form')); ?>
 				<div class="form-group">
 					<label for="titulo">Titulo</label>
 					<input type="text"  class="form-control" id="titulo" name="titulo" value="" placeholder="">

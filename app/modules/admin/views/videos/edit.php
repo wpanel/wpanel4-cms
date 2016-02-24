@@ -15,7 +15,7 @@
 	<div class="panel-heading">Alteração de Videos</div>
 	<div class="panel-body">
 
-		<form action="<?= site_url('admin/videos/edit/'.$row->id); ?>" method="post" role="form" >
+		<?= form_open('admin/videos/edit/'.$row->id, array('role'=>'form')); ?>
 			<div class="form-group">
 				<label for="titulo">Titulo</label>
 				<input type="text"  class="form-control" id="titulo" name="titulo" value="<?= $row->titulo; ?>" placeholder="">
