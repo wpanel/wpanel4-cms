@@ -109,36 +109,36 @@
 				<ul class="sidebar-menu">
 					<li class="header">OPÇÕES PRINCIPAIS</li>
 					<li <?= wpn_activelink('dashboard'); ?>>
-						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>Dashboard</span>'); ?>
+						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>'.wpn_lang('mod_dashboard', 'Dashboard').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('posts'); ?>>
-						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>Postagens</span>'); ?>
+						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_post', 'Posts').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('pages'); ?>>
-						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>Páginas</span>'); ?>
+						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_page', 'Pages').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('agendas'); ?>>
-						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>Agenda de eventos</span>'); ?>
+						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>'.wpn_lang('mod_event', 'Events').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('banners'); ?>>
-						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>Banners</span>'); ?>
+						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>'.wpn_lang('mod_banner', 'Banners').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('albuns'); ?>
-						<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>Albuns de fotos</span>'); ?>
+						<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>'.wpn_lang('mod_galery', 'Galery').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('videos'); ?>> 
-						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>Vídeos</span>'); ?>
+						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>'.wpn_lang('mod_video', 'Videos').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>Gerenciador de menus</span>'); ?>
+					<li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>'.wpn_lang('mod_menu', 'Menus').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('newsletters'); ?>>
-						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>Newsletters</span>'); ?>
+						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('usuarios'); ?>>
-						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>Usuários</span>'); ?>
+						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('configuracoes'); ?>>
-						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>Configurações</span>'); ?>
+						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
 					</li>
 				</ul>
 			</section>

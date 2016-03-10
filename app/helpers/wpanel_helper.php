@@ -214,3 +214,29 @@ if (!function_exists('login_userobject'))
 
     }
 }
+
+if(!function_exists('wpn_lang'))
+{
+
+    /**
+     * Return a config item from config.json.
+     *
+     * @param $item mixed Config item.
+     * @return mixed 
+     */
+    function wpn_lang($key, $default, $file = 'wpn_common')
+    {
+        $CI =& get_instance();
+        
+        $idiom = wpn_config('language');
+        
+        if(isset($file))
+            $CI->lang->load($file, $idiom);
+
+        $line = $CI->lang->line($key, false);
+        if($line)
+            return $line;
+        else
+            return $default;
+    }
+}
