@@ -25,11 +25,11 @@ else
 				<div class="col-md-4">
 					<h2><?= wpn_lang('wpn_hello', 'Hello'); ?> <?= login_userobject('name'); ?>.</h2>
 					<p><?= login_userobject('name'); ?> - <?= login_userobject('email'); ?></p>
-					<p>Cadastrado em <?= datetime_for_user(login_userobject('created'), 0); ?></p>
-					<p><?= anchor('admin/usuarios/profile', 'Alterar meus dados', array('class'=>'btn btn-primary')); ?></p>
+					<p><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(login_userobject('created'), 0); ?></p>
+					<p><?= anchor('admin/usuarios/profile', wpn_lang('lnk_manageprofile','Manage my profile'), array('class'=>'btn btn-primary')); ?></p>
 				</div>
 				<div class="col-md-5">
-					<h4>Resumo do seu conteúdo</h4>
+					<h4><?= wpn_lang('wpn_sumary', 'Sumary'); ?></h4>
 					<table class="table table-striped">
 						<tbody>
 							<tr>

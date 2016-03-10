@@ -54,7 +54,6 @@
 			<nav class="navbar navbar-static-top" role="navigation">
 				<!-- Sidebar toggle button-->
 				<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-				<span class="sr-only">Navegação</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -73,16 +72,16 @@
 									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
 									<p>
 										<?= login_userobject('name'); ?>
-										<small>Cadastrado em <?= datetime_for_user(login_userobject('created'), false); ?></small>
+										<small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(login_userobject('created'), false); ?></small>
 									</p>
 								</li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<?= anchor('admin/usuarios/profile', glyphicon('user') . 'Perfil', array('class'=>'btn btn-primary btn-flat')); ?>
+										<?= anchor('admin/usuarios/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class'=>'btn btn-primary btn-flat')); ?>
 									</div>
 									<div class="pull-right">
-										<?= anchor('/admin/logout', glyphicon('off') . 'Sair', array('class'=>'btn btn-danger btn-flat')); ?>
+										<?= anchor('/admin/logout', glyphicon('off') . wpn_lang('lnk_logout', 'Logout'), array('class'=>'btn btn-danger btn-flat')); ?>
 									</div>
 								</li>
 							</ul>
@@ -107,7 +106,7 @@
 				</div>
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu">
-					<li class="header">OPÇÕES PRINCIPAIS</li>
+					<li class="header"><?= wpn_lang('wpn_mainoptions', 'MAIN OPTIONS'); ?></li>
 					<li <?= wpn_activelink('dashboard'); ?>>
 						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>'.wpn_lang('mod_dashboard', 'Dashboard').'</span>'); ?>
 					</li>
