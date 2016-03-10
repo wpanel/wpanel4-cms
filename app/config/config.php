@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://wpanel.dev/';
+$config['base_url'] = 'https://wpanel-elieldepaula.c9.io/';
 
 /*
 |--------------------------------------------------------------------------
@@ -75,7 +75,7 @@ $config['url_suffix'] = '.html';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'portuguese';
 
 /*
 |--------------------------------------------------------------------------
