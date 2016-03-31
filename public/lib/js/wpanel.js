@@ -55,7 +55,7 @@
                 }
             });
 
-            //$('.colorpicker').colorpicker();
+            $('.select_color').colorpicker();
 
             /* -------------------------------------------------------------------------
              * Este bloco faz o funcionamento do formulário de cadastro 

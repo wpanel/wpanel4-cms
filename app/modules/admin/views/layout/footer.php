@@ -1,38 +1,19 @@
-	      <!-- </section> -->
-	    </div>
-	    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <?= wpn_lang('wpn_pagerendered', 'Page rendered in'); ?> <strong>{elapsed_time}</strong> <?= wpn_lang('wpn_seconds', 'Seconds'); ?>.
-        </div>
-        <p>&copy; Wpanel CMS <?= date('Y') ?>, <a href="http://wpanelcms.com.br/post/licenca.html" target="_blank"><?= wpn_lang('wpn_licence', 'Terms and licence'); ?></a>. <?= wpn_lang('wpn_developed', 'Developed by'); ?> <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</p>
-      </footer>
-    </div>
-    <!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="<?= base_url('lib/plugins') ?>/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.2 JS -->
-    <script src="<?= base_url('lib/js') ?>/bootstrap.min.js" type="text/javascript"></script>
-    <!-- BootBox -->
-    <script src="<?= base_url('lib/plugins') ?>/bootbox/bootbox.min.js"></script>
-    <!-- DATA TABES SCRIPT -->
-    <script src="<?= base_url('lib/plugins') ?>/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="<?= base_url('lib/plugins') ?>/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-    <!-- SlimScroll -->
-    <script src="<?= base_url('lib/plugins') ?>/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src='<?= base_url('lib/plugins') ?>/fastclick/fastclick.min.js'></script>
-    <!-- AdminLTE App -->
-    <script src="<?= base_url('lib/js') ?>/app.min.js" type="text/javascript"></script>
-    <!-- WPanel JS -->
-    <script src="<?= base_url('lib/js') ?>/wpanel.js"></script>
-    <script>
-    var roxyFileman = '<?= base_url(); ?>fileman/index.html';
-    CKEDITOR.replace( 'editor', {
-        filebrowserBrowseUrl:roxyFileman,
-        filebrowserImageBrowseUrl:roxyFileman+'?type=image',
-        removeDialogTabs: 'link:upload;image:upload'
-    });
-    </script>
-  </body>
+            </div>
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                <?= wpn_lang('wpn_pagerendered', 'Page rendered in'); ?> <strong>{elapsed_time}</strong> <?= wpn_lang('wpn_seconds', 'Seconds'); ?>.
+                </div>
+                <p>&copy; Wpanel CMS <?= date('Y') ?>, <a href="http://wpanelcms.com.br/post/licenca.html" target="_blank"><?= wpn_lang('wpn_licence', 'Terms and licence'); ?></a>. <?= wpn_lang('wpn_developed', 'Developed by'); ?> <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</p>
+            </footer>
+        </div>
+        <script>
+        var roxyFileman = '<?= base_url("fileman/index.html"); ?>';
+        CKEDITOR.replace( 'editor', {
+            filebrowserBrowseUrl:roxyFileman,
+            filebrowserImageBrowseUrl:roxyFileman+'?type=image',
+            removeDialogTabs: 'link:upload;image:upload'
+        });
+        </script>
+    </body>
 </html>

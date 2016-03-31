@@ -180,7 +180,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="bgcolor">Selecione uma cor de fundo</label>
-                                            <input type="text" name="bgcolor" id="bgcolor" value="<?= $row->bgcolor ?>" class="form-control colorpicker" placeholder="Ex: #FF99CC" />
+                                            <input type="text" name="bgcolor" id="bgcolor" value="<?= $row->bgcolor ?>" class="form-control select_color" placeholder="Ex: #FF99CC" />
                                         </div>
                                     </div>
                                 </div>

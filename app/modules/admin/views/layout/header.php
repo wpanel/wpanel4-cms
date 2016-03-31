@@ -2,26 +2,48 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Admin WPanel</title>
 		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 		<!-- Bootstrap 3.3.4 -->
-		<link href="<?= base_url('lib/css') ?>/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?= base_url('lib/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
 		<!-- Font Awesome Icons -->
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 		<!-- Ionicons -->
 		<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 		<!-- Theme style -->
-		<link href="<?= base_url('lib/css') ?>/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?= base_url('lib/css/AdminLTE.min.css') ?>" rel="stylesheet" type="text/css" />
 		<!-- AdminLTE Skins. -->
-		<link href="<?= base_url('lib/css') ?>/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?= base_url('lib/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
 			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<!-- jQuery 2.1.4 -->
+	    <script src="<?= base_url('lib/plugins/jQuery/jQuery-2.1.4.min.js') ?>"></script>
+	    <!-- Bootstrap 3.3.2 JS -->
+	    <script src="<?= base_url('lib/js/bootstrap.min.js') ?>" type="text/javascript"></script>
+	    <!-- BootBox -->
+	    <script src="<?= base_url('lib/plugins/bootbox/bootbox.min.js') ?>"></script>
+	    <!-- DATA TABES SCRIPT -->
+	    <script src="<?= base_url('lib/plugins/datatables/jquery.dataTables.min.js') ?>" type="text/javascript"></script>
+	    <!--Data Tables-->
+	    <script src="<?= base_url('lib/plugins/datatables/dataTables.bootstrap.min.js') ?>" type="text/javascript"></script>
+	    <!--Color-Picker-->
+	    <script src="<?= base_url('lib/plugins/colorpicker/bootstrap-colorpicker.min.js') ?>" type="text/javascript"></script>
+	    <link href="<?= base_url('lib/plugins/colorpicker/bootstrap-colorpicker.min.css') ?>" rel="stylesheet" type="text/css" />
+	    <!-- SlimScroll -->
+	    <script src="<?= base_url('lib/plugins/slimScroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
+	    <!-- FastClick -->
+	    <script src='<?= base_url('lib/plugins/fastclick/fastclick.min.js') ?>'></script>
+	    <!-- AdminLTE App -->
+	    <script src="<?= base_url('lib/js/app.min.js') ?>" type="text/javascript"></script>
+	    <!-- WPanel JS -->
+	    <script src="<?= base_url('lib/js/wpanel.js') ?>"></script>
 	</head>
-
 	<?php 
 	$skin = login_userobject('skin');
 	if($skin == '')
@@ -29,15 +51,12 @@
 
 	$avatar = login_userobject('image');
 	if($avatar)
-		$avatar = base_url('media/avatar') . '/'.$avatar;
+		$avatar = base_url('media/avatar/'.$avatar);
 	else
-		$avatar = base_url('lib/img') . '/no-user.jpg';
-	
-	$msg_sistema = $this->session->flashdata('msg_sistema'); 
+		$avatar = base_url('lib/img/no-user.jpg');
 
 	?>
-
-	<body <?php if($msg_sistema) echo "onload=\"sysmsg('".$msg_sistema."');\""; ?> class="skin-<?= $skin; ?> sidebar-mini">
+	<body class="skin-<?= $skin; ?> sidebar-mini">
 
 	<!-- Site wrapper -->
 	<div class="wrapper">
@@ -146,3 +165,19 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
+			
+			<?php
+			$msg_sistema = $this->session->flashdata('msg_sistema');
+			if($msg_sistema){
+				?>
+				<div class="row">
+					<div class="col-md-12">
+						<div style="margin:5px 8px 5px 5px;" class="alert alert-warning alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<?php echo $msg_sistema; ?>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+			?>

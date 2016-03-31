@@ -6,11 +6,21 @@ $query_builder = TRUE;
 /**
  * Configurações para o ambiente de desenvolvimento.
  */
-$db['development']['hostname'] = 'localhost';
-$db['development']['username'] = 'elieldepaula';
+ 
+// Descomente para usar MySQL
+// $db['development']['hostname'] = 'localhost';
+// $db['development']['username'] = 'elieldepaula';
+// $db['development']['password'] = '';
+// $db['development']['database'] = 'c9';
+// $db['development']['dbdriver'] = 'mysqli';
+
+// Implementação usando SQLite.
+$db['development']['hostname'] = 'sqlite:'.APPPATH.'db/wpanel.sqlite';
+$db['development']['username'] = '';
 $db['development']['password'] = '';
-$db['development']['database'] = 'c9';
-$db['development']['dbdriver'] = 'mysqli';
+$db['development']['database'] = '';
+$db['development']['dbdriver'] = 'pdo';
+
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
 $db['development']['db_debug'] = TRUE;
