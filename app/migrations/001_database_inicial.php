@@ -202,7 +202,7 @@ class Migration_Database_inicial extends CI_Migration
 
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("`post_id` int(11) NOT NULL");
-		$this->dbforge->add_field("`category_id` int(11) NOT NULL COMMENT '  \n\n  '");
+		$this->dbforge->add_field("`category_id` int(11) NOT NULL");
 		
 		$this->dbforge->create_table('posts_categories', true);
 
