@@ -40,40 +40,35 @@ class banners extends MX_Controller {
 	{
 		$this->auth->protect('banners');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+		$this->load->model('banner');
 	}
 
 	public function index()
 	{
-		$this->load->model('banner');
 		$this->load->library('table');
 
 		$layout_vars = array();
 		$content_vars = array();
         $options = config_item('banner_positions');
 
-		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
-		$this->table->set_heading('#', 'Título', 'Posição', 'Ordem', 'Status', 'Ações');
-		$query = $this->banner->get_list();
+		$query = $this->banner->get_list(array('field'=>'sequence', 'order'=>'asc'))->result(); // ordenar pela sequencia dos banners. 
+		
+		$content_vars['query'] = $query;
+		$content_vars['options'] = $options;
 
-		foreach($query->result() as $row)
-		{
-			$this->table->add_row(
-				$row->id, 
-				$row->title, 
-				$options[$row->position],
-				$row->order,
-				status_post($row->status), 
-				div(array('class'=>'btn-group btn-group-sm')).
-				anchor('admin/banners/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/banners/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
-				div(null,true)
-				);
-		}
-
-		$content_vars['listagem'] = $this->table->generate();
 		$this->wpanel->load_view('banners/index', $content_vars);
-	}	
+	}
+	
+	public function update_sequence()
+	{
+	    $i = 0;
+	    $itens = $this->input->post('item');
+		foreach ($itens as $value) {
+			// Execute statement:
+			$this->banner->update($value,  ['sequence' => $i]);
+			$i++;
+		}
+	}
 
 	public function add()
 	{
@@ -88,8 +83,6 @@ class banners extends MX_Controller {
 		{
 			$this->wpanel->load_view('banners/add', $content_vars);
 		} else {
-
-			$this->load->model('banner');
 
 			$dados_save = array();
 			$dados_save['user_id'] = $this->auth->get_userid();
@@ -132,14 +125,11 @@ class banners extends MX_Controller {
 				redirect('admin/banners');
 			}
 
-			$this->load->model('banner');
 			$content_vars['id'] = $id;
 			$content_vars['row'] = $this->banner->get_by_id($id)->row();
 			$this->wpanel->load_view('banners/edit', $content_vars);
 
 		} else {
-
-			$this->load->model('banner');
 
 			$dados_save = array();
 			$dados_save['title'] = $this->input->post('title');
@@ -179,7 +169,6 @@ class banners extends MX_Controller {
 		}
 
 		// Remove o arquivo do banner.
-		$this->load->model('banner');
 		$banner = $this->banner->get_by_id($id)->row();
 		$this->banner->remove_media('banners/' . $banner->content);
 

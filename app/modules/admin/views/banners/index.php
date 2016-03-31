@@ -20,7 +20,52 @@
             </div>
         </div>
         <div class="box-body">
-            <?= $listagem; ?>
+            <table id="grid" class="table table-striped">
+			    <thead>
+			        <tr>
+			            <th>#</th>
+			            <th>Título</th>
+			            <th>Posição</th>
+			            <th>Status</th>
+			            <th>Ações</th>
+			        </tr>
+			    </thead>
+			    <tbody class="sortable">
+			        <?php
+			        foreach($query as $row){
+			            ?>
+    			        <tr id="item-<?= $row->id; ?>" style="cursor:move;">
+    			            <td><?= $row->id; ?></td>
+    			            <td><?= $row->title; ?></td>
+    			            <td><?= $options[$row->position]; ?></td>
+    			            <td><?= status_post($row->status); ?></td>
+    			            <td>
+    			                <div class="btn-group btn-group-sm">
+    			                    <?= anchor('admin/banners/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')); ?>
+    			                    <button class="btn btn-default" onClick="return confirmar('<?= site_url('admin/banners/delete/'.$row->id); ?>');"><?= glyphicon('trash'); ?></button>
+    			                </div>
+    			            </td>
+    			        </tr>
+    			        <?php
+			        }
+			        ?>
+			    </tbody>
+			</table>
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(function(){
+        $(".sortable").sortable({
+            axis: 'y',
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                $.ajax({
+                    data: data,
+                    type: 'POST',
+                    url: '<?= site_url("admin/banners/update_sequence"); ?>'
+                });
+            }
+        });
+    });
+</script>

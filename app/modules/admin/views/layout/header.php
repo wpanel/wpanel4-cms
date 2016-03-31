@@ -24,6 +24,8 @@
 		<![endif]-->
 		<!-- jQuery 2.1.4 -->
 	    <script src="<?= base_url('lib/plugins/jQuery/jQuery-2.1.4.min.js') ?>"></script>
+	    <!--JQueryUI-->
+	    <script src="<?= base_url('lib/plugins/jQueryUI/jquery-ui-1.10.3.min.js') ?>"></script>
 	    <!-- Bootstrap 3.3.2 JS -->
 	    <script src="<?= base_url('lib/js/bootstrap.min.js') ?>" type="text/javascript"></script>
 	    <!-- BootBox -->
