@@ -62,10 +62,10 @@ class banners extends MX_Controller {
 	public function update_sequence()
 	{
 	    $i = 0;
-	    $itens = $this->input->post('item');
+	    $itens = $_POST['item']; //$this->input->post('item');
 		foreach ($itens as $value) {
 			// Execute statement:
-			$this->banner->update($value,  ['sequence' => $i]);
+			$this->banner->update($value,  array('sequence' => $i));
 			$i++;
 		}
 	}

@@ -60,6 +60,7 @@
             axis: 'y',
             update: function (event, ui) {
                 var data = $(this).sortable('serialize');
+                alert(data);
                 $.ajax({
                     data: data,
                     type: 'POST',
