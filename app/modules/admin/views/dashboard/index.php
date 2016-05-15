@@ -49,7 +49,7 @@ else
 								<td><?php echo badge($total_agendas); ?></td>
 							</tr>
 							<tr>
-								<td><?= wpn_lang('mod_Galery', 'Galery'); ?></td>
+								<td><?= wpn_lang('mod_galery', 'Galery'); ?></td>
 								<td><?php echo badge($total_albuns); ?></td>
 							</tr>
 							<tr>
@@ -108,7 +108,7 @@ else
 					href="<?= site_url(); ?>" target="_blank" 
 					class="btn btn-success btn-lg btn-block" 
 					style="padding-top:30px;padding-bottom:30px;">
-						<span class="glyphicon glyphicon-globe"></span> <?= wpn_lang('bot_view_site', 'Visualizar Site'); ?>
+						<span class="glyphicon glyphicon-globe"></span> <?= wpn_lang('bot_view_site', 'View website'); ?>
 					</a>
 				</div>
 			</div>

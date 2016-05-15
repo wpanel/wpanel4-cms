@@ -52,13 +52,20 @@ class Posts extends MX_Controller {
 
 		// Template da tabela
 		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
-		$this->table->set_heading('#', 'Título', 'Categoria(s)', 'Data', 'Status', 'Ações');
+		$this->table->set_heading(
+			// '#', 
+			wpn_lang('col_title', 'Title'), 
+			wpn_lang('col_category', 'Category'), 
+			wpn_lang('col_date', 'Date'), 
+			wpn_lang('col_status', 'Status'), 
+			wpn_lang('col_actions', 'Actions')
+		);
 		$query = $this->post->get_by_field('page','0', array('field'=>'created','order'=>'desc'));
 
 		foreach($query->result() as $row)
 		{
 			$this->table->add_row(
-				$row->id, 
+				// $row->id, 
 				$row->title, 
 				// Usando o widget para mostrar as categorias do post.
 				wpn_widget('categoryfrompost', array('post_id' => $row->id)),

@@ -12,7 +12,7 @@
 <section class="content">
     <div class="box">
         <div class="box-body">
-            <form method="post" action="<?= site_url('admin/configuracoes/index'); ?>" enctype="multipart/form-data" role="form">
+            <?= form_open_multipart('admin/configuracoes/index', array('role'=>'form')); ?>
                 <ul class="nav nav-pills" role="tablist" style="margin-bottom:20px;">
                     <li class="active"><a href="#geral" role="tab" data-toggle="tab">Configurações gerais</a></li>
                     <li><a href="#home" role="tab" data-toggle="tab">Página inicial</a></li>
@@ -310,7 +310,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            <?= form_close(); ?>
         </div>
     </div>
 </section>

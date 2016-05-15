@@ -3,13 +3,13 @@ echo $this->wpanel->load_editor();
 ?>
 <section class="content-header">
     <h1>
-        Postagens
-        <small>Gerencie os artigos e postagens do site aqui.</small>
+        <?= wpn_lang('mod_post', 'Posts'); ?>
+        <small><?= wpn_lang('desc_post', 'Manage articles and post of the site.'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/posts'); ?>"><i class="fa fa-files-o"></i> Postagens</a></li>
-        <li>Alteração de postagem</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('mod_dashboard', 'Dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/posts'); ?>"><i class="fa fa-files-o"></i> <?= wpn_lang('mod_post', 'Posts'); ?></a></li>
+        <li><?= wpn_lang('wpn_update_record', 'Update record'); ?></li>
     </ol>
 </section>
 

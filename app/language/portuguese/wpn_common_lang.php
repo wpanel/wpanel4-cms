@@ -63,6 +63,7 @@ $lang['bot_view_site']              = "Visualizar o Site";
 $lang['bot_login']                  = "Login";
 $lang['bot_logout']                 = "Sair";
 $lang['bot_perfil']                 = "Meu perfil";
+$lang['bot_category']               = "Categorias";
 
 /**
  * Links
@@ -91,7 +92,7 @@ $lang['pch_password']               = "Senha";
  */
 $lang['mod_dashboard']              = "Painel de Controle";
 $lang['mod_event']                  = "Eventos";
-$lang['mod_galery']                 = "Album de fotos'";
+$lang['mod_galery']                 = "Album de fotos";
 $lang['mod_banners']                = "Banners";
 $lang['mod_category']               = "Categorias";
 $lang['mod_configuration']          = "Configurações";
@@ -103,7 +104,27 @@ $lang['mod_page']                   = "Páginas";
 $lang['mod_post']                   = "Postagens";
 $lang['mod_user']                   = "Usuários";
 $lang['mod_video']                  = "Vídeos";
- 
+$lang['mod_galery']                 = "Galerias";
+
+/**
+ * Panel title
+ */
+$lang['pan_post']                   = "Lista de postagens";
+
+/**
+ * Modules description
+ */
+$lang['desc_post']                  = "Gerencie os artigos e postagens do site aqui.";
+
+/**
+ * Table cols
+ */
+$lang['col_title']                  = "Título";
+$lang['col_category']               = "Categoria(s)";
+$lang['col_date']                   = "Data";
+$lang['col_status']                 = "Stautus";
+$lang['col_actions']                = "Ações";
+
  /**
   * Misc
   */
@@ -119,6 +140,8 @@ $lang['wpn_seconds']                = "segundos";
 $lang['wpn_licence']                = "Licença e termos de uso";
 $lang['wpn_developed']              = "Desenvolvido por";
 $lang['wpn_sumary']                 = "Resumo";
+$lang['wpn_new_record']             = "Novo registro";
+$lang['wpn_update_record']          = "Alterar registro";
 
 /**
  * Error and system messages

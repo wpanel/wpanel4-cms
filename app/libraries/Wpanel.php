@@ -94,9 +94,15 @@ class Wpanel
     {
         if (count($config) > 0)
             $this->initialize($config);
-        
-        $this->load->model('configuracao');
-        $this->wpanel_config = $this->configuracao->load_config();
+        try {
+            
+        } catch (Exception $e) {
+            // echo $e->getMessage();
+        }
+
+        // $this->load->model('configuracao');
+        // $this->wpanel_config = $this->configuracao->load_config();
+
         log_message('debug', "Wpanel Class Initialized");
     }
 
@@ -243,11 +249,8 @@ class Wpanel
      */
     public function get_config($item = null) 
     {
-        if($item)
-            return $this->wpanel_config->$item;
-        else
-            return $this->wpanel_config;
-        
+        $this->load->model('configuracao');
+        return $this->configuracao->get_config($item);
     }
 
     /* ----- Methods for the Control Panel. ----- */

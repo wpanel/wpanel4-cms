@@ -36,10 +36,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Configuracao extends MY_Model 
 {
+    
+    function __construct()
+    {
+        if(!isset($this->session->wpn_config)){
+            $config_session = array('wpn_config' => $this->load_config());
+            $this->session->set_userdata($config_session);
+        }
+    }
 
     public function load_config($conf_item = null)
     {
-        $json = file_get_contents('../config.json');
+        $json = file_get_contents(APPPATH . 'config/config.json');
         $cobj = (object) json_decode($json);
         if($conf_item == null){
             return $cobj;
@@ -51,10 +59,24 @@ class Configuracao extends MY_Model
     public function save_config($data)
     {
         $json = json_encode($data, JSON_PRETTY_PRINT);
-        if(write_file('../config.json', $json)){
+        if(write_file(APPPATH . 'config/config.json', $json)){
+            
+            $this->session->unset_userdata('wpn_config');
+            $config_session = array('wpn_config' => $this->load_config());
+            $this->session->set_userdata($config_session);
+            
             return true;
         } else {
             return false;
+        }
+    }
+    
+    public function get_config($item = null)
+    {
+        if($item == null){
+            return $this->session->wpn_config;
+        } else {
+            return $this->session->wpn_config->$item;
         }
     }
 }

@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Buttons.
  */
-$lang['bot_new']                    = "New";
+$lang['bot_new']                    = "New record";
 $lang['bot_edit']                   = "Edit";
 $lang['bot_delete']                 = "Delete";
 $lang['bot_ok']                     = "Ok";
