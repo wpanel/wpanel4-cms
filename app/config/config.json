@@ -13,7 +13,7 @@
     "texto_contato": "<p>Esta mensagem pode ser modificada no painel de controle em\u00a0<em>\"Dashboard > Configura\u00e7\u00f5es > Contatos\"<\/em>.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit.<\/p>\r\n",
     "google_analytics": "UA-XXXXX-Y",
     "bgcolor": "",
-    "language": "english",
+    "language": "portuguese",
     "text_editor": "ckeditor",
     "author": "Eliel de Paula <dev>",
     "home_tipo": "page",
