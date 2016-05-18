@@ -1,26 +1,13 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-$active_group  = ENVIRONMENT;
+$active_group = ENVIRONMENT;
 $query_builder = TRUE;
 
 /**
  * Configurações para o ambiente de desenvolvimento.
  */
- 
-// Descomente para usar MySQL
-// $db['development']['hostname'] = 'localhost';
-// $db['development']['username'] = 'elieldepaula';
-// $db['development']['password'] = '';
-// $db['development']['database'] = 'c9';
-// $db['development']['dbdriver'] = 'mysqli';
-
-// Implementação usando SQLite.
-$db['development']['hostname'] = 'sqlite:'.APPPATH.'db/wpanel.sqlite';
-$db['development']['username'] = '';
-$db['development']['password'] = '';
-$db['development']['database'] = '';
+$db['development']['hostname'] = 'sqlite:'.APPPATH.'db/teste.sqlite';
 $db['development']['dbdriver'] = 'pdo';
-
 $db['development']['dbprefix'] = '';
 $db['development']['pconnect'] = TRUE;
 $db['development']['db_debug'] = TRUE;
@@ -50,3 +37,4 @@ $db['production']['dbcollat'] = 'utf8_general_ci';
 $db['production']['swap_pre'] = '';
 $db['production']['autoinit'] = TRUE;
 $db['production']['stricton'] = FALSE;
+

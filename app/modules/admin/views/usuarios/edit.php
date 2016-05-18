@@ -128,7 +128,7 @@
                         foreach(config_item('modules') as $mod)
                         {
                             $marcado = '';
-                            if(in_array($mod['modulename'], unserialize($row->permissions)))
+                            if(@in_array($mod['modulename'], unserialize($row->permissions)))
                             {
                                 $marcado = ' checked="checked"';
                             }

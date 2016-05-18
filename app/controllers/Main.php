@@ -492,7 +492,7 @@ class Main extends MY_Controller
     public function newsletter()
     {
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[newsletter_email.email]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         if ($this->form_validation->run() == FALSE) {
             $this->wpanel->set_meta_description('Newsletter');
@@ -505,7 +505,7 @@ class Main extends MY_Controller
                 'nome' => $this->input->post('nome', true),
                 'email' => $this->input->post('email', true),
                 'created' => date('Y-m-d H:i:s'),
-                'user_ip' => $this->input->server('REMOTE_ADDR', true)
+                'ipaddress' => $this->input->server('REMOTE_ADDR', true)
             );
             if ($this->newsletter->save($dados_save)) {
                 $this->session->set_flashdata('msg_newsletter', 'Seus dados foram salvos com sucesso, obrigado!');

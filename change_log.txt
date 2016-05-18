@@ -1,0 +1,10 @@
+
+[18-05-2016]
+
+- Change log file included;
+- All migration files resumnided into a single file 001_initialdb.php;
+- Removed 'is_unique[users.email]' validation from initial admin form;
+- Solved bug listing permissions on users management;
+- User IP address included on newsletter subscription;
+- Solved bug on database.php creation on setup;
+- Database type choice added on setup form;

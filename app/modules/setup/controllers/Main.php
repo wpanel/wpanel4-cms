@@ -80,13 +80,19 @@ class Main extends CI_Controller
 		 * Defini as regras de validação do formulário
 		 * * ---------------------------------------------------------------------------------------
 		 */
-		$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
+		if($this->input->post('tipo_database') == 'mysql')
+			$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
 		$this->form_validation->set_rules('databasename', 'Base de dados', 'required');
-		$this->form_validation->set_rules('username', 'Usuário', 'required');
+		if($this->input->post('tipo_database') == 'mysql')
+			$this->form_validation->set_rules('username', 'Usuário', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 			$this->load->view('setup/index', $this->layout_vars);
 		else {
+			
+			// Unlink previous database.php file.
+			unlink(APPPATH . '/config/database.php');
+			
 			/*
 			 * -------------------------------------------------------------------------------------
 			 * Gera o arquivo de configuração.
@@ -103,11 +109,22 @@ class Main extends CI_Controller
 			$data .= "/**\n";
 			$data .= " * Configurações para o ambiente de desenvolvimento.\n";
 			$data .= " */\n";
-			$data .= "\$db['development']['hostname'] = '".$this->input->post('servername')."';\n";
-			$data .= "\$db['development']['username'] = '".$this->input->post('username')."';\n";
-			$data .= "\$db['development']['password'] = '".$this->input->post('password')."';\n";
-			$data .= "\$db['development']['database'] = '".$this->input->post('databasename')."';\n";
-			$data .= "\$db['development']['dbdriver'] = 'mysqli';\n";
+			
+			if($this->input->post('tipo_database') == 'mysql')
+				$data .= "\$db['development']['hostname'] = '".$this->input->post('servername')."';\n";
+			else 
+				$data .= "\$db['development']['hostname'] = 'sqlite:'.APPPATH.'db/".$this->input->post('databasename').".sqlite';\n";
+			if($this->input->post('tipo_database') == 'mysql')
+				$data .= "\$db['development']['username'] = '".$this->input->post('username')."';\n";
+			if($this->input->post('tipo_database') == 'mysql')
+				$data .= "\$db['development']['password'] = '".$this->input->post('password')."';\n";
+			if($this->input->post('tipo_database') == 'mysql')
+				$data .= "\$db['development']['database'] = '".$this->input->post('databasename')."';\n";
+			if($this->input->post('tipo_database') == 'mysql')
+				$data .= "\$db['development']['dbdriver'] = 'mysqli';\n";
+			else
+				$data .= "\$db['development']['dbdriver'] = 'pdo';\n";
+			
 			$data .= "\$db['development']['dbprefix'] = '';\n";
 			$data .= "\$db['development']['pconnect'] = TRUE;\n";
 			$data .= "\$db['development']['db_debug'] = TRUE;\n";
@@ -138,7 +155,7 @@ class Main extends CI_Controller
 			$data .= "\$db['production']['autoinit'] = TRUE;\n";
 			$data .= "\$db['production']['stricton'] = FALSE;\n\n";
 
-			if ( ! write_file('./app/config/database.php', $data))
+			if (!write_file(APPPATH . '/config/database.php', $data))
 			{
 				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: Verifique se você deu permissão de escrita na pasta /app/config');
 				redirect('setup');
@@ -202,7 +219,7 @@ class Main extends CI_Controller
 		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
 		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
 		$this->form_validation->set_rules('name', 'Nome completo', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
 		if ($this->form_validation->run() == FALSE)
 		{
