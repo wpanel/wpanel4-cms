@@ -1,8 +1,10 @@
 
+- Solved bug generating the captcha con the contact form.
+
 [18-05-2016]
 
 - Change log file included;
-- All migration files resumnided into a single file 001_initialdb.php;
+- All migration files resumided into a single file 001_initialdb.php;
 - Removed 'is_unique[users.email]' validation from initial admin form;
 - Solved bug listing permissions on users management;
 - User IP address included on newsletter subscription;

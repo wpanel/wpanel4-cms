@@ -100,6 +100,7 @@ class MY_Form_validation extends CI_Form_validation {
 			'word' => $cap['word']
 		);
 
+		$this->CI->load->database();
 		$query = $this->CI->db->insert_string('captcha', $data);
 		$this->CI->db->query($query);
 
