@@ -29,9 +29,9 @@
             echo row();
             echo col(2);
             echo div(array('class'=>'form-group'));
-            echo form_label('Ordem de exibição', 'order');
-            echo form_input(array('name'=>'order', 'class'=>'form-control'));
-            echo form_error('order');
+            echo form_label('Ordem de exibição', 'sequence');
+            echo form_input(array('name'=>'sequence', 'class'=>'form-control'));
+            echo form_error('sequence');
             echo close_div(2);
 
             $options = config_item('banner_positions');

@@ -1,5 +1,7 @@
 
-- Solved bug generating the captcha con the contact form.
+- Bug fixed on Banners admin;
+- Solved bug on slidebanner widget;
+- Solved bug generating the captcha con the contact form;
 
 [18-05-2016]
 

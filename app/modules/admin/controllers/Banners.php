@@ -76,7 +76,7 @@ class banners extends MX_Controller {
 		$content_vars = array();
 
 		$this->form_validation->set_rules('title', 'Título', 'required');
-		$this->form_validation->set_rules('order', 'Ordem', 'required');
+		$this->form_validation->set_rules('sequence', 'Ordem', 'required');
 		$this->form_validation->set_rules('position', 'Posição', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -87,7 +87,7 @@ class banners extends MX_Controller {
 			$dados_save = array();
 			$dados_save['user_id'] = $this->auth->get_userid();
 			$dados_save['title'] = $this->input->post('title');
-			$dados_save['order'] = $this->input->post('order');
+			$dados_save['sequence'] = $this->input->post('sequence');
 			$dados_save['position'] = $this->input->post('position');
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['created'] = date('Y-m-d H:i:s');
@@ -114,7 +114,7 @@ class banners extends MX_Controller {
 		$content_vars = array();
 
 		$this->form_validation->set_rules('title', 'Título', 'required');
-		$this->form_validation->set_rules('order', 'Ordem', 'required');
+		$this->form_validation->set_rules('sequence', 'Ordem', 'required');
 		$this->form_validation->set_rules('position', 'Posição', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
@@ -133,7 +133,7 @@ class banners extends MX_Controller {
 
 			$dados_save = array();
 			$dados_save['title'] = $this->input->post('title');
-			$dados_save['order'] = $this->input->post('order');
+			$dados_save['sequence'] = $this->input->post('sequence');
 			$dados_save['position'] = $this->input->post('position');
 			$dados_save['status'] = $this->input->post('status');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
