@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @since v1.2.2
  * -------------------------------------------------------------------------------------------------
  */
-class Main extends CI_Controller
+class Main extends MX_Controller
 {
 
 	var $layout_vars = array();
@@ -74,6 +74,8 @@ class Main extends CI_Controller
 	 */
 	public function index()
 	{
+		
+		$temp_url = '';
 
 		/*
 		 * -----------------------------------------------------------------------------------------
@@ -86,113 +88,48 @@ class Main extends CI_Controller
 		if($this->input->post('tipo_database') == 'mysql')
 			$this->form_validation->set_rules('username', 'Usuário', 'required');
 
-		if ($this->form_validation->run() == FALSE)
+		if ($this->form_validation->run() == FALSE){
+
+			if($this->config->item('base_url') == 'http://localhost/'){
+				$temp_url = '../';
+			} else {
+				$temp_url = base_url();
+			}
+
+			$this->layout_vars['url'] = $temp_url;
+
 			$this->load->view('setup/index', $this->layout_vars);
-		else {
-			
-			// Unlink previous database.php file.
-			unlink(APPPATH . '/config/database.php');
-			
-			/*
-			 * -------------------------------------------------------------------------------------
-			 * Gera o arquivo de configuração.
-			 * ---------------------------------------------------------------------------------------------
-			 */
-			$this->load->helper('file');
-
-			$data = "";
-			$data .= "<?php if(!defined('BASEPATH')) exit('No direct script access allowed');\n\n";
-
-			$data .= "\$active_group = ENVIRONMENT;\n";
-			$data .= "\$query_builder = TRUE;\n\n";
-
-			$data .= "/**\n";
-			$data .= " * Configurações para o ambiente de desenvolvimento.\n";
-			$data .= " */\n";
-			
-			if($this->input->post('tipo_database') == 'mysql')
-				$data .= "\$db['development']['hostname'] = '".$this->input->post('servername')."';\n";
-			else 
-				$data .= "\$db['development']['hostname'] = 'sqlite:'.APPPATH.'db/".$this->input->post('databasename').".sqlite';\n";
-			if($this->input->post('tipo_database') == 'mysql')
-				$data .= "\$db['development']['username'] = '".$this->input->post('username')."';\n";
-			if($this->input->post('tipo_database') == 'mysql')
-				$data .= "\$db['development']['password'] = '".$this->input->post('password')."';\n";
-			if($this->input->post('tipo_database') == 'mysql')
-				$data .= "\$db['development']['database'] = '".$this->input->post('databasename')."';\n";
-			if($this->input->post('tipo_database') == 'mysql')
-				$data .= "\$db['development']['dbdriver'] = 'mysqli';\n";
-			else
-				$data .= "\$db['development']['dbdriver'] = 'pdo';\n";
-			
-			$data .= "\$db['development']['dbprefix'] = '';\n";
-			$data .= "\$db['development']['pconnect'] = TRUE;\n";
-			$data .= "\$db['development']['db_debug'] = TRUE;\n";
-			$data .= "\$db['development']['cache_on'] = FALSE;\n";
-			$data .= "\$db['development']['cachedir'] = '';\n";
-			$data .= "\$db['development']['char_set'] = 'utf8';\n";
-			$data .= "\$db['development']['dbcollat'] = 'utf8_general_ci';\n";
-			$data .= "\$db['development']['swap_pre'] = '';\n";
-			$data .= "\$db['development']['autoinit'] = TRUE;\n";
-			$data .= "\$db['development']['stricton'] = FALSE;\n\n";
-
-			$data .= "/**\n";
-			$data .= " * Configurações para o ambiente de produção.\n";
-			$data .= " */\n";
-			$data .= "\$db['production']['hostname'] = '';\n";
-			$data .= "\$db['production']['username'] = '';\n";
-			$data .= "\$db['production']['password'] = '';\n";
-			$data .= "\$db['production']['database'] = '';\n";
-			$data .= "\$db['production']['dbdriver'] = 'mysqli';\n";
-			$data .= "\$db['production']['dbprefix'] = '';\n";
-			$data .= "\$db['production']['pconnect'] = TRUE;\n";
-			$data .= "\$db['production']['db_debug'] = TRUE;\n";
-			$data .= "\$db['production']['cache_on'] = FALSE;\n";
-			$data .= "\$db['production']['cachedir'] = '';\n";
-			$data .= "\$db['production']['char_set'] = 'utf8';\n";
-			$data .= "\$db['production']['dbcollat'] = 'utf8_general_ci';\n";
-			$data .= "\$db['production']['swap_pre'] = '';\n";
-			$data .= "\$db['production']['autoinit'] = TRUE;\n";
-			$data .= "\$db['production']['stricton'] = FALSE;\n\n";
-
-			if (!write_file(APPPATH . '/config/database.php', $data))
-			{
-				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: Verifique se você deu permissão de escrita na pasta /app/config');
-				redirect('setup');
-			} else {
-				redirect('setup/migrate');
-			}
 		}
-	}
+		else {
 
-	/**
-	 * ---------------------------------------------------------------------------------------------
-	 * Este método executa a atualiação do banco de dados do WPanel CMS.
-	 * Execute-o durante a instalação e a cada atualização que fizer.
-	 *
-	 * @author Eliel de Paula <dev@elieldepaula.com.br>
-	 * @param $version integer Número da versão de migrate.
-	 * @return mixed
-	 * ---------------------------------------------------------------------------------------------
-	 */
-	public function migrate($version = null)
-	{
-		$this->load->library('migration');
-		if($version == null){
-			if($this->migration->latest())
-			{
-				redirect('setup/firstadmin');
-			} else {
-				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: ' . $this->migration->error_string());
+			$data_install = array(
+				'siteurl' => $this->input->post('siteurl'),
+				'urlamigavel' => $this->input->post('urlamigavel'),
+				'usaextensao' => $this->input->post('usaextensao'),
+				'tipo_database' => $this->input->post('tipo_database'),
+				'servername' => $this->input->post('servername'),
+				'databasename' => $this->input->post('databasename'),
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password')
+			);
+
+			$this->load->library('install');
+			$this->install->initialize($data_install);
+
+			if(!$this->install->get_config()){
+				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/config.php.');
 				redirect('setup');
-			}
-		} else {
-			if($this->migration->version($version))
-			{
-				redirect('setup/firstadmin');
-			} else {
-				$this->session->set_flashdata('msg_setup', 'Houve um erro durante o setup: ' . $this->migration->error_string());
+			} else if(!$this->install->get_json()){
+				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/config.json.');
 				redirect('setup');
+			} else if(!$this->install->get_database()){
+				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/database.php.');
+				redirect('setup');
+			} else if(!$this->install->get_migrate()){
+				$this->session->set_flashdata('msg_setup', 'Houve um erro ao criar a base de dados.');
+				redirect('setup');
+			} else {
+				redirect('setup/firstadmin');
 			}
 		}
 	}
