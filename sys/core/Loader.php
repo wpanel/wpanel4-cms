@@ -138,7 +138,6 @@ class CI_Loader {
 		$this->_ci_ob_level = ob_get_level();
 		$this->_ci_classes =& is_loaded();
 		log_message('info', 'Loader Class Initialized');
-		$this->wpncms();
 	}
 
 	// --------------------------------------------------------------------
@@ -1420,11 +1419,6 @@ class CI_Loader {
 
 			return $filename;
 		}
-	}
-
-	private function wpncms()
-	{
-		echo "<!-- \nDesenvolvido com Wpanel CMS - www.wpanel.com.br\n -->\n";
 	}
 
 }
