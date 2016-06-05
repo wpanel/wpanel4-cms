@@ -1,4 +1,6 @@
-
+- Readmme updated;
+- Message of database backup on configuration panel;
+- Add link to website on top of admin panel;
 - Full update of Setup module;
 
 [28-05-2016]

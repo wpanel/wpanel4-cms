@@ -1,5 +1,5 @@
 {
-    "site_titulo": "Site de exemplo asd",
+    "site_titulo": "Site de exemplo",
     "site_desc": "Descri\u00e7\u00e3o do site aqui",
     "site_tags": "exemplo, site, wpanelcms",
     "site_contato": "",
@@ -10,7 +10,7 @@
     "link_likebox": "http:\/\/facebook.com\/wpanelcms",
     "copyright": "\u00ae Wpanel CMS - 2016 - Site de exemplo.",
     "addthis_uid": "",
-    "texto_contato": "<p>Esta mensagem pode ser alterada no painel de controle.<\/p>\r\n",
+    "texto_contato": "Esta mensagem pode ser alterada no painel de controle.",
     "google_analytics": "UA-XXXXX-Y",
     "bgcolor": "",
     "language": "portuguese",

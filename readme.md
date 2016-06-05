@@ -1,6 +1,6 @@
 #Wpanel CMS
 
-##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 2.2.0.
+##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 3.0.6.
 
 Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
 
@@ -16,7 +16,7 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 ###Requisitos
 
 - PHP >= 5.4.*
-- MySql
+- MySql ou Sqlite
 - Biblioteca Mcrypt ativada.
 
 ###Instalação

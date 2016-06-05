@@ -81,6 +81,9 @@
 				</a>
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
+						<li>
+						<?= anchor('', '<i class="fa fa-globe fa-lg fa-2x"></i>&nbsp;&nbsp;Visualizar o site', array('target'=>'_blank')); ?>
+						</li>
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -290,6 +290,9 @@
                             <div class="col-md-12">
                                 <p>Clique no botão abaixo para efetuar um backup do banco de dados. Todas as informações sobre postagens, banners, configurações serão salvas.</p>
                                 <p>Para fazer um backup dos arquivos, como as imagens, faça-o usando o painel de controle do provedor. Caso não tenha acesso, contate seu webmaster.</p>
+                                <p class="text-danger">
+                                    <strong>Nota:</strong> Este recurso só está disponível para bancos de dados MySQL.
+                                </p>
                                 <p><?= anchor('admin/backups/execute', '<span class="glyphicon glyphicon-circle-arrow-down"></span> Fazer o backup', array('class'=>'btn btn-success')); ?></p>
                             </div>
                         </div>
