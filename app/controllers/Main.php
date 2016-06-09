@@ -461,7 +461,7 @@ class Main extends MY_Controller
     public function rss()
     {
         $this->load->model('post');
-        $query = $this->post->get_list(['field'=>'created', 'order'=>'desc'], null, '')->result();
+        $query = $this->post->get_list(array('field'=>'created', 'order'=>'desc'), null, '')->result();
         $available_languages = config_item('available_languages');
         $locale = $available_languages[wpn_config('language')]['locale'];
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";

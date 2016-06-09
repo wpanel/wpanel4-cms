@@ -69,9 +69,9 @@ class Slidebanner extends Widget {
 
 		$this->load->model('banner');
         $query = $this->banner->get_by_field(
-            ['position' => $this->position, 'status' => 1],
+            array('position' => $this->position, 'status' => 1),
             null,
-            ['field' => 'sequence', 'order' => 'asc'],
+            array('field' => 'sequence', 'order' => 'asc'),
             null,
             'content'
         )->result();

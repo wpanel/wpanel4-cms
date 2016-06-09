@@ -8,12 +8,12 @@
                     <h4 class="page-header">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Eventos
                     </h4>
-                    <?= wpn_widget('eventsmenu', ['attributes' => ['class' => 'menu-sidebar']]); ?>
+                    <?= wpn_widget('eventsmenu', array('attributes' => array('class' => 'menu-sidebar'))); ?>
 
                     <h4 class="page-header">
                         <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Categorias
                     </h4>
-                    <?= wpn_widget('categorymenu', ['inicial_id' => 0, 'main_attr' => ['class' => 'menu-sidebar']]); ?>
+                    <?= wpn_widget('categorymenu', array('inicial_id' => 0, 'main_attr' => array('class' => 'menu-sidebar'))); ?>
 
                 </div>
             </div>

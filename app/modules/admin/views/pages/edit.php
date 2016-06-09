@@ -71,7 +71,7 @@ echo $this->wpanel->load_editor();
             echo col(3);
             echo div(array('class'=>'form-group'));
             echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, [$row->status], array('class'=>'form-control'));
+            echo form_dropdown('status', $options, array($row->status), array('class'=>'form-control'));
             echo close_div(3);
 
             echo hr();

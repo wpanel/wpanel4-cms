@@ -44,7 +44,7 @@
 
             echo div(array('class'=>'form-group'));
             echo form_label('Tipo de visualização', 'view');
-            echo form_dropdown('view', $options, [$row->view], array('class'=>'form-control'));
+            echo form_dropdown('view', $options, array($row->view), array('class'=>'form-control'));
 
             echo close_div(3);
             //000

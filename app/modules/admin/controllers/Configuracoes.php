@@ -72,8 +72,8 @@ class Configuracoes extends MX_Controller
             $this->load->model('categoria');
             $this->load->model('post');
 
-            $query_categorias = $this->categoria->get_list(['field'=>'title', 'order'=>'asc'], null, 'id, title')->result();
-            $query_posts = $this->post->get_list(['field'=>'title', 'order'=>'asc'], null, 'id, title')->result();
+            $query_categorias = $this->categoria->get_list(array('field'=>'title', 'order'=>'asc'), null, 'id, title')->result();
+            $query_posts = $this->post->get_list(array('field'=>'title', 'order'=>'asc'), null, 'id, title')->result();
 
             // Monta a lista de categorias.
             $opt_categoria = array();

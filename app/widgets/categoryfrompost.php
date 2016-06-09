@@ -67,7 +67,7 @@ class Categoryfrompost extends Widget {
         $query = $this->categoria->get_by_post($this->post_id)->result();
 
         foreach ($query as $row){
-            $html .= anchor('posts/'.$row->id.'/'.$row->link, $row->title, ['class' => 'label label-warning', 'style'=>'margin-right:5px;']);
+            $html .= anchor('posts/'.$row->id.'/'.$row->link, $row->title, array('class' => 'label label-warning', 'style'=>'margin-right:5px;'));
         }
         return $html;
     }

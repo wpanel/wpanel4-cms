@@ -61,7 +61,7 @@
                                     <label for="home_category">Editor de texto</label>
                                     <?php
                                     $available_editors = config_item('available_editors');
-                                    echo form_dropdown('text_editor', $available_editors, [$row->text_editor], array('class'=>'form-control')); 
+                                    echo form_dropdown('text_editor', $available_editors, array($row->text_editor), array('class'=>'form-control')); 
                                     ?>
                                 </div>
                             </div>

@@ -30,19 +30,19 @@
                             </button>
                             <a class="navbar-brand" href="<?= site_url(); ?>">
                                 <!--<span class="visible-xs"><?= wpn_config('site_titulo'); ?></span>-->
-                                <?= wpn_widget('logomarca', ['class_name'=>'img-responsive']); ?>
+                                <?= wpn_widget('logomarca', array('class_name'=>'img-responsive')); ?>
                             </a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div class="menu">
-                                <?= wpn_widget('wpanelmenu', ['menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right']); ?>
+                                <?= wpn_widget('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
                             </div>
                         </div>
                     </div>
                 </nav>
             </div>
             <div class="row hidden-xs">
-                <?= wpn_widget('slidebanner', ['position'=>'slide']); ?>
+                <?= wpn_widget('slidebanner', array('position'=>'slide')); ?>
             </div>
             <div class="row">
                 <div class="col-md-9">

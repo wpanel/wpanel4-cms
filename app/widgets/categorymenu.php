@@ -86,7 +86,7 @@ class Categorymenu extends Widget {
     {
 
         $this->load->model('categoria');
-        $query = $this->categoria->get_by_field('category_id', $id, ['field'=>'title', 'order'=>'asc'], null, 'id, title, link')->result();
+        $query = $this->categoria->get_by_field('category_id', $id, array('field'=>'title', 'order'=>'asc'), null, 'id, title, link')->result();
 
         $html = '';
         $html .= '<ul ' . $this->_attributes($this->main_attr) . '>';
