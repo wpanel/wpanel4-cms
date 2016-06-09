@@ -115,7 +115,7 @@ if(!function_exists('wpn_widget'))
      * @param $args array Widget parammeters.
      * @return mixed 
      */
-    function wpn_widget($widget_name, $args = [])
+    function wpn_widget($widget_name, $args = array())
     {
         $CI =& get_instance();
         return $CI->widget->runit($widget_name, $args);

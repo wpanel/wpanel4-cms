@@ -220,24 +220,24 @@ class Wpanel
         // Trata a imagem de exibição.
         if(!$this->meta_image)
             $this->meta_image = base_url('media/'.$this->get_config('logomarca'));
-        $meta = [
-            ['name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'],
-            ['name' => 'robots', 'content' => 'all'],
-            ['name' => 'author', 'content' => $this->get_config('author')],
-            ['name' => 'canonical', 'content' => current_url()],
-            ['name' => 'title', 'content' => $this->meta_title],
-            ['name' => 'description', 'content' => $this->meta_description],
-            ['name' => 'keywords', 'content' => $this->get_config('site_tags') . ', ' . $this->meta_keywords],
+        $meta = array(
+            array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
+            array('name' => 'robots', 'content' => 'all'),
+            array('name' => 'author', 'content' => $this->get_config('author')),
+            array('name' => 'canonical', 'content' => current_url()),
+            array('name' => 'title', 'content' => $this->meta_title),
+            array('name' => 'description', 'content' => $this->meta_description),
+            array('name' => 'keywords', 'content' => $this->get_config('site_tags') . ', ' . $this->meta_keywords),
             // continua...
             //TODO Adicionar meta para o twitter e outras redes sociais.
-            ['name' => 'og:locale', 'content' => $locale],
-            ['name' => 'og:type', 'content' => 'article'],
-            ['name' => 'og:image', 'content' => $this->meta_image],
-            ['name' => 'og:title', 'content' => $this->meta_title],
-            ['name' => 'og:description', 'content' => $this->meta_description],
-            ['name' => 'og:url', 'content' => current_url()],
-            ['name' => 'og:site_name', 'content' => $this->get_config('site_titulo')],
-        ];
+            array('name' => 'og:locale', 'content' => $locale),
+            array('name' => 'og:type', 'content' => 'article'),
+            array('name' => 'og:image', 'content' => $this->meta_image),
+            array('name' => 'og:title', 'content' => $this->meta_title),
+            array('name' => 'og:description', 'content' => $this->meta_description),
+            array('name' => 'og:url', 'content' => current_url()),
+            array('name' => 'og:site_name', 'content' => $this->get_config('site_titulo')),
+        );
         return meta($meta);
     }
 

@@ -123,9 +123,9 @@ class Main extends MY_Controller
         // Check if is a categoryzed list.
         if ($category_id == null) {
             $this->data_content['posts'] = $this->post->get_by_field(
-                ['page' => '0', 'status' => '1'], 
+                array('page' => '0', 'status' => '1'), 
                 null, 
-                ['field' => 'created', 'order' => 'desc'], 
+                array('field' => 'created', 'order' => 'desc'), 
                 null, 
                 'id, title, description, content, link, image, created'
             )->result();
@@ -206,9 +206,9 @@ class Main extends MY_Controller
         $view_title = 'Eventos';
         $this->load->model('post');
         $query = $this->post->get_by_field(
-                ['page' => '2', 'status' => '1'], 
+                array('page' => '2', 'status' => '1'), 
                 null, 
-                ['field' => 'created', 'order' => 'desc']
+                array('field' => 'created', 'order' => 'desc')
         )->result();
         $this->wpanel->set_meta_title($view_title);
         $this->wpanel->set_meta_description('Lista de eventos');
@@ -243,7 +243,7 @@ class Main extends MY_Controller
         $this->load->model('album');
         $query = $this->album->get_by_field(
             'status', 1, 
-            ['field'=>'created', 'order'=>'desc'], 
+            array('field'=>'created', 'order'=>'desc'), 
             'titulo, capa, created'
         )->result();
         $this->wpanel->set_meta_description('Álbuns de fotos');
@@ -277,9 +277,9 @@ class Main extends MY_Controller
         if ($query_album->status == 0)
             show_error('Este álbum foi suspenso temporariamente', 404);
         $query_pictures = $this->foto->get_by_field(
-            ['album_id'=>$album_id, 'status'=>1], 
+            array('album_id'=>$album_id, 'status'=>1), 
             null, 
-            ['field' => 'created', 'order' => 'desc'],
+            array('field' => 'created', 'order' => 'desc'),
             null,
             'id, filename, descricao'
         )->result();
@@ -344,7 +344,7 @@ class Main extends MY_Controller
         $query_videos = $this->video->get_by_field(
             'status', 
             1, 
-            ['field' => 'created', 'order' => 'desc'],
+            array('field' => 'created', 'order' => 'desc'),
             null,
             'link, titulo'
         )->result();
@@ -368,7 +368,7 @@ class Main extends MY_Controller
             show_404();
         $this->load->model('video');
         $query_video = $this->video->get_by_field(
-            ['link'=>$code,'status'=>1], 
+            array('link'=>$code,'status'=>1), 
             null,
             null,
             null,

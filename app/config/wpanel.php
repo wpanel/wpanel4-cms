@@ -3,28 +3,28 @@
 /**
  * Define os idiomas disponíveis. 
  */
-$config['available_languages'] = [
-    'english'    =>['locale' => 'en', 'label' => 'Inglês'], 
-    'portuguese' =>['locale' => 'pt_BR', 'label' => 'Português']
-];
+$config['available_languages'] = array(
+    'english'    => array('locale' => 'en', 'label' => 'Inglês'), 
+    'portuguese' => array('locale' => 'pt_BR', 'label' => 'Português')
+);
 
-$config['available_editors'] = ['ckeditor'=>'CKEditor', 'tinymce'=>'TinyMCE'];
+$config['available_editors'] = array('ckeditor'=>'CKEditor', 'tinymce'=>'TinyMCE');
 
 /**
  * Define os tipos de usuário serão permitidos no site. 
  */
-$config['users_role'] = ['user' => 'Usuário comum', 'admin' => 'Administrador'];
+$config['users_role'] = array('user' => 'Usuário comum', 'admin' => 'Administrador');
 
 /**
  * Define as views disponíveis para a exibição das listas de postagens.
  */
-$config['posts_views'] = ['list' => 'Listagem', 'mosaic' => 'Mosaico'];
+$config['posts_views'] = array('list' => 'Listagem', 'mosaic' => 'Mosaico');
 
 /**
  * Define as posições dos banners no site para serem listados no 
  * painel de contorle.
  */
-$config['banner_positions'] = ['slide' => 'Slide-Show', 'sidebar' => 'Barra lateral'];
+$config['banner_positions'] = array('slide' => 'Slide-Show', 'sidebar' => 'Barra lateral');
 
 /**
  * Define a lista de modulos para permissão do usuário.

@@ -79,7 +79,7 @@ class MY_Model extends CI_Model
      * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
      */
-    public function get_list($order = [], $limit = [], $select = null)
+    public function get_list($order = array(), $limit = array(), $select = null)
     {
         if ($select != null)
             $this->db->select($select);
@@ -102,7 +102,7 @@ class MY_Model extends CI_Model
      * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
      */
-    public function get_by_id($value = null, $order = [], $limit = [], $select = null) 
+    public function get_by_id($value = null, $order = array(), $limit = array(), $select = null) 
     {
         if($value == null)
             return FALSE;
@@ -121,7 +121,7 @@ class MY_Model extends CI_Model
      * @param $select string List of selected fields: "name, email, phone".
      * @return mixed
      */
-    public function get_by_field($field, $value = null, $order = [], $limit = [], $select = null)
+    public function get_by_field($field, $value = null, $order = array(), $limit = array(), $select = null)
     {
         if ($select != null) 
             $this->db->select($select);

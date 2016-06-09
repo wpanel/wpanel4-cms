@@ -149,7 +149,6 @@ class Migration_Initialdb extends CI_Migration
 		$this->dbforge->add_field("id");
 		$this->dbforge->add_field("nome varchar(45) DEFAULT NULL");
 		$this->dbforge->add_field("email varchar(100) DEFAULT NULL");
-		$this->dbforge->add_field("ipaddress varchar(20) DEFAULT NULL");
 		$this->dbforge->add_field("created datetime DEFAULT NULL");
 		
 		$this->dbforge->create_table('newsletter_email', true);
@@ -225,17 +224,17 @@ class Migration_Initialdb extends CI_Migration
 
 	public function down()
 	{
-		$this->dbforge->drop_table('albuns');
-		$this->dbforge->drop_table('banners');
-		$this->dbforge->drop_table('captcha');
-		$this->dbforge->drop_table('categories');
-		$this->dbforge->drop_table('fotos');
-		$this->dbforge->drop_table('menus');
-		$this->dbforge->drop_table('menu_itens');
-		$this->dbforge->drop_table('newsletter_email');
-		$this->dbforge->drop_table('posts');
-		$this->dbforge->drop_table('posts_categories');
-		$this->dbforge->drop_table('videos');
-		$this->dbforge->drop_table('users');
+		$this->dbforge->drop_table('albuns', true);
+		$this->dbforge->drop_table('banners', true);
+		$this->dbforge->drop_table('captcha', true);
+		$this->dbforge->drop_table('categories', true);
+		$this->dbforge->drop_table('fotos', true);
+		$this->dbforge->drop_table('menus', true);
+		$this->dbforge->drop_table('menu_itens', true);
+		$this->dbforge->drop_table('newsletter_email', true);
+		$this->dbforge->drop_table('posts', true);
+		$this->dbforge->drop_table('posts_categories', true);
+		$this->dbforge->drop_table('videos', true);
+		$this->dbforge->drop_table('users', true);
 	}
 }
