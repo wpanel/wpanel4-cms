@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['base_url'] = 'http://localhost/';
+$config['base_url'] = 'https://wpanel-elieldepaula.c9.io/';
 $config['index_page'] = '';
 $config['url_suffix'] = '';
 $config['uri_protocol']	= 'REQUEST_URI';

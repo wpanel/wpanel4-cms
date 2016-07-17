@@ -1,3 +1,4 @@
+- Array implementation changed in order to improve compatibility with versions before PHP 5.5;
 - Readmme updated;
 - Message of database backup on configuration panel;
 - Add link to website on top of admin panel;
