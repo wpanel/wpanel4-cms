@@ -40,7 +40,7 @@
     			            <td><?= $options[$row->position]; ?></td>
     			            <td><?= status_post($row->status); ?></td>
     			            <td>
-    			                <div class="btn-group btn-group-sm">
+    			                <div class="btn-group btn-group-xs">
     			                    <?= anchor('admin/banners/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')); ?>
     			                    <button class="btn btn-default" onClick="return confirmar('<?= site_url('admin/banners/delete/'.$row->id); ?>');"><?= glyphicon('trash'); ?></button>
     			                </div>

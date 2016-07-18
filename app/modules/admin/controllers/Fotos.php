@@ -83,7 +83,7 @@ class fotos extends MX_Controller {
 				$row->descricao,
 				mdate('%d/%m/%Y - %H:%i', strtotime($row->created)),
 				status_post($row->status),
-				div(array('class'=>'btn-group btn-group-sm')).
+				div(array('class'=>'btn-group btn-group-xs')).
 				anchor('admin/fotos/edit/'.$row->id, glyphicon('edit'), 
 					array('class' => 'btn btn-default')).
 				'<button class="btn btn-default" onClick="return confirmar(\'' . 

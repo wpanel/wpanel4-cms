@@ -72,7 +72,7 @@ class albuns extends MX_Controller {
 				anchor('admin/fotos/index/'.$row->id, glyphicon('picture') . $row->titulo),
 				mdate('%d/%m/%Y - %H:%i', strtotime($row->created)),
 				status_post($row->status), 
-				div(array('class'=>'btn-group btn-group-sm')).
+				div(array('class'=>'btn-group btn-group-xs')).
 				anchor('admin/fotos/index/'.$row->id, glyphicon('picture'), array('class' => 'btn btn-default')).
 				anchor('admin/albuns/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
 				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/albuns/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .

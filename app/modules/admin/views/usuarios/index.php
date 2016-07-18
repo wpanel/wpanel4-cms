@@ -44,7 +44,7 @@
                                 ?>
                             </td>
                             <td>
-                                <div class="btn-group btn-group-sm">
+                                <div class="btn-group btn-group-xs">
                                     <?= anchor('admin/usuarios/edit/' . $row->id, '<span class="glyphicon glyphicon-edit"></span>', array('class' => 'btn btn-default')); ?>
                                     <?= '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/usuarios/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>'; ?>
                                 </div>

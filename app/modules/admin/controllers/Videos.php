@@ -61,7 +61,7 @@ class Videos extends MX_Controller {
 				$row->titulo,
 				$row->descricao,
 				status_post($row->status),
-				div(array('class'=>'btn-group btn-group-sm')).
+				div(array('class'=>'btn-group btn-group-xs')).
 				anchor('admin/videos/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
 				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/videos/delete/'.$row->id).'\');">'.glyphicon('trash').'</button>'.
 				div(null,true)

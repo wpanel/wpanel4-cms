@@ -72,7 +72,7 @@ class Categorias extends MX_Controller
 				$row->title,
 				$this->categoria->get_title_by_id($row->category_id),
 				$posts_views[$row->view],
-				div(array('class' => 'btn-group btn-group-sm')) .
+				div(array('class' => 'btn-group btn-group-xs')) .
 				anchor('admin/categorias/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
 				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/categorias/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null, true)

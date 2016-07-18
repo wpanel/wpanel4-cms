@@ -72,7 +72,7 @@ class Posts extends MX_Controller {
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações
-				div(array('class'=>'btn-group btn-group-sm')).
+				div(array('class'=>'btn-group btn-group-xs')).
 				anchor('admin/posts/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
 				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/posts/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
 				div(null,true)
