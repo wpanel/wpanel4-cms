@@ -55,7 +55,7 @@ class Posts extends MX_Controller {
 		$this->table->set_heading(
 			// '#', 
 			wpn_lang('col_title', 'Title'), 
-			wpn_lang('col_category', 'Category'), 
+			// wpn_lang('col_category', 'Category'), 
 			wpn_lang('col_date', 'Date'), 
 			wpn_lang('col_status', 'Status'), 
 			wpn_lang('col_actions', 'Actions')
@@ -66,9 +66,9 @@ class Posts extends MX_Controller {
 		{
 			$this->table->add_row(
 				// $row->id, 
-				$row->title, 
+				$row->title.'<br/><small>'.wpn_widget('categoryfrompost', array('post_id' => $row->id)).'</small>', 
 				// Usando o widget para mostrar as categorias do post.
-				wpn_widget('categoryfrompost', array('post_id' => $row->id)),
+				// wpn_widget('categoryfrompost', array('post_id' => $row->id)),
 				mdate('%d/%m/%Y', strtotime($row->created)), 
 				status_post($row->status),
 				// Ícones de ações
