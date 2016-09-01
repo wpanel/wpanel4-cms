@@ -1,3 +1,9 @@
+
+- 
+- Updated Codeigniter base framework to version 3.2.0
+
+[28-08-2016]
+
 - Array implementation changed in order to improve compatibility with versions before PHP 5.5;
 - Readmme updated;
 - Message of database backup on configuration panel;

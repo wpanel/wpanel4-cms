@@ -153,7 +153,7 @@ if (!function_exists('wpn_activelink'))
     function wpn_activelink($link, $segment = 2, $return = ' class="active"')
     {
         $CI =& get_instance();
-        if ($CI->uri->segment(2) == $link)
+        if ($CI->uri->segment($segment) == $link)
             return $return;
     }
 }

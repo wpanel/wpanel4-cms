@@ -285,7 +285,7 @@ class CI_Output {
 	/**
 	 * Get Header
 	 *
-	 * @param	string	$header_name
+	 * @param	string	$header
 	 * @return	string
 	 */
 	public function get_header($header)
@@ -377,7 +377,7 @@ class CI_Output {
 	/**
 	 * Set Cache
 	 *
-	 * @param	int	$time	Cache expiration time in seconds
+	 * @param	int	$time	Cache expiration time in minutes
 	 * @return	CI_Output
 	 */
 	public function cache($time)

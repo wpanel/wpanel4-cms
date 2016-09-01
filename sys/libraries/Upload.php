@@ -286,7 +286,7 @@ class CI_Upload {
 	/**
 	 * Constructor
 	 *
-	 * @param	array	$props
+	 * @param	array	$config
 	 * @return	void
 	 */
 	public function __construct($config = array())
@@ -526,6 +526,12 @@ class CI_Upload {
 			$this->file_name = preg_replace('/\s+/', '_', $this->file_name);
 		}
 
+		if ($this->file_ext_tolower && ($ext_length = strlen($this->file_ext)))
+		{
+			// file_ext was previously lower-cased by a get_extension() call
+			$this->file_name = substr($this->file_name, 0, -$ext_length).$this->file_ext;
+		}
+
 		/*
 		 * Validate the file name
 		 * This function appends an number onto the end of
@@ -595,7 +601,7 @@ class CI_Upload {
 				'file_type'		=> $this->file_type,
 				'file_path'		=> $this->upload_path,
 				'full_path'		=> $this->upload_path.$this->file_name,
-				'raw_name'		=> str_replace($this->file_ext, '', $this->file_name),
+				'raw_name'		=> substr($this->file_name, 0, -strlen($this->file_ext)),
 				'orig_name'		=> $this->orig_name,
 				'client_name'		=> $this->client_name,
 				'file_ext'		=> $this->file_ext,

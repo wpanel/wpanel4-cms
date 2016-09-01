@@ -137,6 +137,7 @@ class CI_Loader {
 	{
 		$this->_ci_ob_level = ob_get_level();
 		$this->_ci_classes =& is_loaded();
+
 		log_message('info', 'Loader Class Initialized');
 	}
 
@@ -320,7 +321,7 @@ class CI_Loader {
 		}
 
 		$model = ucfirst($model);
-		if ( ! class_exists($model))
+		if ( ! class_exists($model, FALSE))
 		{
 			foreach ($this->_ci_model_paths as $mod_path)
 			{
@@ -717,9 +718,16 @@ class CI_Loader {
 	{
 		if (is_array($library))
 		{
-			foreach ($library as $driver)
+			foreach ($library as $key => $value)
 			{
-				$this->driver($driver);
+				if (is_int($key))
+				{
+					$this->driver($value, $params);
+				}
+				else
+				{
+					$this->driver($key, $params, $value);
+				}
 			}
 
 			return $this;
@@ -928,6 +936,14 @@ class CI_Loader {
 		 */
 		if (is_array($_ci_vars))
 		{
+			foreach (array_keys($_ci_vars) as $key)
+			{
+				if (strncmp($key, '_ci_', 4) === 0)
+				{
+					unset($_ci_vars[$key]);
+				}
+			}
+
 			$this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $_ci_vars);
 		}
 		extract($this->_ci_cached_vars);
@@ -1090,7 +1106,7 @@ class CI_Loader {
 	 * @used-by	CI_Loader::_ci_load_library()
 	 * @uses	CI_Loader::_ci_init_library()
 	 *
-	 * @param	string	$library	Library name to load
+	 * @param	string	$library_name	Library name to load
 	 * @param	string	$file_path	Path to the library filename, relative to libraries/
 	 * @param	mixed	$params		Optional parameters to pass to the class constructor
 	 * @param	string	$object_name	Optional object name to assign to
@@ -1333,10 +1349,7 @@ class CI_Loader {
 		// Autoload drivers
 		if (isset($autoload['drivers']))
 		{
-			foreach ($autoload['drivers'] as $item)
-			{
-				$this->driver($item);
-			}
+			$this->driver($autoload['drivers']);
 		}
 
 		// Load libraries

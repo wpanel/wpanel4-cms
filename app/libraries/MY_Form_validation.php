@@ -78,9 +78,9 @@ class MY_Form_validation extends CI_Form_validation {
 	function get_captcha() {
 		$vals = array(
 			'word' => $this->gen_rand_shortcode(6),
-			'img_path' => './captcha/',
+			'img_path' => FCPATH . 'captcha/',
 			'img_url' => base_url('captcha').'/',
-			'font_path'  => './lib/fonts/essai.ttf',
+			'font_path'  => FCPATH . 'lib/fonts/essai.ttf',
 			'img_width' => '150',
 			'img_height' => '50',
 			'expiration' => 7200,
