@@ -1,6 +1,10 @@
 
-- 
-- Updated Codeigniter base framework to version 3.2.0
+- Removed .gitignore from /media/banners;
+- Added 3 demo images to banners;
+- Meta tag with the scale fixed on the default template header.php view;
+- Setting up the full path public folder into the MY_Form_validator method to generate captcha;
+- Bug fix in the wpanel_helper -> wpn_activelink() segment param;
+- Updated Codeigniter base framework to version 3.2.0;
 
 [28-08-2016]
 

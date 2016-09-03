@@ -3,6 +3,7 @@
     <head>
         <?= wpn_widget('wpntitle'); ?>
         <?= wpn_meta(); ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="canonical" href="<?= current_url(); ?>" />
         <!-- Bootstrap -->
         <?= wpn_asset('css', 'bootstrap.min.css'); ?>

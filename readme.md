@@ -11,7 +11,7 @@ O projeto já está estável e funcionando bem, com um painel de controle respon
 
 É sem dúvida um bom ponto de partida para qualquer projeto. 
 
-Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com seus projetos desenvolvidos para adicionar ao 'Show-Case' em http://wpanelcms.com.br
+Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com seus projetos desenvolvidos para adicionar ao Show-Case.
 
 ###Requisitos
 
