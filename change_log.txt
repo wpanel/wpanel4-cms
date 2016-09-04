@@ -1,4 +1,5 @@
 
+- Bug fix in App -> Main() -> albus(), missed limit param in get_by_field() call;
 - Removed .gitignore from /media/banners;
 - Added 3 demo images to banners;
 - Meta tag with the scale fixed on the default template header.php view;

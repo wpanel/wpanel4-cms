@@ -244,7 +244,8 @@ class Main extends MY_Controller
         $query = $this->album->get_by_field(
             'status', 1, 
             array('field'=>'created', 'order'=>'desc'), 
-            'titulo, capa, created'
+            null,
+            'id, titulo, capa, created'
         )->result();
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
