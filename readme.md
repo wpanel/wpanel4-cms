@@ -62,7 +62,7 @@ Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repo
 
 Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto evitando ter que dividir o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
 
-Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <http://wpanelcms.com.br/#download>
+Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <https://elieldepaula.github.io/wpanel/#download>
 
 #Licença
 
