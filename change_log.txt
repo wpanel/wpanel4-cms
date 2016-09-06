@@ -1,4 +1,5 @@
 
+- Fancybox plugin included into album and video galeries;
 - Bug fix in App -> Main() -> albus(), missed limit param in get_by_field() call;
 - Removed .gitignore from /media/banners;
 - Added 3 demo images to banners;

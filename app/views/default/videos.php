@@ -1,3 +1,8 @@
+<!-- Bibliotecas adicionais para o Fancybox. -->
+<script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6'); ?>"></script>
+<link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
 	<div class="col-md-12">
 		<h3 class="page-header">Galeria de Vídeos</h3>
@@ -28,8 +33,10 @@
 						'src' => 'http://img.youtube.com/vi/'.$video->link.'/0.jpg',
 						'class' => 'img-responsive'
 					);
-					echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
+					// Link antigo para exibição do vídeo em outra página.
+					// echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
 					?>
+					<a href="https://www.youtube.com/watch?v=<?= $video->link; ?>" class="fancybox-media" ><?= img($image_properties); ?></a>
 				</div>
 			</div>
 			<div class="caption">
@@ -59,3 +66,15 @@
         </script>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+	    $('.fancybox-media').fancybox({
+	        openEffect: 'none',
+	        closeEffect: 'none',
+	        helpers: {
+	            media: {}
+	        }
+	    });
+    });
+</script>

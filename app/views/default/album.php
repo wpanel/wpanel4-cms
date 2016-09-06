@@ -1,3 +1,7 @@
+<!-- Bibliotecas adicionais para o Fancybox. -->
+<script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
+<link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
 	<div class="col-md-12">
 		<h3 class="page-header"><?= $album->titulo; ?></h3>
@@ -26,12 +30,14 @@
 		<div class="col-md-<?= $col; ?>">
 			<?php
 			$conf_foto = array(
-				'src' => base_url() . '/media/albuns/' . $album->id . '/' . $row->filename,
+				'src' => base_url('/media/albuns/' . $album->id . '/' . $row->filename),
 				'class' => 'img-responsive',
 				'alt' => $row->descricao
 			);
-			echo anchor('foto/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
+			// Link antigo para exibição da foto em outra página.
+			// echo anchor('foto/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
 			?>
+			<a href="<?= base_url('media/albuns/' . $album->id . '/' . $row->filename); ?>" class="fancybox" rel="group"><?= img($conf_foto); ?></a>
 			<h4><?= $row->descricao; ?></h4>
 		</div>
 		<?php
@@ -60,3 +66,9 @@
         </script>
     </div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+</script>
