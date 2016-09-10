@@ -70,6 +70,7 @@ class Main extends MY_Controller
         // Setup the 'col' number of the mosaic views.
         // $this->wpn_cols_mosaic = 3;
         parent::__construct();
+        $this->wpanel->check_setup();
     }
 
     /**

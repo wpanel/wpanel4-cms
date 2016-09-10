@@ -35,7 +35,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-class Formlib 
+class xFormlib 
 {
 
     private $form_title     = ''; // Título do form exibido no 'panel'.

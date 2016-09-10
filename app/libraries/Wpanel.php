@@ -99,10 +99,6 @@ class Wpanel
         } catch (Exception $e) {
             // echo $e->getMessage();
         }
-
-        // $this->load->model('configuracao');
-        // $this->wpanel_config = $this->configuracao->load_config();
-
         log_message('debug', "Wpanel Class Initialized");
     }
 
@@ -159,6 +155,21 @@ class Wpanel
         }
         return $this;
     }
+    
+    /**
+     * Check the first admin user.
+     * 
+     * @return mixed
+     */
+    public function check_setup()
+	{
+		$this->load->model('user');
+		if ($this->user->inicial_user() == FALSE)
+		{
+			redirect('setup');
+		}
+		
+	}
 
     // ----- Encapsulation for meta tags | begin. ----- //
     public function set_meta_description($value)

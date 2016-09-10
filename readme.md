@@ -1,8 +1,8 @@
 #Wpanel CMS
 
-##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 3.0.6.
+##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 3.x.
 
-Wpanel é um CMS (do inglês Content Manager System) ou Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
+Wpanel CMS é um Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
 
 A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos intermináveis e plugins de terçeiros que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, e muito rápido, além de ser
 muito popular, ter uma ótima documentação e uma boa comunidade.
@@ -21,42 +21,28 @@ Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com
 
 ###Instalação
 
-**Importante:**
-Não use o repositório master em produção, ele é apenas para desenvolvimento. Para uso em produção use sempre o release mais atual.
-
-#### Via Composer
-
-1. Execute o comando:
+1. Faça o download do Wpanel CMS em .zip/.tar.gz, ou você pode clonar o repositório ou executar o comando abaixo caso você use o composer:
 
 	```
 	composer create-project "elieldepaula/wpanelcms" Blog
 	```
 	Isto criará uma cópia do Wpanel CMS em um diretório 'Blog'
-2. Crie uma base de dados MySql;
-3. Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup;
-4. Informe os dados de conexão com a base de dados recém criada;
-5. Na tela seguinte, crie o usuário administrador inicial;
-6. Faça seu primeiro login no painel de controle;
-7. Na Dashboard do painel de controle, clique na opção 'Visualizar Site', o site de exemplo já deve estar funcionando.
-8. É recomendável que remova ou renomeie o modulo /app/modules/setup;
-
-#### Download do projeto
-
-1. Faça o download do último release em: <https://github.com/elieldepaula/wpanel/releases>;
-2. Carregue todos os arquivos para o servidor onde ficará hospedado ou em seu servidor local;
-3. Crie uma base de dados MySql;
-4. Execute a instalação inicial acessando pelo navegador: http://seusite/index.php/setup;
-5. Informe os dados de conexão com a base de dados recém criada;
-6. Na tela seguinte, crie o usuário administrador inicial;
-7. Faça seu primeiro login no painel de controle;
-8. Na Dashboard do painel de controle, clique na opção 'Visualizar Site', o site de exemplo será aberto em uma nova aba ou janela dependendo do seu navegador.
-9. É recomendável que remova ou renomeie o modulo /app/modules/setup;
+2. Certifique-se de dar permissão de escrita nas pastas: app/sessions, app/cache, app/db e public/captcha;
+3. Altere o arquivo app/config/config.php de acordo com seu ambiente e projeto;
+4. Altere o arquivo app/config/database.php de acordo com o banco de dados que deseja usar;
+	Caso deseje usar MySql, você precisará configurar uma nova base de dados no seu servidor.
+5. Acesse seu site pelo navegador, no primeiro acesso você será direcionado para a criação de um usuário administrador;
+6. Faça seu login no painel de controle, clique na opção 'Visualizar Site', se tudo ocorreu bem seu Wpanel CMS já está configurado :)
 
 # Contribuindo com o projeto
 
 ## Desenvolvendo
 
 Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repositório e enviando seus 'Pull-Requests'. Envie-me um email em dev[arroba]elieldepaula.com.br para trocarmos informações e manter um contato maior, mesmo que seja uma opinião ou uma dica já estará contribuindo.
+
+##Feedback
+
+Envie sua opinião, dicas e experiências que teve com o Wpanel CMS, todo feedback me ajuda a guiar o desenvolvimento do projeto e dependendo se tornam novas funcionalidades.
 
 ##Doando
 

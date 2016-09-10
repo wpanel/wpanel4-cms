@@ -63,84 +63,12 @@ class Main extends MX_Controller
 	}
 
 	/**
-	 * ---------------------------------------------------------------------------------------------
-	 * Este método mostra o formulário de configuração da conexão com
-	 * o banco de dados e efetua o processo de gerar o arquivo de
-	 * configuração da conexão do wpanelcms.
-	 *
-	 * @author Eliel de Paula <dev@elieldepaula.com.br>
-	 * @return mixed
-	 * ---------------------------------------------------------------------------------------------
-	 */
-	public function index()
-	{
-		
-		$temp_url = '';
-
-		/*
-		 * -----------------------------------------------------------------------------------------
-		 * Defini as regras de validação do formulário
-		 * * ---------------------------------------------------------------------------------------
-		 */
-		if($this->input->post('tipo_database') == 'mysql')
-			$this->form_validation->set_rules('servername', 'Servidor MySQL', 'required');
-		$this->form_validation->set_rules('databasename', 'Base de dados', 'required');
-		if($this->input->post('tipo_database') == 'mysql')
-			$this->form_validation->set_rules('username', 'Usuário', 'required');
-
-		if ($this->form_validation->run() == FALSE){
-
-			if($this->config->item('base_url') == 'http://localhost/'){
-				$temp_url = '../';
-			} else {
-				$temp_url = base_url();
-			}
-
-			$this->layout_vars['url'] = $temp_url;
-
-			$this->load->view('setup/index', $this->layout_vars);
-		}
-		else {
-
-			$data_install = array(
-				'siteurl' => $this->input->post('siteurl'),
-				'urlamigavel' => $this->input->post('urlamigavel'),
-				'usaextensao' => $this->input->post('usaextensao'),
-				'tipo_database' => $this->input->post('tipo_database'),
-				'servername' => $this->input->post('servername'),
-				'databasename' => $this->input->post('databasename'),
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password')
-			);
-
-			$this->load->library('install');
-			$this->install->initialize($data_install);
-
-			if(!$this->install->get_config()){
-				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/config.php.');
-				redirect('setup');
-			} else if(!$this->install->get_json()){
-				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/config.json.');
-				redirect('setup');
-			} else if(!$this->install->get_database()){
-				$this->session->set_flashdata('msg_setup', 'Erro na criação do arquivo /app/config/database.php.');
-				redirect('setup');
-			} else if(!$this->install->get_migrate()){
-				$this->session->set_flashdata('msg_setup', 'Houve um erro ao criar a base de dados.');
-				redirect('setup');
-			} else {
-				redirect('setup/firstadmin');
-			}
-		}
-	}
-
-	/**
 	 * Este método faz o cadastro do primeiro administrador do wpanel.
 	 *
 	 * @return void
 	 * @author Eliel de Paula <elieldepaula@gmail.com>
 	 **/
-	public function firstadmin()
+	public function index()
 	{
 
 		$this->load->model('user');
@@ -161,7 +89,7 @@ class Main extends MX_Controller
 		if ($this->form_validation->run() == FALSE)
 		{
 
-			$this->load->view('setup/firstadmin', $this->layout_vars);
+			$this->load->view('setup/ndex', $this->layout_vars);
 
 		} else {
 
@@ -184,7 +112,7 @@ class Main extends MX_Controller
 				redirect('admin/login');
 			} else {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-				redirect('setup/firstadmin');
+				redirect('setup');
 			}
 		}
 	}
