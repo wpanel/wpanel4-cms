@@ -1,4 +1,5 @@
 
+- Favicon included;
 - Minor bug fixes;
 - Readme.md updates;
 - Setup proccess redefinition;

@@ -89,7 +89,7 @@ class Main extends MX_Controller
 		if ($this->form_validation->run() == FALSE)
 		{
 
-			$this->load->view('setup/ndex', $this->layout_vars);
+			$this->load->view('setup/index', $this->layout_vars);
 
 		} else {
 
