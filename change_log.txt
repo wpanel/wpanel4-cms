@@ -1,4 +1,5 @@
 
+- Link name of Post/Page changed to avoid name conflicts;
 - Favicon included;
 - Minor bug fixes;
 - Readme.md updates;

@@ -113,7 +113,7 @@ class Posts extends MX_Controller {
 			$dados_save['user_id'] = $this->auth->get_userid();
 			$dados_save['title'] = $this->input->post('title');
 			$dados_save['description'] = $this->input->post('description');
-			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));
+			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title')))).'-'.time();
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
