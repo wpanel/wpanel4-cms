@@ -64,7 +64,7 @@ class Main extends MY_Controller
         * can adjust as you need to your project.
         */
         // Enable the CodeIgniter Profile.
-        // $this->wpn_profiler = FALSE;
+        // $this->wpn_profiler = TRUE;
         // Chose the template folder.
         // $this->wpn_template = 'default';
         // Setup the 'col' number of the mosaic views.
@@ -81,11 +81,8 @@ class Main extends MY_Controller
      */
     public function custom() 
     {
-        echo '<meta charset="UTF-8">';
-        echo '<title>Custom Home Page</title>';
-        echo '<h1>This is a custom home-page of Wpanel CMS.</h1>';
-        echo '<p>You can change this in the control panel following: 
-            Configurations > Home Page.</p>';
+        $this->wpanel->set_meta_title('Início');
+        $this->render('custom');
     }
 
     /**

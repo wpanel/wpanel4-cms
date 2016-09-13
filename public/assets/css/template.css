@@ -5,6 +5,9 @@
 /**
 * Use this if you are using brand-image.
 */
+.navbar {
+    margin-bottom: 0px;
+}
 .navbar-brand {
     padding: 5px 5px;
 }
@@ -64,6 +67,10 @@ body {
 }
 .wpn-spacer {
     height: 20px;
+}
+.wpn-container {
+    background-color: #ffffff;
+    margin-bottom: 20px;
 }
 .wpn-social-buttons {
     margin-bottom: 10px;

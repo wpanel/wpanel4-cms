@@ -1,4 +1,6 @@
 
+- Small thanges in the default theme, including a new background image;
+- A base to a custom page included;
 - Link name of Post/Page changed to avoid name conflicts;
 - Favicon included;
 - Minor bug fixes;
