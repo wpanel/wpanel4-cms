@@ -1,4 +1,5 @@
 
+- Small changes into default migration file;
 - Changes in /app/models/Configuracao.php, now I did not save the JSON data in the session;
 - Small thanges in the default theme, including a new background image;
 - A base to a custom page included;
