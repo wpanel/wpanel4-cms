@@ -37,8 +37,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Wpanelmenu extends Widget {
 
     private $menu_id = '';
-    private $class_menu = '';
-    private $class_item = '';
+    private $ul_style = '';
+    private $li_style = '';
+    
+    private $ul_dropdown = '';
 
 	function __construct($config = array())
 	{
@@ -65,7 +67,7 @@ class Wpanelmenu extends Widget {
 
     public function run()
 	{
-		return $this->get_menu();
+		return $this->get_menu($this->menu_id, $this->ul_style, $this->li_style);
 	}
 
     /**
@@ -76,37 +78,36 @@ class Wpanelmenu extends Widget {
      * os usados pelo Bootstrap, mas pode-se deixar os parametros de estilo em
      * branco e criar seus próprios estilos usando "ul li {}"
      * 
-     * @todo Criar a seleção de tipo de impressão ou estilo, para lista, coluna, em linha etc.
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param int $menu_id
-     * @param string $class_menu
-     * @param string $class_item
-     * @return string|boolean
+     * @param string $ul_style
+     * @param string $li_style
+     * @return mixed
      * ---------------------------------------------------------------------------------------------
      */
-    private function get_menu()
+    private function get_menu($menu_id = null, $ul_style = '', $li_style = '')
     {
-        if ($this->menu_id == null)
+        if ($menu_id == null)
             return false;
-        
+
         $this->load->model('menu_item');
         $query = $this->menu_item->get_by_field(
             'menu_id', 
-            $this->menu_id, 
+            $menu_id, 
             array('field' => 'ordem', 'order' => 'asc'),
-            null,
-            'tipo, href, label'
+            null
         )->result();
-        
+
         $html = "";
-        $html .= "<ul class=\"" . $this->class_menu . "\">";
+        $html .= "<ul class=\"" . $ul_style . "\">";
         foreach ($query as $row)
         {
-            if ($row->tipo == 'submenu') {
-                $html .= "<li class=\"" . $this->class_item . " dropdown\">";
-            } else {
-                $html .= "<li class=\"" . $this->class_item . "\">";
-            }
+
+            if ($row->tipo == 'submenu')
+                $html .= "<li class=\"" . $li_style . "\">";
+            else
+                $html .= "<li>";
+            
             switch ($row->tipo)
             {
                 case 'link':
@@ -119,20 +120,18 @@ class Wpanelmenu extends Widget {
                     $html .= anchor('posts/' . $row->href, $row->label);
                     break;
                 case 'funcional':
-                    if ($row->href == 'home') {
+                    if ($row->href == 'home')
                         $html .= anchor('', $row->label);
-                    } else {
+                    else
                         $html .= anchor($row->href, $row->label);
-                    }
                     break;
                 case 'submenu':
                     $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" >" . $row->label . " <span class=\"caret\"></span></a>";
-                    $html .= $this->get_menu($row->href, 'dropdown-menu');
+                    $html .= $this->get_menu($row->href, 'dropdown-menu', 'dropdown-submenu');
                     break;
             }
             $html .= "</li>";
         }
-
         $html .= "</ul>";
         return $html;
     }

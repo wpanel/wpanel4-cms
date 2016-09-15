@@ -37,7 +37,7 @@
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <div class="menu">
-                                <?= wpn_widget('wpanelmenu', array('menu_id' => 1, 'class_menu' => 'nav navbar-nav navbar-right')); ?>
+                                <?= wpn_widget('wpanelmenu', array('menu_id' => 1, 'ul_style' => 'nav navbar-nav pull-right', 'li_style'=>'dropdown')); ?>
                             </div>
                         </div>
                     </div>
