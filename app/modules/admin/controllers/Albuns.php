@@ -179,8 +179,8 @@ class albuns extends MX_Controller {
 			redirect('admin/albuns');
 		}
 
-		$this->load->model('album');
-
+		$this->load->model(array('album', 'foto'));
+		$this->foto->delete_by_album($id);
 		$query = $this->album->get_by_id($id)->row();
 		$this->album->remove_media('capas/' . $query->capa);
 
