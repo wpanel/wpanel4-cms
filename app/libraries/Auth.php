@@ -75,12 +75,17 @@ class Auth {
 
 	public function get_account_id()
 	{
-		//TODO Retornar o ID da conta logada.
+		return $this->_get_login_data('id');
 	}
 
-	public function get_extra_data()
+	public function get_login_data($item = NULL)
 	{
-		//TODO Retornar os dados adicionais da conta.
+		return $this->_get_login_data($item);
+	}
+
+	public function get_extra_data($item = NULL)
+	{
+		return $this->_get_extra_data($item);
 	}
 
 	public function send_activation_email()
@@ -97,6 +102,16 @@ class Auth {
 //	Métodos privados
 //----------------------------------------------------------------
 
+	/**
+	 * Create a new account.
+	 *
+	 * @param $email
+	 * @param $password
+	 * @param $role
+	 * @param array $extra_data
+	 * @return mixed
+	 * @throws Exception
+	 */
 	private function _create_account($email, $password, $role, $extra_data = array())
 	{
 
@@ -125,6 +140,15 @@ class Auth {
 
 	}
 
+	/**
+	 * Login into an account.
+	 *
+	 * @param $email
+	 * @param $password
+	 * @param bool|FALSE $remember
+	 * @param null $backlink
+	 * @return bool
+	 */
 	private function _login_account($email, $password, $remember = FALSE, $backlink = NULL)
 	{
 		$data = array(
@@ -140,6 +164,11 @@ class Auth {
 		}
 	}
 
+	/**
+	 * Logout from an login session.
+	 *
+	 * @return mixed
+	 */
 	private function _logout_account()
 	{
 		return $this->session->sess_destroy();
@@ -150,23 +179,66 @@ class Auth {
 		//TODO Criar o envio do email com a chave de ativação.
 	}
 
-	private function _set_session($user)
+	/**
+	 * Setup a login session.
+	 *
+	 * @param $account
+	 * @return bool
+	 */
+	private function _set_session($account)
 	{
 		//TODO Buscar as informações de permissão e incluir na sessão.
-		if(!$user->id)
+		if(!$account->id)
 			return FALSE;
 
 		$session_data = array(
-			'id' => $user->id,
-			'email' => $user->email,
-			'role' => $user->role,
-			'extra_data' => $user->extra_data,
+			'id' => $account->id,
+			'email' => $account->email,
+			'role' => $account->role,
+			'extra_data' => $account->extra_data,
+			'created' => $account->created,
 			'logged_in' => TRUE
 		);
 		$this->session->set_userdata($session_data);
 	}
 
-	// Método de criptografia separado para facilitar a mudança do hash.
+	/**
+	 * Return an extra-data item from an login or all the object.
+	 *
+	 * @param null $item
+	 * @return object
+	 */
+	private function _get_extra_data($item = NULL)
+	{
+		$json = $this->_get_login_data('extra_data');
+		$cobj = (object) json_decode($json);
+		if($item == NULL)
+			return $cobj;
+		else
+			return $cobj->$item;
+	}
+
+	/**
+	 * Return an item from the login session.
+	 *
+	 * @param null $item
+	 * @return bool
+	 */
+	private function _get_login_data($item = NULL)
+	{
+		if($item == NULL)
+			return FALSE;
+		else
+			return $this->session->userdata($item);
+	}
+
+	/**
+	 * Return a hashed password.
+	 *
+	 * @param $password
+	 * @param string $salt
+	 * @return string
+	 */
 	private function _hash_password($password, $salt = '')
 	{
 		//TODO Colocar o salt na configuração da biblioteca.

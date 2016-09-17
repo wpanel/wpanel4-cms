@@ -195,26 +195,6 @@ if (!function_exists('status_user'))
     }
 }
 
-if (!function_exists('login_userobject')) 
-{
-    
-    /**
-     * This helper return a item from the user logged object.
-     * 
-     * @param $var string
-     * @return mixed
-     */
-    function login_userobject($var = null)
-    {
-        $CI =& get_instance();
-        if($var == null)
-            return $CI->session->userdata('user_object');
-        else
-            return $CI->session->userdata('user_object')->$var;
-
-    }
-}
-
 if(!function_exists('wpn_lang'))
 {
 

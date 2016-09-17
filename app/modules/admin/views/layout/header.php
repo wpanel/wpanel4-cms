@@ -46,12 +46,12 @@
 	    <!-- WPanel JS -->
 	    <script src="<?= base_url('lib/js/wpanel.js') ?>"></script>
 	</head>
-	<?php 
-	$skin = login_userobject('skin');
+	<?php
+	$skin = auth_extra_data('skin');
 	if($skin == '')
 		$skin = 'blue';
 
-	$avatar = login_userobject('image');
+	$avatar = auth_extra_data('avatar');
 	if($avatar)
 		$avatar = base_url('media/avatar/'.$avatar);
 	else
@@ -87,16 +87,16 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="<?= $avatar; ?>" class="user-image" alt="<?= login_userobject('name'); ?>"/>
-								<span class="hidden-xs"><?= login_userobject('name'); ?></span>
+								<img src="<?= $avatar; ?>" class="user-image" alt="<?= auth_extra_data('name'); ?>"/>
+								<span class="hidden-xs"><?= auth_extra_data('name'); ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header">
-									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
+									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
 									<p>
-										<?= login_userobject('name'); ?>
-										<small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(login_userobject('created'), false); ?></small>
+										<?= auth_extra_data('name'); ?>
+										<small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(auth_login_data('created'), false); ?></small>
 									</p>
 								</li>
 								<!-- Menu Footer-->
@@ -122,10 +122,10 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
+						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
 					</div>
 					<div class="pull-left info">
-						<p><?= login_userobject('name'); ?></p>
+						<p><?= auth_extra_data('name'); ?></p>
 					</div>
 				</div>
 				<!-- sidebar menu: : style can be found in sidebar.less -->

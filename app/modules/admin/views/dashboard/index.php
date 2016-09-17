@@ -1,7 +1,7 @@
 <?php
 
 // Captura o avatar do usuário.
-$avatar = login_userobject('image');
+$avatar = auth_extra_data('avatar');
 if($avatar)
 	$avatar = base_url('media/avatar') . '/'.$avatar;
 else
@@ -21,11 +21,11 @@ else
 	<div class="box">
 		<div class="box-body">
 			<div class="row">
-				<div class="col-md-3 hidden-xs"><img src="<?= $avatar; ?>" class="img-responsive img-thumbnail" alt="<?= login_userobject('name'); ?>"/></div>
+				<div class="col-md-3 hidden-xs"><img src="<?= $avatar; ?>" class="img-responsive img-thumbnail" alt="<?= auth_extra_data('name'); ?>"/></div>
 				<div class="col-md-4">
-					<h2><?= wpn_lang('wpn_hello', 'Hello'); ?> <?= login_userobject('name'); ?>.</h2>
-					<p><?= login_userobject('name'); ?> - <?= login_userobject('email'); ?></p>
-					<p><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(login_userobject('created'), 0); ?></p>
+					<h2><?= wpn_lang('wpn_hello', 'Hello'); ?> <?= auth_extra_data('name'); ?>.</h2>
+					<p><?= auth_extra_data('name'); ?> - <?= auth_login_data('email'); ?></p>
+					<p><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(auth_login_data('created'), 0); ?></p>
 					<p><?= anchor('admin/usuarios/profile', wpn_lang('lnk_manageprofile','Manage my profile'), array('class'=>'btn btn-primary')); ?></p>
 				</div>
 				<div class="col-md-5">
