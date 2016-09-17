@@ -58,14 +58,14 @@ class Auth {
 		//TODO Criar o método que edita o usuário.
 	}
 
-	public function login()
+	public function login($email, $password, $remember = FALSE, $backlink = NULL)
 	{
-		//TODO Criar o método que faz o login do usuário.
+		return $this->_login_account($email, $password, $remember, $backlink);
 	}
 
 	public function logout()
 	{
-		//TODO Criar o método que faz o logout do usuário.
+		return $this->_logout_account();
 	}
 
 	public function has_permission()
@@ -105,7 +105,7 @@ class Auth {
 
 		$data = array(
 			'email' => $email,
-			'password' => md5($password),
+			'password' => $this->_hash_password($password),
 			'role' => $role,
 			'extra_data' => json_encode($extra_data, JSON_PRETTY_PRINT),
 			'ip_address' => $_SERVER['REMOTE_ADDR'],
@@ -123,6 +123,55 @@ class Auth {
 
 		return $new_user;
 
+	}
+
+	private function _login_account($email, $password, $remember = FALSE, $backlink = NULL)
+	{
+		$data = array(
+			'email' => $email,
+			'password' => $this->_hash_password($password)
+		);
+		$login = $this->model->login_account($data);
+		if($login == FALSE)
+			return FALSE;
+		else {
+			$this->_set_session($login);
+			return TRUE;
+		}
+	}
+
+	private function _logout_account()
+	{
+		return $this->session->sess_destroy();
+	}
+
+	private function _send_activation_email()
+	{
+		//TODO Criar o envio do email com a chave de ativação.
+	}
+
+	private function _set_session($user)
+	{
+		//TODO Buscar as informações de permissão e incluir na sessão.
+		if(!$user->id)
+			return FALSE;
+
+		$session_data = array(
+			'id' => $user->id,
+			'email' => $user->email,
+			'role' => $user->role,
+			'extra_data' => $user->extra_data,
+			'logged_in' => TRUE
+		);
+		$this->session->set_userdata($session_data);
+	}
+
+	// Método de criptografia separado para facilitar a mudança do hash.
+	private function _hash_password($password, $salt = '')
+	{
+		//TODO Colocar o salt na configuração da biblioteca.
+		//TODO Dar a opção de escolher o hash nas configurações (md5, sha256 etc)
+		return md5($password . $salt);
 	}
 
 

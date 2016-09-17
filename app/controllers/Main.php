@@ -64,7 +64,7 @@ class Main extends MY_Controller
         * can adjust as you need to your project.
         */
         // Enable the CodeIgniter Profile.
-        // $this->wpn_profiler = TRUE;
+         $this->wpn_profiler = TRUE;
         // Chose the template folder.
         // $this->wpn_template = 'default';
         // Setup the 'col' number of the mosaic views.

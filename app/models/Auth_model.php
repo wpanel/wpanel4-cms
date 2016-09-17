@@ -21,11 +21,24 @@ class Auth_model extends MY_Model {
 	// Atualiza uma conta
 	public function update_account($data)
 	{
-		$id = $data['id'];
-		unset($data['id']);
+		$id = $data['id']; // Recupera o ID.
+		unset($data['id']); // Remove o ID do array de atualização.
 		$this->db->where('id', $id);
 		$this->db->update('accounts', $data);
 		return $this->db->affected_rows();
+	}
+
+	// Ferifica o login de uma conta
+	public function login_account($data)
+	{
+		$this->db->where('email', $data['email']);
+		$this->db->where('password', $data['password']);
+		$this->db->where('status', 1);
+		$query = $this->db->get('accounts');
+		if ($query->num_rows() > 0)
+			return $query->row();
+		else
+			return FALSE;
 	}
 
 	// Verifica se o email já existe.
