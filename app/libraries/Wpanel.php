@@ -164,11 +164,8 @@ class Wpanel
     public function check_setup()
 	{
 		$this->load->model('auth_model');
-		if ($this->auth_model->inicial_user() == FALSE)
-		{
+		if ($this->auth->accounts_empty() == TRUE)
 			redirect('setup');
-		}
-		
 	}
 
     // ----- Encapsulation for meta tags | begin. ----- //

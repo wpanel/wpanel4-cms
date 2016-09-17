@@ -88,9 +88,9 @@ class Auth {
 		//TODO Criar o método que envia a mensagem de ativação por email.
 	}
 
-	public function has_accounts()
+	public function accounts_empty()
 	{
-		return $this->model->inicial_user();
+		return $this->model->accounts_empty();
 	}
 
 //----------------------------------------------------------------
@@ -113,6 +113,8 @@ class Auth {
 			'updated' => date('Y-m-d H:i:s'),
 			'status' => 0
 		);
+
+		//TODO Adicionar configuração se envia ou não ativação por email.
 
 		$new_user = $this->model->insert_account($data);
 

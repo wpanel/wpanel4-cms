@@ -37,12 +37,16 @@ class Auth_model extends MY_Model {
 		return ($num > 0);
 	}
 
-	public function inicial_user()
+	// Verifica se existe alguma conta.
+	public function accounts_empty()
 	{
-		if ($this->db->count_all_results('accounts') >= 1)
-			return true;
+		$this->db->select('id');
+		$this->db->where('role', 'admin');
+		$account = $this->db->get('accounts')->num_rows();
+		if($account > 0)
+			return FALSE;
 		else
-			return false;
+			return TRUE;
 	}
 
 }
