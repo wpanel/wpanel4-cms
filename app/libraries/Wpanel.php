@@ -163,8 +163,8 @@ class Wpanel
      */
     public function check_setup()
 	{
-		$this->load->model('user');
-		if ($this->user->inicial_user() == FALSE)
+		$this->load->model('auth_model');
+		if ($this->auth_model->inicial_user() == FALSE)
 		{
 			redirect('setup');
 		}

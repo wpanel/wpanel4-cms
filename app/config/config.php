@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://wpanel-elieldepaula.c9.io/';
+$config['base_url'] = 'http://localhost:8000/';
 
 /*
 |--------------------------------------------------------------------------

@@ -37,4 +37,12 @@ class Auth_model extends MY_Model {
 		return ($num > 0);
 	}
 
+	public function inicial_user()
+	{
+		if ($this->db->count_all_results('accounts') >= 1)
+			return true;
+		else
+			return false;
+	}
+
 }

@@ -71,12 +71,13 @@ class Main extends MX_Controller
 	public function index()
 	{
 
-		$this->load->model('user');
+		// Substituido pelo Auth.
+		// $this->load->model('user');
 
 		/**
 		 * Verifica se já existe algum usuário cadastrado.
 		 */
-		if ($this->user->inicial_user() == true)
+		if ($this->auth->has_accounts() == true)
 		{
 			redirect('admin/login');
 		}

@@ -88,6 +88,11 @@ class Auth {
 		//TODO Criar o método que envia a mensagem de ativação por email.
 	}
 
+	public function has_accounts()
+	{
+		return $this->model->inicial_user();
+	}
+
 //----------------------------------------------------------------
 //	Métodos privados
 //----------------------------------------------------------------
