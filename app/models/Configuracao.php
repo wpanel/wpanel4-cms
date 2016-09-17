@@ -37,13 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Configuracao extends MY_Model 
 {
     
-    function __construct()
-    {
-        if(!isset($this->session->wpn_config)){
-            $config_session = array('wpn_config' => $this->load_config());
-            $this->session->set_userdata($config_session);
-        }
-    }
+    function __construct(){}
 
     private function load_config($conf_item = null)
     {
