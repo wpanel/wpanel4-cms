@@ -1,4 +1,5 @@
 
+- removed site configurations from sessions;
 - Auto delete to files and folders from album on delete action;
 - Bug fix in the wpanelmenu widget to show menu and submenu;
 
