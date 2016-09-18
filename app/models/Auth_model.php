@@ -62,4 +62,53 @@ class Auth_model extends MY_Model {
 			return TRUE;
 	}
 
+	// Métodos do controle de usuários
+
+	public function all_accounts()
+	{
+		//TODO Criar a a consulta por todas as contas.
+	}
+
+	public function account_by_id($id = NULL)
+	{
+		if($id == NULL)
+			return FALSE;
+			//throw new Exception('Account ID is empty.');
+
+		$this->db->where('id', $id);
+		$account = $this->db->get('accounts');
+		if($account->num_rows() > 0)
+			return $account->row();
+		else
+			return FALSE;
+
+	}
+
+	// Exemplo retirado do projeto ACL no Github.
+	public function validate_permission($account_id, $url){
+		$this->db->select('permissions.*');
+		$this->db->from('permissions');
+		$this->db->join('modules_actions', 'modules_actions.id = permissions.module_action_id');
+		$this->db->where('modules_actions.link', $url);
+		$this->db->where('permissions.user_id', $account_id);
+		$this->db->where('modules_actions.whitelist', 0);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0)
+			return true;
+		else
+			return false;
+	}
+
+	// Valida a lista branca - retirado do projeto ACL no Github.
+	public function validate_white_list($url){
+		$this->db->select('modules_actions.link');
+		$this->db->where('modules_actions.link', $url);
+		$this->db->where('modules_actions.whitelist', 1);
+		$query = $this->db->get('modules_actions');
+		if ($query->num_rows() == 0)
+			return false;
+
+		return true;
+	}
+
 }

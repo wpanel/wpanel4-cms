@@ -202,6 +202,12 @@ class Migration_newauth extends CI_Migration
     			'constraint' => 255,
     			'null' => FALSE
 			),
+			'whitelist' => array(
+				'type' => 'int',
+				'constraint' => 11,
+				'default' => '0'
+			),
+
 			'created' => array(
 	        	'type' => 'datetime',
 	        	'null' => TRUE,

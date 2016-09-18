@@ -102,7 +102,7 @@
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<?= anchor('admin/usuarios/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class'=>'btn btn-primary btn-flat')); ?>
+										<?= anchor('admin/accounts/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class'=>'btn btn-primary btn-flat')); ?>
 									</div>
 									<div class="pull-right">
 										<?= anchor('/admin/logout', glyphicon('off') . wpn_lang('lnk_logout', 'Logout'), array('class'=>'btn btn-danger btn-flat')); ?>

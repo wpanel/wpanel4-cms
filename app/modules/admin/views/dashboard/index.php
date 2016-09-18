@@ -26,7 +26,7 @@ else
 					<h2><?= wpn_lang('wpn_hello', 'Hello'); ?> <?= auth_extra_data('name'); ?>.</h2>
 					<p><?= auth_extra_data('name'); ?> - <?= auth_login_data('email'); ?></p>
 					<p><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(auth_login_data('created'), 0); ?></p>
-					<p><?= anchor('admin/usuarios/profile', wpn_lang('lnk_manageprofile','Manage my profile'), array('class'=>'btn btn-primary')); ?></p>
+					<p><?= anchor('admin/accounts/profile', wpn_lang('lnk_manageprofile','Manage my profile'), array('class'=>'btn btn-primary')); ?></p>
 				</div>
 				<div class="col-md-5">
 					<h4><?= wpn_lang('wpn_sumary', 'Sumary'); ?></h4>
@@ -89,7 +89,7 @@ else
 			<div class="row">
 				<div class="col-md-4" style="margin-top:10px;">
 					<a 
-					href="<?= site_url('admin/usuarios'); ?>" 
+					href="<?= site_url('admin/accounts'); ?>"
 					class="btn btn-warning btn-lg btn-block" 
 					style="padding-top:30px;padding-bottom:30px;">
 						<span class="glyphicon glyphicon-user"></span> <?= wpn_lang('bot_manage_users', 'Manage Users'); ?>

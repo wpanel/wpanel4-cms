@@ -83,9 +83,9 @@ class Auth {
 		return $this->_get_login_data($item);
 	}
 
-	public function get_extra_data($item = NULL)
+	public function get_extra_data($item = NULL, $json = NULL)
 	{
-		return $this->_get_extra_data($item);
+		return $this->_get_extra_data($item, $json);
 	}
 
 	public function send_activation_email()
@@ -96,6 +96,39 @@ class Auth {
 	public function accounts_empty()
 	{
 		return $this->model->accounts_empty();
+	}
+
+	// Metodos do CRUD das contas.
+	public function account_by_id($id = NULL)
+	{
+		return $this->_get_account_by_id($id);
+	}
+
+	// Exemplo retirado do projeto ACL no Github.
+	public function check_permission()
+	{
+		// Configure here your user id session.
+		$account_id = $this->get_account_id();
+		if ($account_id == '') {
+			$this->session->flashdata('msg_auth', 'User is not logged.');
+			redirect('admin/logout');
+			exit;
+		} else {
+			$white_list = array();
+			$white_list[] = 'validation';
+			$url = $this->uri->uri_string();
+			($this->uri->total_segments() == 3)? $url.'/' : $url;
+			if($url == '')
+				return TRUE;
+			if ($this->model->validate_white_list($url))
+				return TRUE;
+			if ($this->model->validate_permission($account_id, $url) === false){
+				$this->session->flashdata('msg_sistema', 'User don\'t has permission.');
+				redirect('admin/dashboard');
+				exit;
+			}
+			return true;
+		}
 	}
 
 //----------------------------------------------------------------
@@ -208,9 +241,10 @@ class Auth {
 	 * @param null $item
 	 * @return object
 	 */
-	private function _get_extra_data($item = NULL)
+	private function _get_extra_data($item = NULL, $json = nULL)
 	{
-		$json = $this->_get_login_data('extra_data');
+		if($json == NULL)
+			$json = $this->_get_login_data('extra_data');
 		$cobj = (object) json_decode($json);
 		if($item == NULL)
 			return $cobj;
@@ -230,6 +264,13 @@ class Auth {
 			return FALSE;
 		else
 			return $this->session->userdata($item);
+	}
+
+	private function _get_account_by_id($id = NULL)
+	{
+		if($id == NULL)
+			$id = $this->_get_login_data('id');
+		return $this->model->account_by_id($id);
 	}
 
 	/**

@@ -10,7 +10,12 @@
 |
 */
 
-
+$hook['post_controller_constructor'] = array(
+    'class'    => 'Auth',
+    'function' => 'check_permission',
+    'filename' => 'Auth.php',
+    'filepath' => 'libraries'
+);
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
