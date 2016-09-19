@@ -1,25 +1,26 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <section class="content-header">
     <h1>
-        Usuários
-        <small>Gerencie os usuários que administrarão o site aqui.</small>
+        Contas de usuário
+        <small>Gerencie as contas de usuário do site aqui.</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><i class="fa fa-users"></i> Usuários</li>
+        <li><i class="fa fa-users"></i> Contas de usuário</li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lista de usuários</h3>
+            <h3 class="box-title">Lista de contas</h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/usuarios/add', glyphicon('plus-sign') . 'Novo usuário', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/accounts/add', glyphicon('plus-sign') . 'Novo cadastro', array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">
-            <table id="grid" class="table table-striped">
+            <?= $listagem; ?>
+            <?php /*<table id="grid" class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -35,7 +36,7 @@
                     { ?>
                         <tr>
                             <td><?= $row->id; ?></td>
-                            <td><?= $row->name; ?></td>
+                            <td><?= auth_extra_data('name'); ?></td>
                             <td><?= $row->email; ?></td>
                             <td><?= $roles[$row->role]; ?></td>
                             <td>
@@ -52,7 +53,7 @@
                         </tr>
                     <?php } ?>
                 </tbody>
-            </table>
+            </table> */ ?>
         </div>
     </div>
 </section>

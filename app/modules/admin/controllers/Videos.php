@@ -40,7 +40,7 @@ class Videos extends MX_Controller {
 
 	function __construct()
 	{
-		$this->auth->protect('videos');
+		$this->auth->check_permission();
 		$this->load->model('video');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}

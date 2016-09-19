@@ -12,7 +12,7 @@
 
 $hook['post_controller_constructor'] = array(
     'class'    => 'Auth',
-    'function' => 'check_permission',
+    'function' => 'check_permission_by_hook',
     'filename' => 'Auth.php',
     'filepath' => 'libraries'
 );

@@ -7,6 +7,7 @@
 * - gerenciar os usua´rios (crud)
 * - gerenciar a ativação/desativação
 * - gerenciar os IP´s banidos
+* - Gerenciar módulos e actions
 * - fazer o login e logout do usuário
 * - registrar os logins realizados
 * - limitar o acesso por excesso de tentativas
@@ -17,13 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth {
 
+	protected $auth_white_list = array();
+
 	// Construtor
 	public function __construct($config = array()) 
 	{
-		if (count($config) > 0) 
-		{
+		if (count($config) > 0)
 			$this->initialize($config);
-		}
 		$this->load->model('auth_model', 'model');
 		log_message('debug', "Auth Class Initialized");
 	}
@@ -34,8 +35,30 @@ class Auth {
 		return get_instance()->$var;
 	}
 
+	/**
+	 * Initialize the library loading the configuration files or
+	 * an array() passed on load of the class.
+	 *
+	 * @param $config array()
+	 * @return void
+	 */
+	public function initialize($config = array())
+	{
+		foreach ($config as $key => $val) {
+			if (isset($this->$key)) {
+				$method = 'set_' . $key;
+				if (method_exists($this, $method))
+					$this->$method($val);
+				else
+					$this->$key = $val;
+
+			}
+		}
+		return $this;
+	}
+
 //----------------------------------------------------------------
-//	Métodos da API
+//	Métodos da API pública
 //----------------------------------------------------------------
 
 	public function create_account($email, $password, $role, $profile_data = array())
@@ -51,6 +74,16 @@ class Auth {
 	public function deactivate_account()
 	{
 		//TODO Criar o método que desativa um usuário.
+	}
+
+	public function get_account_by_id($id = NULL)
+	{
+		return $this->_get_account_by_id($id);
+	}
+
+	public function get_account_list()
+	{
+		//TODO Listar as contas.
 	}
 
 	public function update_account()
@@ -95,40 +128,21 @@ class Auth {
 
 	public function accounts_empty()
 	{
+		//TODO Verificar se convém deixar a chamada ao model diretamente no método público.
 		return $this->model->accounts_empty();
 	}
 
-	// Metodos do CRUD das contas.
-	public function account_by_id($id = NULL)
+	public function check_permission_by_hook()
 	{
-		return $this->_get_account_by_id($id);
+		if($this->config->item('auth_check_permyssion_by_hook') == TRUE)
+			return $this->check_permission();
 	}
 
 	// Exemplo retirado do projeto ACL no Github.
 	public function check_permission()
 	{
-		// Configure here your user id session.
-		$account_id = $this->get_account_id();
-		if ($account_id == '') {
-			$this->session->flashdata('msg_auth', 'User is not logged.');
-			redirect('admin/logout');
-			exit;
-		} else {
-			$white_list = array();
-			$white_list[] = 'validation';
-			$url = $this->uri->uri_string();
-			($this->uri->total_segments() == 3)? $url.'/' : $url;
-			if($url == '')
-				return TRUE;
-			if ($this->model->validate_white_list($url))
-				return TRUE;
-			if ($this->model->validate_permission($account_id, $url) === false){
-				$this->session->flashdata('msg_sistema', 'User don\'t has permission.');
-				redirect('admin/dashboard');
-				exit;
-			}
-			return true;
-		}
+		echo $this->config->item('auth_white_list');
+		return $this->_check_permission();
 	}
 
 //----------------------------------------------------------------
@@ -273,6 +287,35 @@ class Auth {
 		return $this->model->account_by_id($id);
 	}
 
+	private function _check_permission()
+	{
+		$account_id = $this->get_account_id();
+		$account_role = $this->_get_login_data('role');
+		if ($account_id == '') {
+			$this->session->flashdata('msg_auth', 'User is not logged.');
+			redirect('admin/logout');
+			exit;
+		} else {
+
+			$url = $this->uri->uri_string();
+			($this->uri->total_segments() == 3)? $url.'/' : $url;
+
+			if($account_role == 'ROOT')
+				return TRUE;
+			if($url == '')
+				return TRUE;
+			if(in_array($this->_prepare_url($url), $this->auth_white_list))
+				return TRUE;
+			if ($this->model->validate_white_list($url))
+				return TRUE;
+			if ($this->model->validate_permission($account_id, $url) === false){
+				$this->session->flashdata('msg_sistema', 'User don\'t has permission.');
+				redirect('admin/dashboard');
+				exit;
+			}
+			return TRUE;
+		}
+	}
 	/**
 	 * Return a hashed password.
 	 *
@@ -280,12 +323,34 @@ class Auth {
 	 * @param string $salt
 	 * @return string
 	 */
-	private function _hash_password($password, $salt = '')
+	private function _hash_password($password)
 	{
-		//TODO Colocar o salt na configuração da biblioteca.
-		//TODO Dar a opção de escolher o hash nas configurações (md5, sha256 etc)
-		return md5($password . $salt);
+		switch ($this->auth_password_hash_type) {
+			case 'md5':
+				return md5($password . $this->auth_password_hash_salt);
+				break;
+			
+			case 'something':
+				//TODO Codificar outras opções de criptografia aqui.
+				break;
+		}
 	}
 
+	private function _prepare_url($url)
+	{
+		//TODO Aprender uma forma mais elegante de fazer isso. :)
+		$x = explode('/', $url);
+		$out = '';
+		$bar = '/';
+		foreach ($x as $key => $value) {
+			if($key > 2)
+				$value = '*';
+			if($key == 0)
+				$out .= $value;
+			else
+				$out .= $bar . $value;
+		}
+		return $out;
+	}
 
 }

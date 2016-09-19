@@ -55,6 +55,7 @@ class Auth_model extends MY_Model {
 	{
 		$this->db->select('id');
 		$this->db->where('role', 'admin');
+		$this->db->or_where('role', 'ROOT');
 		$account = $this->db->get('accounts')->num_rows();
 		if($account > 0)
 			return FALSE;

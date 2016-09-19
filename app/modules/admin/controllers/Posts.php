@@ -38,7 +38,7 @@ class Posts extends MX_Controller {
 
 	function __construct()
 	{
-		//$this->auth->protect('posts');
+		$this->auth->check_permission();
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
