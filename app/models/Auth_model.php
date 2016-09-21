@@ -18,6 +18,21 @@ class Auth_model extends MY_Model {
 		return $this->db->insert_id();
 	}
 
+	public function insert_permission($data)
+	{
+		$data['module_id'] = $this->_get_module_from_action($data['module_action_id']);
+		$this->db->insert('permissions', $data);
+		return $this->db->insert_id();
+	}
+
+	private function _get_module_from_action($action_id)
+	{
+		$this->db->select('module_id');
+		$this->db->where('id', $action_id);
+		$query = $this->db->get('modules_actions')->row();
+		return $query->module_id;
+	}
+
 	// Atualiza uma conta
 	public function update_account($data)
 	{
@@ -86,12 +101,13 @@ class Auth_model extends MY_Model {
 	}
 
 	// Exemplo retirado do projeto ACL no Github.
-	public function validate_permission($account_id, $url){
+	public function validate_permission($account_id, $url)
+	{
 		$this->db->select('permissions.*');
 		$this->db->from('permissions');
 		$this->db->join('modules_actions', 'modules_actions.id = permissions.module_action_id');
 		$this->db->where('modules_actions.link', $url);
-		$this->db->where('permissions.user_id', $account_id);
+		$this->db->where('permissions.account_id', $account_id);
 		$this->db->where('modules_actions.whitelist', 0);
 		$query = $this->db->get();
 		if ($query->num_rows() > 0)
@@ -101,7 +117,8 @@ class Auth_model extends MY_Model {
 	}
 
 	// Valida a lista branca - retirado do projeto ACL no Github.
-	public function validate_white_list($url){
+	public function validate_white_list($url)
+	{
 		$this->db->select('modules_actions.link');
 		$this->db->where('modules_actions.link', $url);
 		$this->db->where('modules_actions.whitelist', 1);

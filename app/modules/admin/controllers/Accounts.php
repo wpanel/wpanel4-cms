@@ -41,7 +41,7 @@ class Accounts extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->model('account');
+        //$this->load->model('account');
         $this->auth->check_permission();
     }
 
@@ -51,19 +51,27 @@ class Accounts extends MX_Controller
         $content_vars = array();
         $this->load->library('table');
         $roles = config_item('users_role');
-
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
         $this->table->set_heading(
-                '#', 'E-mail', 'Role', wpn_lang('col_date', 'Date'), wpn_lang('col_status', 'Status'), wpn_lang('col_actions', 'Actions')
+                '#', 
+                'Nome', 
+                'E-mail', 
+                'Role', 
+                wpn_lang('col_date', 'Date'), 
+                wpn_lang('col_status', 'Status'), 
+                wpn_lang('col_actions', 'Actions')
         );
-
-        $query = $this->account->get_list()->result();
-
+        $query = $this->auth->list_accounts();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->email, $row->role, mdate('%d/%m/%Y', strtotime($row->created)), status_post($row->status),
+                    $row->id, 
+                    $this->auth->get_extra_data('name', $row->extra_data), 
+                    $row->email, 
+                    $row->role, 
+                    mdate('%d/%m/%Y', strtotime($row->created)), 
+                    status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/accounts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
@@ -71,46 +79,40 @@ class Accounts extends MX_Controller
                     div(null, true)
             );
         }
-
         $content_vars['listagem'] = $this->table->generate();
-
         $this->wpanel->load_view('accounts/index', $content_vars);
     }
 
     public function add()
     {
-
         $this->form_validation->set_rules('password', 'Senha', 'required');
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-
-        if ($this->form_validation->run() == FALSE) {
-
-            $layout_vars = array();
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[accounts.email]');
+        if ($this->form_validation->run() == FALSE){
             $content_vars = array();
-
+            $content_vars['query_module'] = $this->auth->list_modules_full();
             $this->wpanel->load_view('accounts/add', $content_vars);
         } else {
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['image'] = $this->user->upload_media('avatar');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['password'] = $this->input->post('password');
-            $dados_save['role'] = $this->input->post('role');
-            $dados_save['created'] = date('Y-m-d H:i:s');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
-            $dados_save['status'] = $this->input->post('status');
-            $dados_save['permissions'] = serialize($this->input->post('permissions'));
+            // Cria a nova conta.
+            $newaccount = $this->auth->create_account(
+                $this->input->post('email'), 
+                $this->input->post('password'), 
+                $this->input->post('role'), 
+                $profile_data = array(
+                    'name' => $this->input->post('name'),
+                    'skin' => $this->input->post('skin'),
+                    'avatar' => $this->auth->upload_avatar()
+                ),
+                $this->input->post('permission')
+            );
 
-            if ($this->user->save($dados_save)) {
+            if ($newaccount > 0) {
                 $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                redirect('admin/usuarios');
+                redirect('admin/accounts');
             } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/usuarios');
+                redirect('admin/accounts');
             }
         }
     }
@@ -118,8 +120,6 @@ class Accounts extends MX_Controller
     public function edit($id = null)
     {
 
-        //$this->auth->protect('usuarios');
-        // Verifica se altera a senha
         if ($this->input->post('alterar_senha') == '1') {
             $this->form_validation->set_rules('password', 'Senha', 'required|md5');
         }
@@ -139,7 +139,8 @@ class Accounts extends MX_Controller
             $content_vars = array();
 
             $content_vars['id'] = $id;
-            $content_vars['row'] = $this->account->get_by_id($id)->row();
+            $content_vars['query_module'] = $this->auth->list_modules_full();
+            $content_vars['row'] = $this->auth->get_account_by_id($id);
             $this->wpanel->load_view('accounts/edit', $content_vars);
         } else {
 

@@ -1,6 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
+ * Define os tipos de usuário serão permitidos no site. 
+ */
+$config['auth_account_role'] = array('ROOT'=>'Super-User', 'user' => 'Usuário comum', 'admin' => 'Administrador');
+
+/**
  * Check permissions into a hook for all methods (global).
  */
 $config['auth_check_permyssion_by_hook'] = FALSE;
@@ -20,6 +25,7 @@ $config['auth_password_hash_salt'] = '';
  */
 $config['auth_white_list'] = array(
     'admin',
+    'admin/login',
     'admin/dashboard',
     'admin/accounts/profile',
     // Liberado para testes

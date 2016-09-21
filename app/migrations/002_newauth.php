@@ -238,7 +238,7 @@ class Migration_newauth extends CI_Migration
 	        	'type' => 'INT',
 	        	'null' => FALSE
 	        ),
-	        'user_id' => array(
+	        'account_id' => array(
 	        	'type' => 'INT',
 	        	'null' => FALSE
 	        ),
@@ -255,7 +255,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('module_id');
 		$this->dbforge->add_key('module_action_id');
-		$this->dbforge->add_key('user_id');
+		$this->dbforge->add_key('account_id');
 		$this->dbforge->create_table('permissions', true);
 
 		// Cria a tabela log_access

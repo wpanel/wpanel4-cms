@@ -80,7 +80,7 @@ $autoload['helper'] = array('url', 'form', 'file', 'text', 'inflector', 'html', 
 |
 */
 
-$autoload['config'] = array('wpanel');
+$autoload['config'] = array('wpanel', 'auth');
 
 
 /*
