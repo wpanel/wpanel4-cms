@@ -99,7 +99,7 @@ class Accounts extends MX_Controller
                 $this->input->post('email'), 
                 $this->input->post('password'), 
                 $this->input->post('role'), 
-                $profile_data = array(
+                array(
                     'name' => $this->input->post('name'),
                     'skin' => $this->input->post('skin'),
                     'avatar' => $this->auth->upload_avatar()
@@ -120,11 +120,6 @@ class Accounts extends MX_Controller
     public function edit($id = null)
     {
 
-        if ($this->input->post('alterar_senha') == '1') {
-            $this->form_validation->set_rules('password', 'Senha', 'required|md5');
-        }
-
-        $this->form_validation->set_rules('username', 'Nome de usuário', 'required');
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
@@ -135,55 +130,61 @@ class Accounts extends MX_Controller
                 redirect('admin/usuarios');
             }
 
-            $layout_vars = array();
             $content_vars = array();
 
-            $content_vars['id'] = $id;
             $content_vars['query_module'] = $this->auth->list_modules_full();
             $content_vars['row'] = $this->auth->get_account_by_id($id);
             $this->wpanel->load_view('accounts/edit', $content_vars);
+
         } else {
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['role'] = $this->input->post('role');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
-            $dados_save['status'] = $this->input->post('status');
-            $dados_save['permissions'] = serialize($this->input->post('permissions'));
+            // Cria a nova conta.
+            $updatedaccount = $this->auth->update_account(
+                $id,
+                $this->input->post('email'),
+                $this->input->post('role'),
+                array(
+                    'name' => $this->input->post('name'),
+                    'skin' => $this->input->post('skin'),
+                    'avatar' => $this->auth->upload_avatar()
+                ),
+                $this->input->post('permission')
+            );
 
-            // Verifica se altera a imagem
-            if ($this->input->post('alterar_imagem') == '1') {
-                $query = $this->user->get_by_id($id)->row();
-                $this->user->remove_media('avatar/' . $query->image);
-                $dados_save['image'] = $this->user->upload_media('avatar');
-            }
-
-            // Verifica se altera a senha.
-            if ($this->input->post('alterar_senha') == '1') {
-                $dados_save['password'] = $this->input->post('password');
-            }
-
-            if ($this->user->update($id, $dados_save)) {
-                if ($this->input->post('alterar_senha') == '1') {
-                    redirect('admin/logout');
-                } else {
-                    $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                    redirect('admin/usuarios');
-                }
+            if ($updatedaccount > 0) {
+                $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+                redirect('admin/accounts');
             } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/usuarios');
+                redirect('admin/accounts');
             }
+        }
+    }
+
+    public function changepassword($account_id = NULL)
+    {
+        if($account_id == NULL){
+            $this->session->set_flashdata('msg_sistema', 'Não foi possível alterar a senha.');
+            redirect('admin/accounts');
+        }
+
+        $updatedpassword = $this->auth->change_password(
+            $account_id,
+            NULL,
+            $this->input->post('password', TRUE)
+        );
+
+        if ($updatedpassword > 0) {
+            $this->session->set_flashdata('msg_sistema', 'Senha alterada com sucesso.');
+            redirect('admin/accounts/edit/'.$account_id);
+        } else {
+            $this->session->set_flashdata('msg_sistema', 'Erro ao alterar a senha.');
+            redirect('admin/accounts/edit/'.$account_id);
         }
     }
 
     public function delete($id = null)
     {
-
-        $this->auth->protect('usuarios');
 
         if ($id == null) {
             $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');

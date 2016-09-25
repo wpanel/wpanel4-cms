@@ -43,6 +43,19 @@ class Auth_model extends MY_Model {
 		return $this->db->affected_rows();
 	}
 
+	// Atualiza a senha de uma conta
+	public function update_password($data)
+	{
+		// Verifica se foi passado a senha anterior e faz a verificação.
+		if(isset($data['old_password']))
+			$this->db->where('password', $data['old_password']);
+
+		$this->db->where('id', $data['id']);
+		$this->db->update('accounts', array('password' => $data['new_password'], 'updated' => date('Y-m-d H:i:s')));
+		return $this->db->affected_rows();
+
+	}
+
 	// Ferifica o login de uma conta
 	public function login_account($data)
 	{
@@ -78,11 +91,19 @@ class Auth_model extends MY_Model {
 			return TRUE;
 	}
 
-	// Métodos do controle de usuários
-
-	public function all_accounts()
+	// Lista todas as contas.
+	public function all_accounts($order = array(), $limit = array(), $select = null)
 	{
-		//TODO Criar a a consulta por todas as contas.
+		if ($select != null)
+			$this->db->select($select);
+
+		if ((is_array($order)) and (count($order)!=0))
+			$this->db->order_by($order['field'], $order['order']);
+
+		if((is_array($limit)) and (count($limit) != 0))
+			$this->db->limit($limit['limit'], $limit['offset']);
+
+		return $this->db->get('accounts');
 	}
 
 	public function account_by_id($id = NULL)
@@ -127,6 +148,18 @@ class Auth_model extends MY_Model {
 			return false;
 
 		return true;
+	}
+
+	// Remove as permissões de uma conta.
+	public function remove_permission_by_account($account_id = NULL)
+	{
+		if($account_id == NULL)
+			return FALSE;
+
+		$this->db->where('account_id', $account_id);
+        $this->db->delete('permissions');
+        return $this->db->affected_rows();
+
 	}
 
 }

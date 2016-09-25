@@ -63,9 +63,9 @@ class Auth
 //	Métodos da API pública
 //----------------------------------------------------------------
 
-    public function create_account($email, $password, $role, $profile_data = array(), $permissions= array())
+    public function create_account($email, $password, $role, $extra_data = array(), $permissions= array())
     {
-        return $this->_create_account($email, $password, $role, $profile_data, $permissions);
+        return $this->_create_account($email, $password, $role, $extra_data, $permissions);
     }
     public function create_permission($module_id, $action_id, $account_id)
     {
@@ -92,9 +92,14 @@ class Auth
         return $this->_get_account_by_id($id);
     }
 
-    public function update_account()
+    public function update_account($id, $email, $role, $extra_data = array(), $permissions= array())
     {
-        //TODO Criar o método que edita o usuário.
+        return $this->_update_account($id, $email, $role, $extra_data, $permissions);
+    }
+
+    public function change_password($id, $old_password = NULL, $new_password)
+    {
+    	return $this->_change_password($id, $old_password, $new_password);
     }
 
     public function login($email, $password, $remember = FALSE, $backlink = NULL)
@@ -150,11 +155,9 @@ class Auth
     	return $this->_has_permission($url, $account_id);
     }
 
-    // CRUD em accounts
-
-    public function list_accounts()
+    public function list_accounts($order = array(), $limit = array(), $select = null)
     {
-    	return $this->_list_accounts();
+    	return $this->_list_accounts($order, $limit, $select);
     }
 
     public function list_modules_full()
@@ -216,6 +219,55 @@ class Auth
             'updated' => date('Y-m-d H:i:s')
     	);
     	return $this->model->insert_permission($data);
+    }
+
+    private function _update_account($id, $email, $role, $extra_data = array(), $permissions = array())
+    {
+
+        $data = array();
+        $data['id'] = $id;
+        $data['email'] = $email;
+        $data['role'] = $role;
+        $data['ip_address'] = $_SERVER['REMOTE_ADDR'];
+        $data['updated'] = date('Y-m-d H:i:s');
+
+        // Altera as permissões caso seja enviado algum parametro pelo array.
+        //TODO Melhorar a atualização dos dados-extra, desse jeito sempre perderá a foto.
+        if(count($extra_data) > 0)
+            $data['extra_data'] = json_encode($extra_data, JSON_PRETTY_PRINT);
+
+        $updated_account = $this->model->update_account($data);
+
+        // Fazer a atualização das permissões.
+        if(count($permissions) > 0){
+            //TODO Apagar as permissões antigas.
+            $this->model->remove_permission_by_account($id);
+            foreach ($permissions as $key => $value) {
+                $this->_create_permission($value, $id);
+            }
+        }
+
+        // Atualizar o cadastro pelo model.
+        if (!$updated_account > 0)
+            throw new Exception('Error updating an account.');
+
+        return $updated_account;
+
+    }
+
+    private function _change_password($id, $old_password = NULL, $new_password)
+    {
+        $data = array();
+        $data['id'] = $id;
+        if($old_password != NULL)$data['old_password'] = $this->_hash_password($old_password);
+        $data['new_password'] = $this->_hash_password($new_password);
+
+        $updated_password = $this->model->update_password($data);
+
+        if (!$updated_password > 0)
+            throw new Exception('Error updating an password.');
+
+        return $updated_password;
     }
 
     /**
@@ -319,10 +371,9 @@ class Auth
         return $this->model->account_by_id($id);
     }
 
-    private function _list_accounts()
+    private function _list_accounts($order = array(), $limit = array(), $select = null)
     {
-    	$this->load->model('account');
-    	return $this->account->get_list()->result();
+    	return $this->model->all_accounts($order, $limit, $select)->result();
     }
 
     private function _list_modules_full()
@@ -331,7 +382,7 @@ class Auth
         $query_module = $this->module->get_list(array('field'=>'order', 'order'=>'asc'))->result_array();
         // Adiciona as actions na lista de módulos.
         foreach ($query_module as $key => $value) {
-            $query_action = $this->module_action->get_by_field('module_id', $query_module[$key]['id'])->result_array();
+            $query_action = $this->module_action->get_by_field(array('whitelist'=>'0', 'module_id'=>$query_module[$key]['id']))->result_array();
             $query_module[$key]['actions'] = $query_action;
         }
         return $query_module;

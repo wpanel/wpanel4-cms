@@ -16,7 +16,7 @@
             <h3 class="box-title">Alteração de conta de usuário</h3>
         </div>
         <div class="box-body">
-            <?= form_open_multipart('admin/accounts/add', array('role'=>'form')); ?>
+            <?= form_open_multipart('admin/accounts/edit/'.$row->id, array('role'=>'form')); ?>
                 <ul class="nav nav-pills" role="tablist" style="margin-bottom:20px;">
                     <li class="active"><a href="#userdata" role="tab" data-toggle="tab">Dados do usuário</a></li>
                     <li><a href="#permissions" role="tab" data-toggle="tab">Permissões</a></li>
@@ -36,20 +36,20 @@
                                         <?= form_error('name'); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email válido</label>
                                         <input type="email" name="email" value="<?= $row->email; ?>" class="form-control" />
                                         <?= form_error('email'); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="password">Senha</label>
                                         <input type="password" name="password" class="form-control" />
                                         <?= form_error('password'); ?>
                                     </div>
-                                </div>
+                                </div> -->
                             </div> <!-- end row -->
                             <div class="row">
                                 <div class="col-md-6">
@@ -157,15 +157,43 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
                         <?= anchor('admin/accounts', 'Cancelar', array('class'=>'btn btn-danger')); ?>
+                        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
                     </div>
                 </div>
             <?= form_close(); ?>
         </div>
     </div>
 </section>
+
+<?= form_open('admin/accounts/changepassword/'.$row->id); ?>
+<div class="modal fade change-password-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Alteração de senha
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" name="password" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= form_close(); ?>
+
 <script type="text/javascript">
     function marcardesmarcar(id){
       $('.marcar-'+id).each(

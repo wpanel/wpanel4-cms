@@ -33,6 +33,7 @@ $config['auth_white_list'] = array(
     'admin/accounts/add',
     'admin/accounts/edit',
     'admin/accounts/edit/*',
+    'admin/accounts/changepassword/*',
     'admin/accounts/delete',
     'admin/configuracoes',
     'admin/configuracoes/index'
