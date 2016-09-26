@@ -52,10 +52,26 @@
                                 </div> -->
                             </div> <!-- end row -->
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
+                                    <div class="thumbnail">
+                                        <?php if(auth_extra_data('avatar', $row->extra_data)){ ?>
+                                            <img src="<?= base_url('media/avatar') . '/'.auth_extra_data('avatar', $row->extra_data); ?>" class="img-responsive" />
+                                        <?php } else { ?>
+                                            <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" />
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="userfile">Foto do usuário</label>
                                         <input type="file" name="userfile" class="form-control" />
+                                        <input type="hidden" name="avatar" value="<?= auth_extra_data('avatar', $row->extra_data); ?>"/>
+                                        <div class="checkbox">
+                                            <label>
+                                                <?= form_checkbox('change_avatar', '1', false); ?>
+                                                Alterar o avatar
+                                            </label>
+                                        </div>
                                         <?= form_error('image'); ?>
                                     </div>
                                 </div>
@@ -160,7 +176,7 @@
                     <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
                         <?= anchor('admin/accounts', 'Cancelar', array('class'=>'btn btn-danger')); ?>
-                        <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
                     </div>
                 </div>
             <?= form_close(); ?>

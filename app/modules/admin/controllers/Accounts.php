@@ -138,16 +138,20 @@ class Accounts extends MX_Controller
 
         } else {
 
-            // Cria a nova conta.
+            $extra_data = array();
+            $extra_data['name'] = $this->input->post('name');
+            $extra_data['skin'] = $this->input->post('skin');
+            if($this->input->post('change_avatar'))
+                $extra_data['avatar'] = $this->auth->upload_avatar();
+            else
+                $extra_data['avatar'] = $this->input->post('avatar');
+
+            // Atualiza uma conta.
             $updatedaccount = $this->auth->update_account(
                 $id,
                 $this->input->post('email'),
                 $this->input->post('role'),
-                array(
-                    'name' => $this->input->post('name'),
-                    'skin' => $this->input->post('skin'),
-                    'avatar' => $this->auth->upload_avatar()
-                ),
+                $extra_data,
                 $this->input->post('permission')
             );
 
@@ -187,16 +191,16 @@ class Accounts extends MX_Controller
     {
 
         if ($id == null) {
-            $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-            redirect('admin/usuarios');
+            $this->session->set_flashdata('msg_sistema', 'Conta de usuário inexistente.');
+            redirect('admin/accounts');
         }
 
-        if ($this->user->delete($id)) {
-            $this->session->set_flashdata('msg_sistema', 'Usuário excluído com sucesso.');
-            redirect('admin/usuarios');
+        if ($this->auth->remove_account($id)) {
+            $this->session->set_flashdata('msg_sistema', 'Conta de usuário excluída com sucesso.');
+            redirect('admin/accounts');
         } else {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o usuário.');
-            redirect('admin/usuarios');
+            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir a conta de usuário.');
+            redirect('admin/accounts');
         }
     }
 
@@ -206,52 +210,45 @@ class Accounts extends MX_Controller
         if ($this->input->post('alterar_senha') == '1')
             $this->form_validation->set_rules('password', 'Senha', 'required');
 
-        $this->form_validation->set_rules('username', 'Nome de usuário', 'required');
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
         if ($this->form_validation->run() == FALSE) {
             $content_vars = array();
-            $account_data = $this->auth->get_account_id();
+            $account_data = $this->auth->get_account_by_id($this->auth->get_account_id());
             if ($account_data->id == null) {
                 $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
                 redirect('admin/dashboard');
             }
-
             $content_vars['row'] = $account_data;
             $content_vars['extra_data'] = $this->auth->get_extra_data(NULL, $account_data->extra_data);
             $this->wpanel->load_view('accounts/profile', $content_vars);
         } else {
+            $extra_data = array();
+            $extra_data['name'] = $this->input->post('name');
+            $extra_data['skin'] = $this->input->post('skin');
+            if($this->input->post('change_avatar') == '1')
+                $extra_data['avatar'] = $this->auth->upload_avatar();
+            else
+                $extra_data['avatar'] = $this->input->post('avatar');
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
+            $updatedaccount = $this->auth->update_account(
+                $this->auth->get_account_id(),
+                $this->input->post('email'),
+                $this->input->post('role'),
+                $extra_data
+            );
 
-            // Verifica se altera a imagem
-            if ($this->input->post('alterar_imagem') == '1') {
-                $query = $this->user->get_by_id($id)->row();
-                $this->user->remove_media('avatar/' . $query->image);
-                $dados_save['image'] = $this->user->upload_media('avatar');
-            }
-
-            // Verifica se altera a senha.
-            if ($this->input->post('alterar_senha') == '1') {
-                $dados_save['password'] = $this->input->post('password');
-            }
-
-            if ($this->user->update($id, $dados_save)) {
-                if ($this->input->post('alterar_senha') == '1') {
+            if ($updatedaccount > 0) {
+                if ($this->input->post('change_password') == '1') {
                     redirect('admin/logout');
                 } else {
                     $this->session->set_flashdata('msg_sistema', 'Seus dados foram salvos com sucesso.');
-                    redirect('admin/usuarios/profile');
+                    redirect('admin/accounts/profile');
                 }
             } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
-                redirect('admin/usuarios/profile');
+                redirect('admin/accounts/profile');
             }
         }
     }

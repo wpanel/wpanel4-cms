@@ -77,14 +77,19 @@ class Auth
     	return $this->_upload_avatar($path, $types, $fieldname, $filename);
     }
 
-    public function activate_account()
+    public function activate_account($account_id = NULL)
     {
         //TODO Criar o método que ativa o usuário pelo email (token).
     }
 
-    public function deactivate_account()
+    public function deactivate_account($account_id = NULL)
     {
         //TODO Criar o método que desativa um usuário.
+    }
+
+    public function remove_account($account_id = NULL)
+    {
+        return $this->_remove_account($account_id);
     }
 
     public function get_account_by_id($id = NULL)
@@ -221,13 +226,13 @@ class Auth
     	return $this->model->insert_permission($data);
     }
 
-    private function _update_account($id, $email, $role, $extra_data = array(), $permissions = array())
+    private function _update_account($id, $email, $role = NULL, $extra_data = array(), $permissions = array())
     {
 
         $data = array();
         $data['id'] = $id;
         $data['email'] = $email;
-        $data['role'] = $role;
+        if($role != NULL)$data['role'] = $role;
         $data['ip_address'] = $_SERVER['REMOTE_ADDR'];
         $data['updated'] = date('Y-m-d H:i:s');
 
@@ -268,6 +273,17 @@ class Auth
             throw new Exception('Error updating an password.');
 
         return $updated_password;
+    }
+
+    private function _remove_account($account_id = NULL)
+    {
+        $this->model->remove_permission_by_account($account_id);
+        $removedaccount = $this->model->remove_account($account_id);
+
+        if (!$removedaccount > 0)
+            throw new Exception('Error removing an account.');
+
+        return $removedaccount;
     }
 
     /**
@@ -339,7 +355,7 @@ class Auth
      * @param null $item
      * @return object
      */
-    private function _get_extra_data($item = NULL, $json = nULL)
+    private function _get_extra_data($item = NULL, $json = NULL)
     {
         if ($json == NULL)
             $json = $this->_get_login_data('extra_data');

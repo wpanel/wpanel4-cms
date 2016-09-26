@@ -17,7 +17,7 @@
         <div class="box-body">
             <?= form_open_multipart('admin/accounts/profile', array('role'=>'form')); ?>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Nome completo</label>
                             <input type="text" name="name" value="<?= $extra_data->name; ?>" class="form-control" />
@@ -37,7 +37,7 @@
                             <input type="password" name="password" class="form-control" />
                             <div class="checkbox">
                                 <label>
-                                    <?= form_checkbox('alterar_senha', '1', false); ?>
+                                    <?= form_checkbox('change_password', '1', false); ?>
                                     Alterar a senha
                                 </label>
                             </div>
@@ -46,27 +46,29 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <?php if($extra_data->avatar){ ?>
+                                <img src="<?= base_url('media/avatar') . '/'.$extra_data->avatar; ?>" class="img-responsive" />
+                            <?php } else { ?>
+                                <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" />
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="userfile">Foto do usuário</label>
                             <input type="file" name="userfile" class="form-control" />
+                            <input type="hidden" name="avatar" value="<?= $extra_data->avatar; ?>"/>
                             <div class="checkbox">
                                 <label>
-                                    <?= form_checkbox('alterar_imagem', '1', false); ?>
+                                    <?= form_checkbox('change_avatar', '1', false); ?>
                                     Alterar a foto
                                 </label>
                             </div>
-                            <?= form_error('image'); ?>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <?php if($extra_data->avatar){ ?>
-                            <img src="<?= base_url('media/avatar') . '/'.$extra_data->avatar; ?>" class="img-responsive" width="120" />
-                        <?php } else { ?>
-                            <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" width="120" />
-                        <?php } ?>
-                    </div>
-                     <div class="col-md-2">
+                     <div class="col-md-3">
                         <div class="form-group">
                             <?php
                             // Opções de skin
@@ -91,8 +93,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar alterações</button>
                         <?= anchor('admin/dashboard', 'Cancelar', array('class'=>'btn btn-danger')); ?>
                     </div>

@@ -25,14 +25,6 @@ class Auth_model extends MY_Model {
 		return $this->db->insert_id();
 	}
 
-	private function _get_module_from_action($action_id)
-	{
-		$this->db->select('module_id');
-		$this->db->where('id', $action_id);
-		$query = $this->db->get('modules_actions')->row();
-		return $query->module_id;
-	}
-
 	// Atualiza uma conta
 	public function update_account($data)
 	{
@@ -49,11 +41,16 @@ class Auth_model extends MY_Model {
 		// Verifica se foi passado a senha anterior e faz a verificação.
 		if(isset($data['old_password']))
 			$this->db->where('password', $data['old_password']);
-
 		$this->db->where('id', $data['id']);
 		$this->db->update('accounts', array('password' => $data['new_password'], 'updated' => date('Y-m-d H:i:s')));
 		return $this->db->affected_rows();
+	}
 
+	public function remove_account($account_id = NULL)
+	{
+		$this->db->where('id', $account_id);
+		$this->db->delete('accounts');
+		return $this->db->affected_rows();
 	}
 
 	// Ferifica o login de uma conta
@@ -96,13 +93,10 @@ class Auth_model extends MY_Model {
 	{
 		if ($select != null)
 			$this->db->select($select);
-
 		if ((is_array($order)) and (count($order)!=0))
 			$this->db->order_by($order['field'], $order['order']);
-
 		if((is_array($limit)) and (count($limit) != 0))
 			$this->db->limit($limit['limit'], $limit['offset']);
-
 		return $this->db->get('accounts');
 	}
 
@@ -111,7 +105,6 @@ class Auth_model extends MY_Model {
 		if($id == NULL)
 			return FALSE;
 			//throw new Exception('Account ID is empty.');
-
 		$this->db->where('id', $id);
 		$account = $this->db->get('accounts');
 		if($account->num_rows() > 0)
@@ -155,11 +148,18 @@ class Auth_model extends MY_Model {
 	{
 		if($account_id == NULL)
 			return FALSE;
-
 		$this->db->where('account_id', $account_id);
         $this->db->delete('permissions');
         return $this->db->affected_rows();
 
+	}
+
+	private function _get_module_from_action($action_id)
+	{
+		$this->db->select('module_id');
+		$this->db->where('id', $action_id);
+		$query = $this->db->get('modules_actions')->row();
+		return $query->module_id;
 	}
 
 }
