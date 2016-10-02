@@ -81,9 +81,9 @@ class Main extends MY_Controller
         // $this->wpn_cols_mosaic = 3;
         
         /**
-         * Set the default post view: list or mosaic.
+         * Set the default post view: list (default) or mosaic.
          */
-        $this->wpn_posts_view = 'mosaic';
+        // $this->wpn_posts_view = 'mosaic';
         
         parent::__construct();
         $this->wpanel->check_setup();
