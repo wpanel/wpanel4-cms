@@ -59,18 +59,35 @@ class Main extends MY_Controller
      */
     function __construct() 
     {
-        /*
-        * Here are some options provided by the MY_Controller class, you
-        * can adjust as you need to your project.
-        */
-        // Enable the CodeIgniter Profile.
+        
+        /**
+         * Here are some options provided by the MY_Controller class, you
+         * can adjust as you need to your project.
+         */
+        
+        /**
+         * Enable the CodeIgniter Profile.
+         */
         // $this->wpn_profiler = TRUE;
-        // Chose the template folder.
+        
+        /**
+         * Chose the template folder.
+         */
         // $this->wpn_template = 'default';
-        // Setup the 'col' number of the mosaic views.
+        
+        /**
+         * Set the 'col' number of the mosaic views.
+         */
         // $this->wpn_cols_mosaic = 3;
+        
+        /**
+         * Set the default post view: list or mosaic.
+         */
+        $this->wpn_posts_view = 'mosaic';
+        
         parent::__construct();
         $this->wpanel->check_setup();
+        
     }
 
     /**
