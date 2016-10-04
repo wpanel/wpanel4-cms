@@ -423,9 +423,9 @@ class Auth
                 return TRUE;
             if (in_array($this->_prepare_url($url), $this->auth_white_list))
                 return TRUE;
-            if ($this->model->validate_white_list($url))
+            if ($this->model->validate_white_list($this->_prepare_url($url)))
                 return TRUE;
-            if ($this->model->validate_permission($account_id, $url) === false) {
+            if ($this->model->validate_permission($account_id, $this->_prepare_url($url)) === false) {
                 $this->session->flashdata('msg_sistema', 'User don\'t has permission.');
                 redirect('admin/dashboard');
                 exit;

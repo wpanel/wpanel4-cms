@@ -176,6 +176,25 @@ if (!function_exists('status_post'))
     }
 }
 
+if (!function_exists('sim_nao')) 
+{
+
+    /**
+     * Return a bootstrap label tag according to the user status.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $status int - User status
+     * @return string
+     * */
+    function sim_nao($status)
+    {
+        if ($status == '1')
+            return '<span class="label label-success">Sim</span>';
+        else
+            return '<span class="label label-danger">Não</span>';
+    }
+}
+
 if (!function_exists('status_user')) 
 {
 
