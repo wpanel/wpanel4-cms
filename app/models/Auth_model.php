@@ -9,8 +9,6 @@ class Auth_model extends MY_Model {
 		parent::__construct();
 	}
 
-	//TODO Criar os métodos da biblioteca Auth() aqui.
-
 	// Cria uma nova conta.
 	public function insert_account($data)
 	{

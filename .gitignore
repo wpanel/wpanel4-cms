@@ -7,3 +7,4 @@ ehthumbs.db
 Thumbs.db
 .idea
 app/db/*.sqlite
+app/modules/gerador

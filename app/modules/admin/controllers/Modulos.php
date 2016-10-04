@@ -49,7 +49,7 @@ class Modulos extends MX_Controller {
 	*/
 	function __construct()
 	{
-//		$this->auth->protect('modulos');
+		$this->auth->check_permission();
 		$this->load->model(array('module', 'module_action'));
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
@@ -143,7 +143,6 @@ class Modulos extends MX_Controller {
 			$this->wpanel->load_view('modulos/edit', $content_vars);
 		} else {
 			$data = array();
-			//TODO Revise os campos para a atualização.
 			$data['name'] = $this->input->post('name');
 			$data['icon'] = $this->input->post('icon');
 			if($this->input->post('show_in_menu') == '1')
@@ -176,7 +175,6 @@ class Modulos extends MX_Controller {
 			$this->session->set_flashdata('msg_sistema', 'Registro inexistente.');
 			redirect('admin/modulos');
 		}
-		//TODO Deletar os itens dos modulos.
 		$this->module->delete_actions($id);
 		if($this->module->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Registro excluído com sucesso.');
