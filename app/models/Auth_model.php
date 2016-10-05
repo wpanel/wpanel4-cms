@@ -54,14 +54,34 @@ class Auth_model extends MY_Model {
 	// Ferifica o login de uma conta
 	public function login_account($data)
 	{
+		// Verifica se o IP está banido.
+		if($this->config->item('auth_enable_ip_banned') == TRUE and $this->_check_ip_banned($_SERVER['REMOTE_ADDR']) > 0)
+			return FALSE;
+		// Verifica se o IP excedeu o limite de tentativas.
+		if($this->_check_attempt($_SERVER['REMOTE_ADDR'])){
+			// Verifica se deve banir automaticamente o IP.
+			if($this->config->item('auth_enable_autoban') == TRUE)
+				$this->_ban_ip($_SERVER['REMOTE_ADDR']);
+			return FALSE;
+		}
+
 		$this->db->where('email', $data['email']);
 		$this->db->where('password', $data['password']);
 		$this->db->where('status', 1);
 		$query = $this->db->get('accounts');
-		if ($query->num_rows() > 0)
+		if ($query->num_rows() > 0){
+			// Verifica se deve registrar o login.
+			if ($this->config->item('auth_log_access') == TRUE){
+				$user = $query->row();
+				$temp = array('user_id' => $user->id, 'ip_address' => $_SERVER['REMOTE_ADDR'], 'created' => date('Y-m-d H:i:s'));
+				$this->db->insert('log_access', $temp);
+			}
+			$this->_clear_attempt($_SERVER['REMOTE_ADDR']);
 			return $query->row();
-		else
+		} else {
+			$this->_add_attempt($_SERVER['REMOTE_ADDR']);
 			return FALSE;
+		}
 	}
 
 	// Verifica se o email já existe.
@@ -158,6 +178,71 @@ class Auth_model extends MY_Model {
 		$this->db->where('id', $action_id);
 		$query = $this->db->get('modules_actions')->row();
 		return $query->module_id;
+	}
+
+	// Cria um novo registro de tentativa.
+	private function _add_attempt($ip_address = NULL)
+	{
+		$this->db->select('id');
+		$this->db->where('ip_address', $ip_address);
+		$_attempts = $this->db->get('ip_attempts');
+		$num_rows = $_attempts->num_rows();
+		if($num_rows > 0){
+			// existe, update: adicionar +1
+			$this->db->set('number_of_attempts', 'number_of_attempts+1' ,FALSE);
+			$this->db->set('last_failed_attempt', date('Y-m-d H:i:s'));
+			$this->db->set('updated', date('Y-m-d H:i:s'));
+			$this->db->where('ip_address', $ip_address);
+			$this->db->update('ip_attempts');
+		} else {
+			// nao existe, criar o primeiro
+			$this->db->set('ip_address', $ip_address);
+			$this->db->set('number_of_attempts', '1');
+			$this->db->set('last_failed_attempt', date('Y-m-d H:i:s'));
+			$this->db->set('created', date('Y-m-d H:i:s'));
+			$this->db->set('updated', date('Y-m-d H:i:s'));
+			$this->db->insert('ip_attempts');
+		}
+	}
+
+	private function _ban_ip($ip_address = NULL)
+	{
+		if($this->_check_ip_banned($ip_address) == FALSE){
+			$this->db->set('ip_address', $ip_address);
+			$this->db->set('created', date('Y-m-d H:i:s'));
+			return $this->db->insert('ip_banned');
+		} else
+			return FALSE;
+	}
+
+	// Verifica se já atingiu o total permitido de tentativas.
+	// retorna true se atingiu o total de tentativas e false se nao atingiu.
+	private function _check_attempt($ip_address = NULL)
+	{
+		$this->db->where('ip_address', $ip_address);
+		$query = $this->db->get('ip_attempts')->row();
+		if($query->number_of_attempts >= $this->config->item('auth_max_attempts')){
+			return TRUE;
+		}
+		else
+			return FALSE;
+	}
+
+	// Limpa as tentativas em caso de acerto.
+	private function _clear_attempt($ip_address = NULL)
+	{
+		$this->db->where('ip_address', $ip_address);
+        $this->db->delete('ip_attempts');
+        return $this->db->affected_rows();
+	}
+
+	// Verifica se o IP está na lista de IP's banidos.
+	private function _check_ip_banned($ip_address = NULL)
+	{
+		$this->db->select('id');
+		$this->db->where('ip_address', $ip_address);
+		$num = $this->db->get('ip_banned')->num_rows();
+		return ($num > 0);
 	}
 
 }

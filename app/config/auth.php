@@ -11,6 +11,20 @@ $config['auth_account_role'] = array('ROOT'=>'Super-User', 'user' => 'Usuário c
 $config['auth_check_permyssion_by_hook'] = FALSE;
 
 /**
+ * Register a log from user access.
+ */
+$config['auth_log_access'] = TRUE;
+
+/**
+ * Enable the bann IP's.
+ */
+$config['auth_enable_ip_banned'] = TRUE;
+
+$config['auth_max_attempts'] = 10; // Define o máximo de tentativas de login.
+
+$config['auth_enable_autoban'] = TRUE; // Bane automaticamente o IP caso atinja o limite.
+
+/**
  * Type of hash for passwords.
  */
 $config['auth_password_hash_type'] = 'md5';
@@ -29,11 +43,11 @@ $config['auth_white_list'] = array(
     'admin/dashboard',
     'admin/accounts/profile',
     // Liberado para testes
-    // 'admin/accounts',
-    // 'admin/accounts/add',
-    // 'admin/accounts/edit',
-    // 'admin/accounts/edit/*',
-    // 'admin/accounts/changepassword/*',
+    'admin/modulos',
+    'admin/modulos/add',
+    'admin/modulos/edit/*',
+    'admin/moduloitens/add/*',
+    'admin/moduloitens/edit/*/*',
     // 'admin/accounts/delete/*',
     'admin/configuracoes',
     'admin/configuracoes/index',

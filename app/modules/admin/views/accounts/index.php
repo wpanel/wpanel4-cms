@@ -16,6 +16,7 @@
             <h3 class="box-title">Lista de contas</h3>
             <div class="box-tools pull-right">
                 <?= anchor('admin/accounts/add', glyphicon('plus-sign') . 'Novo cadastro', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/ipbanneds', glyphicon('ban-circle') . 'IP\'s banidos ', array('class' => 'btn btn-sm btn-danger')); ?>
             </div>
         </div>
         <div class="box-body">

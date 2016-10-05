@@ -35,14 +35,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Esta é a classe do módulo de administração Moduloitens, ela foi
+ * Esta é a classe do módulo de administração Ipbanneds, ela foi
  * gerada automaticamente pela ferramenta Wpanel-GEN para a criação
  * de códigos padrão para o Wpanel CMS.
  *
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  * @version		0.0.1
  */
-class Moduloitens extends MX_Controller {
+class Ipbanneds extends MX_Controller {
 	
 	/**
 	* Método construtor.
@@ -50,7 +50,7 @@ class Moduloitens extends MX_Controller {
 	function __construct()
 	{
 		$this->auth->check_permission();
-		$this->load->model('module_action');
+		$this->load->model('ipban');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 	
@@ -61,7 +61,24 @@ class Moduloitens extends MX_Controller {
 	*/
 	public function index()
 	{
-		redirect('admin/modulos');
+		$this->load->library('table');
+		$layout_vars = array();
+		$content_vars = array();
+		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">'));
+		$this->table->set_heading('#', 'Endereço IP', 'Data', 'Ações');
+		$query = $this->ipban->get_list()->result();
+		foreach($query as $row)
+		{
+			$this->table->add_row(
+				$row->id, $row->ip_address, date('d/m/Y H:i:s', strtotime($row->created)), 
+				// Ícones de ações
+				div(array('class'=>'btn-group btn-group-xs')).
+				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/ipbanneds/delete/'.$row->id).'\');">'.glyphicon('trash').'</button>' .
+				div(null,true)
+			);
+		}
+		$content_vars['listagem'] = $this->table->generate();
+		$this->wpanel->load_view('ipbanneds/index', $content_vars);
 	}
 	
 	/**
@@ -69,78 +86,26 @@ class Moduloitens extends MX_Controller {
 	* 
 	* @return mixed
 	*/
-	public function add($module_id = NULL)
+	public function add()
 	{
 		$layout_vars = array();
 		$content_vars = array();
-		$this->form_validation->set_rules('description', 'Descrição', 'required');
-		$this->form_validation->set_rules('link', 'Link', 'required');
+		$this->form_validation->set_rules('ip_address', 'Endereço IP', 'required');
 		if ($this->form_validation->run() == FALSE)
 		{
-			$content_vars['module_id'] = $module_id;
-			$this->wpanel->load_view('moduloitens/add', $content_vars);
+			$this->wpanel->load_view('ipbanneds/add', $content_vars);
 		} else {
 			$data = array();
-			$data['module_id'] = $module_id;
-			$data['description'] = $this->input->post('description');
-			$data['link'] = $this->input->post('link');
-			if($this->input->post('whitelist') == '1')
-				$data['whitelist'] = '1';
-			else
-				$data['whitelist'] = '0';
-			$data['created'] = date('Y-m_d H:i:s');
-			$data['updated'] = date('Y-m_d H:i:s');
+			$data['ip_address'] = $this->input->post('ip_address');
+			$data['created'] = date('Y-m-d H:i:s');
 			
-			if($this->module_action->save($data))
+			if($this->ipban->save($data))
 			{
 				$this->session->set_flashdata('msg_sistema', 'Registro salvo com sucesso.');
-				redirect('admin/modulos/edit/'.$module_id);
+				redirect('admin/ipbanneds');
 			} else {
 				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o registro.');
-				redirect('admin/modulos/edit/'.$module_id);
-			}
-		}
-	}
-	
-	/**
-	* Mostra o formulário e altera um registro.
-	* 
-	* @param $id int Id do registro a ser editado.
-	* @return mixed
-	*/
-	public function edit($id = NULL, $module_id = NULL)
-	{
-		$layout_vars = array();
-		$content_vars = array();
-		$this->form_validation->set_rules('description', 'Descrição', 'required');
-		$this->form_validation->set_rules('link', 'Link', 'required');
-		if ($this->form_validation->run() == FALSE)
-		{
-			if($id == NULL){
-				$this->session->set_flashdata('msg_sistema', 'Registro inexistente.');
-				redirect('admin/moduloitens');
-			}
-			$content_vars['module_id'] = $module_id;
-			$content_vars['row'] = $this->module_action->get_by_id($id)->row();
-			$this->wpanel->load_view('moduloitens/edit', $content_vars);
-		} else {
-			$data = array();
-			$data['module_id'] = $module_id;
-			$data['description'] = $this->input->post('description');
-			$data['link'] = $this->input->post('link');
-			if($this->input->post('whitelist') == '1')
-				$data['whitelist'] = '1';
-			else
-				$data['whitelist'] = '0';
-			$data['updated'] = date('Y-m_d H:i:s');
-			
-			if($this->module_action->update($id, $data))
-			{
-				$this->session->set_flashdata('msg_sistema', 'Registro salvo com sucesso.');
-				redirect('admin/modulos/edit/'.$module_id);
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o registro.');
-				redirect('admin/modulos/edit/'.$module_id);
+				redirect('admin/ipbanneds');
 			}
 		}
 	}
@@ -151,20 +116,20 @@ class Moduloitens extends MX_Controller {
 	* @param $id int Id do registro a ser excluído.
 	* @return mixed
 	*/
-	public function delete($id = NULL, $module_id = NULL)
+	public function delete($id = null)
 	{
 		if($id == null){
 			$this->session->set_flashdata('msg_sistema', 'Registro inexistente.');
-			redirect('admin/modulos');
+			redirect('admin/ipbanneds');
 		}
-		if($this->module_action->delete($id)){
+		if($this->ipban->delete($id)){
 			$this->session->set_flashdata('msg_sistema', 'Registro excluído com sucesso.');
-			redirect('admin/modulos/edit/'.$module_id);
+			redirect('admin/ipbanneds');
 		} else {
 			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir o registro.');
-			redirect('admin/modulos/edit/'.$module_id);
+			redirect('admin/ipbanneds');
 		}
 	}
 }
 
-// End of file modules/admin/controllers/Moduloitens.php
+// End of file modules/admin/controllers/Ipbanneds.php

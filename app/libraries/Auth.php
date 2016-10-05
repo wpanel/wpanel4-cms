@@ -4,14 +4,19 @@
  * Nova biblioteca de autenticação com ACL.
  *
  * Esta versão tem como objetivo:
- * - gerenciar os usua´rios (crud)
+ * -----------------------------------
+ * - gerenciar os usuários (crud) [ok]
  * - gerenciar a ativação/desativação
- * - gerenciar os IP´s banidos
- * - Gerenciar módulos e actions
- * - fazer o login e logout do usuário
- * - registrar os logins realizados
- * - limitar o acesso por excesso de tentativas
+ * - Gerar o menu do painel de controle de acordo com as permissões
+ * - gerenciar os IP´s banidos (crud) [ok]
+ * - banir autometicamente os ips [ok]
+ * - configurar limite de tentativas [ok]
+ * - Gerenciar módulos e actions [ok]
+ * - fazer o login e logout do usuário [ok]
+ * - registrar os logins realizados [ok]
+ * - limitar o acesso por excesso de tentativas [ok]
  * - lembrar login (remember me) com cookies
+ *   TODO Criar a tabela ip_banned no arquivo migration. [ok]
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -149,7 +154,6 @@ class Auth
             return $this->check_permission();
     }
 
-    // Exemplo retirado do projeto ACL no Github.
     public function check_permission($url = NULL)
     {
         return $this->_check_permission($url);
@@ -236,16 +240,14 @@ class Auth
         $data['ip_address'] = $_SERVER['REMOTE_ADDR'];
         $data['updated'] = date('Y-m-d H:i:s');
 
-        // Altera as permissões caso seja enviado algum parametro pelo array.
         //TODO Melhorar a atualização dos dados-extra, desse jeito sempre perderá a foto.
         if(count($extra_data) > 0)
             $data['extra_data'] = json_encode($extra_data, JSON_PRETTY_PRINT);
 
         $updated_account = $this->model->update_account($data);
 
-        // Fazer a atualização das permissões.
+        // Altera as permissões caso seja enviado algum parametro pelo array.
         if(count($permissions) > 0){
-            //TODO Apagar as permissões antigas.
             $this->model->remove_permission_by_account($id);
             foreach ($permissions as $key => $value) {
                 $this->_create_permission($value, $id);

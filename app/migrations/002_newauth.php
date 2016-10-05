@@ -62,6 +62,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->create_table('accounts', true);
 
 		// Cria a tabela de perfil do usuário
+		// Esta tabela não será usada por enquanto.
 		$fields = array(
 	        'id' => array(
                 'type' => 'INT',
@@ -100,44 +101,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('user_id');
-		$this->dbforge->create_table('users_profile', true);
-
-		// Cria a tabela ip_attempts
-		$fields = array(
-			'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE
-	        ),
-	        'ip_adress' => array(
-	        	'type' => 'varchar',
-	        	'constraint' => 15,
-	        	'null' => FALSE,
-	        	'default' => '0.0.0.0'
-        	),
-        	'last_failed_attempt' => array(
-        		'type' => 'datetime',
-        		'null' => FALSE,
-    		),
-    		'number_of_attempts' => array(
-    			'type' => 'int',
-    			'constraint' => 11,
-    			'null' => FALSE
-			),
-			'created' => array(
-	        	'type' => 'datetime',
-	        	'null' => TRUE,
-	        ),
-	        'updated' => array(
-	        	'type' => 'datetime',
-	        	'null' => TRUE,
-	        )
-		);
-		$this->dbforge->add_field($fields);
-		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->add_key('number_of_attempts');
-		$this->dbforge->create_table('ip_attempts', true);
+		// $this->dbforge->create_table('users_profile', true);
 
 		// Cria a tabela 'modules'
 		$fields = array(
@@ -270,7 +234,7 @@ class Migration_newauth extends CI_Migration
 				'type' => 'INT',
 				'null' => FALSE
 			),
-			'ip_adress' => array(
+			'ip_address' => array(
 				'type' => 'varchar',
 				'constraint' => 15,
 				'null' => FALSE,
@@ -287,6 +251,67 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('module_id');
 		$this->dbforge->create_table('log_access', true);
 
+		// Cria a tabela ip_attempts
+		$fields = array(
+			'id' => array(
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+	        ),
+	        'ip_address' => array(
+	        	'type' => 'varchar',
+	        	'constraint' => 15,
+	        	'null' => FALSE,
+	        	'default' => '0.0.0.0'
+        	),
+        	'last_failed_attempt' => array(
+        		'type' => 'datetime',
+        		'null' => FALSE,
+    		),
+    		'number_of_attempts' => array(
+    			'type' => 'int',
+    			'constraint' => 11,
+    			'null' => FALSE
+			),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        ),
+	        'updated' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('number_of_attempts');
+		$this->dbforge->create_table('ip_attempts', true);
+
+		// Cria a tabela ip_banned
+		$fields = array(
+			'id' => array(
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+	        ),
+	        'ip_address' => array(
+	        	'type' => 'varchar',
+	        	'constraint' => 15,
+	        	'null' => FALSE,
+	        	'default' => '0.0.0.0'
+        	),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('ip_address');
+		$this->dbforge->create_table('ip_banned', true);
+		
 		//TODO Lembrar mais alguma tabela...
 
 	}
