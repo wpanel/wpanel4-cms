@@ -5,7 +5,7 @@ class Migration_newauth extends CI_Migration
 	public function up()
 	{
 		// Renomeia a tabela 'users' para fins de recuperação.
-		$this->dbforge->rename_table('users', 'users_bkp');
+		//$this->dbforge->rename_table('users', 'users_bkp', TRUE);
 
 		// Cria uma nova tabela 'accounts' com a nova estrutura.
 		$fields = array(
@@ -60,48 +60,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('accounts', true);
-
-		// Cria a tabela de perfil do usuário
-		// Esta tabela não será usada por enquanto.
-		$fields = array(
-	        'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE
-	        ),
-	        'user_id' => array(
-	        	'type' => 'INT',
-	        	'null' => FALSE
-	        ),
-	        'nome' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '150',
-                'null' => TRUE,
-	        ),
-	        'avatar' => array(
-                'type' =>'VARCHAR',
-                'constraint' => '200',
-                'null' => TRUE,
-	        ),
-	        'skin' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 40,
-                'null' => TRUE,
-	        ),
-	        'created' => array(
-	        	'type' => 'datetime',
-	        	'null' => TRUE,
-	        ),
-	        'updated' => array(
-	        	'type' => 'datetime',
-	        	'null' => TRUE,
-	        )
-		);
-		$this->dbforge->add_field($fields);
-		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->add_key('user_id');
-		// $this->dbforge->create_table('users_profile', true);
+		$fields = NULL;
 
 		// Cria a tabela 'modules'
 		$fields = array(
@@ -123,7 +82,7 @@ class Migration_newauth extends CI_Migration
 			),
 			'show_in_menu' => array(
     			'type' => 'int',
-    			'constraint' => 1,
+    			'constraint' => 11,
     			'null' => TRUE
 			),
 			'order' => array(
@@ -142,7 +101,8 @@ class Migration_newauth extends CI_Migration
 		);
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('modules', true);
+		$this->dbforge->create_table('modules', TRUE);
+		$fields = NULL;
 
 		// Cria a tabela 'modules_actions'
 		$fields = array(
@@ -185,6 +145,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('module_id');
 		$this->dbforge->create_table('modules_actions', true);
+		$fields = NULL;
 
 		// Cria a tabela permissions
 		$fields = array(
@@ -221,6 +182,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('module_action_id');
 		$this->dbforge->add_key('account_id');
 		$this->dbforge->create_table('permissions', true);
+		$fields = NULL;
 
 		// Cria a tabela log_access
 		$fields = array(
@@ -250,6 +212,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('module_id');
 		$this->dbforge->create_table('log_access', true);
+		$fields = NULL;
 
 		// Cria a tabela ip_attempts
 		$fields = array(
@@ -287,6 +250,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('number_of_attempts');
 		$this->dbforge->create_table('ip_attempts', true);
+		$fields = NULL;
 
 		// Cria a tabela ip_banned
 		$fields = array(
@@ -311,6 +275,7 @@ class Migration_newauth extends CI_Migration
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->add_key('ip_address');
 		$this->dbforge->create_table('ip_banned', true);
+		$fields = NULL;
 		
 		//TODO Lembrar mais alguma tabela...
 
