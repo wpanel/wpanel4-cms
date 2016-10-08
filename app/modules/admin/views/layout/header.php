@@ -157,8 +157,8 @@
 					<li <?= wpn_activelink('newsletters'); ?>>
 						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('usuarios'); ?>>
-						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
+					<li <?= wpn_activelink('accounts'); ?>>
+						<?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
 					</li>
 					<li <?= wpn_activelink('configuracoes'); ?>>
 						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
