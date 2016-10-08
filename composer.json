@@ -1,10 +1,10 @@
 {
 	"name": "elieldepaula/wpanelcms",
-	"homepage": "http://wpanelcms.com.br",
+	"homepage": "http://wpanelcms.org",
     "license": "MIT",
     "type": "project",
-    "keywords": ["wpanel", "cms", "codeigniter", "wpanelcms"],
-    "description": "WPanel CMS is a Content Manager System for blogs, websites and small applications written in PHP over CodeIgniter 2.2.x .",
+    "keywords": ["wpanel", "blog", "manager", "cms", "codeigniter", "wpanelcms"],
+    "description": "WPanel CMS is a Content Manager System for blogs, websites and small applications written in PHP over CodeIgniter 3.x .",
     "authors": [
         {
             "name": "Eliel de Paula",
