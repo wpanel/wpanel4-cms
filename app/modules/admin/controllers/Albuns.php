@@ -99,7 +99,7 @@ class albuns extends MX_Controller {
 			$this->load->model('album');
 
 			$dados_save = array();
-			$dados_save['user_id'] = $this->auth->get_userid();
+			$dados_save['user_id'] = $this->auth->get_login_data('id');
 			$dados_save['titulo'] = $this->input->post('titulo');
 			$dados_save['descricao'] = $this->input->post('descricao');
 			$dados_save['status'] = $this->input->post('status');

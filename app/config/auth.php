@@ -49,11 +49,11 @@ $config['auth_white_list'] = array(
     'admin/moduloitens/add/*',
     'admin/moduloitens/edit/*/*',
     // 'admin/accounts/delete/*',
-    'admin/configuracoes',
+    /*'admin/configuracoes',
     'admin/configuracoes/index',
     'gerador',
     'gerador/main',
     'gerador/main/gerarModel',
     'gerador/main/gerarController',
-    'gerador/main/gerarCrud',
+    'gerador/main/gerarCrud',*/
 );
