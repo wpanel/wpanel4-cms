@@ -58,17 +58,6 @@ class banners extends MX_Controller {
 
 		$this->wpanel->load_view('banners/index', $content_vars);
 	}
-	
-	public function update_sequence()
-	{
-	    $i = 0;
-	    $itens = $_POST['item']; //$this->input->post('item');
-		foreach ($itens as $value) {
-			// Execute statement:
-			$this->banner->update($value,  array('sequence' => $i));
-			$i++;
-		}
-	}
 
 	public function add()
 	{
@@ -180,5 +169,5 @@ class banners extends MX_Controller {
 			redirect('admin/banners');
 		}
 	}
-
+	
 }
