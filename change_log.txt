@@ -6,7 +6,7 @@
 - Auto delete to files and folders from album on delete action;
 - Bug fix in the wpanelmenu widget to show menu and submenu;
 
-[14-09-2916]
+[14-09-2016]
 
 - Small changes into default migration file;
 - Changes in /app/models/Configuracao.php, now I did not save the JSON data in the session;
