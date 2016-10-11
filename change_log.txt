@@ -1,4 +1,5 @@
 
+- Bug fix into contact form, small fixes along the app/controllers/Main.php class;
 - Removed an old code from banners control (an attempt to make drag and drop sortable);
 - Updates on composer.json
 - Default view posts comments included into /app/controllers/Main.php

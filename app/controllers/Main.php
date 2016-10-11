@@ -109,12 +109,12 @@ class Main extends MY_Controller
      */
     public function index() 
     {
-        switch ($this->wpanel->get_config('home_tipo')) {
+        switch (wpn_config('home_tipo')) {
             case 'page':
-                $this->post($this->wpanel->get_config('home_id'), true);
+                $this->post(wpn_config('home_id'), true);
                 break;
             case 'category':
-                $this->posts($this->wpanel->get_config('home_id'));
+                $this->posts(wpn_config('home_id'));
                 break;
             default:
                 return $this->custom();
@@ -418,7 +418,7 @@ class Main extends MY_Controller
             $this->wpanel->set_meta_description('Formulário de contato');
             $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
             $this->wpanel->set_meta_title('Contato');
-            $this->data_content['contact_content'] = $this->wpanel->get_config('texto_contato');
+            $this->data_content['contact_content'] = wpn_config('texto_contato');
             $this->data_content['captcha'] = $this->form_validation->get_captcha();
             $this->render('contact');
         } else {
@@ -441,21 +441,21 @@ class Main extends MY_Controller
             // Load the library.
             $this->load->library('email');
             // Check if use SMTP.
-            if ($this->wpanel->get_config('usa_smtp') == 1) {
+            if (wpn_config('usa_smtp') == 1) {
                 $conf_email = array();
                 $conf_email['protocol'] = 'smtp';
-                $conf_email['smtp_host'] = $this->wpanel->get_config('smtp_servidor');
-                $conf_email['smtp_port'] = $this->wpanel->get_config('smtp_porta');
-                $conf_email['smtp_user'] = $this->wpanel->get_config('smtp_usuario');
-                $conf_email['smtp_pass'] = $this->wpanel->get_config('smtp_senha');
+                $conf_email['smtp_host'] = wpn_config('smtp_servidor');
+                $conf_email['smtp_port'] = wpn_config('smtp_porta');
+                $conf_email['smtp_user'] = wpn_config('smtp_usuario');
+                $conf_email['smtp_pass'] = wpn_config('smtp_senha');
                 $this->email->initialize($conf_email);
-                $this->email->from($this->wpanel->get_config('smtp_usuario'), 'Formulário de contato');
+                $this->email->from(wpn_config('smtp_usuario'), 'Formulário de contato');
             } else {
                 $this->email->from($email, $nome);
             }
             // Send the message.
-            $this->email->to($this->wpanel->get_config('site_contato'));
-            $this->email->subject('Mensagem do site - [' . $this->wpanel->get_titulo() . ']');
+            $this->email->to(wpn_config('site_contato'));
+            $this->email->subject('Mensagem do site - [' . wpn_config('site_titulo') . ']');
             $this->email->message($msg);
             // Verify the succes of the send.
             if ($this->email->send()) {
@@ -484,7 +484,7 @@ class Main extends MY_Controller
         $rss .= "<rss version=\"2.0\">\n";
         $rss .= "\t<channel>\n";
         $rss .= "\t\t<title>" . wpn_config('site_titulo') . "</title>\n";
-        $rss .= "\t\t<description>" . $this->wpanel->get_config('site_desc') . "</description>\n";
+        $rss .= "\t\t<description>" . wpn_config('site_desc') . "</description>\n";
         $rss .= "\t\t<link>" . site_url() . "</link>\n";
         $rss .= "\t\t<language>".$locale."</language>\n";
         foreach ($query as $row) {
