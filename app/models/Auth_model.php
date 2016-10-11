@@ -44,6 +44,20 @@ class Auth_model extends MY_Model {
 		return $this->db->affected_rows();
 	}
 
+	public function activate_account($account_id = NULL)
+	{
+		$this->db->where('id', $account_id);
+		$this->db->update('accounts', array('status' => 1));
+		return $this->db->affected_rows();
+	}
+
+	public function deactivate_account($account_id = NULL)
+	{
+		$this->db->where('id', $account_id);
+		$this->db->update('accounts', array('status' => 0));
+		return $this->db->affected_rows();
+	}
+
 	public function remove_account($account_id = NULL)
 	{
 		$this->db->where('id', $account_id);

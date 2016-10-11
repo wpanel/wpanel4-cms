@@ -173,10 +173,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
                         <?= anchor('admin/accounts', 'Cancelar', array('class'=>'btn btn-danger')); ?>
-                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <?php
+                        if($row->status == 1)
+                            echo anchor('admin/accounts/deactivate/'.$row->id, 'Desativar usuário', array('class'=>'btn btn-danger')); 
+                        else
+                            echo anchor('admin/accounts/activate/'.$row->id, 'Ativar usuário', array('class'=>'btn btn-success')); 
+                        ?>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
                     </div>
                 </div>
             <?= form_close(); ?>

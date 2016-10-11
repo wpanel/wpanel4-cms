@@ -239,3 +239,15 @@ if(!function_exists('wpn_lang'))
             return $default;
     }
 }
+
+if(!function_exists('wpn_link_permission'))
+{
+    function wpn_link_permission($url = NULL)
+    {
+        $CI =& get_instance();
+        if($CI->auth->has_permission($url))
+            return TRUE;
+        else
+            return FALSE;
+    }
+}

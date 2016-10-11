@@ -134,35 +134,55 @@
 					<li <?= wpn_activelink('dashboard'); ?>>
 						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>'.wpn_lang('mod_dashboard', 'Dashboard').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('posts'); ?>>
-						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_post', 'Posts').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('pages'); ?>>
-						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_page', 'Pages').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('agendas'); ?>>
-						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>'.wpn_lang('mod_event', 'Events').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('banners'); ?>>
-						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>'.wpn_lang('mod_banner', 'Banners').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('albuns'); ?>
-						<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>'.wpn_lang('mod_galery', 'Galery').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('videos'); ?>> 
-						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>'.wpn_lang('mod_video', 'Videos').'</span>'); ?>
-					</li>
+					<?php if(wpn_link_permission('admin/posts')){ ?>
+						<li <?= wpn_activelink('posts'); ?>>
+							<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_post', 'Posts').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/pages')){ ?>
+						<li <?= wpn_activelink('pages'); ?>>
+							<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_page', 'Pages').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/agendas')){ ?>
+						<li <?= wpn_activelink('agendas'); ?>>
+							<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>'.wpn_lang('mod_event', 'Events').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/banners')){ ?>
+						<li <?= wpn_activelink('banners'); ?>>
+							<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>'.wpn_lang('mod_banner', 'Banners').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/albuns')){ ?>
+						<li <?= wpn_activelink('albuns'); ?>
+							<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>'.wpn_lang('mod_galery', 'Galery').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/videos')){ ?>
+						<li <?= wpn_activelink('videos'); ?>> 
+							<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>'.wpn_lang('mod_video', 'Videos').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/menus')){ ?>
 					<li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>'.wpn_lang('mod_menu', 'Menus').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('newsletters'); ?>>
-						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('accounts'); ?>>
-						<?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('configuracoes'); ?>>
-						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
-					</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/newsletters')){ ?>
+						<li <?= wpn_activelink('newsletters'); ?>>
+							<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/accounts')){ ?>
+						<li <?= wpn_activelink('accounts'); ?>>
+							<?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/configuracoes')){ ?>
+						<li <?= wpn_activelink('configuracoes'); ?>>
+							<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
+						</li>
+					<?php } ?>
 				</ul>
 			</section>
 			<!-- /.sidebar -->

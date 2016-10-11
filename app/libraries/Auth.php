@@ -5,9 +5,12 @@
  *
  * Esta versão tem como objetivo:
  * -----------------------------------
+ * --->> Verificar porque usuario comum esta logando no painel.
+ * - gerenciar a ativação/desativação (crud)[ok] (email)[andamento]
+ * - Gerar o menu do painel de controle de acordo com as permissões [ok] (de certa forma)
+ *        - mostrar links somente para quem tem permissão [ok]
+ * - lembrar login (remember me) com cookies
  * - gerenciar os usuários (crud) [ok]
- * - gerenciar a ativação/desativação
- * - Gerar o menu do painel de controle de acordo com as permissões
  * - gerenciar os IP´s banidos (crud) [ok]
  * - banir autometicamente os ips [ok]
  * - configurar limite de tentativas [ok]
@@ -15,7 +18,6 @@
  * - fazer o login e logout do usuário [ok]
  * - registrar os logins realizados [ok]
  * - limitar o acesso por excesso de tentativas [ok]
- * - lembrar login (remember me) com cookies
  *   TODO Criar a tabela ip_banned no arquivo migration. [ok]
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -84,12 +86,12 @@ class Auth
 
     public function activate_account($account_id = NULL)
     {
-        //TODO Criar o método que ativa o usuário pelo email (token).
+        return $this->_activate_account($account_id);
     }
 
     public function deactivate_account($account_id = NULL)
     {
-        //TODO Criar o método que desativa um usuário.
+        return $this->_deactivate_account($account_id);
     }
 
     public function remove_account($account_id = NULL)
@@ -205,6 +207,12 @@ class Auth
             'status' => 0
         );
 
+        //TODO Testar esta solução online.
+        $data_email = array();
+        $data_email['to'] = $email;
+        $data_email['subject'] = 'Confirmação e ativação de cadastro.';
+        //$this->_send_activation_email($data_email);
+
         $new_account = $this->model->insert_account($data);
 
         if(count($permissions) > 0){
@@ -288,6 +296,33 @@ class Auth
         return $removedaccount;
     }
 
+    private function _activate_account($account_id = '')
+    {
+        $changed_account = $this->model->activate_account($account_id);
+        if (!$changed_account > 0)
+            throw new Exception('Error activating account.');
+
+        return $changed_account;
+    }
+
+    private function _deactivate_account($account_id = '')
+    {
+        $changed_account = $this->model->deactivate_account($account_id);
+        if (!$changed_account > 0)
+            throw new Exception('Error activating account.');
+
+        return $changed_account;
+    }
+
+    private function _send_activation_email($data = null)
+    {
+
+        $data['html'] = TRUE;
+        $data['message'] = $this->load->view('emails/account_activation', $data, TRUE);
+        return $this->wpanel->send_email($data);
+
+    }
+
     /**
      * Login into an account.
      *
@@ -321,11 +356,6 @@ class Auth
     private function _logout_account()
     {
         return $this->session->sess_destroy();
-    }
-
-    private function _send_activation_email()
-    {
-        //TODO Criar o envio do email com a chave de ativação.
     }
 
     /**
@@ -440,7 +470,10 @@ class Auth
     {
     	if($account_id == NULL)
     		$account_id = $this->get_account_id();
-    	return $this->model->validate_permission($account_id, $url);
+        if($this->_get_login_data('role') == 'ROOT')
+            return TRUE;
+        else
+    	   return $this->model->validate_permission($account_id, $url);
     }
 
     /**

@@ -41,7 +41,6 @@ class Accounts extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        //$this->load->model('account');
         $this->auth->check_permission();
     }
 
@@ -250,6 +249,28 @@ class Accounts extends MX_Controller
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
                 redirect('admin/accounts/profile');
             }
+        }
+    }
+
+    public function activate($account_id = NULL)
+    {
+        if($this->auth->activate_account($account_id)){
+            $this->session->set_flashdata('msg_sistema', 'Conta ativada com sucesso.');
+            redirect('admin/accounts/edit/'.$account_id);
+        } else {
+            $this->session->set_flashdata('msg_sistema', 'Não foi possível ativar a conta.');
+            redirect('admin/accounts/edit/'.$account_id);
+        }
+    }
+
+    public function deactivate($account_id = NULL)
+    {
+        if($this->auth->deactivate_account($account_id)){
+            $this->session->set_flashdata('msg_sistema', 'Conta desativada com sucesso.');
+            redirect('admin/accounts/edit/'.$account_id);
+        } else {
+            $this->session->set_flashdata('msg_sistema', 'Não foi possível desativar a conta.');
+            redirect('admin/accounts/edit/'.$account_id);
         }
     }
 

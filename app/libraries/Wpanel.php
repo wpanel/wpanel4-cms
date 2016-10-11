@@ -261,8 +261,6 @@ class Wpanel
         return $this->configuracao->get_config($item);
     }
 
-    /* ----- Methods for the Control Panel. ----- */
-
     /**
      * Return the code needed to load the configured editor.
      *
@@ -273,13 +271,13 @@ class Wpanel
     public function load_editor() 
     {
         $html = '';
-        switch ($this->get_config('text_editor')) {
+        switch (wpn_config('text_editor')) {
             case 'ckeditor':
-                $html .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('') . "lib/plugins/ckeditor/ckeditor.js\"></script>\n";
+                $html .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('lib/plugins/ckeditor/ckeditor.js') . "\"></script>\n";
                 return $html;
                 break;
             case 'tinymce':
-                $html .= '<script src="' . base_url() . 'lib/plugins/tinymce/tinymce.min.js"></script>';
+                $html .= '<script src="' . base_url('lib/plugins/tinymce/tinymce.min.js') . '"></script>';
                 $html .= '<script>tinymce.init({selector:\'textarea#editor\',';
                 $html .= '        plugins: [';
                 $html .= '            "advlist autolink lists link image charmap print preview anchor",';
@@ -309,5 +307,40 @@ class Wpanel
         $this->load->view('layout/header');
         $this->load->view($view, $dados);
         $this->load->view('layout/footer');
+    }
+
+    //TODO Write the basic documentation.
+    public function send_email($data = NULL)
+    {
+        if($data == NULL)
+            return FALSE;
+        // Load the library.
+        $this->load->library('email');
+        // Check if use SMTP.
+        if (wpn_config('usa_smtp') == 1) {
+            $param = array();
+            $param['protocol'] = 'smtp';
+            $param['smtp_host'] = wpn_config('smtp_servidor');
+            $param['smtp_port'] = wpn_config('smtp_porta');
+            $param['smtp_user'] = wpn_config('smtp_usuario');
+            $param['smtp_pass'] = wpn_config('smtp_senha');
+            if($data['html'] == TRUE)
+                $param['mailtype'] = 'html';
+            else
+                $param['mailtype'] = 'text';
+            $this->email->initialize($param);
+            $this->email->from(wpn_config('smtp_usuario'), $data['from_name']);
+        } else
+            $this->email->from($data['from_email'], $data['from_name']);
+        // Send the message.
+        $this->email->to($data['to']);
+        $this->email->subject($data['subject']);
+        $this->email->message($data['message']);
+        // Verify the succes of the send.
+        if ($this->email->send()) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
