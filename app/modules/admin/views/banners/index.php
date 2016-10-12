@@ -34,7 +34,7 @@
 			        <?php
 			        foreach($query as $row){
 			            ?>
-    			        <tr style="cursor:move;">
+    			        <tr>
     			            <td><?= $row->id; ?></td>
     			            <td><?= $row->title; ?> (<?= $row->sequence; ?>)</td>
     			            <td><?= $options[$row->position]; ?></td>

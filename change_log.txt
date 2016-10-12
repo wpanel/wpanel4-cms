@@ -1,4 +1,7 @@
 
+- Fonts-awesome includeds on the project folder;
+- Updated AdminLTE.css files;
+- Fixed style of banners table;
 - Bug fix into contact form, small fixes along the app/controllers/Main.php class;
 - Removed an old code from banners control (an attempt to make drag and drop sortable);
 - Updates on composer.json
