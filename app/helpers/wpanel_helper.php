@@ -145,7 +145,7 @@ if (!function_exists('wpn_activelink'))
      * This helper return class 'active' for bootstrap menus in the control panel and
      * could be used into the site as well.
      * 
-     * @param $link string Link param to check.
+     * @param $link mixed Link param to check, It could be string or array.
      * @param $segment integer Segment of the URL to be checked, default 2 to Control Panel.
      * @param $return string Code returned case is active, default: class="active".
      * @return string
@@ -153,8 +153,14 @@ if (!function_exists('wpn_activelink'))
     function wpn_activelink($link, $segment = 2, $return = ' class="active"')
     {
         $CI =& get_instance();
-        if ($CI->uri->segment($segment) == $link)
-            return $return;
+        $var = $CI->uri->segment($segment);
+        if(is_array($link)){
+            if(in_array($var, $link))
+                return $return;
+        } else {
+            if ($var == $link)
+                return $return;
+        }
     }
 }
 

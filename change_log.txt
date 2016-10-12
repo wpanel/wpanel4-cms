@@ -1,4 +1,5 @@
 
+- Wpanel helper updated to wpn_activelink accept array as item resource;
 - Fonts-awesome includeds on the project folder;
 - Updated AdminLTE.css files;
 - Fixed style of banners table;
