@@ -73,6 +73,7 @@ class Main extends MY_Controller
         /**
          * Chose the template folder.
          */
+
         // $this->wpn_template = 'default';
         
         /**

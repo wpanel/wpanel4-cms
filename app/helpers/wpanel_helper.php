@@ -182,6 +182,25 @@ if (!function_exists('status_post'))
     }
 }
 
+if (!function_exists('sim_nao')) 
+{
+
+    /**
+     * Return a bootstrap label tag according to the user status.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $status int - User status
+     * @return string
+     * */
+    function sim_nao($status)
+    {
+        if ($status == '1')
+            return '<span class="label label-success">Sim</span>';
+        else
+            return '<span class="label label-danger">Não</span>';
+    }
+}
+
 if (!function_exists('status_user')) 
 {
 
@@ -198,26 +217,6 @@ if (!function_exists('status_user'))
             return '<span class="label label-success">Ativo</span>';
         else
             return '<span class="label label-danger">Bloqueado</span>';
-    }
-}
-
-if (!function_exists('login_userobject')) 
-{
-    
-    /**
-     * This helper return a item from the user logged object.
-     * 
-     * @param $var string
-     * @return mixed
-     */
-    function login_userobject($var = null)
-    {
-        $CI =& get_instance();
-        if($var == null)
-            return $CI->session->userdata('user_object');
-        else
-            return $CI->session->userdata('user_object')->$var;
-
     }
 }
 
@@ -244,5 +243,17 @@ if(!function_exists('wpn_lang'))
             return $line;
         else
             return $default;
+    }
+}
+
+if(!function_exists('wpn_link_permission'))
+{
+    function wpn_link_permission($url = NULL)
+    {
+        $CI =& get_instance();
+        if($CI->auth->has_permission($url))
+            return TRUE;
+        else
+            return FALSE;
     }
 }

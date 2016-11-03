@@ -83,7 +83,7 @@ class Likebox extends Widget {
 	{
 		$html = "";
 		$html .= "<div class=\"fb-like-box\"
-                        data-href=\"" . $this->wpanel->get_config('link_likebox') . "\"
+                        data-href=\"" . wpn_config('link_likebox') . "\"
                         data-colorscheme=\"".$colorscheme."\"
                         data-show-faces=\"".$show_faces."\"
                         data-header=\"".$header."\"

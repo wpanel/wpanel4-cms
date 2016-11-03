@@ -10,3 +10,6 @@ public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
 public/media/avatar/*.png
 public/media/avatar/*.gif
+.idea
+app/db/*.sqlite
+app/modules/gerador
