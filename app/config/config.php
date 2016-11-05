@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-if($_SERVER['REMOTE_ADDR'] == '::1')
+if($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
     $config['base_url'] = 'http://localhost:8000/';
 else
     $config['base_url'] = 'https://wpanel-elieldepaula.c9.io/';

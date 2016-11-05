@@ -10,6 +10,7 @@
 - Removed site configurations from sessions;
 - Auto delete to files and folders from album on delete action;
 - Bug fix in the wpanelmenu widget to show menu and submenu;
+- Changes into config.php to select base_url by remote_addr;
 
 [14-09-2016]
 
