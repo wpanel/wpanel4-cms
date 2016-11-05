@@ -23,12 +23,12 @@
 				echo form_open('admin/login', array('role' => 'form'));
 				?>
 					<div class="form-group has-feedback">
-						<input type="text" name="email" class="form-control" placeholder="<?= wpn_lang('input_email', 'Email'); ?>"/>
+						<input type="text" name="email" class="form-control" placeholder="<?= wpn_lang('pch_username', 'Email or Username'); ?>"/>
 						<?= form_error('email'); ?>
 						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<input type="password" name="password" class="form-control" placeholder="<?= wpn_lang('input_password', 'Password'); ?>"/>
+						<input type="password" name="password" class="form-control" placeholder="<?= wpn_lang('pch_password', 'Password'); ?>"/>
 						<?= form_error('password'); ?>
 						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 					</div>

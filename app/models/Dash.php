@@ -40,7 +40,7 @@ class Dash extends MY_Model
 	public function calcula_totais($modulo, $tipo = 0)
 	{
 
-		$this->db->where('user_id', $this->auth->get_account_id());
+		$this->db->where('user_id', login_userobject('id'));
 
 		if($modulo == 'posts')
 			$this->db->where('page', $tipo);

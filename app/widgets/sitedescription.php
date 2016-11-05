@@ -63,7 +63,7 @@ class Sitedescription extends Widget {
 
     public function run()
 	{
-		return "<div class=\"".$this->classname."\" ><p>" . wpn_config('site_desc') . "</p></div>";
+		return "<div class=\"".$this->classname."\" ><p>" . $this->wpanel->get_config('site_desc') . "</p></div>";
 	}
 
 }

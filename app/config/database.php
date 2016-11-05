@@ -77,11 +77,11 @@ $query_builder = TRUE;
  */
 $db['development'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
+	'hostname' => '',
+	'username' => '',
 	'password' => '',
-	'database' => 'dev_wpanel_auth',
-	'dbdriver' => 'mysqli',
+	'database' => APPPATH.'db/teste.sqlite',
+	'dbdriver' => 'sqlite3',
 	'dbprefix' => '',
 	'pconnect' => TRUE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

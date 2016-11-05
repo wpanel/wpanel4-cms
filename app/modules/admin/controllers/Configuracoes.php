@@ -48,8 +48,7 @@ class Configuracoes extends MX_Controller
 
     function __construct()
     {
-        $this->auth->check_permission();
-        parent::__construct();
+        $this->auth->protect('configuracoes');
     }
 
     /**

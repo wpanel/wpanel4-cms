@@ -81,9 +81,12 @@
                 <div class="form-group" id="form_funcional" <?php if($row->tipo == 'funcional'){ echo 'style="display:block;"'; } else {echo 'style="display:none;"';} ?>>
                     <label for="funcional">Página funcional</label>
                     <select class="form-control" name="funcional" id="funcional">
-                        <?php foreach(config_item('funcional_links') as $key => $value){ ?>
-                            <option value="<?= $key; ?>" <?php if($row->href == $key){ echo 'selected="selected"';} ?>><?= $value ?></option>
-                        <?php } ?>
+                        <option value="home" <?php if($row->href == 'home'){ echo 'selected="selected"';} ?>>Página inicial</option>
+                        <option value="contato" <?php if($row->href == 'contato'){ echo 'selected="selected"';} ?>>Página de contato</option>
+                        <option value="albuns" <?php if($row->href == 'fotos'){ echo 'selected="selected"';} ?>>Galeria de fotos</option>
+                        <option value="videos" <?php if($row->href == 'videos'){ echo 'selected="selected"';} ?>>Galeria de videos</option>
+                        <option value="events" <?php if($row->href == 'eventos'){ echo 'selected="selected"';} ?>>Lista de eventos</option>
+                        <option value="rss" <?php if($row->href == 'rss'){ echo 'selected="selected"';} ?>>Página de RSS</option>
                     </select>
                 </div>
                 <div class="form-group" id="form_submenu" <?php if($row->tipo == 'submenu'){ echo 'style="display:block;"'; } else {echo 'style="display:none;"';} ?>>

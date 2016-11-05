@@ -66,21 +66,6 @@ $lang['bot_perfil']                 = "Meu perfil";
 $lang['bot_category']               = "Categorias";
 
 /**
- * Inputs
- */
-$lang['input_fullname'] = 'Nome completo';
-$lang['input_validemail'] = 'E-mail válido';
-$lang['input_email'] = 'E-mail';
-$lang['input_password'] = 'Senha';
-
-/**
- * Setup
- */
-$lang['first_account_success'] = 'Conta criada com sucesso';
-$lang['first_account_error'] = 'Erro ao criar a conta';
-$lang['setup_title'] = 'Cadastro do primeiro administrador';
-
-/**
  * Links
  */
 $lang['lnk_recoverpass']            = "Esqueci minha senha";
@@ -98,7 +83,7 @@ $lang['lab_password']               = "Senha";
 /**
 * Placeholders
 */
-$lang['pch_username']               = "Nome de usuário";
+$lang['pch_username']               = "Nome de usuário ou E-mail";
 $lang['pch_youremail']              = "Seu E-mail";
 $lang['pch_password']               = "Senha";
 
@@ -161,4 +146,3 @@ $lang['wpn_update_record']          = "Alterar registro";
 /**
  * Error and system messages
  */
-$lang['msg_login_error'] = "Seu login falhou, tente novamente";

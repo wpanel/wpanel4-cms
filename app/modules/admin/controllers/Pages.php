@@ -38,7 +38,7 @@ class Pages extends MX_Controller {
 
 	function __construct()
 	{
-		$this->auth->check_permission();
+		$this->auth->protect('pages');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 

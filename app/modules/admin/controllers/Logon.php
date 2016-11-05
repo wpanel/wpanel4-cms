@@ -35,50 +35,50 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * This class executes the authentication functions into the Wpanel CMS.
+ * Esta classe forma o conjunto de funcionalidades do Logon do Wpanel
  *
  * @package Wpanel
  * @author Eliel de Paula <dev@gelieldepaula.com.br>
  * @since v1.2.2 12/09/2015
- * @version 2.0.0
- */
+ **/
 class Logon extends MX_Controller {
 
 	function __construct()
 	{
-		parent::__construct();
-	}
-
-	public function index()
-	{
-
-		if ($this->auth->accounts_empty() == TRUE)
-			redirect('setup');
-
-		$this->form_validation->set_rules('email', wpn_lang('input_email', 'Email'), 'required|valid_email');
-		$this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-			$this->load->load->view('logon/index');
-		else {
-			if($this->auth->login($this->input->post('email'), $this->input->post('password')))
-				return redirect('admin');
-			else {
-				$this->session->set_flashdata('msg_auth', wpn_lang('msg_login_error', 'Your login failed, try again.'));
-				return redirect('admin/login');
-			}
-		}
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
 	/**
-	 * This method does the logout of the user account.
+	 * Este método faz o login do usuário no wpanel.
 	 *
 	 * @return void
-	 */
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function index()
+	{
+		$this->load->model('user');
+		
+		if ($this->user->inicial_user() == false) redirect('admin/dashboard/firstadmin');
+
+		$this->form_validation->set_rules('email', 'Nome de usuário ou email', 'required');
+		$this->form_validation->set_rules('password', 'Senha', 'required');
+		
+		if ($this->form_validation->run() == FALSE)
+			$this->load->load->view('logon/index');
+		else
+			$this->auth->login();
+		
+	}
+
+	/**
+	 * Este método faz o logout do usuário.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
 	public function out()
 	{
 		$this->auth->logout();
-		redirect('admin/login');
 	}
 	
 	/**

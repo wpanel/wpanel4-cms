@@ -39,7 +39,7 @@ class menuitens extends MX_Controller
 
     function __construct()
     {
-        $this->auth->check_permission();
+        $this->auth->protect('menus');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         $this->load->model('menu_item');
     }
