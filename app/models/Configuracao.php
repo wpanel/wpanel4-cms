@@ -53,7 +53,7 @@ class Configuracao extends MY_Model
     
     public function save_config($data)
     {
-        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $json = json_encode($data);
         if(write_file(APPPATH . 'config/config.json', $json))
             return true;
         else
