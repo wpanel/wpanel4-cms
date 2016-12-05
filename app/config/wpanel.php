@@ -1,4 +1,39 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+
+/**
+ * WPanel CMS
+ *
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ *
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package     WpanelCms
+ * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://wpanelcms.com.br
+ */
+ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Define os idiomas disponíveis. 
@@ -27,90 +62,15 @@ $config['posts_views'] = array('list' => 'Listagem', 'mosaic' => 'Mosaico');
 $config['banner_positions'] = array('slide' => 'Slide-Show', 'sidebar' => 'Barra lateral');
 
 /**
- * Define a lista de modulos para permissão do usuário.
+ * Define os links funcionais para o gerenciador de menu.
  */
-$config['modules'] = array(
-	
-    /*
-    
-    // Exemplo de configuração de módulo.
-    array(
-        'modulename' => '', 	// Nome do modulo
-        'label' => '', 		// Label que será exibido no link dinâmico do painel de controle
-        'link' => '', 		// Referência de link a partir de /admin/link, ex: 'pages'
-        'description' => '',	// Descrição do módulo.
-        'visible' => True, 	// Indica se o múdulo será ou não exibido no menu dinâmico co painel de controle.
-    ),
-
-    */
-    array(
-        'modulename' => 'agendas',
-        'label' => 'Agendas',
-        'link' => 'agendas',
-        'description' => 'Gerenciador de agendas.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'albuns',
-        'label' => 'Álbuns',
-        'link' => 'albuns',
-        'description' => 'Gerenciador de álbuns de foto.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'banners',
-        'label' => 'Baners',
-        'link' => 'banners',
-        'description' => 'Gerenciador de banners.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'configuracoes',
-        'label' => 'Configurações',
-        'link' => 'configuracoes',
-        'description' => 'Gerencia as configurações do site.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'menus',
-        'label' => 'Menus',
-        'link' => 'menus',
-        'description' => 'Gerenciador de menu.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'newsletters',
-        'label' => 'Newsletters',
-        'link' => 'newsletters',
-        'description' => 'Gerencia os emails coletados no cadastro de newsletter.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'pages',
-        'label' => 'Páginas',
-        'link' => 'pages',
-        'description' => 'Gerencia as páginas fixas do site.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'posts',
-        'label' => 'Postagens',
-        'link' => 'posts',
-        'description' => 'Gerencia as postagens do site.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'usuarios',
-        'label' => 'Usuários',
-        'link' => 'usuarios',
-        'description' => 'Gerencia os usuários do painel de controle.',
-        'visible' => True, 
-    ),
-    array(
-        'modulename' => 'videos',
-        'label' => 'Vídeos',
-        'link' => 'videos',
-        'description' => 'Gerencia os vídeos que serão disponibilizados no site.',
-        'visible' => True, 
-    ),
+$config['funcional_links'] = array(
+    'home'      => 'Página inicial',
+    'contato'   => 'Página de contato',
+    'albuns'    => 'Galeria de fotos',
+    'videos'    => 'Galeria de videos',
+    'events'    => 'Lista de eventos',
+    'pool'      => 'Lista de enquetes',
+    'users'     => 'Área do usuário',
+    'rss'       => 'Página de RSS',
 );

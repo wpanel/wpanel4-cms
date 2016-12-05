@@ -145,7 +145,7 @@ if (!function_exists('wpn_activelink'))
      * This helper return class 'active' for bootstrap menus in the control panel and
      * could be used into the site as well.
      * 
-     * @param $link mixed Link param to check, It could be string or array.
+     * @param $link string Link param to check.
      * @param $segment integer Segment of the URL to be checked, default 2 to Control Panel.
      * @param $return string Code returned case is active, default: class="active".
      * @return string
@@ -153,14 +153,8 @@ if (!function_exists('wpn_activelink'))
     function wpn_activelink($link, $segment = 2, $return = ' class="active"')
     {
         $CI =& get_instance();
-        $var = $CI->uri->segment($segment);
-        if(is_array($link)){
-            if(in_array($var, $link))
-                return $return;
-        } else {
-            if ($var == $link)
-                return $return;
-        }
+        if ($CI->uri->segment($segment) == $link)
+            return $return;
     }
 }
 
@@ -182,6 +176,25 @@ if (!function_exists('status_post'))
     }
 }
 
+if (!function_exists('sim_nao')) 
+{
+
+    /**
+     * Return a bootstrap label tag according to the user status.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $status int - User status
+     * @return string
+     * */
+    function sim_nao($status)
+    {
+        if ($status == '1')
+            return '<span class="label label-success">Sim</span>';
+        else
+            return '<span class="label label-danger">Não</span>';
+    }
+}
+
 if (!function_exists('status_user')) 
 {
 
@@ -198,26 +211,6 @@ if (!function_exists('status_user'))
             return '<span class="label label-success">Ativo</span>';
         else
             return '<span class="label label-danger">Bloqueado</span>';
-    }
-}
-
-if (!function_exists('login_userobject')) 
-{
-    
-    /**
-     * This helper return a item from the user logged object.
-     * 
-     * @param $var string
-     * @return mixed
-     */
-    function login_userobject($var = null)
-    {
-        $CI =& get_instance();
-        if($var == null)
-            return $CI->session->userdata('user_object');
-        else
-            return $CI->session->userdata('user_object')->$var;
-
     }
 }
 
@@ -244,5 +237,17 @@ if(!function_exists('wpn_lang'))
             return $line;
         else
             return $default;
+    }
+}
+
+if(!function_exists('wpn_link_permission'))
+{
+    function wpn_link_permission($url = NULL)
+    {
+        $CI =& get_instance();
+        if($CI->auth->has_permission($url))
+            return TRUE;
+        else
+            return FALSE;
     }
 }

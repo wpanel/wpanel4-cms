@@ -61,6 +61,12 @@ $lang['bot_configurations']         = "Configurations";
 $lang['bot_view_site']              = "View Site";
 
 /**
+ * Setup
+ */
+$lang['first_account_success'] = 'CAccount succefull created';
+$lang['first_account_error'] = 'Can´t create this account';
+
+/**
  * Modules
  */
 $lang['mod_dashboard']              = "Dashboard";

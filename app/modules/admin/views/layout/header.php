@@ -9,7 +9,7 @@
 		<!-- Bootstrap 3.3.4 -->
 		<link href="<?= base_url('lib/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
 		<!-- Font Awesome Icons -->
-		<link href="<?= base_url('lib/plugins/font-awesome-4.6.3/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css" />
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 		<!-- Ionicons -->
 		<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 		<!-- Theme style -->
@@ -46,12 +46,12 @@
 	    <!-- WPanel JS -->
 	    <script src="<?= base_url('lib/js/wpanel.js') ?>"></script>
 	</head>
-	<?php 
-	$skin = login_userobject('skin');
+	<?php
+	$skin = auth_extra_data('skin');
 	if($skin == '')
 		$skin = 'blue';
 
-	$avatar = login_userobject('image');
+	$avatar = auth_extra_data('avatar');
 	if($avatar)
 		$avatar = base_url('media/avatar/'.$avatar);
 	else
@@ -87,22 +87,22 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="<?= $avatar; ?>" class="user-image" alt="<?= login_userobject('name'); ?>"/>
-								<span class="hidden-xs"><?= login_userobject('name'); ?></span>
+								<img src="<?= $avatar; ?>" class="user-image" alt="<?= auth_extra_data('name'); ?>"/>
+								<span class="hidden-xs"><?= auth_extra_data('name'); ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header">
-									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
+									<img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
 									<p>
-										<?= login_userobject('name'); ?>
-										<small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(login_userobject('created'), false); ?></small>
+										<?= auth_extra_data('name'); ?>
+										<small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(auth_login_data('created'), false); ?></small>
 									</p>
 								</li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
 									<div class="pull-left">
-										<?= anchor('admin/usuarios/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class'=>'btn btn-primary btn-flat')); ?>
+										<?= anchor('admin/accounts/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class'=>'btn btn-primary btn-flat')); ?>
 									</div>
 									<div class="pull-right">
 										<?= anchor('/admin/logout', glyphicon('off') . wpn_lang('lnk_logout', 'Logout'), array('class'=>'btn btn-danger btn-flat')); ?>
@@ -122,10 +122,10 @@
 				<!-- Sidebar user panel -->
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= login_userobject('name'); ?>" />
+						<img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
 					</div>
 					<div class="pull-left info">
-						<p><?= login_userobject('name'); ?></p>
+						<p><?= auth_extra_data('name'); ?></p>
 					</div>
 				</div>
 				<!-- sidebar menu: : style can be found in sidebar.less -->
@@ -134,35 +134,55 @@
 					<li <?= wpn_activelink('dashboard'); ?>>
 						<?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>'.wpn_lang('mod_dashboard', 'Dashboard').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('posts'); ?>>
-						<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_post', 'Posts').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('pages'); ?>>
-						<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_page', 'Pages').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('agendas'); ?>>
-						<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>'.wpn_lang('mod_event', 'Events').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('banners'); ?>>
-						<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>'.wpn_lang('mod_banner', 'Banners').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('albuns'); ?>
-						<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>'.wpn_lang('mod_galery', 'Galery').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('videos'); ?>> 
-						<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>'.wpn_lang('mod_video', 'Videos').'</span>'); ?>
-					</li>
+					<?php if(wpn_link_permission('admin/posts')){ ?>
+						<li <?= wpn_activelink('posts'); ?>>
+							<?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_post', 'Posts').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/pages')){ ?>
+						<li <?= wpn_activelink('pages'); ?>>
+							<?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>'.wpn_lang('mod_page', 'Pages').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/agendas')){ ?>
+						<li <?= wpn_activelink('agendas'); ?>>
+							<?= anchor('admin/agendas', ' <i class="fa fa-calendar"></i> <span>'.wpn_lang('mod_event', 'Events').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/banners')){ ?>
+						<li <?= wpn_activelink('banners'); ?>>
+							<?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>'.wpn_lang('mod_banner', 'Banners').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/albuns')){ ?>
+						<li <?= wpn_activelink('albuns'); ?>
+							<?= wpn_activelink('fotos'); ?>><?= anchor('admin/albuns', '<i class="fa fa-camera"></i> <span>'.wpn_lang('mod_galery', 'Galery').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/videos')){ ?>
+						<li <?= wpn_activelink('videos'); ?>> 
+							<?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>'.wpn_lang('mod_video', 'Videos').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/menus')){ ?>
 					<li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>'.wpn_lang('mod_menu', 'Menus').'</span>'); ?>
 					</li>
-					<li <?= wpn_activelink('newsletters'); ?>>
-						<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('usuarios'); ?>>
-						<?= anchor('admin/usuarios', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
-					</li>
-					<li <?= wpn_activelink('configuracoes'); ?>>
-						<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
-					</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/newsletters')){ ?>
+						<li <?= wpn_activelink('newsletters'); ?>>
+							<?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>'.wpn_lang('mod_newsletter', 'Newsletters').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/accounts')){ ?>
+						<li <?= wpn_activelink('accounts'); ?>>
+							<?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
+						</li>
+					<?php } ?>
+					<?php if(wpn_link_permission('admin/configuracoes')){ ?>
+						<li <?= wpn_activelink('configuracoes'); ?>>
+							<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>
+						</li>
+					<?php } ?>
 				</ul>
 			</section>
 			<!-- /.sidebar -->

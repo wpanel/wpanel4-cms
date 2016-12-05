@@ -30,13 +30,13 @@
 			            <th>Ações</th>
 			        </tr>
 			    </thead>
-			    <tbody>
+			    <tbody class="sortable">
 			        <?php
 			        foreach($query as $row){
 			            ?>
-    			        <tr>
+    			        <tr id="item-<?= $row->id; ?>" style="cursor:move;">
     			            <td><?= $row->id; ?></td>
-    			            <td><?= $row->title; ?> (<?= $row->sequence; ?>)</td>
+    			            <td><?= $row->title; ?></td>
     			            <td><?= $options[$row->position]; ?></td>
     			            <td><?= status_post($row->status); ?></td>
     			            <td>
@@ -54,3 +54,19 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(function(){
+        $(".sortable").sortable({
+            axis: 'y',
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                alert(data);
+                $.ajax({
+                    data: data,
+                    type: 'POST',
+                    url: '<?= site_url("admin/banners/update_sequence"); ?>'
+                });
+            }
+        });
+    });
+</script>

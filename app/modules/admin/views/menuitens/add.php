@@ -78,12 +78,9 @@
                 <div class="form-group" id="form_funcional" style="display: none;">
                     <label for="funcional">Página funcional</label>
                     <select class="form-control" name="funcional" id="funcional">
-                        <option value="home">Página inicial</option>
-                        <option value="contato">Página de contato</option>
-                        <option value="albuns">Galeria de fotos</option>
-                        <option value="videos">Galeria de videos</option>
-                        <option value="events">Lista de eventos</option>
-                        <option value="rss">Página de RSS</option>
+                        <?php foreach(config_item('funcional_links') as $key => $value){ ?>
+                            <option value="<?= $key; ?>"><?= $value ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="form-group" id="form_submenu" style="display: none;">

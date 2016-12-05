@@ -44,11 +44,10 @@ class Dashboard extends MX_Controller {
 
 	function __construct()
 	{
-
 		// Protege o acesso do dashboard independente de permissão.
-		if(!$this->session->userdata('logged_in'))
-			redirect('admin/logout');
-
+		$this->auth->check_permission();
+		if(auth_login_data('role') == 'user')
+			redirect('users');
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 		$this->load->model('dash');
 	}

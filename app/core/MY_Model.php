@@ -195,24 +195,6 @@ class MY_Model extends CI_Model
     }
 
     /**
-     * Delete a record by some field.
-     *
-     * @param $field String Field of the table.
-     * @param $value int Value of the field.
-     * @param $table string Optional table name.
-     * @return mixed
-     */
-    public function delete_by($field, $value, $table = NULL)
-    {
-        $this->db->where($field, $value);
-        if($table == NULL)
-            $this->db->delete($this->table_name);
-        else
-            $this->db->delete($table);
-        return $this->db->affected_rows();
-    }
-
-    /**
      * Upload a file.
      * 
      * @param $path String Path where the file must be saved.

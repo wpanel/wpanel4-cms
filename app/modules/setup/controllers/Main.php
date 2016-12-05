@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * WPanel CMS
  *
@@ -35,20 +35,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * -------------------------------------------------------------------------------------------------
- * Classe Setup()
- * 
- * Esta classe faz a instalação (configuração) inicial do Wpanel CMS
- * seguindo os seguintes passos:
- *
- * 1- Mostra um formulário para o usuário informar os dados da conexão;
- * 2- Gera o arquivo /app/config/database.php com os dados informados;
- * 3- Mostra um formulário para o usuário cadastrar o primeiro administrador;
- * 4- Salva os dados do administrador e direciona o usuário para a tela de login;
+ * This class creates a new admin user if the account table accounts was empty. Usually this occurs in the
+ * first run of Wpanel CMS.
  *
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  * @since v1.2.2
- * -------------------------------------------------------------------------------------------------
  */
 class Main extends MX_Controller
 {
@@ -59,59 +50,42 @@ class Main extends MX_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 
-	/**
-	 * Este método faz o cadastro do primeiro administrador do wpanel.
-	 *
-	 * @return void
-	 * @author Eliel de Paula <elieldepaula@gmail.com>
-	 **/
 	public function index()
 	{
-
-		$this->load->model('user');
-
-		/**
-		 * Verifica se já existe algum usuário cadastrado.
-		 */
-		if ($this->user->inicial_user() == true)
-		{
+		// Check if accounts is empty.
+		if ($this->auth->accounts_empty() == FALSE)
 			redirect('admin/login');
-		}
-		
-		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
-		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
-		$this->form_validation->set_rules('name', 'Nome completo', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+		$this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
+		$this->form_validation->set_rules('name', wpn_lang('input_fullname', 'Full name'), 'required');
+		$this->form_validation->set_rules('email', wpn_lang('input_validemail', 'Valid email'), 'required|valid_email');
+		$this->form_validation->set_rules('agree', wpn_lang('input_agree', 'Terms of use'), 'required');
 
 		if ($this->form_validation->run() == FALSE)
-		{
-
 			$this->load->view('setup/index', $this->layout_vars);
-
-		} else {
-
-			$dados_save = array(
-				'name' => $this->input->post('name'),
-				'email' => $this->input->post('email'),
-				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
-				'skin' => 'blue',
-				'role' => 'admin',
-				'permissions' => serialize(array()),
-				'created' => date('Y-m-d H:i:s'),
-				'updated' => date('Y-m-d H:i:s'),
-				'status' => 1
+		else {
+			$newuser = $this->auth->create_account(
+				$this->input->post('email', TRUE),
+				$this->input->post('password', TRUE),
+				'ROOT',
+				array(
+					'name' => $this->input->post('name'),
+					'skin' => 'blue',
+					'avatar' => ''
+				)
 			);
-
-			if($this->user->save($dados_save))
+			if($newuser > 0)
 			{
-				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+
+				// Activate the first user account.
+				$this->auth->activate_account($newuser);
+
+				$this->session->set_flashdata('msg_sistema', wpn_lang('first_account_success', 'Account succefull created'));
 				redirect('admin/login');
 			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
+				$this->session->set_flashdata('msg_sistema', wpn_lang('first_account_error', 'Can´t create this account'));
 				redirect('setup');
 			}
 		}

@@ -38,7 +38,7 @@ class banners extends MX_Controller {
 	
 	function __construct()
 	{
-		$this->auth->protect('banners');
+		$this->auth->check_permission();
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 		$this->load->model('banner');
 	}
@@ -57,6 +57,17 @@ class banners extends MX_Controller {
 		$content_vars['options'] = $options;
 
 		$this->wpanel->load_view('banners/index', $content_vars);
+	}
+	
+	public function update_sequence()
+	{
+	    $i = 0;
+	    $itens = $_POST['item']; //$this->input->post('item');
+		foreach ($itens as $value) {
+			// Execute statement:
+			$this->banner->update($value,  array('sequence' => $i));
+			$i++;
+		}
 	}
 
 	public function add()
@@ -169,5 +180,5 @@ class banners extends MX_Controller {
 			redirect('admin/banners');
 		}
 	}
-	
+
 }

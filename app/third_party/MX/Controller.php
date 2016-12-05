@@ -52,6 +52,8 @@ class MX_Controller
 		
 		/* autoload module items */
 		$this->load->_autoloader($this->autoload);
+
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}
 	
 	public function __get($class) 
