@@ -1,4 +1,7 @@
 
+[05-12-2016]
+
+- Included delete_by() into MY_Model;
 - Removed JSON_PRETTY_PRINT from /app/models/Configuracao.php to avoid some errors saving the .json config file in some PHP versions;
 - Updated Codeigniter base framework to version 3.1.2;
 
