@@ -49,9 +49,9 @@
                     <div class="col-md-2">
                         <div class="thumbnail">
                             <?php if($extra_data->avatar){ ?>
-                                <img src="<?= base_url('media/avatar') . '/'.$extra_data->avatar; ?>" class="img-responsive" />
+                                <img src="<?= base_url('media/avatar/'.$extra_data->avatar); ?>" class="img-responsive" />
                             <?php } else { ?>
-                                <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" />
+                                <img src="<?= base_url('lib/img/no-user.jpg'); ?>" class="img-responsive" />
                             <?php } ?>
                         </div>
                     </div>

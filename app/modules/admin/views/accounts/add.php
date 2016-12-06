@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/usuarios'); ?>"><i class="fa fa-users"></i> Contas de usuário</a></li>
+        <li><a href="<?= site_url('admin/accounts'); ?>"><i class="fa fa-users"></i> Contas de usuário</a></li>
         <li>Criação de conta de usuário</li>
     </ol>
 </section>
