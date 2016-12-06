@@ -42,7 +42,6 @@ class Auth
     protected $auth_password_hash_type = 'md5';
     protected $auth_password_hash_salt;
 
-    // Construtor
     public function __construct($config = array())
     {
         if (count($config) > 0)
@@ -51,7 +50,6 @@ class Auth
         log_message('debug', "Auth Class Initialized");
     }
 
-    // Permite que use a instância do CI
     public function __get($var)
     {
         return get_instance()->$var;
@@ -79,10 +77,6 @@ class Auth
         return $this;
     }
 
-    //----------------------------------------------------------------
-    //	Métodos da API pública
-    //----------------------------------------------------------------
-
     public function create_account($email, $password, $role, $extra_data = array(), $permissions = array())
     {
 
@@ -93,7 +87,7 @@ class Auth
             'email' => $email,
             'password' => $this->_hash_password($password),
             'role' => $role,
-            'extra_data' => json_encode($extra_data, JSON_PRETTY_PRINT),
+            'extra_data' => json_encode($extra_data),
             'ip_address' => $_SERVER['REMOTE_ADDR'],
             'created' => date('Y-m-d H:i:s'),
             'updated' => date('Y-m-d H:i:s'),
@@ -124,7 +118,6 @@ class Auth
     {
         $data = array(
             'module_action_id' => $action_id,
-            // 'module_id' => $module_id, //TODO Criar uma forma de buscar o module_id da lista de actions.
             'account_id' => $account_id,
             'created' => date('Y-m-d H:i:s'),
             'updated' => date('Y-m-d H:i:s')
@@ -201,7 +194,7 @@ class Auth
 
         //TODO Melhorar a atualização dos dados-extra, desse jeito sempre perderá a foto.
         if(count($extra_data) > 0)
-            $data['extra_data'] = json_encode($extra_data, JSON_PRETTY_PRINT);
+            $data['extra_data'] = json_encode($extra_data);
 
         $updated_account = $this->model->update_account($data);
 
@@ -209,12 +202,10 @@ class Auth
         if(count($permissions) > 0){
             $this->model->remove_permission_by_account($id);
             foreach ($permissions as $key => $value) {
-                    // create_permission($action_id, $account_id)
                 $this->create_permission($value, $id);
             }
         }
 
-        // Atualizar o cadastro pelo model.
         if (!$updated_account > 0)
             throw new Exception('Error updating an account.');
 
@@ -365,10 +356,6 @@ class Auth
         return $query_module;
     }
 
-//----------------------------------------------------------------
-//	Métodos privados
-//----------------------------------------------------------------
-
     private function _send_activation_email($data = null)
     {
 
@@ -386,7 +373,7 @@ class Auth
      */
     private function _set_session($account)
     {
-        //TODO Buscar as informações de permissão e incluir na sessão.
+    
         if (!$account->id)
             return FALSE;
 
@@ -416,12 +403,9 @@ class Auth
                 return md5($password . $this->auth_password_hash_salt);
                 break;
 
-            case 'something':
-                //TODO Codificar outras opções de criptografia aqui.
+            case 'something': //TODO Codificar outras opções de criptografia aqui.
+                // ...
                 break;
-            // default:
-            //     return md5($password . $this->auth_password_hash_salt);
-            //     break;
         }
     }
 

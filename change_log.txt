@@ -1,4 +1,7 @@
 
+- Cleaning In some folders and codes;
+- Fix some links on user accounts views;
+
 [05-12-2016]
 
 - Included delete_by() into MY_Model;
