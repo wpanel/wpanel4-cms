@@ -157,10 +157,10 @@ class fotos extends MX_Controller {
       $this->load->model('foto');
 
       /* Faz o laço do upload */
-      $pasta = './media/albuns/'.$album_id.'/';
+      $pasta = FCPATH.'media/albuns/'.$album_id.'/';
       $fotos = $_FILES['fotos'];
 
-      for($i = 0; $i < sizeof($fotos); $i++)
+      for($i = 0; $i < sizeof($fotos['name']); $i++)
       {
 
         $nome = $album_id . '_' . time() . '_' . str_replace(array(' ', ',', '-'), '', 

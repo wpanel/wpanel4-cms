@@ -154,6 +154,20 @@ class MY_Model extends CI_Model
     {
         return $this->db->count_all($this->table_name);
     }
+
+    /**
+     * This method returns the total of an where clausule.
+     * 
+     * @param string $field
+     * @param string $value
+     * @return int
+     */
+    public function count_by($field, $value)
+    {
+        $this->db->where($field, $value);
+        $this->db->from($this->table_name);
+        return $this->db->count_all_results();
+    }
     
     /**
      * Save a new record.
@@ -223,7 +237,7 @@ class MY_Model extends CI_Model
      */
     public function upload_media($path, $types = '*', $fieldname = 'userfile', $filename = null)
     {
-        $config['upload_path'] = './media/'.$path.'/';
+        $config['upload_path'] = FCPATH.'media/'.$path.'/';
         $config['remove_spaces'] = TRUE;
         $config['file_ext_tolower'] = TRUE;
         $config['allowed_types'] = $types;
@@ -250,7 +264,7 @@ class MY_Model extends CI_Model
      */
     public function remove_media($file)
     {
-        $filename = './media/'.$file;
+        $filename = FCPATH.'media/'.$file;
         if(file_exists($filename))
         {
             if(unlink($filename))
