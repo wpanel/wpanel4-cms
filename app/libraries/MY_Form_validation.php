@@ -65,7 +65,7 @@ class MY_Form_validation extends CI_Form_validation {
 		$row = $query->row();
 
 		if ($row->count == 0) {
-			$this->set_message('captcha', lang('captcha_err'));
+			$this->set_message('captcha', 'O texto de confirmação não é válido.'); //TODO Usar o arquivo de tradução. lang('captcha_err'));
 			return FALSE;
 		} else {
 			return TRUE;
