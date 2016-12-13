@@ -1,5 +1,6 @@
 
-- Fixed error on form validation of captcha.
+- Changed the configuration admin module;
+- Fixed error on form validation of captcha;
 - Changes on config.php to auto setup the base_url config;
 - Fixed bug on Main.php with wpn_config();
 - I added the count_by () method to MY_Model.php and fixed an error that prevented bulk uploading of photos beyond 5 files;

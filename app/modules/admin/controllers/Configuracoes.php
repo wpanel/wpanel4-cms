@@ -59,20 +59,16 @@ class Configuracoes extends MX_Controller
     {
 
         $configs = $this->wpanel->get_config();
-
-        $layout_vars = array();
-        $content_vars = array();
+        $content_vars   = array();
         $category_check = '';
-        $page_check = '';
-        $smtp_checked = '';
+        $page_check     = '';
+        $smtp_checked   = '';
 
         $this->form_validation->set_rules('site_titulo', 'Título do site', 'required');
-
         if ($this->form_validation->run() == FALSE){
 
             $this->load->model('categoria');
             $this->load->model('post');
-
             $query_categorias = $this->categoria->get_list(array('field'=>'title', 'order'=>'asc'), null, 'id, title')->result();
             $query_posts = $this->post->get_list(array('field'=>'title', 'order'=>'asc'), null, 'id, title')->result();
 
@@ -82,13 +78,11 @@ class Configuracoes extends MX_Controller
             foreach ($query_categorias as $value){
                 $opt_categoria[$value->id] = $value->title;
             }
-
             // Monta a lista de postagens.
             $opt_posts = array();
             foreach ($query_posts as $value){
                 $opt_posts[$value->id] = $value->title;
             }
-
             // Organiza as caixas de checagem da configuração da página inicial.
             switch ($configs->home_tipo){
                 case 'category':
@@ -107,14 +101,12 @@ class Configuracoes extends MX_Controller
                     $custom_check = 'checked';
                     break;
             }
-            
             // Organiza as caixas de checagem do uso de SMTP.
             if ($configs->usa_smtp == 1){
                 $smtp_checked = 'checked';
             } else {
                 $smtp_checked = '';
             }
-            
             // Envia as variáveis para a view.
             $content_vars['opt_categoria']  = $opt_categoria;
             $content_vars['opt_posts']      = $opt_posts;
@@ -124,68 +116,89 @@ class Configuracoes extends MX_Controller
             $content_vars['smtp_checked']   = $smtp_checked;
             $content_vars['editor']         = $this->wpanel->load_editor();
             $content_vars['row']            = $configs;
-
             $this->wpanel->load_view('configuracoes/index', $content_vars);
             
         } else {
             
             $this->load->model('configuracao');
 
-            $dados_save = array();
-            $dados_save['site_titulo'] = $this->input->post('site_titulo');
-            $dados_save['site_desc'] = $this->input->post('site_desc');
-            $dados_save['site_tags'] = $this->input->post('site_tags');
-            $dados_save['site_contato'] = $this->input->post('site_contato');
-            $dados_save['site_telefone'] = $this->input->post('site_telefone');
-            $dados_save['link_instagram'] = $this->input->post('link_instagram');
-            $dados_save['link_twitter'] = $this->input->post('link_twitter');
-            $dados_save['link_facebook'] = $this->input->post('link_facebook');
-            $dados_save['link_likebox'] = $this->input->post('link_likebox');
-            $dados_save['copyright'] = $this->input->post('copyright');
-            $dados_save['addthis_uid'] = $this->input->post('addthis_uid');
-            $dados_save['texto_contato'] = $this->input->post('texto_contato');
-            $dados_save['google_analytics'] = $this->input->post('google_analytics');
-            $dados_save['bgcolor'] = $this->input->post('bgcolor');
-            $dados_save['language'] = $this->input->post('language');
-            $dados_save['text_editor'] = $this->input->post('text_editor');
-            $dados_save['author'] = $this->input->post('author');
-
+            $configs->site_titulo      = $this->input->post('site_titulo');
+            $configs->site_desc        = $this->input->post('site_desc');
+            $configs->site_tags        = $this->input->post('site_tags');
+            $configs->site_contato     = $this->input->post('site_contato');
+            $configs->site_telefone    = $this->input->post('site_telefone');
+            $configs->link_instagram   = $this->input->post('link_instagram');
+            $configs->link_twitter     = $this->input->post('link_twitter');
+            $configs->link_facebook    = $this->input->post('link_facebook');
+            $configs->link_likebox     = $this->input->post('link_likebox');
+            $configs->copyright        = $this->input->post('copyright');
+            $configs->addthis_uid      = $this->input->post('addthis_uid');
+            $configs->texto_contato    = $this->input->post('texto_contato');
+            $configs->google_analytics = $this->input->post('google_analytics');
+            $configs->bgcolor          = $this->input->post('bgcolor');
+            $configs->language         = $this->input->post('language');
+            $configs->text_editor      = $this->input->post('text_editor');
+            $configs->author           = $this->input->post('author');
             // Configurações da página inicial do site.
-            $dados_save['home_tipo'] = $this->input->post('home_tipo');
+            $configs->home_tipo         = $this->input->post('home_tipo');
             if ($this->input->post('home_tipo') == 'page') {
-                $dados_save['home_id'] = $this->input->post('home_post');
+                $configs->home_id      = $this->input->post('home_post');
             } else {
-                $dados_save['home_id'] = $this->input->post('home_category');
+                $configs->home_id      = $this->input->post('home_category');
             }
-
             // Smtp
-            $dados_save['usa_smtp'] = $this->input->post('usa_smtp');
-            $dados_save['smtp_servidor'] = $this->input->post('smtp_servidor');
-            $dados_save['smtp_porta'] = $this->input->post('smtp_porta');
-            $dados_save['smtp_usuario'] = $this->input->post('smtp_usuario');
-            $dados_save['smtp_senha'] = $this->input->post('smtp_senha');
+            $configs->usa_smtp         = $this->input->post('usa_smtp');
+            $configs->smtp_servidor    = $this->input->post('smtp_servidor');
+            $configs->smtp_porta       = $this->input->post('smtp_porta');
+            $configs->smtp_usuario     = $this->input->post('smtp_usuario');
+            $configs->smtp_senha       = $this->input->post('smtp_senha');
+            // Mantém os dados das imagens.
+            $configs->logomarca        = $configs->logomarca;
+            $configs->background       = $configs->background;
 
-            if ($this->input->post('alterar_logomarca') == '1') {
-                $this->remove_image('logomarca');
-                $dados_save['logomarca'] = $this->upload('logomarca');
-            } else {
-                $dados_save['logomarca'] = $configs->logomarca;
-            }
-
-            if ($this->input->post('alterar_background') == '1') {
-                $this->remove_image('background');
-                $dados_save['background'] = $this->upload('background');
-            } else {
-                $dados_save['background'] = $configs->background;
-            }
-
-            if ($this->configuracao->save_config($dados_save)) {
+            if ($this->configuracao->save_config($configs)) {
                 $this->session->set_flashdata('msg_sistema', 'Configuração salva com sucesso.');
                 redirect('admin/configuracoes');
             } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar a configuração.');
                 redirect('admin/configuracoes');
             }
+        }
+    }
+    
+    /**
+     * Altera a logomarca.
+     */
+    public function altlogo()
+    {
+        $configs = $this->wpanel->get_config();
+        $this->remove_image('logomarca');
+        $configs->logomarca = $this->upload('logomarca');
+        
+        if ($this->configuracao->save_config($configs)) {
+            $this->session->set_flashdata('msg_sistema', 'Configuração salva com sucesso.');
+            redirect('admin/configuracoes');
+        } else {
+            $this->session->set_flashdata('msg_sistema', 'Erro ao salvar a configuração.');
+            redirect('admin/configuracoes');
+        }
+    }
+    
+    /**
+     * Altera a imagem de fundo.
+     */
+    public function altback()
+    {
+        $configs = $this->wpanel->get_config();
+        $this->remove_image('background');
+        $configs->background   = $this->upload('background');
+        
+        if ($this->configuracao->save_config($configs)) {
+            $this->session->set_flashdata('msg_sistema', 'Configuração salva com sucesso.');
+            redirect('admin/configuracoes');
+        } else {
+            $this->session->set_flashdata('msg_sistema', 'Erro ao salvar a configuração.');
+            redirect('admin/configuracoes');
         }
     }
 
@@ -199,7 +212,7 @@ class Configuracoes extends MX_Controller
     private function upload($field_name) 
     {
 
-        $config['upload_path'] = './media/';
+        $config['upload_path'] = APPPATH.'media/';
         $config['allowed_types'] = '*';
         $config['max_size'] = '2000';
         $config['max_width'] = '0';
@@ -230,7 +243,7 @@ class Configuracoes extends MX_Controller
     private function remove_image($item) 
     {
         $config = $this->wpanel->get_config();
-        $filename = './media/' . $config->$item;
+        $filename = APPPATH.'media/' . $config->$item;
         if (file_exists($filename)) {
             if (unlink($filename)) {
                 return TRUE;
