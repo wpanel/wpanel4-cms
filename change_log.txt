@@ -1,4 +1,6 @@
 
+- Added manual 'date' from posts;
+- Fixed user_id error on post creation;
 - Changed the configuration admin module;
 - Fixed error on form validation of captcha;
 - Changes on config.php to auto setup the base_url config;

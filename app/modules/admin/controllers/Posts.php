@@ -110,15 +110,15 @@ class Posts extends MX_Controller {
 			$this->load->model('post');
 
 			$dados_save = array();
-			$dados_save['user_id'] = $this->auth->get_userid();
+			$dados_save['user_id'] = auth_login_data('id');
 			$dados_save['title'] = $this->input->post('title');
 			$dados_save['description'] = $this->input->post('description');
 			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title')))).'-'.time();
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s');
-			$dados_save['updated'] = date('Y-m-d H:i:s');
+			$dados_save['created'] = datetime_for_mysql($this->input->post('created').' 00:00:00');
+			$dados_save['created'] = datetime_for_mysql($this->input->post('created').' 00:00:00');
 			$dados_save['image'] = $this->post->upload_media('capas');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
@@ -198,6 +198,7 @@ class Posts extends MX_Controller {
 			$dados_save['content'] = $this->input->post('content');
 			$dados_save['tags'] = $this->input->post('tags');
 			$dados_save['status'] = $this->input->post('status');
+			$dados_save['created'] = datetime_for_mysql($this->input->post('created').' 00:00:00');
 			$dados_save['updated'] = date('Y-m-d H:i:s');
 			// Identifica se é uma página ou uma postagem
 			// 0=post, 1=Página
