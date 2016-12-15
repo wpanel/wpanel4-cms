@@ -172,11 +172,10 @@ class Configuracoes extends MX_Controller
     public function altlogo()
     {
         $configs = $this->wpanel->get_config();
-        $this->remove_image('logomarca');
-        $configs->logomarca = $this->upload('logomarca');
-        
+        $this->configuracao->remove_media($configs->logomarca);
+        $configs->logomarca = $this->configuracao->upload_media('', '*', 'logomarca');
         if ($this->configuracao->save_config($configs)) {
-            $this->session->set_flashdata('msg_sistema', 'Configuração salva com sucesso.');
+            $this->session->set_flashdata('msg_sistema', 'Logomarca salva com sucesso.');
             redirect('admin/configuracoes');
         } else {
             $this->session->set_flashdata('msg_sistema', 'Erro ao salvar a configuração.');
@@ -190,69 +189,14 @@ class Configuracoes extends MX_Controller
     public function altback()
     {
         $configs = $this->wpanel->get_config();
-        $this->remove_image('background');
-        $configs->background   = $this->upload('background');
-        
+        $this->configuracao->remove_media($configs->background);
+        $configs->background = $this->configuracao->upload_media('', '*', 'background');
         if ($this->configuracao->save_config($configs)) {
-            $this->session->set_flashdata('msg_sistema', 'Configuração salva com sucesso.');
+            $this->session->set_flashdata('msg_sistema', 'Imagem de fundo salva com sucesso.');
             redirect('admin/configuracoes');
         } else {
             $this->session->set_flashdata('msg_sistema', 'Erro ao salvar a configuração.');
             redirect('admin/configuracoes');
         }
     }
-
-    /**
-     * Este método faz o upload das imagens da logomarca e do background
-     * do site para a pasta 'media'.
-     *
-     * @param $field_name string Nome do input que enviará o upload.
-     * @return void
-     */
-    private function upload($field_name) 
-    {
-
-        $config['upload_path'] = APPPATH.'media/';
-        $config['allowed_types'] = '*';
-        $config['max_size'] = '2000';
-        $config['max_width'] = '0';
-        $config['max_height'] = '0';
-        $config['remove_spaces'] = TRUE;
-        $config['overwrite'] = TRUE;
-        $config['file_name'] = $field_name;
-
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload($field_name)) {
-            $upload_data = array();
-            $upload_data = $this->upload->data();
-            return $upload_data['file_name'];
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Este método remove uma imagem de configuração da pasta
-     * para evitar que a alteração de imagens gaste espaço
-     * desnecessário no servidor.
-     *
-     * @param $item String Item de configuração.
-     * @return boolean
-     */
-    private function remove_image($item) 
-    {
-        $config = $this->wpanel->get_config();
-        $filename = APPPATH.'media/' . $config->$item;
-        if (file_exists($filename)) {
-            if (unlink($filename)) {
-                return TRUE;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
-
 }
