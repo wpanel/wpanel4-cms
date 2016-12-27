@@ -1,4 +1,8 @@
 
+- Refactoring 'Fotos' views;
+- Refactoring 'Albuns' views;
+- Refactoring 'Agenda' views;
+- Bug fix on configuration admin module;
 - Added manual 'date' from posts;
 - Fixed user_id error on post creation;
 - Changed the configuration admin module;
