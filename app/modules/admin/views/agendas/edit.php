@@ -46,7 +46,7 @@
 							);
 							echo img($data);
 							?>
-						<label><input type="checkbox" name="alterar_imagem" value="1" class="checkbox"  /> Alterar a foto.</label>
+						<div class="checkbox"><label><input type="checkbox" name="alterar_imagem" value="1" /> Alterar a foto.</label></div>
 					</div>
 				 </div>
 			 	<div class="col-md-3 " id="">
