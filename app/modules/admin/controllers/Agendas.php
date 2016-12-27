@@ -105,7 +105,7 @@ class Agendas extends MX_Controller {
 			$this->load->model('post');
 
 			$dados_save = array();
-			$dados_save['user_id'] = $this->auth->get_userid();
+			$dados_save['user_id'] = auth_login_data('id');
 			$dados_save['title'] = $this->input->post('title');
 			$dados_save['description'] = $this->input->post('description');
 			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));

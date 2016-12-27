@@ -1,7 +1,4 @@
-<?php
-echo $this->wpanel->load_editor();
-?>
-
+<?= $this->wpanel->load_editor(); ?>
 <section class="content-header">
     <h1>
         Agendas de eventos
@@ -20,85 +17,69 @@ echo $this->wpanel->load_editor();
             <h3 class="box-title">Alteração de evento</h3>
         </div>
         <div class="box-body">
-            <?php
-            echo form_open_multipart('admin/agendas/edit/'.$id, array('role'=>'form'));
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Título da postagem', 'title');
-            echo form_input(array('name'=>'title', 'value'=> $row->title, 'class'=>'form-control'));
-            echo form_error('title');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Local', 'description');
-            echo form_input(array('name'=>'description', 'value'=> $row->description, 'class'=>'form-control', 'rows'=>'3'));
-            echo form_error('description');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Conteúdo', 'content');
-            echo form_textarea(array('name'=>'content', 'value'=> $row->content, 'class'=>'form-control ckeditor', 'id'=>'editor'));
-            echo form_error('content');
-            echo close_div();
-
-            echo row();
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Imagem de capa', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
-            if(file_exists('./media/capas/'.$row->image)){
-                echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
-            } else {
-                echo '<p>Arquivo inexistente</p>';
-            }
-            echo div(array('class'=>'checkbox'));
-            echo '<label>';
-            echo form_checkbox(array('name'=>'alterar_imagem', 'value'=>'1', 'class'=>'checkbox'));
-            echo ' Alterar a foto.</label>';
-            echo close_div(3);
-
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Data', 'created');
-            echo form_input(array('name'=>'created', 'value'=> datetime_for_user($row->created, false), 'class'=>'form-control'));
-            echo form_error('created');
-            echo close_div(2);
-
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Palavras-chave (Separe com vírgula)', 'tags');
-            echo form_textarea(array('name'=>'tags', 'value'=> $row->tags, 'class'=>'form-control', 'rows'=>'5'));
-            echo close_div(2);
-
-            // Opções de status
-            $options = array(
-                              '0'  => 'Rascunho',
-                              '1'  => 'Publicado'
-                            );
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
-            echo close_div(3);
-
-            echo hr();
-
-            echo row();
-            echo col();
-            echo form_button(
-                    array(
-                      'type'=>'submit', 
-                      'name'=>'submit', 
-                      'content'=>'Salvar as alterações', 
-                      'class'=>'btn btn-primary'
-                      )
-                    );
-            echo nbs(); // &nbsp;
-            echo anchor('admin/agendas', 'Cancelar', array('class'=>'btn btn-danger'));
-            echo close_div(2);
-
-            echo form_close();
-            ?>
+		<?= form_open_multipart('admin/agendas/edit/'.$id, array('role'=>'form')); ?>
+			<div class="form-group" >
+				<label for="title">Título da postagem</label>
+				<input type="text" name="title" value="<?= $row->title; ?>" class="form-control"  />
+				<?= form_error('title'); ?>
+			</div>
+			<div class="form-group" >
+				<label for="description">Local</label>
+				<input type="text" name="description" value="<?= $row->description; ?>" class="form-control" rows="3"  />
+			</div>
+			<div class="form-group" >
+				<label for="content">Conteúdo</label>
+				<textarea name="content" cols="40" rows="10" class="form-control ckeditor" id="editor">
+					<?= $row->content; ?>
+				</textarea>
+			</div>
+			<div class="row " id="">
+				<div class="col-md-3 " id="">
+					<div class="form-group" >
+						<label for="userfile">Imagem de capa</label>
+						<input type="file" name="userfile" value="" class="form-control"  />
+							<?php
+							$data = array(
+								'src' => 'media/capas/'.$row->image,
+								'class' => 'img-responsive img-thumbnail',
+								'style' => 'margin-top: 5px'
+							);
+							echo img($data);
+							?>
+						<label><input type="checkbox" name="alterar_imagem" value="1" class="checkbox"  /> Alterar a foto.</label>
+					</div>
+				 </div>
+			 	<div class="col-md-3 " id="">
+					 <div class="form-group" >
+						 <label for="created">Data</label>
+					 	<input type="text" name="created" value="<?= datetime_for_user($row->created, FALSE); ?>" class="form-control"  />
+						<?= form_error('created'); ?>
+					 </div>
+				 </div>
+				 <div class="col-md-3 " id="">
+					 <div class="form-group" >
+						 <label for="tags">Palavras-chave (Separe com vírgula)</label>
+						 <textarea name="tags" cols="40" rows="5" class="form-control" ><?= $row->tags; ?></textarea>
+					 </div>
+				 </div>
+				 <div class="col-md-3 " id="">
+					 <div class="form-group" >
+						 <label for="status">Status</label>
+						 <select name="status" class="form-control">
+						 	<option value="0" <?php if($row->status == 0){ echo 'selected'; } ?>>Rascunho</option>
+						 	<option value="1" <?php if($row->status == 1){ echo 'selected'; } ?>>Publicado</option>
+						 </select>
+					 </div>
+				 </div>
+			 </div>
+			 <hr/>
+			 <div class="row " id="">
+				 <div class="col-md-12 " id="">
+					 <button name="submit" type="submit" class="btn btn-primary" >Salvar as alterações</button>
+					 &nbsp;<?= anchor('admin/agendas', 'Cancelar', array('class' => 'btn btn-danger')); ?>
+				 </div>
+			 </div>
+			 <?= form_close(); ?>
         </div>
     </div>
 </section>
