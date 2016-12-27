@@ -16,59 +16,45 @@
             <h3 class="box-title">Alteração de foto</h3>
         </div>
         <div class="box-body">
-            <?php
-
-            echo form_open_multipart('admin/fotos/edit/'.$row->id, array('role'=>'form'));
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Selecione a imagem', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
-            echo '<p style="margin-top:15px;"><b>Pré-visualização da imagem:</b></p>';
-            echo img(array('src'=>'media/albuns/'.$row->album_id.'/'.$row->filename, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
-            echo div(array('class'=>'checkbox'));
-            echo '<label>';
-            echo form_checkbox(array('name'=>'alterar_imagem', 'value'=>'1', 'class'=>'checkbox'));
-            echo ' Alterar a imagem.</label>';
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Descrição', 'descricao');
-            echo form_input(array('name'=>'descricao', 'value'=> $row->descricao, 'class'=>'form-control'));
-            echo form_error('descricao');
-            echo close_div();
-
-            echo row();
-
-            // Opções de status
-            $options = array(
-                              '0'  => 'Indisponível',
-                              '1'  => 'Publicado'
-                            );
-
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
-            echo close_div(3);
-
-            echo hr();
-
-            echo row();
-            echo col();
-            echo form_button(
-                    array(
-                      'type'=>'submit', 
-                      'name'=>'submit', 
-                      'content'=>'Salvar as alterações', 
-                      'class'=>'btn btn-primary'
-                      )
-                    );
-            echo nbs(); // &nbsp;
-            echo anchor('admin/fotos/index/'.$row->album_id, 'Cancelar', array('class'=>'btn btn-danger'));
-            echo close_div(3);
-
-            echo form_close();
-            ?>
+			<?= form_open_multipart('admin/fotos/edit/'.$row->id, array('role'=>'form')); ?>
+				<div class="form-group">
+					<label>Selecione a imagem</label>
+					<input type="file" name="userfile" class="form-control" />
+				</div>
+            	<p style="margin-top:15px;"><b>Pré-visualização da imagem:</b></p>
+				<?php
+            	$data = array(
+					'src'=>'media/albuns/'.$row->album_id.'/'.$row->filename, 
+					'class'=>'img-responsive img-thumbnail', 
+					'style'=>'margin-top:5px;'
+				);
+				echo img($data);
+				?>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="alterar_imagem" value="1" />
+						Alterar a imagem.
+					</label>
+				</div>
+				<div class="form-group">
+					<label>Descrição</label>
+					<input type="text" name="descricao" value="<?= $row->descricao; ?>" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label>Status</label>
+					<select name="status" class="form-control">
+						<option value="0" <?php if($row->status == 0){ echo 'selected'; } ?> >Indisponível</option>
+						<option value="1" <?php if($row->status == 1){ echo 'selected'; } ?> >Publicado</option>
+					</select>
+				</div>
+				<hr/>
+				<div class="row">
+					<div class="col-sm-12 col-md-12">
+						<button type="submit" class="btn btn-primary">Salvar as alterações</button>
+						&nbsp; <?= anchor('admin/fotos/index/'.$row->album_id, 'Cancelar', array('class' => 'btn btn-danger')); ?>
+					</div>
+				</div>
+			<?= form_close(); ?>
         </div>
     </div>
 </section>

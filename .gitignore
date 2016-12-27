@@ -10,3 +10,8 @@ public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
 public/media/avatar/*.png
 public/media/avatar/*.gif
+
+public/media/albuns/*/*.jpg
+public/media/albuns/*/*.jpeg
+public/media/albuns/*/*.png
+public/media/albuns/*/*.gif
