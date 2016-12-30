@@ -6,6 +6,10 @@
 ehthumbs.db
 Thumbs.db
 composer.lock
+
+app/sessions/wpanel_*
+app/db/*.sqlite
+
 public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
 public/media/avatar/*.png
