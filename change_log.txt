@@ -1,4 +1,9 @@
 
+- Complete change into send contact messages grom WpanelCMS;
+    - Created send_mail() into wpanel();
+    - Changes in Main() controller;
+    - Changes in contact.php view;
+    - Created migration to fix the contact link in database;
 - Refactoring 'Fotos' views;
 - Refactoring 'Albuns' views;
 - Refactoring 'Agenda' views;
