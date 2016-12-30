@@ -23,7 +23,7 @@ if($msg_contato){
 
 <div class="row">
     <div class="col-md-12">
-        <?= form_open('contato', array('class'=>'form-horizontal', 'role'=>'form')); ?>
+        <?= form_open('contact', array('class'=>'form-horizontal', 'role'=>'form')); ?>
             <div class="form-group">
                 <div class="col-sm-2">
                     <label for="nome" class="control-label">Nome <b>(*)</b></label>
