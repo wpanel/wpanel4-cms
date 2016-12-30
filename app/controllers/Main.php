@@ -404,12 +404,12 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method contato() creates a full functional 'Contact Page' for the site.
+     * The method contact() creates a full functional 'Contact Page' for the site.
      *
      * @todo Criar a opção de inserir a mensagem no banco de dados e no painel de contorle.
      * @return void
      */
-    public function contato() 
+    public function contact() 
     {
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -439,33 +439,22 @@ class Main extends MY_Controller
             $msg .= "$mensagem";
             $msg .= "\n\n";
             $msg .= "Enviado pelo WPanel CMS\n";
-            // Load the library.
-            $this->load->library('email');
-            // Check if use SMTP.
-            if (wpn_config('usa_smtp') == 1) {
-                $conf_email = array();
-                $conf_email['protocol'] = 'smtp';
-                $conf_email['mailpath'] = '/usr/sbin/sendmail';
-                $conf_email['smtp_host'] = wpn_config('smtp_servidor');
-                $conf_email['smtp_port'] = wpn_config('smtp_porta');
-                $conf_email['smtp_user'] = wpn_config('smtp_usuario');
-                $conf_email['smtp_pass'] = wpn_config('smtp_senha');
-                $this->email->initialize($conf_email);
-                $this->email->from(wpn_config('smtp_usuario'), 'Formulário de contato');
-            } else {
-                $this->email->from($email, $nome);
-            }
-            // Send the message.
-            $this->email->to(wpn_config('site_contato'));
-            $this->email->subject('Mensagem do site - [' . wpn_config('site_titulo') . ']');
-            $this->email->message($msg);
-            // Verify the succes of the send.
-            if ($this->email->send()) {
+
+            $mail_data = array(
+                'html' => FALSE,
+                'from_name' => $nome,
+                'from_email' => $email,
+                'to' => wpn_config('site_contato'),
+                'subject' => 'Formulário de contato - ' . wpn_config('site_titulo'),
+                'message' => $msg,
+            );
+
+            if($this->wpanel->send_email($mail_data)){
                 $this->session->set_flashdata('msg_contato', 'Sua mensagem foi enviada com sucesso!');
-                redirect('contato');
+                redirect('contact');
             } else {
                 $this->session->set_flashdata('msg_contato', 'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
-                redirect('contato');
+                redirect('contact');
             }
         }
     }

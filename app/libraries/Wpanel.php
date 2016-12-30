@@ -309,7 +309,23 @@ class Wpanel
         $this->load->view('layout/footer');
     }
 
-    //TODO Write the basic documentation.
+    /**
+     * Send an email from the website.
+     *
+     * Example of array:
+     *
+     *    array(
+     *        'html' => 'true/false',
+     *        'from_name' => '',
+     *        'from_email' => '',
+     *        'to' => '',
+     *        'subject' => '',
+     *        'message' => '',
+     *    )
+     * 
+     * @param array $data
+     * @return bool
+     */
     public function send_email($data = NULL)
     {
         if($data == NULL)

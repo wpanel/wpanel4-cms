@@ -43,7 +43,7 @@ $route['foto/(:any)/(:any)'] 	= 'main/foto/$2';
 $route['videos'] 				= 'main/videos';
 $route['video/(:any)/(:any)'] 	= 'main/video/$1';
 $route['newsletter'] 			= 'main/newsletter';
-$route['contato'] 				= 'main/contato';
+$route['contact'] 				= 'main/contact';
 $route['rss']               	= 'main/rss';
 
 /* End of file routes.php */

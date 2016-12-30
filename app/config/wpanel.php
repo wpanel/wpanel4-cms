@@ -66,7 +66,7 @@ $config['banner_positions'] = array('slide' => 'Slide-Show', 'sidebar' => 'Barra
  */
 $config['funcional_links'] = array(
     'home'      => 'Página inicial',
-    'contato'   => 'Página de contato',
+    'contact'   => 'Página de contato',
     'albuns'    => 'Galeria de fotos',
     'videos'    => 'Galeria de videos',
     'events'    => 'Lista de eventos',
