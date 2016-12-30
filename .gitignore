@@ -15,3 +15,8 @@ public/media/albuns/*/*.jpg
 public/media/albuns/*/*.jpeg
 public/media/albuns/*/*.png
 public/media/albuns/*/*.gif
+
+public/media/banners/*.jpg
+public/media/banners/*.jpeg
+public/media/banners/*.png
+public/media/banners/*.gif
