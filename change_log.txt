@@ -1,4 +1,5 @@
 
+- Introduced the new front-end alerts system;
 - Complete change into send contact messages grom WpanelCMS;
     - Created send_mail() into wpanel();
     - Changes in Main() controller;

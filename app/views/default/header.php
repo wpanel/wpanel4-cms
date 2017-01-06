@@ -46,5 +46,6 @@
             <div class="row hidden-xs">
                 <?= wpn_widget('slidebanner', array('position'=>'slide')); ?>
             </div>
+            <?= wpn_widget('notice'); ?>
             <div class="row">
                 <div class="col-md-9">

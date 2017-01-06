@@ -450,10 +450,10 @@ class Main extends MY_Controller
             );
 
             if($this->wpanel->send_email($mail_data)){
-                $this->session->set_flashdata('msg_contato', 'Sua mensagem foi enviada com sucesso!');
+                $this->notice('Sua mensagem foi enviada com sucesso.', 'Sucesso!', 'success');
                 redirect('contact');
             } else {
-                $this->session->set_flashdata('msg_contato', 'Erro, sua mensagem não pode ser enviada, tente novamente mais tarde.');
+                $this->notice('Sua mensagem não pode ser enviada.', 'Erro!', 'danger');
                 redirect('contact');
             }
         }
@@ -515,10 +515,10 @@ class Main extends MY_Controller
                 'ipaddress' => $this->input->server('REMOTE_ADDR', true)
             );
             if ($this->newsletter->save($dados_save)) {
-                $this->session->set_flashdata('msg_newsletter', 'Seus dados foram salvos com sucesso, obrigado!');
+                $this->notice('Seus dados foram salvos com sucesso.', 'Sucesso!', 'success');
                 redirect('newsletter');
             } else {
-                $this->session->set_flashdata('msg_newsletter', 'Não foi possível salvar seus dados, verifique os erros e tente novamente.');
+                $this->notice('Não foi possível salvar seus dados, verifique e tente novamente.', 'Erro!', 'danger');
                 redirect('newsletter');
             }
         }
