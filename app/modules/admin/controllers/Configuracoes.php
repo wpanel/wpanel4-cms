@@ -101,11 +101,16 @@ class Configuracoes extends MX_Controller
                     $custom_check = 'checked';
                     break;
             }
-            // Organiza as caixas de checagem do uso de SMTP.
+            // Organiza as caixas de checagem do uso de SMTP e TLS/SSL.
             if ($configs->usa_smtp == 1){
                 $smtp_checked = 'checked';
             } else {
                 $smtp_checked = '';
+            }
+            if ($configs->usa_ssl == 1){
+                $ssl_checked = 'checked';
+            } else {
+                $ssl_checked = '';
             }
             // Envia as variáveis para a view.
             $content_vars['opt_categoria']  = $opt_categoria;
@@ -114,6 +119,7 @@ class Configuracoes extends MX_Controller
             $content_vars['page_check']     = $page_check;
             $content_vars['custom_check']   = $custom_check;
             $content_vars['smtp_checked']   = $smtp_checked;
+            $content_vars['ssl_checked']    = $ssl_checked;
             $content_vars['editor']         = $this->wpanel->load_editor();
             $content_vars['row']            = $configs;
             $this->wpanel->load_view('configuracoes/index', $content_vars);
@@ -150,6 +156,7 @@ class Configuracoes extends MX_Controller
             $configs->usa_smtp         = $this->input->post('usa_smtp');
             $configs->smtp_servidor    = $this->input->post('smtp_servidor');
             $configs->smtp_porta       = $this->input->post('smtp_porta');
+            $configs->usa_ssl          = $this->input->post('usa_ssl');
             $configs->smtp_usuario     = $this->input->post('smtp_usuario');
             $configs->smtp_senha       = $this->input->post('smtp_senha');
             // Mantém os dados das imagens.

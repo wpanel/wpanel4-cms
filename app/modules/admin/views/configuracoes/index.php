@@ -226,6 +226,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="usa_ssl" value="ssl" <?= $ssl_checked; ?> class="checkbox" />
+                                            Usar autenticação TLS/SSL.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -333,29 +333,36 @@ class Wpanel
         // Load the library.
         $this->load->library('email');
         // Check if use SMTP.
-        if (wpn_config('usa_smtp') == 1) {
-            $param = array();
-            $param['protocol'] = 'smtp';
-            $param['smtp_host'] = wpn_config('smtp_servidor');
-            $param['smtp_port'] = wpn_config('smtp_porta');
-            $param['smtp_user'] = wpn_config('smtp_usuario');
-            $param['smtp_pass'] = wpn_config('smtp_senha');
-            if($data['html'] == TRUE)
-                $param['mailtype'] = 'html';
-            else
-                $param['mailtype'] = 'text';
-            $this->email->initialize($param);
-            $this->email->from(wpn_config('smtp_usuario'), $data['from_name']);
-        } else
-            $this->email->from($data['from_email'], $data['from_name']);
+        if(wpn_config("usa_smtp")){
+            $config['smtp_host'] = wpn_config("smtp_servidor");
+            $config['smtp_user'] = wpn_config("smtp_usuario");
+            $config['smtp_pass'] = wpn_config("smtp_senha");
+            $config['smtp_port'] = wpn_config("smtp_porta");
+            $config['smtp_crypto'] = wpn_config("smtp_ssl");//'ssl';
+            $config['mailtype'] = $data['html'] ? 'html' : 'text';
+            $config['validate'] = TRUE;
+            $config['protocol'] = 'sendmail';
+            $config['mailpath'] = '/usr/sbin/sendmail';
+            $config['charset'] = 'utf-8';
+            $config['wordwrap'] = TRUE;
+
+            $this->email->initialize($config);
+            $this->email->from(wpn_config('smtp_usuario'), wpn_config('site_titulo'));
+        } else {
+            $this->email->from($data['from_email'], wpn_config('site_titulo'));
+        }
+
         // Send the message.
         $this->email->to($data['to']);
         $this->email->subject($data['subject']);
         $this->email->message($data['message']);
+        
         // Verify the succes of the send.
         if ($this->email->send()) {
+            log_message('debug', $this->email->print_debugger() . " Success");
             return TRUE;
         } else {
+            log_message('debug', $this->email->print_debugger() . " Error");
             return FALSE;
         }
     }

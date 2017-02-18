@@ -247,6 +247,22 @@ class Auth
     {
         return $this->session->sess_destroy();
     }
+    
+    /**
+     * This method returns the user accound by $id, or if null, return the logged
+     * account.
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function account($id = NULL)
+    {
+        if($id){
+            return $this->model->account_by_id($id);
+        } else {
+            return $this->model->acocunt_by_id($this->get_login_data('id'));
+        }
+    }
 
     public function get_account_id()
     {

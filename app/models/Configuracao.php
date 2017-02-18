@@ -43,7 +43,7 @@ class Configuracao extends MY_Model
 
     private function load_config($conf_item = null)
     {
-        $json = file_get_contents(APPPATH . 'config/config.json');
+        $json = file_get_contents(FCPATH . 'config/config.json');
         $cobj = (object) json_decode($json);
         if($conf_item == null)
             return $cobj;
@@ -54,7 +54,7 @@ class Configuracao extends MY_Model
     public function save_config($data)
     {
         $json = json_encode($data);
-        if(write_file(APPPATH . 'config/config.json', $json))
+        if(write_file(FCPATH . 'config/config.json', $json))
             return true;
         else
             return false;

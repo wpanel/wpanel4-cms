@@ -1,4 +1,9 @@
 
+- Small change in Auth.php library;
+- Changed send_mail() method from Wpanel.php library;
+- Included TLS/SSL into configurations panel;
+- Changed config.json and database.php to isolate the basic config info from the main project;
+- Changes into .htaccess file;
 - Introduced the new front-end alerts system;
 - Complete change into send contact messages grom WpanelCMS;
     - Created send_mail() into wpanel();
