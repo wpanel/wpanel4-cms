@@ -107,7 +107,7 @@ class Configuracoes extends MX_Controller
             } else {
                 $smtp_checked = '';
             }
-            if ($configs->usa_ssl == 1){
+            if ($configs->usa_ssl == 'ssl'){
                 $ssl_checked = 'checked';
             } else {
                 $ssl_checked = '';
