@@ -1,4 +1,6 @@
 
+- Enhanced security for fileman;
+- /app/sessions/* removed;
 - Bug fix on configurations module at smtp_ssl value;
 - Small change in Auth.php library;
 - Changed send_mail() method from Wpanel.php library;

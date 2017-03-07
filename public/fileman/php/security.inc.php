@@ -20,8 +20,37 @@
 
   Contact: Lyubomir Arsov, liubo (at) web-lobby.com
 */
+  
 function checkAccess($action){
-  if(!session_id())
-    session_start();
+    if(!is_logged())
+        exit('No direct script access allowed');
 }
+
+function is_logged(){
+    $output = false;
+    $filename = sys_get_temp_dir() . '/wpanel_' . $_COOKIE['wpanel_'];
+    if(file_exists($filename)){
+        $handle = fopen($filename, "r");
+        $contents = fread($handle, filesize($filename));
+        fclose($handle);
+        $x = explode(';', $contents);
+        foreach($x as $key => $value){
+            $y = explode('|', $value);
+            if(test_y($y)){
+                $output = true;
+                break;
+            }
+        }
+    }
+    return $output;
+}
+
+function test_y($y){
+    if($y[0] == 'logged_in'){
+        return true;
+        break;
+    } else
+        return false;
+}
+
 ?>
