@@ -1,4 +1,5 @@
 
+- Functions valid_cpf() and valid_cnpj() included to MY_Form_validation.php;
 - Enhanced security for fileman;
 - /app/sessions/* removed;
 - Bug fix on configurations module at smtp_ssl value;

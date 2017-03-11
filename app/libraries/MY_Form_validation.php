@@ -125,4 +125,53 @@ class MY_Form_validation extends CI_Form_validation {
 		}
 		return $randstr;
 	}
+
+	/**
+     *
+     * valid_cpf
+     *
+     * Verifica  o CPF é válido.
+     * @access	public
+     * @param	string
+     * @return	bool
+     */
+    function valid_cpf($cpf)
+    {
+        $CI = & get_instance();
+        $CI->form_validation->set_message('valid_cpf', 'O %s informado não é válido.');
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+        if (strlen($cpf) != 11 || preg_match('/^([0-9])\1+$/', $cpf)) {
+            return false;
+        }
+        $digit = substr($cpf, 0, 9);
+        for ($j = 10; $j <= 11; $j++) {
+            $sum = 0;
+            for ($i = 0; $i < $j - 1; $i++) {
+                $sum += ($j - $i) * ((int) $digit[$i]);
+            }
+            $summod11 = $sum % 11;
+            $digit[$j - 1] = $summod11 < 2 ? 0 : 11 - $summod11;
+        }
+        return $digit[9] == ((int) $cpf[9]) && $digit[10] == ((int) $cpf[10]);
+    }
+
+    /**
+     * Verifica se o CNPJ é válido.
+     * @param     string
+     * @return     bool
+     */
+    function valid_cnpj($str)
+    {
+        $CI = & get_instance();
+        $CI->form_validation->set_message('valid_cnpj', 'O %s informado não é válido.');
+        if (strlen($str) <> 18)
+            return FALSE;
+        $soma1 = ($str[0] * 5) + ($str[1] * 4) + ($str[3] * 3) + ($str[4] * 2) + ($str[5] * 9) + ($str[7] * 8) + ($str[8] * 7) + ($str[9] * 6) + ($str[11] * 5) + ($str[12] * 4) + ($str[13] * 3) + ($str[14] * 2);
+        $resto = $soma1 % 11;
+        $digito1 = $resto < 2 ? 0 : 11 - $resto;
+        $soma2 = ($str[0] * 6) + ($str[1] * 5) + ($str[3] * 4) + ($str[4] * 3) + ($str[5] * 2) + ($str[7] * 9) + ($str[8] * 8) + ($str[9] * 7) + ($str[11] * 6) + ($str[12] * 5) + ($str[13] * 4) + ($str[14] * 3) + ($str[16] * 2);
+        $resto = $soma2 % 11;
+        $digito2 = $resto < 2 ? 0 : 11 - $resto;
+        return (($str[16] == $digito1) && ($str[17] == $digito2));
+    }
 }
