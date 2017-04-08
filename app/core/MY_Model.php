@@ -227,6 +227,17 @@ class MY_Model extends CI_Model
     }
 
     /**
+     * Empty a table.
+     *
+     * @param $table String TAble name.
+     * @return mixed
+     */
+    public function empty_table($table = NULL)
+    {
+        return $this->db->empty_table($table);
+    }
+
+    /**
      * Upload a file.
      * 
      * @param $path String Path where the file must be saved.

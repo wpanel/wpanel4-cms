@@ -7,7 +7,7 @@
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class ipban extends MY_Model {
+class Ipban extends MY_Model {
 
 	public $table_name	= 'ip_banned';
 	public $primary_key	= 'id';

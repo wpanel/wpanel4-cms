@@ -1,4 +1,8 @@
 
+- Added empty_table() into MY_Model.php class;
+- Added Export and Clear newsletters email list;
+- Ipban.php model renamed from ipban.php;
+- Bug fix missing 'ipaddress' field on 'newsletter_email' table;
 - Functions valid_cpf() and valid_cnpj() included to MY_Form_validation.php;
 - Enhanced security for fileman;
 - /app/sessions/* removed;
