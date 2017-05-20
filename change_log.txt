@@ -1,4 +1,9 @@
 
+- Update HMVC libraries;
+- Changed default database config to SQLite3;
+- Fix Setup View;
+- Updated .gitignore;
+- Git-Flow adopted to the project;
 - Added empty_table() into MY_Model.php class;
 - Added Export and Clear newsletters email list;
 - Ipban.php model renamed from ipban.php;
