@@ -1,4 +1,5 @@
 
+- Fix composer autoload on config.php
 - Update HMVC libraries;
 - Changed default database config to SQLite3;
 - Fix Setup View;
