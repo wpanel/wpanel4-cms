@@ -1,4 +1,5 @@
 
+- Installation of Forensics Profiler from Lonnie Ezell;
 - Fix composer autoload on config.php
 - Update HMVC libraries;
 - Changed default database config to SQLite3;
