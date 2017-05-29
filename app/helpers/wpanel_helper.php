@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -46,9 +46,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  * @link        http://elieldepaula.com.br
  */
-
-if(!function_exists('wpn_asset'))
+if (!function_exists('wpn_asset'))
 {
+
     /**
      * Esta função retorna o código de inclusão de umas
      * biblioteca CSS ou Java-Script. 
@@ -59,21 +59,23 @@ if(!function_exists('wpn_asset'))
      */
     function wpn_asset($type, $filename)
     {
-        switch ($type) {
+        switch ($type)
+        {
             case 'css':
-                return "<link href=\"".base_url('assets/css/'.$filename)."\" rel=\"stylesheet\">\n";
+                return "<link href=\"" . base_url('assets/css/' . $filename) . "\" rel=\"stylesheet\">\n";
                 break;
             case 'js':
-                return "<script src=\"".base_url('assets/js/'.$filename)."\" type=\"text/javascript\"></script>\n";
+                return "<script src=\"" . base_url('assets/js/' . $filename) . "\" type=\"text/javascript\"></script>\n";
                 break;
             case 'custom':
                 return $filename;
                 break;
         }
     }
+
 }
 
-if(!function_exists('wpn_config'))
+if (!function_exists('wpn_config'))
 {
 
     /**
@@ -84,12 +86,13 @@ if(!function_exists('wpn_config'))
      */
     function wpn_config($item = null)
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         return $CI->wpanel->get_config($item);
     }
+
 }
 
-if(!function_exists('wpn_meta'))
+if (!function_exists('wpn_meta'))
 {
 
     /**
@@ -99,12 +102,13 @@ if(!function_exists('wpn_meta'))
      */
     function wpn_meta()
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         return $CI->wpanel->get_meta();
     }
+
 }
 
-if(!function_exists('wpn_widget'))
+if (!function_exists('wpn_widget'))
 {
 
     /**
@@ -117,30 +121,32 @@ if(!function_exists('wpn_widget'))
      */
     function wpn_widget($widget_name, $args = array())
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         return $CI->widget->runit($widget_name, $args);
     }
+
 }
 
-if(!function_exists('wpn_fakelink'))
+if (!function_exists('wpn_fakelink'))
 {
 
     /**
-    * This produces a link based on the string $var
-    *
-    * @return string
-    */
+     * This produces a link based on the string $var
+     *
+     * @return string
+     */
     function wpn_fakelink($var)
     {
         return strtolower(url_title(convert_accented_characters($var)));
     }
+
 }
 
 /* ----- Functions used only on the control panel. ----- */
 
-if (!function_exists('wpn_activelink')) 
+if (!function_exists('wpn_activelink'))
 {
-    
+
     /**
      * This helper return class 'active' for bootstrap menus in the control panel and
      * could be used into the site as well.
@@ -152,13 +158,14 @@ if (!function_exists('wpn_activelink'))
      */
     function wpn_activelink($link, $segment = 2, $return = ' class="active"')
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         if ($CI->uri->segment($segment) == $link)
             return $return;
     }
+
 }
 
-if (!function_exists('status_post')) 
+if (!function_exists('status_post'))
 {
 
     /**
@@ -174,9 +181,10 @@ if (!function_exists('status_post'))
         else
             return '<span class="label label-danger">Indisponível</span>';
     }
+
 }
 
-if (!function_exists('sim_nao')) 
+if (!function_exists('sim_nao'))
 {
 
     /**
@@ -193,9 +201,10 @@ if (!function_exists('sim_nao'))
         else
             return '<span class="label label-danger">Não</span>';
     }
+
 }
 
-if (!function_exists('status_user')) 
+if (!function_exists('status_user'))
 {
 
     /**
@@ -212,9 +221,10 @@ if (!function_exists('status_user'))
         else
             return '<span class="label label-danger">Bloqueado</span>';
     }
+
 }
 
-if(!function_exists('wpn_lang'))
+if (!function_exists('wpn_lang'))
 {
 
     /**
@@ -225,29 +235,32 @@ if(!function_exists('wpn_lang'))
      */
     function wpn_lang($key, $default, $file = 'wpn_common')
     {
-        $CI =& get_instance();
-        
+        $CI = & get_instance();
+
         $idiom = wpn_config('language');
-        
-        if(isset($file))
+
+        if (isset($file))
             $CI->lang->load($file, $idiom);
 
         $line = $CI->lang->line($key, false);
-        if($line)
+        if ($line)
             return $line;
         else
             return $default;
     }
+
 }
 
-if(!function_exists('wpn_link_permission'))
+if (!function_exists('wpn_link_permission'))
 {
+
     function wpn_link_permission($url = NULL)
     {
-        $CI =& get_instance();
-        if($CI->auth->has_permission($url))
+        $CI = & get_instance();
+        if ($CI->auth->has_permission($url))
             return TRUE;
         else
             return FALSE;
     }
+
 }

@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link        https://wpanelcms.com.br
  * @version     0.0.1
  */
-class Wpanel 
+class Wpanel
 {
 
     /**
@@ -56,28 +56,28 @@ class Wpanel
      * @var $wpanel_config mixed
      */
     protected $wpanel_config;
-    
+
     /**
      * Description for meta tags.
      * 
      * @var $meta_description String
      */
     protected $meta_description = '';
-    
+
     /**
      * Image for meta tags.
      * 
      * @var $meta_image string
      */
     protected $meta_image = '';
-    
+
     /**
      * Key words for meta tags
      * 
      * @var $meta_keywords string
-     */ 
+     */
     protected $meta_keywords = '';
-    
+
     /**
      * Title for meta tags.
      * 
@@ -90,13 +90,15 @@ class Wpanel
      * 
      * @return void
      */
-    public function __construct($config = array()) 
+    public function __construct($config = array())
     {
         if (count($config) > 0)
             $this->initialize($config);
-        try {
+        try
+        {
             
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             // echo $e->getMessage();
         }
         log_message('debug', "Wpanel Class Initialized");
@@ -107,7 +109,7 @@ class Wpanel
      * 
      * @return mixed
      */
-    public function __get($var) 
+    public function __get($var)
     {
         return get_instance()->$var;
     }
@@ -121,17 +123,18 @@ class Wpanel
      * @author Eliel de Paula <dev@elieldepaula.com.br>
      * ---------------------------------------------------------------------------------------------
      */
-    private function _attributes($attributes) 
+    private function _attributes($attributes)
     {
-        if (is_array($attributes)) {
+        if (is_array($attributes))
+        {
             $atr = '';
-            foreach ($attributes as $key => $value) {
+            foreach ($attributes as $key => $value)
+            {
                 $atr .= $key . "=\"" . $value . "\" ";
             }
             return $atr;
         } elseif (is_string($attributes) and strlen($attributes) > 0)
             $atr = ' ' . $attributes;
-        
     }
 
     /**
@@ -141,32 +144,33 @@ class Wpanel
      * @param $config array()
      * @return void
      */
-    public function initialize($config = array()) 
+    public function initialize($config = array())
     {
-        foreach ($config as $key => $val) {
-            if (isset($this->$key)) {
+        foreach ($config as $key => $val)
+        {
+            if (isset($this->$key))
+            {
                 $method = 'set_' . $key;
                 if (method_exists($this, $method))
                     $this->$method($val);
                 else
                     $this->$key = $val;
-                
             }
         }
         return $this;
     }
-    
+
     /**
      * Check the first admin user.
      * 
      * @return mixed
      */
     public function check_setup()
-	{
-		$this->load->model('auth_model');
-		if ($this->auth->accounts_empty() == TRUE)
-			redirect('setup');
-	}
+    {
+        $this->load->model('auth_model');
+        if ($this->auth->accounts_empty() == TRUE)
+            redirect('setup');
+    }
 
     // ----- Encapsulation for meta tags | begin. ----- //
     public function set_meta_description($value)
@@ -174,50 +178,51 @@ class Wpanel
         $this->meta_description = $value;
     }
 
-    public function get_meta_description() 
+    public function get_meta_description()
     {
         return $this->meta_description;
     }
 
-    public function set_meta_image($value) 
+    public function set_meta_image($value)
     {
         $this->meta_image = $value;
     }
 
-    public function get_meta_image() 
+    public function get_meta_image()
     {
         return $this->meta_image;
     }
 
-    public function set_meta_keywords($value) 
+    public function set_meta_keywords($value)
     {
         $this->meta_keywords = $value;
     }
 
-    public function get_meta_keywords() 
+    public function get_meta_keywords()
     {
         return $this->meta_keywords;
     }
 
-    public function set_meta_title($value) 
+    public function set_meta_title($value)
     {
-        $this->meta_title = $value .' | '. $this->get_config('site_titulo');
+        $this->meta_title = $value . ' | ' . $this->get_config('site_titulo');
     }
 
     public function get_meta_title()
     {
         return $this->meta_title;
     }
+
     // ----- Encapsulation for meta tags | end. ----- //
 
     /* ----- Methods for the Website. ----- */
-    
+
     /**
      * Return a full meta-tag to be inserted into the <head> of the site.
      *
      * @return mixed
      */
-    public function get_meta() 
+    public function get_meta()
     {
         // Recupera a variável 'Locale'.
         $available_languages = config_item('available_languages');
@@ -226,8 +231,8 @@ class Wpanel
         if (!$this->meta_description)
             $this->meta_description = $this->get_config('site_desc');
         // Trata a imagem de exibição.
-        if(!$this->meta_image)
-            $this->meta_image = base_url('media/'.$this->get_config('logomarca'));
+        if (!$this->meta_image)
+            $this->meta_image = base_url('media/' . $this->get_config('logomarca'));
         $meta = array(
             array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
             array('name' => 'robots', 'content' => 'all'),
@@ -255,7 +260,7 @@ class Wpanel
      * @param $item String
      * @return mixed
      */
-    public function get_config($item = null) 
+    public function get_config($item = null)
     {
         $this->load->model('configuracao');
         return $this->configuracao->get_config($item);
@@ -268,10 +273,11 @@ class Wpanel
      * @todo Revisar este código de 'invocaçao' do editor.
      * @todo Adicionar o filemanager no tinyMCE.
      */
-    public function load_editor() 
+    public function load_editor()
     {
         $html = '';
-        switch (wpn_config('text_editor')) {
+        switch (wpn_config('text_editor'))
+        {
             case 'ckeditor':
                 $html .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('lib/plugins/ckeditor/ckeditor.js') . "\"></script>\n";
                 return $html;
@@ -302,7 +308,7 @@ class Wpanel
      * @param array $dados
      * @return mixed
      */
-    public function load_view($view, $dados = null) 
+    public function load_view($view, $dados = null)
     {
         $this->load->view('layout/header');
         $this->load->view($view, $dados);
@@ -328,12 +334,13 @@ class Wpanel
      */
     public function send_email($data = NULL)
     {
-        if($data == NULL)
+        if ($data == NULL)
             return FALSE;
         // Load the library.
         $this->load->library('email');
         // Check if use SMTP.
-        if(wpn_config("usa_smtp")){
+        if (wpn_config("usa_smtp"))
+        {
             $config['smtp_host'] = wpn_config("smtp_servidor");
             $config['smtp_user'] = wpn_config("smtp_usuario");
             $config['smtp_pass'] = wpn_config("smtp_senha");
@@ -348,7 +355,8 @@ class Wpanel
 
             $this->email->initialize($config);
             $this->email->from(wpn_config('smtp_usuario'), wpn_config('site_titulo'));
-        } else {
+        } else
+        {
             $this->email->from($data['from_email'], wpn_config('site_titulo'));
         }
 
@@ -356,14 +364,17 @@ class Wpanel
         $this->email->to($data['to']);
         $this->email->subject($data['subject']);
         $this->email->message($data['message']);
-        
+
         // Verify the succes of the send.
-        if ($this->email->send()) {
+        if ($this->email->send())
+        {
             log_message('debug', $this->email->print_debugger() . " Success");
             return TRUE;
-        } else {
+        } else
+        {
             log_message('debug', $this->email->print_debugger() . " Error");
             return FALSE;
         }
     }
+
 }

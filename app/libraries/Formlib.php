@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,28 +29,31 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
-class xFormlib 
+/**
+ * Form Lib is a library to generate bootstrap forms in CodeIgniter format.
+ */
+class Formlib
 {
 
-    private $form_title     = ''; // Título do form exibido no 'panel'.
-    private $form_submitaction  = ''; // Endereço completo do action (http://endereco/completo).
-    private $form_cancelaction  = ''; // Endereço completo do cancelamento (http://endereco/completo).
-    private $form_submit_label  = 'Submit'; // Texto do botão de submit.
-    private $form_cancel_label  = 'Cancel'; // Texto do botão de cancelamento.
-    private $form_type      = 'post'; // Tipo de envio: post, get, multipart.
-    private $form_role      = 'form'; // Tag 'role' usada pelo bootstrap.
-    private $form_itens     = array(); // array com os itens do formulário.
+    private $form_title = ''; // Título do form exibido no 'panel'.
+    private $form_submitaction = ''; // Endereço completo do action (http://endereco/completo).
+    private $form_cancelaction = ''; // Endereço completo do cancelamento (http://endereco/completo).
+    private $form_submit_label = 'Submit'; // Texto do botão de submit.
+    private $form_cancel_label = 'Cancel'; // Texto do botão de cancelamento.
+    private $form_type = 'post'; // Tipo de envio: post, get, multipart.
+    private $form_role = 'form'; // Tag 'role' usada pelo bootstrap.
+    private $form_itens = array(); // array com os itens do formulário.
 
     public function __construct($config = array())
     {
-        if (count($config) > 0) {
+        if (count($config) > 0)
+        {
             $this->initialize($config);
         }
         log_message('debug', "FormLib Class Initialized");
@@ -69,14 +73,16 @@ class xFormlib
      */
     private function _attributes($attributes)
     {
-        if (is_array($attributes)) {
+        if (is_array($attributes))
+        {
             $atr = '';
             foreach ($attributes as $key => $value)
             {
                 $atr .= $key . "=\"" . $value . "\" ";
             }
             return $atr;
-        } elseif (is_string($attributes) and strlen($attributes) > 0) {
+        } elseif (is_string($attributes) and strlen($attributes) > 0)
+        {
             $atr = ' ' . $attributes;
         }
     }
@@ -93,18 +99,21 @@ class xFormlib
     {
         foreach ($config as $key => $val)
         {
-            if (isset($this->$key)) {
+            if (isset($this->$key))
+            {
                 $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
+                if (method_exists($this, $method))
+                {
                     $this->$method($val);
-                } else {
+                } else
+                {
                     $this->$key = $val;
                 }
             }
         }
         return $this;
     }
-    
+
     /**
      * Retorna o código 'required' caso o valor seja true.
      * 
@@ -114,7 +123,8 @@ class xFormlib
      */
     private function is_required($var)
     {
-        if($var == True){
+        if ($var == True)
+        {
             return 'required="required"';
         }
     }
@@ -128,7 +138,8 @@ class xFormlib
      */
     private function is_checked($var)
     {
-        if($var == True){
+        if ($var == True)
+        {
             return 'checked="checked"';
         }
     }
@@ -143,7 +154,8 @@ class xFormlib
      */
     private function is_selected($field, $value)
     {
-        if($field == $value){
+        if ($field == $value)
+        {
             return 'selected="selected"';
         }
     }
@@ -157,8 +169,9 @@ class xFormlib
      */
     private function show_error($var)
     {
-        if($var){
-            return "<p class=\"bg-danger\">".$var."</p>\n";
+        if ($var)
+        {
+            return "<p class=\"bg-danger\">" . $var . "</p>\n";
         }
     }
 
@@ -172,12 +185,14 @@ class xFormlib
     {
         $html = "";
         $html .= "<div class=\"panel panel-default\">\n";
-        $html .= "<div class=\"panel-heading\">".$this->form_title."</div>\n";
+        $html .= "<div class=\"panel-heading\">" . $this->form_title . "</div>\n";
         $html .= "<div class=\"panel-body\">\n\n";
-        if($this->form_type == 'multipart'){
-            $html .= "<form action=\"".$this->form_submitaction."\" method=\"post\" enctype=\"multipart/form-data\" role=\"".$this->form_role."\" >\n";
-        } else {
-            $html .= "<form action=\"".$this->form_submitaction."\" method=\"".$this->form_type."\" role=\"".$this->form_role."\" >\n";
+        if ($this->form_type == 'multipart')
+        {
+            $html .= "<form action=\"" . $this->form_submitaction . "\" method=\"post\" enctype=\"multipart/form-data\" role=\"" . $this->form_role . "\" >\n";
+        } else
+        {
+            $html .= "<form action=\"" . $this->form_submitaction . "\" method=\"" . $this->form_type . "\" role=\"" . $this->form_role . "\" >\n";
         }
         return $html;
     }
@@ -191,8 +206,8 @@ class xFormlib
     private function form_footer()
     {
         $html = "";
-        $html .= "<button type=\"submit\" class=\"btn btn-success\">".$this->form_submit_label."</button>\n";
-        $html .= "<a href=\"".$this->form_cancelaction."\" class=\"btn btn-danger\">".$this->form_cancel_label."</a>\n";
+        $html .= "<button type=\"submit\" class=\"btn btn-success\">" . $this->form_submit_label . "</button>\n";
+        $html .= "<a href=\"" . $this->form_cancelaction . "\" class=\"btn btn-danger\">" . $this->form_cancel_label . "</a>\n";
         $html .= "</form>\n\n</div>\n</div>\n</div>";
         return $html;
     }
@@ -218,36 +233,37 @@ class xFormlib
     private function make_input($item = array())
     {
         $html = "";
-        switch ($item['type']) {
+        switch ($item['type'])
+        {
             case 'textarea':
                 $html .= "<div class=\"form-group\">\n";
-                $html .= "<label for=\"".$item['id']."\">".$item['label']."</label>\n";
-                $html .= "<textarea class=\"form-control\" id=\"".$item['id']."\" name=\"".$item['name']."\" placeholder=\"".$item['placeholder']."\" rows=\"".$item['rows']."\">".$item['value']."</textarea>\n";
+                $html .= "<label for=\"" . $item['id'] . "\">" . $item['label'] . "</label>\n";
+                $html .= "<textarea class=\"form-control\" id=\"" . $item['id'] . "\" name=\"" . $item['name'] . "\" placeholder=\"" . $item['placeholder'] . "\" rows=\"" . $item['rows'] . "\">" . $item['value'] . "</textarea>\n";
                 $html .= $this->show_error($item['error']);
-                $html .= "</div>\n";            
+                $html .= "</div>\n";
                 break;
             case 'checkbox':
                 $html .= "<div class=\"checkbox\">\n<label>\n";
-                $html .= "<input type=\"".$item['type']."\" name=\"".$item['name']."\" value=\"".$item['value']."\" ".$this->is_checked($item['checked'])." > ".$item['label']."\n";
+                $html .= "<input type=\"" . $item['type'] . "\" name=\"" . $item['name'] . "\" value=\"" . $item['value'] . "\" " . $this->is_checked($item['checked']) . " > " . $item['label'] . "\n";
                 $html .= "</label>\n";
                 $html .= $this->show_error($item['error']);
                 $html .= "</div>\n";
                 break;
             case 'radio':
                 $html .= "<div class=\"radio\">\n<label>\n";
-                $html .= "<input type=\"".$item['type']."\" name=\"".$item['name']."\" value=\"".$item['value']."\" ".$this->is_checked($item['checked'])." > ".$item['label']."\n";
+                $html .= "<input type=\"" . $item['type'] . "\" name=\"" . $item['name'] . "\" value=\"" . $item['value'] . "\" " . $this->is_checked($item['checked']) . " > " . $item['label'] . "\n";
                 $html .= "</label>\n";
                 $html .= $this->show_error($item['error']);
                 $html .= "</div>\n";
                 break;
             case 'select':
                 $html .= "<div class=\"form-group\">\n";
-                $html .= "<label for=\"".$item['id']."\">".$item['label']."</label>\n";
-                $html .= "<select class=\"form-control\" id=\"".$item['id']."\" name=\"".$item['name']."\">\n";
+                $html .= "<label for=\"" . $item['id'] . "\">" . $item['label'] . "</label>\n";
+                $html .= "<select class=\"form-control\" id=\"" . $item['id'] . "\" name=\"" . $item['name'] . "\">\n";
                 $html .= "<option>[ Selecione ]</option>\n";
-                foreach($item['itens'] as $x => $value)
+                foreach ($item['itens'] as $x => $value)
                 {
-                    $html .= "<option value=\"".$x."\" ".$this->is_selected($x, $item['value'])." >".$value."</option>\n";
+                    $html .= "<option value=\"" . $x . "\" " . $this->is_selected($x, $item['value']) . " >" . $value . "</option>\n";
                 }
                 $html .= "</select>\n";
                 $html .= $this->show_error($item['error']);
@@ -255,12 +271,12 @@ class xFormlib
                 break;
             default:
                 $html .= "<div class=\"form-group\">\n";
-                $html .= "<label for=\"".$item['id']."\">".$item['label']."</label>\n";
-                $html .= "<input type=\"".$item['type']."\" ".$this->is_required($item['required'])." class=\"form-control\" id=\"".$item['id']."\" name=\"".$item['name']."\" value=\"".$item['value']."\" placeholder=\"".$item['placeholder']."\">\n";
+                $html .= "<label for=\"" . $item['id'] . "\">" . $item['label'] . "</label>\n";
+                $html .= "<input type=\"" . $item['type'] . "\" " . $this->is_required($item['required']) . " class=\"form-control\" id=\"" . $item['id'] . "\" name=\"" . $item['name'] . "\" value=\"" . $item['value'] . "\" placeholder=\"" . $item['placeholder'] . "\">\n";
                 $html .= $this->show_error($item['error']);
                 $html .= "</div>\n";
                 break;
-        }       
+        }
         return $html;
     }
 
@@ -273,9 +289,9 @@ class xFormlib
     private function get_items()
     {
         $html = "";
-        foreach($this->form_items as $x => $item)
+        foreach ($this->form_items as $x => $item)
         {
-                $html .= $this->make_input($item);
+            $html .= $this->make_input($item);
         }
         return $html;
     }
