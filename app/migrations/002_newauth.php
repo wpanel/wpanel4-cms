@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +29,16 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Migration class.
  *
- * This class updates a initial database to e new auth library.
+ * This class updates a initial database to WpanelCms.
  *
  * @package     WpanelCms
  * @subpackage  Migrations
@@ -49,281 +49,283 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Migration_newauth extends CI_Migration
 {
+	public function up()
+	{
+		// Renomeia a tabela 'users' para fins de recuperação.
+		$this->dbforge->rename_table('users', 'users_bkp', TRUE);
 
-    public function up()
-    {
-        $this->dbforge->rename_table('users', 'users_bkp', TRUE);
+		// Cria uma nova tabela 'accounts' com a nova estrutura.
+		$fields = array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 5,
+				'unsigned' => TRUE,
+				'auto_increment' => TRUE
+			),
+			'email' => array(
+				'type' => 'varchar',
+				'constraint' => 100,
+				'null' => FALSE
+			),
+			'password' => array(
+				'type' => 'varchar',
+				'constraint' => 255,
+				'null' => FALSE
+			),
+			'role' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '20',
+				'null' => FALSE,
+			),
+			'extra_data' => array(
+				'type' => 'TEXT',
+				'null' => FALSE,
+			),
+			'ip_address' => array(
+				'type' => 'varchar',
+				'constraint' => 15,
+				'default' => '0.0.0.0'
+			),
+			'activated' => array(
+				'type' => 'datetime',
+				'null' => TRUE
+			),
+			'created' => array(
+				'type' => 'datetime',
+				'null' => TRUE,
+			),
+			'updated' => array(
+				'type' => 'datetime',
+				'null' => TRUE,
+			),
+			'status' => array(
+				'type' => 'int',
+				'null' => FALSE,
+				'default' => '0'
+			)
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->create_table('accounts', true);
+		$fields = NULL;
 
-        $fields = array(
-            'id' => array(
+		// Cria a tabela 'modules'
+		$fields = array(
+			'id' => array(
+    			'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE,
+			),
+			'name' => array(
+    			'type' => 'varchar',
+    			'constraint' => 60,
+    			'null' => FALSE
+			),
+			'icon' => array(
+    			'type' => 'varchar',
+    			'constraint' => 100,
+    			'null' => TRUE
+			),
+			'show_in_menu' => array(
+    			'type' => 'int',
+    			'constraint' => 11,
+    			'null' => TRUE
+			),
+			'order' => array(
+    			'type' => 'int',
+    			'constraint' => 2,
+    			'null' => TRUE
+			),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        ),
+	        'updated' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->create_table('modules', TRUE);
+		$fields = NULL;
+
+		// Cria a tabela 'modules_actions'
+		$fields = array(
+			'id' => array(
+    			'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE,
+			),
+			'module_id' => array(
+	        	'type' => 'INT',
+	        	'null' => FALSE
+	        ),
+	        'description' => array(
+    			'type' => 'varchar',
+    			'constraint' => 255,
+    			'null' => FALSE
+			),
+			'link' => array(
+    			'type' => 'varchar',
+    			'constraint' => 255,
+    			'null' => FALSE
+			),
+			'whitelist' => array(
+				'type' => 'int',
+				'constraint' => 11,
+				'default' => '0'
+			),
+
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        ),
+	        'updated' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('module_id');
+		$this->dbforge->create_table('modules_actions', true);
+		$fields = NULL;
+
+		// Cria a tabela permissions
+		$fields = array(
+			'id' => array(
+    			'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE,
+			),
+			'module_id' => array(
+	        	'type' => 'INT',
+	        	'null' => FALSE
+	        ),
+	        'module_action_id' => array(
+	        	'type' => 'INT',
+	        	'null' => FALSE
+	        ),
+	        'account_id' => array(
+	        	'type' => 'INT',
+	        	'null' => FALSE
+	        ),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        ),
+	        'updated' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('module_id');
+		$this->dbforge->add_key('module_action_id');
+		$this->dbforge->add_key('account_id');
+		$this->dbforge->create_table('permissions', true);
+		$fields = NULL;
+
+		// Cria a tabela log_access
+		$fields = array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 5,
+				'unsigned' => TRUE,
+				'auto_increment' => TRUE,
+			),
+			'user_id' => array(
+				'type' => 'INT',
+				'null' => FALSE
+			),
+			'ip_address' => array(
+				'type' => 'varchar',
+				'constraint' => 15,
+				'null' => FALSE,
+				'default' => '0.0.0.0'
+			),
+			'created' => array(
+				'type' => 'datetime',
+				'null' => TRUE,
+			)
+			// Nesta tabela não teremos a coluna 'created' pois só vai ter o registro sem alteração.
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('module_id');
+		$this->dbforge->create_table('log_access', true);
+		$fields = NULL;
+
+		// Cria a tabela ip_attempts
+		$fields = array(
+			'id' => array(
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
-            ),
-            'email' => array(
-                'type' => 'varchar',
-                'constraint' => 100,
-                'null' => FALSE
-            ),
-            'password' => array(
-                'type' => 'varchar',
-                'constraint' => 255,
-                'null' => FALSE
-            ),
-            'role' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '20',
-                'null' => FALSE,
-            ),
-            'extra_data' => array(
-                'type' => 'TEXT',
-                'null' => FALSE,
-            ),
-            'ip_address' => array(
-                'type' => 'varchar',
-                'constraint' => 15,
-                'default' => '0.0.0.0'
-            ),
-            'activated' => array(
-                'type' => 'datetime',
-                'null' => TRUE
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'updated' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'status' => array(
-                'type' => 'int',
-                'null' => FALSE,
-                'default' => '0'
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('accounts', true);
-        $fields = NULL;
+	        ),
+	        'ip_address' => array(
+	        	'type' => 'varchar',
+	        	'constraint' => 15,
+	        	'null' => FALSE,
+	        	'default' => '0.0.0.0'
+        	),
+        	'last_failed_attempt' => array(
+        		'type' => 'datetime',
+        		'null' => FALSE,
+    		),
+    		'number_of_attempts' => array(
+    			'type' => 'int',
+    			'constraint' => 11,
+    			'null' => FALSE
+			),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        ),
+	        'updated' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('number_of_attempts');
+		$this->dbforge->create_table('ip_attempts', true);
+		$fields = NULL;
 
-        // Cria a tabela 'modules'
-        $fields = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE,
-            ),
-            'name' => array(
-                'type' => 'varchar',
-                'constraint' => 60,
-                'null' => FALSE
-            ),
-            'icon' => array(
-                'type' => 'varchar',
-                'constraint' => 100,
-                'null' => TRUE
-            ),
-            'show_in_menu' => array(
-                'type' => 'int',
-                'constraint' => 11,
-                'null' => TRUE
-            ),
-            'order' => array(
-                'type' => 'int',
-                'constraint' => 2,
-                'null' => TRUE
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'updated' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('modules', TRUE);
-        $fields = NULL;
-
-        // Cria a tabela 'modules_actions'
-        $fields = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE,
-            ),
-            'module_id' => array(
-                'type' => 'INT',
-                'null' => FALSE
-            ),
-            'description' => array(
-                'type' => 'varchar',
-                'constraint' => 255,
-                'null' => FALSE
-            ),
-            'link' => array(
-                'type' => 'varchar',
-                'constraint' => 255,
-                'null' => FALSE
-            ),
-            'whitelist' => array(
-                'type' => 'int',
-                'constraint' => 11,
-                'default' => '0'
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'updated' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('module_id');
-        $this->dbforge->create_table('modules_actions', true);
-        $fields = NULL;
-
-        // Cria a tabela permissions
-        $fields = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE,
-            ),
-            'module_id' => array(
-                'type' => 'INT',
-                'null' => FALSE
-            ),
-            'module_action_id' => array(
-                'type' => 'INT',
-                'null' => FALSE
-            ),
-            'account_id' => array(
-                'type' => 'INT',
-                'null' => FALSE
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'updated' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('module_id');
-        $this->dbforge->add_key('module_action_id');
-        $this->dbforge->add_key('account_id');
-        $this->dbforge->create_table('permissions', true);
-        $fields = NULL;
-
-        // Cria a tabela log_access
-        $fields = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE,
-            ),
-            'user_id' => array(
-                'type' => 'INT',
-                'null' => FALSE
-            ),
-            'ip_address' => array(
-                'type' => 'varchar',
-                'constraint' => 15,
-                'null' => FALSE,
-                'default' => '0.0.0.0'
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-                // Nesta tabela não teremos a coluna 'created' pois só vai ter o registro sem alteração.
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('module_id');
-        $this->dbforge->create_table('log_access', true);
-        $fields = NULL;
-
-        // Cria a tabela ip_attempts
-        $fields = array(
-            'id' => array(
+		// Cria a tabela ip_banned
+		$fields = array(
+			'id' => array(
                 'type' => 'INT',
                 'constraint' => 5,
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
-            ),
-            'ip_address' => array(
-                'type' => 'varchar',
-                'constraint' => 15,
-                'null' => FALSE,
-                'default' => '0.0.0.0'
-            ),
-            'last_failed_attempt' => array(
-                'type' => 'datetime',
-                'null' => FALSE,
-            ),
-            'number_of_attempts' => array(
-                'type' => 'int',
-                'constraint' => 11,
-                'null' => FALSE
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            ),
-            'updated' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('number_of_attempts');
-        $this->dbforge->create_table('ip_attempts', true);
-        $fields = NULL;
+	        ),
+	        'ip_address' => array(
+	        	'type' => 'varchar',
+	        	'constraint' => 15,
+	        	'null' => FALSE,
+	        	'default' => '0.0.0.0'
+        	),
+			'created' => array(
+	        	'type' => 'datetime',
+	        	'null' => TRUE,
+	        )
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->add_key('ip_address');
+		$this->dbforge->create_table('ip_banned', true);
+		$fields = NULL;
 
-        // Cria a tabela ip_banned
-        $fields = array(
-            'id' => array(
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => TRUE,
-                'auto_increment' => TRUE
-            ),
-            'ip_address' => array(
-                'type' => 'varchar',
-                'constraint' => 15,
-                'null' => FALSE,
-                'default' => '0.0.0.0'
-            ),
-            'created' => array(
-                'type' => 'datetime',
-                'null' => TRUE,
-            )
-        );
-        $this->dbforge->add_field($fields);
-        $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('ip_address');
-        $this->dbforge->create_table('ip_banned', true);
-        $fields = NULL;
-
-        // Adiciona os módulos iniciais.
-        $this->db->query("INSERT INTO `modules` (`id`, `name`, `icon`, `show_in_menu`, `order`, `created`, `updated`) VALUES
+		// Adiciona os módulos iniciais.
+		$this->db->query("INSERT INTO `modules` (`id`, `name`, `icon`, `show_in_menu`, `order`, `created`, `updated`) VALUES
 			(1,	'Postagens',	'',	1,	0,	'2016-10-08 18:25:03',	'2016-10-08 18:25:03'),
 			(2,	'Páginas',	'',	1,	0,	'2016-10-08 18:28:50',	'2016-10-08 18:28:50'),
 			(3,	'Eventos',	'',	1,	0,	'2016-10-08 18:30:04',	'2016-10-08 18:30:09'),
@@ -334,9 +336,9 @@ class Migration_newauth extends CI_Migration
 			(8,	'Newsletters',	'',	1,	0,	'2016-10-08 18:47:42',	'2016-10-08 18:47:42'),
 			(9,	'Contas de usuário',	'',	1,	0,	'2016-10-08 18:48:13',	'2016-10-08 18:48:13'),
 			(10,	'Configurações',	'',	1,	0,	'2016-10-08 18:51:28',	'2016-10-08 18:51:28');");
-
-        // Adiciona as ações dos módulos iniciais.
-        $this->db->query("INSERT INTO `modules_actions` (`id`, `module_id`, `description`, `link`, `whitelist`, `created`, `updated`) VALUES
+		
+		// Adiciona as ações dos módulos iniciais.
+		$this->db->query("INSERT INTO `modules_actions` (`id`, `module_id`, `description`, `link`, `whitelist`, `created`, `updated`) VALUES
 			(1,	1,	'Listar postagens',	'admin/posts',	0,	'2016-10-08 18:25:23',	'2016-10-08 18:25:23'),
 			(2,	1,	'Adicionar postaagem',	'admin/posts/add',	0,	'2016-10-08 18:25:40',	'2016-10-08 18:25:40'),
 			(3,	1,	'Alterar postagem',	'admin/posts/edit/*',	0,	'2016-10-08 18:25:57',	'2016-10-08 18:25:57'),
@@ -388,22 +390,22 @@ class Migration_newauth extends CI_Migration
 			(49,	9,	'Apagar um IP banido',	'admin/ipbanneds/delete/*',	0,	'2016-10-08 18:51:04',	'2016-10-08 18:51:04'),
 			(50,	10,	'Visualizar configurações',	'admin/configuracoes',	0,	'2016-10-08 18:52:09',	'2016-10-08 18:52:09'),
 			(51,	10,	'Salvar configurações',	'admin/configuracoes/index',	0,	'2016-10-08 18:52:18',	'2016-10-08 18:52:18');");
-    }
 
-    public function down()
-    {
-        // Exclui a tabela 'users' nova.
-        $this->dbforge->drop_table('accounts');
-        // Restaura a tabela 'users' antiga.
-        $this->dbforge->rename_table('users_bkp', 'users');
-        // Exclui a tabela ip_attempts
-        $this->dbforge->drop_table('ip_attempts');
-        // Exclui a tabela modules.
-        $this->dbforge->drop_table('modules');
-        // Exclui a tabela modules_actions.
-        $this->dbforge->drop_table('modules_actions');
-        // Exclui a tabela log_access.
-        $this->dbforge->drop_table('log_access');
-    }
+	}
 
+	public function down()
+	{
+		// Exclui a tabela 'users' nova.
+		$this->dbforge->drop_table('accounts');
+		// Restaura a tabela 'users' antiga.
+		$this->dbforge->rename_table('users_bkp', 'users');
+		// Exclui a tabela ip_attempts
+		$this->dbforge->drop_table('ip_attempts');
+		// Exclui a tabela modules.
+		$this->dbforge->drop_table('modules');
+		// Exclui a tabela modules_actions.
+		$this->dbforge->drop_table('modules_actions');
+		// Exclui a tabela log_access.
+		$this->dbforge->drop_table('log_access');
+	}
 }

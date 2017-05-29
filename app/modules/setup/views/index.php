@@ -48,12 +48,12 @@
 					<?= form_error('agree'); ?>
 				</div>
 				<hr/>
-				<button type="submit" class="btn btn-block btn-primary">
+				<button type="submit" class="btn btn-primary">
 					<?= wpn_lang('bot_next', 'Next').' <span class="glyphicon glyphicon-chevron-right"></span>'; ?>
 				</button>
 				<?= form_close(); ?>
 			</div>
 			<p class="text-center" style="padding-top:20px;">&copy; Wpanel CMS <?= date('Y') ?>, <a href="http://wpanel.org/licenca.html" target="_blank"><?= wpn_lang('wpn_licence', 'Terms and licence'); ?></a>. <?= wpn_lang('wpn_developed', 'Developed by'); ?> <a href="http://elieldepaula.com.br" target="_blank">Eliel de Paula</a>.</p>
-		</div>
+		</div>px;
 	</body>
 </html>

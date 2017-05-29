@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,40 +28,35 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Slidebanner extends Widget
-{
+class Slidebanner extends Widget {
 
-    private $position = '';
-    private $class_name = '';
-    private $interval = '5000';
-    private $cycle = 'true';
+	private $position = '';
+	private $class_name = '';
+	private $interval = '5000';
+	private $cycle = 'true';
 
-    function __construct($config = array())
-    {
-        if (count($config) > 0)
-        {
+	function __construct($config = array())
+	{
+		if (count($config) > 0) {
             $this->initialize($config);
         }
-    }
+	}
 
     public function initialize($config = array())
     {
         foreach ($config as $key => $val)
         {
-            if (isset($this->$key))
-            {
+            if (isset($this->$key)) {
                 $method = 'set_' . $key;
-                if (method_exists($this, $method))
-                {
+                if (method_exists($this, $method)) {
                     $this->$method($val);
-                } else
-                {
+                } else {
                     $this->$key = $val;
                 }
             }
@@ -70,19 +64,23 @@ class Slidebanner extends Widget
         return $this;
     }
 
-    public function run()
-    {
+	public function run()
+	{
 
-        $this->load->model('banner');
+		$this->load->model('banner');
         $query = $this->banner->get_by_field(
-                        array('position' => $this->position, 'status' => 1), null, array('field' => 'sequence', 'order' => 'asc'), null, 'content'
-                )->result();
+            array('position' => $this->position, 'status' => 1),
+            null,
+            array('field' => 'sequence', 'order' => 'asc'),
+            null,
+            'content'
+        )->result();
 
-        $data = array(
-            'banners' => $query,
-            'class_name' => $this->class_name
-        );
-        $this->load->view('widgets/slidebanner', $data);
-    }
+		$data = array(
+			'banners' => $query,
+			'class_name' => $this->class_name
+		);
+		$this->load->view('widgets/slidebanner', $data);
+	}
 
 }

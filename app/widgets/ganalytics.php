@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,17 +28,16 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ganalytics extends Widget
-{
+class Ganalytics extends Widget {
 
     public function run()
-    {
+	{
 
         $html = "";
         $html .= "\t<!-- Google Analytics -->\n";
@@ -49,12 +47,12 @@ class Ganalytics extends Widget
         $html .= "\tm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n";
         $html .= "\t})(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n";
 
-        $html .= "\tga('create', '" . wpn_config('google_analytics') . "', 'auto');\n";
+        $html .= "\tga('create', '".wpn_config('google_analytics')."', 'auto');\n";
         $html .= "\tga('send', 'pageview');\n";
         $html .= "\t</script>\n";
         $html .= "\t<!-- End Google Analytics -->\n";
 
         return $html;
-    }
+	}
 
 }
