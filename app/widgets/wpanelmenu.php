@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,36 +29,40 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Wpanelmenu extends Widget {
+class Wpanelmenu extends Widget
+{
 
     private $menu_id = '';
     private $ul_style = '';
     private $li_style = '';
-    
     private $ul_dropdown = '';
 
-	function __construct($config = array())
-	{
-		if (count($config) > 0) {
+    function __construct($config = array())
+    {
+        if (count($config) > 0)
+        {
             $this->initialize($config);
         }
-	}
+    }
 
     public function initialize($config = array())
     {
         foreach ($config as $key => $val)
         {
-            if (isset($this->$key)) {
+            if (isset($this->$key))
+            {
                 $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
+                if (method_exists($this, $method))
+                {
                     $this->$method($val);
-                } else {
+                } else
+                {
                     $this->$key = $val;
                 }
             }
@@ -66,9 +71,9 @@ class Wpanelmenu extends Widget {
     }
 
     public function run()
-	{
-		return $this->get_menu($this->menu_id, $this->ul_style, $this->li_style);
-	}
+    {
+        return $this->get_menu($this->menu_id, $this->ul_style, $this->li_style);
+    }
 
     /**
      * ---------------------------------------------------------------------------------------------
@@ -92,11 +97,8 @@ class Wpanelmenu extends Widget {
 
         $this->load->model('menu_item');
         $query = $this->menu_item->get_by_field(
-            'menu_id', 
-            $menu_id, 
-            array('field' => 'ordem', 'order' => 'asc'),
-            null
-        )->result();
+                        'menu_id', $menu_id, array('field' => 'ordem', 'order' => 'asc'), null
+                )->result();
 
         $html = "";
         $html .= "<ul class=\"" . $ul_style . "\">";
@@ -107,7 +109,7 @@ class Wpanelmenu extends Widget {
                 $html .= "<li class=\"" . $li_style . "\">";
             else
                 $html .= "<li>";
-            
+
             switch ($row->tipo)
             {
                 case 'link':

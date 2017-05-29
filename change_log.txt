@@ -1,4 +1,7 @@
 
+- General revision;
+- License updating into the files;
+- Documentation of the methods;
 - Installation of Forensics Profiler from Lonnie Ezell;
 - Fix composer autoload on config.php
 - Update HMVC libraries;

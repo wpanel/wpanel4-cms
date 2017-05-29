@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +29,17 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Configuracao extends MY_Model 
+class Configuracao extends MY_Model
 {
-    
-    function __construct(){
+
+    function __construct()
+    {
         parent::__construct();
     }
 
@@ -45,23 +47,24 @@ class Configuracao extends MY_Model
     {
         $json = file_get_contents(FCPATH . 'config/config.json');
         $cobj = (object) json_decode($json);
-        if($conf_item == null)
+        if ($conf_item == null)
             return $cobj;
         else
             return $cobj->$conf_item;
     }
-    
+
     public function save_config($data)
     {
         $json = json_encode($data);
-        if(write_file(FCPATH . 'config/config.json', $json))
+        if (write_file(FCPATH . 'config/config.json', $json))
             return true;
         else
             return false;
     }
-    
+
     public function get_config($item = null)
     {
         return $this->load_config($item);
     }
+
 }

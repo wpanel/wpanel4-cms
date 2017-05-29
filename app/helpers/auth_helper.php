@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,27 +29,30 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!function_exists('is_logged'))
 {
+
     // Retorna se está ou não logado.
     function is_logged()
     {
-        $CI =& get_instance();
-        if($CI->session->userdata('logged_in'))
+        $CI = & get_instance();
+        if ($CI->session->userdata('logged_in'))
             return TRUE;
         else
             return FALSE;
     }
+
 }
 
 if (!function_exists('has_permission'))
 {
+
     /**
      * Verifica se um usuário tem permissão para determinado link. A opção $override_root
      * serve para não considerar o root na hora da checagem.
@@ -62,13 +65,15 @@ if (!function_exists('has_permission'))
      */
     function has_permission($url, $account_id = NULL, $override_root = FALSE)
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         return $CI->auth->has_permission($url, $account_id, $override_root);
     }
+
 }
 
 if (!function_exists('auth_extra_data'))
 {
+
     /**
      * This helper return a 'extra-data' item from the session login.
      *
@@ -77,16 +82,18 @@ if (!function_exists('auth_extra_data'))
      */
     function auth_extra_data($item = null, $json = null)
     {
-        $CI =& get_instance();
-        if($item == null)
+        $CI = & get_instance();
+        if ($item == null)
             return $CI->auth->get_extra_data(null, $json);
         else
             return $CI->auth->get_extra_data($item, $json);
     }
+
 }
 
 if (!function_exists('auth_login_data'))
 {
+
     /**
      * This helper return a item from the session login.
      *
@@ -95,7 +102,8 @@ if (!function_exists('auth_login_data'))
      */
     function auth_login_data($var)
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         return $CI->auth->get_login_data($var);
     }
+
 }
