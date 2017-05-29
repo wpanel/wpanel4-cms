@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -39,34 +40,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @package Wpanel
  * @author Eliel de Paula <dev@gelieldepaula.com.br>
- **/
-class Dashboard extends MX_Controller {
+ * */
+class Dashboard extends MX_Controller
+{
 
-	function __construct()
-	{
-		// Protege o acesso do dashboard independente de permissão.
-		$this->auth->check_permission();
-		if(auth_login_data('role') == 'user')
-			redirect('users');
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-		$this->load->model('dash');
-	}
+    function __construct()
+    {
+        // Protege o acesso do dashboard independente de permissão.
+        $this->auth->check_permission();
+        if (auth_login_data('role') == 'user')
+            redirect('users');
+        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+        $this->load->model('dash');
+    }
 
-	public function index()
-	{
+    public function index()
+    {
 
-		$layout_vars = array();
-		$content_vars = array();
+        $layout_vars = array();
+        $content_vars = array();
 
-		$content_vars['total_posts'] 	= $this->dash->calcula_totais('posts', '0');
-		$content_vars['total_paginas'] 	= $this->dash->calcula_totais('posts', '1');
-		$content_vars['total_agendas'] 	= $this->dash->calcula_totais('posts', '2');
-		$content_vars['total_banners'] 	= $this->dash->calcula_totais('banners');
-		$content_vars['total_albuns'] 	= $this->dash->calcula_totais('albuns');
-		$content_vars['total_videos'] 	= $this->dash->calcula_totais('videos');
-		//----------------------------------------------------------------------------------------------------
+        $content_vars['total_posts'] = $this->dash->calcula_totais('posts', '0');
+        $content_vars['total_paginas'] = $this->dash->calcula_totais('posts', '1');
+        $content_vars['total_agendas'] = $this->dash->calcula_totais('posts', '2');
+        $content_vars['total_banners'] = $this->dash->calcula_totais('banners');
+        $content_vars['total_albuns'] = $this->dash->calcula_totais('albuns');
+        $content_vars['total_videos'] = $this->dash->calcula_totais('videos');
+        //----------------------------------------------------------------------------------------------------
 
-		$this->wpanel->load_view('dashboard/index', $content_vars);
+        $this->wpanel->load_view('dashboard/index', $content_vars);
+    }
 
-	}
 }

@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -61,8 +62,8 @@ class menus extends MX_Controller
             $html_menu .= "<div class=\"col-md-9 col-sm-9\">" . $row->nome . "</div>";
             $html_menu .= "<div class=\"col-md-2 col-sm-2 btn-group btn-group-xs\">";
             $html_menu .= anchor('admin/menus/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default'));
-            $html_menu .= '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menus/delete/' . 
-                $row->id).'\');">'.glyphicon('trash').'</button>';
+            $html_menu .= '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/menus/delete/' .
+                            $row->id) . '\');">' . glyphicon('trash') . '</button>';
             $html_menu .= "</div>";
             $html_menu .= "</div></li>";
             $html_menu .= "<li class=\"list-group-item\">";
@@ -112,8 +113,8 @@ class menus extends MX_Controller
             $this->table->add_row(
                     $row->label, $row->ordem, humanize($row->tipo), $link, div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/menuitens/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/menuitens/delete/' . 
-                        $row->id).'\');">'.glyphicon('trash').'</button>' .
+                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/menuitens/delete/' .
+                            $row->id) . '\');">' . glyphicon('trash') . '</button>' .
                     div(null, true)
             );
         }
@@ -136,7 +137,7 @@ class menus extends MX_Controller
         $query = $this->categoria->get_by_id($categoria_id)->row();
         return $query->title;
     }
-    
+
     private function get_titulo_menu($menu_id)
     {
         $this->load->model('menu');
@@ -152,9 +153,11 @@ class menus extends MX_Controller
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE)
+        {
             $this->wpanel->load_view('menus/add', $content_vars);
-        } else {
+        } else
+        {
 
             $dados_save = array();
             $dados_save['user_id'] = $this->auth->get_userid();
@@ -165,10 +168,12 @@ class menus extends MX_Controller
             $dados_save['created'] = date('Y-m-d H:i:s');
             $dados_save['updated'] = date('Y-m-d H:i:s');
 
-            if ($this->menu->save($dados_save)) {
+            if ($this->menu->save($dados_save))
+            {
                 $this->session->set_flashdata('msg_sistema', 'Menu salvo com sucesso.');
                 redirect('admin/menus');
-            } else {
+            } else
+            {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o menu.');
                 redirect('admin/menus');
             }
@@ -183,9 +188,11 @@ class menus extends MX_Controller
 
         $this->form_validation->set_rules('nome', 'Nome', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE)
+        {
 
-            if ($id == null) {
+            if ($id == null)
+            {
                 $this->session->set_flashdata('msg_sistema', 'Menu inexistente.');
                 redirect('admin/menus');
             }
@@ -193,7 +200,8 @@ class menus extends MX_Controller
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu->get_by_id($id)->row();
             $this->wpanel->load_view('menus/edit', $content_vars);
-        } else {
+        } else
+        {
 
             $dados_save = array();
             $dados_save['nome'] = $this->input->post('nome');
@@ -202,10 +210,12 @@ class menus extends MX_Controller
             $dados_save['estilo'] = $this->input->post('estilo');
             $dados_save['updated'] = date('Y-m-d H:i:s');
 
-            if ($this->menu->update($id, $dados_save)) {
+            if ($this->menu->update($id, $dados_save))
+            {
                 $this->session->set_flashdata('msg_sistema', 'Menu salvo com sucesso.');
                 redirect('admin/menus');
-            } else {
+            } else
+            {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o menu.');
                 redirect('admin/menus');
             }
@@ -214,20 +224,25 @@ class menus extends MX_Controller
 
     public function delete($id = null)
     {
-        if ($id == null) {
+        if ($id == null)
+        {
             $this->session->set_flashdata('msg_sistema', 'Menu inexistente.');
             redirect('admin/menus');
         }
-        if ($this->menu->delete($id)) {
+        if ($this->menu->delete($id))
+        {
             $this->load->model('menu_item');
-            if($this->menu_item->delete_by_menu($id)) {
+            if ($this->menu_item->delete_by_menu($id))
+            {
                 $this->session->set_flashdata('msg_sistema', 'Menu excluído com sucesso.');
                 redirect('admin/menus');
-            } else {
+            } else
+            {
                 $this->session->set_flashdata('msg_sistema', 'Menu excluído com sucesso, porém os itens do menu não foram excluídos.');
                 redirect('admin/menus');
             }
-        } else {
+        } else
+        {
             $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o menu.');
             redirect('admin/menus');
         }
