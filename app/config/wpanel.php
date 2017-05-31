@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,37 +29,40 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
  defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Define the available languages.
+ * Define os idiomas disponíveis. 
  */
 $config['available_languages'] = array(
     'english'    => array('locale' => 'en', 'label' => 'Inglês'), 
     'portuguese' => array('locale' => 'pt_BR', 'label' => 'Português')
 );
 
-/**
- * Available editors.
- */
 $config['available_editors'] = array('ckeditor'=>'CKEditor', 'tinymce'=>'TinyMCE');
 
 /**
- * Available post list views.
+ * Define os tipos de usuário serão permitidos no site. 
+ */
+$config['users_role'] = array('user' => 'Usuário comum', 'admin' => 'Administrador');
+
+/**
+ * Define as views disponíveis para a exibição das listas de postagens.
  */
 $config['posts_views'] = array('list' => 'Listagem', 'mosaic' => 'Mosaico');
 
 /**
- * Available banners positions on the Site.
+ * Define as posições dos banners no site para serem listados no 
+ * painel de contorle.
  */
 $config['banner_positions'] = array('slide' => 'Slide-Show', 'sidebar' => 'Barra lateral');
 
 /**
- * Funcional links to menu manager.
+ * Define os links funcionais para o gerenciador de menu.
  */
 $config['funcional_links'] = array(
     'home'      => 'Página inicial',

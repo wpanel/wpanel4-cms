@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,33 +28,27 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dash extends MY_Model
+class Dash extends MY_Model 
 {
 
-    /**
-     * Calc totals to Dashboard.
-     * 
-     * @param string $modulo Module name.
-     * @param int $tipo Posts type.
-     * @return mixed
-     */
-    public function calcula_totais($modulo, $tipo = 0)
-    {
+	public function calcula_totais($modulo, $tipo = 0)
+	{
 
-        $this->db->where('user_id', $this->auth->get_account_id());
+		$this->db->where('user_id', $this->auth->get_account_id());
 
-        if ($modulo == 'posts')
-            $this->db->where('page', $tipo);
+		if($modulo == 'posts')
+			$this->db->where('page', $tipo);
+		
+		$this->db->from($modulo);
 
-        $this->db->from($modulo);
+		return $this->db->count_all_results();
 
-        return $this->db->count_all_results();
-    }
+	}
 
 }

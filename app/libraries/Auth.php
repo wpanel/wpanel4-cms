@@ -1,13 +1,13 @@
-<?php
+<?php 
 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,14 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
-defined('BASEPATH') OR exit('No direct script access allowed');
+ defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * This library manage account users into Wpanel CMS.
- */
 class Auth
 {
-
     protected $auth_check_permyssion_by_hook = FALSE;
     protected $auth_white_list = array();
     protected $auth_password_hash_type = 'md5';
@@ -70,8 +66,7 @@ class Auth
     {
         foreach ($config as $key => $val)
         {
-            if (isset($this->$key))
-            {
+            if (isset($this->$key)) {
                 $method = 'set_' . $key;
                 if (method_exists($this, $method))
                     $this->$method($val);
@@ -107,10 +102,8 @@ class Auth
 
         $new_account = $this->model->insert_account($data);
 
-        if (count($permissions) > 0)
-        {
-            foreach ($permissions as $key => $value)
-            {
+        if(count($permissions) > 0){
+            foreach ($permissions as $key => $value) {
                 $this->create_permission($value, $new_account);
             }
         }
@@ -134,15 +127,15 @@ class Auth
 
     public function upload_avatar($path = 'avatar', $types = '*', $fieldname = 'userfile', $filename = null)
     {
-        $config['upload_path'] = FCPATH . 'media/' . $path . '/';
+        $config['upload_path'] = FCPATH.'media/'.$path.'/';
         $config['remove_spaces'] = TRUE;
         $config['file_ext_tolower'] = TRUE;
         $config['allowed_types'] = $types;
-        if ($filename == null)
+        if($filename == null)
             $config['file_name'] = md5(date('YmdHis'));
         else
             $config['file_name'] = $filename;
-
+        
         $this->load->library('upload', $config);
         if ($this->upload->do_upload($fieldname))
         {
@@ -195,23 +188,20 @@ class Auth
         $data = array();
         $data['id'] = $id;
         $data['email'] = $email;
-        if ($role != NULL)
-            $data['role'] = $role;
+        if($role != NULL)$data['role'] = $role;
         $data['ip_address'] = $_SERVER['REMOTE_ADDR'];
         $data['updated'] = date('Y-m-d H:i:s');
 
         //TODO Melhorar a atualização dos dados-extra, desse jeito sempre perderá a foto.
-        if (count($extra_data) > 0)
+        if(count($extra_data) > 0)
             $data['extra_data'] = json_encode($extra_data);
 
         $updated_account = $this->model->update_account($data);
 
         // Altera as permissões caso seja enviado algum parametro pelo array.
-        if (count($permissions) > 0)
-        {
+        if(count($permissions) > 0){
             $this->model->remove_permission_by_account($id);
-            foreach ($permissions as $key => $value)
-            {
+            foreach ($permissions as $key => $value) {
                 $this->create_permission($value, $id);
             }
         }
@@ -226,8 +216,7 @@ class Auth
     {
         $data = array();
         $data['id'] = $id;
-        if ($old_password != NULL)
-            $data['old_password'] = $this->_hash_password($old_password);
+        if($old_password != NULL)$data['old_password'] = $this->_hash_password($old_password);
         $data['new_password'] = $this->_hash_password($new_password);
 
         $updated_password = $this->model->update_password($data);
@@ -248,8 +237,7 @@ class Auth
         $login = $this->model->login_account($data);
         if ($login == FALSE)
             return FALSE;
-        else
-        {
+        else {
             $this->_set_session($login);
             return TRUE;
         }
@@ -259,7 +247,7 @@ class Auth
     {
         return $this->session->sess_destroy();
     }
-
+    
     /**
      * This method returns the user accound by $id, or if null, return the logged
      * account.
@@ -269,11 +257,9 @@ class Auth
      */
     public function account($id = NULL)
     {
-        if ($id)
-        {
+        if($id){
             return $this->model->account_by_id($id);
-        } else
-        {
+        } else {
             return $this->model->acocunt_by_id($this->get_login_data('id'));
         }
     }
@@ -295,9 +281,9 @@ class Auth
     {
         // If $json is empty uses the session login extra-data.
         if ($json == NULL)
-            $json = $this->get_login_data('extra_data');
+           $json = $this->get_login_data('extra_data');
         $objeto = (object) json_decode($json);
-        if ($item == NULL)
+        if($item == NULL)
             return $objeto;
         else
             return $objeto->$item;
@@ -323,15 +309,12 @@ class Auth
     {
         $account_id = $this->get_account_id();
         $account_role = $this->get_login_data('role');
-        if ($account_id == '')
-        {
+        if ($account_id == '') {
             $this->session->flashdata('msg_auth', 'User is not logged.');
             redirect('admin/logout');
             exit;
-        } else
-        {
-            if ($url == NULL)
-            {
+        } else {
+            if($url == NULL){
                 $url = $this->uri->uri_string();
                 ($this->uri->total_segments() == 3) ? $url . '/' : $url;
             }
@@ -343,8 +326,7 @@ class Auth
                 return TRUE;
             if ($this->model->validate_white_list($this->_prepare_url($url)))
                 return TRUE;
-            if ($this->model->validate_permission($account_id, $this->_prepare_url($url)) === false)
-            {
+            if ($this->model->validate_permission($account_id, $this->_prepare_url($url)) === false) {
                 $this->session->flashdata('msg_sistema', 'User don\'t has permission.');
                 redirect('admin/dashboard');
                 exit;
@@ -365,12 +347,12 @@ class Auth
      */
     public function has_permission($url, $account_id = NULL, $override_root = FALSE)
     {
-        if ($account_id == NULL)
+        if($account_id == NULL)
             $account_id = $this->get_account_id();
-        if ($this->get_login_data('role') == 'ROOT' && $override_root == FALSE)
+        if($this->get_login_data('role') == 'ROOT' && $override_root == FALSE)
             return TRUE;
         else
-            return $this->model->validate_permission($account_id, $url);
+           return $this->model->validate_permission($account_id, $url);
     }
 
     public function list_accounts($order = array(), $limit = array(), $select = null)
@@ -381,11 +363,10 @@ class Auth
     public function list_modules_full()
     {
         $this->load->model(array('module', 'module_action'));
-        $query_module = $this->module->get_list(array('field' => 'order', 'order' => 'asc'))->result_array();
+        $query_module = $this->module->get_list(array('field'=>'order', 'order'=>'asc'))->result_array();
         // Adiciona as actions na lista de módulos.
-        foreach ($query_module as $key => $value)
-        {
-            $query_action = $this->module_action->get_by_field(array('whitelist' => '0', 'module_id' => $value['id']))->result_array();
+        foreach ($query_module as $key => $value) {
+            $query_action = $this->module_action->get_by_field(array('whitelist'=>'0', 'module_id'=>$value['id']))->result_array();
             $query_module[$key]['actions'] = $query_action;
         }
         return $query_module;
@@ -397,6 +378,7 @@ class Auth
         $data['html'] = TRUE;
         $data['message'] = $this->load->view('emails/account_activation', $data, TRUE);
         return $this->wpanel->send_email($data);
+
     }
 
     /**
@@ -407,7 +389,7 @@ class Auth
      */
     private function _set_session($account)
     {
-
+    
         if (!$account->id)
             return FALSE;
 
@@ -460,5 +442,4 @@ class Auth
         }
         return $out;
     }
-
 }
