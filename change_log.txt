@@ -1,4 +1,6 @@
 
+[28/05/2017]
+
 - General revision;
 - License updating into the files;
 - Documentation of the methods;

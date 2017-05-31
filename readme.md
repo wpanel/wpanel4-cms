@@ -1,62 +1,64 @@
-#Wpanel CMS
+# Welcome to Wpanel CMS
 
-##Um CMS para blogs, websites e pequenas aplicações desenvolvido com CodeIgniter 3.x.
+*Build Blogs, Websites and Web Apps with an CMS made in top of CodeIgniter 3.x*
 
-Wpanel CMS é um Gerenciador de Conteúdo para blogs, sites e pequenas aplicações que eu desenvolvi para meus projetos em PHP.
+This project was born with the necessity to create an easy and cheap website without the comon sense that is using solutions like Wordpress or Joomla that are full of features but also it's full of complex codes and infinite plugins.What in the end, make the proccess pretty confuse.
 
-A idéia inicial era de ter uma base sólida porém simples, sem milhões de códigos intermináveis e plugins de terçeiros que te deixa com calafrios na hora de dar manutenção. Por isso desenvolvi usando o Framework CodeIgniter por ser simples, e muito rápido, além de ser
-muito popular, ter uma ótima documentação e uma boa comunidade.
+# Features
 
-O projeto já está estável e funcionando bem, com um painel de controle responsivo graças ao Bootstrap 3, e um site demonstrativo também responsivo e com uma otimização SEO básica.
+1. Responsive admin thanks to AdminLTE.
+2. Account management with ACL granting access by URI.
+3. Posts - It could be a blog or news on your site.
+4. Pages - Manage fis pages on yout site, like 'About' page.
+5. Events - The same structure of Posts/Pages but changed to show events, like parties and shows.
+6. Banners - Manage the slide banner of the home page.
+7. Galleries - Manage the pictures galleries of the site. Each gallery has his onw pictures.
+8. Videos from Youtube.
+9. Menu management.
+10. Newsletters - Collect leads on your site.
+11. Accounts management.
+12. Configurations.
 
-É sem dúvida um bom ponto de partida para qualquer projeto. 
+# Wpanel require
 
-Se você gostar do Wpanel CMS e adotá-lo em algum projeto, envie-me um link com seus projetos desenvolvidos para adicionar ao Show-Case.
+1. Webserver Apache (recomended)
+2. PHP 5.4+
+3. Mcrypt enabled
+4. MySQL or SQLite3
 
-###Requisitos
+# Installation
 
-- PHP >= 5.4.*
-- MySql ou Sqlite
-- Biblioteca Mcrypt ativada.
+The steps for installation are covered in the [Wiki of the project.](https://github.com/elieldepaula/wpanel/wiki/Installation)
 
-###Instalação
+# Contributing
 
-1. Faça o download do Wpanel CMS em .zip/.tar.gz, ou você pode clonar o repositório ou executar o comando abaixo caso você use o composer:
+*See how to contribute to this project:*
 
-	```
-	composer create-project "elieldepaula/wpanelcms" Blog
-	```
-	Isto criará uma cópia do Wpanel CMS em um diretório 'Blog'
-2. Certifique-se de dar permissão de escrita nas pastas: app/sessions, app/cache, app/db e public/captcha;
-3. Altere o arquivo app/config/config.php de acordo com seu ambiente e projeto;
-4. Altere o arquivo app/config/database.php de acordo com o banco de dados que deseja usar;
-	Caso deseje usar MySql, você precisará configurar uma nova base de dados no seu servidor.
-5. Acesse seu site pelo navegador, no primeiro acesso você será direcionado para a criação de um usuário administrador;
-6. Faça seu login no painel de controle, clique na opção 'Visualizar Site', se tudo ocorreu bem seu Wpanel CMS já está configurado :)
+## 1 - Development
 
-# Contribuindo com o projeto
+If you're a web developer and want to be part of an cool project, you're in the right place! Fork the project and send your Pull-requests. Also you can send me a email to *dev[at]elieldepaula.com.br* so we can change ideas and to plan some features to the project.
 
-## Desenvolvendo
+I also recommend you to read the CodeIgniter [Style Guide](https://www.codeigniter.com/user_guide/general/styleguide.html) on a try to make the code in the same pattern.
 
-Contribua com o projeto me ajudando a desenvolver, pode começar clonando o repositório e enviando seus 'Pull-Requests'. Envie-me um email em dev[arroba]elieldepaula.com.br para trocarmos informações e manter um contato maior, mesmo que seja uma opinião ou uma dica já estará contribuindo.
+## 2 - Feedback
 
-##Feedback
+Send your feedback about the project, you can send an email to *dev[at]elieldepaula.com.br* or send a message in our [page on Facebook](https://www.facebook.com/wpanelcms/). If you have experienced bugs you can inform them in the [issues section](https://github.com/elieldepaula/wpanel/issues) here on github. And do not forget to send your ideas and demands to the project, we want to hear what you are meant to do with Wpanel and help you.
 
-Envie sua opinião, dicas e experiências que teve com o Wpanel CMS, todo feedback me ajuda a guiar o desenvolvimento do projeto e dependendo se tornam novas funcionalidades.
+## 3 - Donate
 
-##Doando
+Financial donating is always welcome and they help us to keep focus on the project, then the evolution could be more fast.
 
-Doações financeiras são sempre bem vindas e ajudam a manter o foco no projeto evitando ter que dividir o tempo com muitos outros projetos, assim a evolução do projeto é bem mais rápida.
+You'll find two buttons of donation [in the oficial site](http://wpanel.org/#download), one for PayPal and another to PagSeguro.
 
-Se você deseja enviar uma doação, entre em contato comigo em dev[arroba]elieldepaula.com.br ou use o botão no site oficial <http://wpanel.org/#download>
+Feel free to send an email to dev[at]elieldepaula.com.br and get more informations about others ways to donate.
 
-#Licença
+# License
 
-Este é um projeto pessoal em que trabalho a vários anos, estou disponibilizando sob a licença MIT, você pode usar da forma que achar melhor, mas sem nenhuma garantia. Se quiser contribuir para o projeto, entre em contato comigo pelo email dev[at]elieldepaula.com.br, clone o repositório e vamos fazer um CMS mais completo para quem usa CodeIgniter.
+This is a personal project I have been working on for several years and I am making it available under the MIT license, you can use it any way you want, but without any warranty. In the development process I learned a lot and grew as a developer and I'm happy to extend this project to you.
 
-#The MIT License (MIT)
+# The MIT License (MIT)
 
-Copyright (c) 2014 Eliel de Paula
+Copyright (c) 2017 Eliel de Paula
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
