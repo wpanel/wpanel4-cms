@@ -1,4 +1,16 @@
 
+[28/05/2017]
+
+- General revision;
+- License updating into the files;
+- Documentation of the methods;
+- Installation of Forensics Profiler from Lonnie Ezell;
+- Fix composer autoload on config.php
+- Update HMVC libraries;
+- Changed default database config to SQLite3;
+- Fix Setup View;
+- Updated .gitignore;
+- Git-Flow adopted to the project;
 - Added empty_table() into MY_Model.php class;
 - Added Export and Clear newsletters email list;
 - Ipban.php model renamed from ipban.php;
