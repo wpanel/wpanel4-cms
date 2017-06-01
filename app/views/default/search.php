@@ -1,4 +1,4 @@
-<h3 class="page-header">Resultados da busca por: <?= $search_terms; ?></h3>
+<h1 class="page-header">Resultados da busca por: <?= $search_terms; ?></h1>
 <!-- Mostra a lista de resultados. -->
 <?php foreach ($results as $row) { ?>
     <div class="row wpn-postagens">

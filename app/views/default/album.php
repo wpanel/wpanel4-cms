@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <h3 class="page-header"><?= $album->titulo; ?></h3>
+        <h1 class="page-header"><?= $album->titulo; ?></h1>
         <p><?= $album->descricao; ?></p>
         <p><?= mdate('%d/%m/%Y', strtotime($album->created)); ?></p>
     </div>

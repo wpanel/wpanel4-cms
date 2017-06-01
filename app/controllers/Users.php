@@ -130,10 +130,24 @@ class Users extends MY_Controller
         // Check the login
         if(!is_logged())
             redirect('users/login');
-        $query = $this->auth->get_account_by_id();
-        $this->data_content['row'] = $query;
-        $this->wpanel->set_meta_title('Área de usuários');
-    	$this->render('users_profile');
+        
+        $this->form_validation->set_rules('name', 'Nome', 'required');
+        $this->form_validation->set_rules('email', 'E-Mail', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Senha', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $query = $this->auth->get_account_by_id();
+            $this->data_content['row'] = $query;
+            $this->data_content['extra'] = (object) json_decode($query->extra_data);
+            $this->wpanel->set_meta_title('Área de usuários');
+            $this->render('users_profile');
+        } else {
+            $extra_data = array(
+                'name' => $this->input->post('name'),
+                'avatar' => '',
+                'skin' => ''
+            );
+            $this->auth->update_account($id, $this->input->post('email'), 'user', $extra_data);
+        }
     }
 
     public function login()

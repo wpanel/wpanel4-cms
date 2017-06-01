@@ -35,8 +35,8 @@
                 
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-md-12">
-                    <p class="text-center"><?= wpn_config('copyright'); ?></p>
+                <div class="col-sm-12 col-md-12 wpn-copyright">
+                    <p><?= wpn_config('copyright'); ?></p>
                 </div>
             </div>
         </div>

@@ -10,8 +10,8 @@ if ($msg_newsletter)
 }
 ?>
 <div class="row">
-    <div class="col-sm-6 col-md-6">
-        <h1>Newsletter</h1>
+    <div class="col-sm-12 col-md-12">
+        <h1 class="page-header">Newsletter</h1>
         <p>Cadastre seu email em nossa lista para que você receba todas as nossas novidades em primeira mão!</p>
     </div>
 </div>

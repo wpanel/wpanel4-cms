@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <h3 class="page-header">Cadastro de usuários</h3>
+        <h1 class="page-header">Cadastro de usuários</h1>
     </div>
 </div>
 <?php

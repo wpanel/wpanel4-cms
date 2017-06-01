@@ -63,7 +63,6 @@ body {
 }
 .wpn-container {
     background-color: #ffffff;
-    margin-bottom: 20px;
 }
 .wpn-social-buttons {
     margin-bottom: 10px;
@@ -91,11 +90,14 @@ body {
     margin: 0;
     padding: 0;
 }
-.wpn-footer {}
-.wpn-footer .wpn-copyright {
-  border-top: solid 1px #ccc;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding-top: 30px;
+.wpn-footer {
+    padding-bottom: 20px;
+}
+.wpn-copyright {
+    padding: 20px 0 20px 0;
     text-align: center;
+}
+.wpn-copyright p {
+    margin: 0;
+    padding: 0;
 }

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <h3 class="page-header">Galeria de Vídeos</h3>
+        <h1 class="page-header">Galeria de Vídeos</h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">

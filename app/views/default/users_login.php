@@ -18,7 +18,7 @@
                 <?= form_error('password'); ?>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+        <?= form_close(); ?>
 
     </div>
     <div class="col-sm-6 col-sm-6">
