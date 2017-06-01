@@ -45,9 +45,18 @@
 * General styles.
 */
 body {
-    background-position: top center;
+    
+    margin-top: 50px;
+    
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
 }
 .wpn-spacer {
     height: 20px;

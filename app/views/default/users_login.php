@@ -4,7 +4,7 @@
 </h1>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-6">
 
         <?= form_open('users/login', array('class'=>'col-sm-10', 'role'=>'form')); ?>
             <div class="form-group">
@@ -21,7 +21,7 @@
         </form>
 
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-6">
         <h3>Cadastre-se!</h3>
         <p>Crie seu cadastro clicando no botão abaixo.</p>
         <p><?= anchor('users/register', 'Cadastro', array('class' => 'btn btn-primary')); ?></p>

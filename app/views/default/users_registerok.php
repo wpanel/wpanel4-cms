@@ -4,6 +4,6 @@
 <p>Muito obrigado!</p>
 <hr/>
 <p class="text-center">
-	<?= anchor('', 'Página inicial', array('class' => 'btn btn-success')); ?>
-	<?= anchor('users/login', 'Login', array('class' => 'btn btn-info')); ?>
+    <?= anchor('', 'Página inicial', array('class' => 'btn btn-success')); ?>
+    <?= anchor('users/login', 'Login', array('class' => 'btn btn-info')); ?>
 </p>
