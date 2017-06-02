@@ -35,7 +35,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class erros extends MX_Controller
+class Erros extends MX_Controller
 {
 
     public function index()
