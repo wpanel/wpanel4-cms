@@ -133,7 +133,6 @@ class Users extends MY_Controller
         
         $this->form_validation->set_rules('name', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'E-Mail', 'required|valid_email');
-        $this->form_validation->set_rules('password', 'Senha', 'required');
         if ($this->form_validation->run() == FALSE) {
             $query = $this->auth->get_account_by_id();
             $this->data_content['row'] = $query;
@@ -146,7 +145,14 @@ class Users extends MY_Controller
                 'avatar' => '',
                 'skin' => ''
             );
-            $this->auth->update_account($id, $this->input->post('email'), 'user', $extra_data);
+            if($this->auth->update_account($this->auth->get_login_data('id'), $this->input->post('email'), 'user', $extra_data))
+            {
+                $this->session->set_flashdata('msg_contato', 'Sua conta foi atualizada com sucesso!');
+                redirect('users/profile');
+            } else {
+                $this->session->set_flashdata('msg_contato', 'Sua conta não pode ser atualizada. Verifique seus dados e tente novamente.');
+                redirect('users/profile');
+            }
         }
     }
 
@@ -172,5 +178,26 @@ class Users extends MY_Controller
     {
     	$this->auth->logout();
         redirect();
+    }
+    
+    public function change_password()
+    {
+        $this->form_validation->set_rules('actual_password', 'Senha atual', 'required');
+        $this->form_validation->set_rules('new_password', 'Nova senha', 'required');
+        $this->form_validation->set_rules('conf_password', 'Confirmação de senha', 'required|matches[new_password]');
+        if ($this->form_validation->run() == FALSE)
+        {
+            redirect('users/profile');
+        } else 
+        {
+            if($this->auth->change_password($this->auth->get_login_data('id'), $this->input->post('actual_password'), $this->input->post('new_password')))
+            {
+                $this->session->set_flashdata('msg_sistema', 'Sua senha foi alterada com sucesso.');
+                return redirect('users/profile');
+            } else {
+                $this->session->set_flashdata('msg_sistema', 'Sua senha não pode ser alterada, tente novamente.');
+                return redirect('users/profile');
+            }
+        }
     }
 }
