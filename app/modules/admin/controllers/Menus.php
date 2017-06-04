@@ -35,7 +35,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class menus extends MX_Controller
+class Menus extends MX_Controller
 {
 
     function __construct()
