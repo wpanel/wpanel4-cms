@@ -45,16 +45,24 @@
 * General styles.
 */
 body {
-    background-position: top center;
+    
+    margin-top: 50px;
+    
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
 }
 .wpn-spacer {
     height: 20px;
 }
 .wpn-container {
     background-color: #ffffff;
-    margin-bottom: 20px;
 }
 .wpn-social-buttons {
     margin-bottom: 10px;
@@ -82,11 +90,14 @@ body {
     margin: 0;
     padding: 0;
 }
-.wpn-footer {}
-.wpn-footer .wpn-copyright {
-  border-top: solid 1px #ccc;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding-top: 30px;
+.wpn-footer {
+    padding-bottom: 20px;
+}
+.wpn-copyright {
+    padding: 20px 0 20px 0;
     text-align: center;
+}
+.wpn-copyright p {
+    margin: 0;
+    padding: 0;
 }

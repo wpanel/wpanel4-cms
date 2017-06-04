@@ -1,8 +1,8 @@
-<h3 class="page-header">Resultados da busca por: <?= $search_terms; ?></h3>
+<h1 class="page-header">Resultados da busca por: <?= $search_terms; ?></h1>
 <!-- Mostra a lista de resultados. -->
 <?php foreach ($results as $row) { ?>
     <div class="row wpn-postagens">
-        <div class="col-md-12">
+        <div class="col-sm-12 col-md-12">
             <h3><?= anchor('post/'.$row->link, $row->title); ?></h3>
             <p class="text-muted">
                 <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($row->created)); ?> <br/></span>

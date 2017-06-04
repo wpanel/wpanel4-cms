@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header">Fale conosco</h3>
+        <h1 class="page-header">Fale conosco</h1>
     </div>
 </div>
 

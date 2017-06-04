@@ -3,7 +3,7 @@
 <?php foreach($events as $event){ ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
-            <h3><?= anchor('event/'.$event->link, $event->title); ?></h3>
+            <h1><?= anchor('event/'.$event->link, $event->title); ?></h1>
             <p class="text-muted">
                 <span><b>Data</b> <?= mdate('%d/%m/%Y', strtotime($event->created)); ?> | <b>Local</b> <?= $event->description; ?><br/></span>
             </p>

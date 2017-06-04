@@ -14,6 +14,7 @@
             
                 $image_properties = array(
                     'src' => 'media/banners/' . $row->content,
+                    'style' => 'width:100%;',
                     'class' => '',
                 );
 

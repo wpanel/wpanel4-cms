@@ -34,7 +34,8 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class fotos extends MX_Controller {
+class Fotos extends MX_Controller
+{
 
 	function __construct()
 	{
