@@ -1,4 +1,10 @@
 
+[04/06/2017]
+
+- Renamed classes to first upper-case.
+- Updates on /app/controllers/Users.php
+- Updates on basic website;
+
 [28/05/2017]
 
 - General revision;

@@ -73,7 +73,7 @@ $active_group = ENVIRONMENT;
 $query_builder = TRUE;
 
 /**
- * Configurações para o ambiente de desenvolvimento.
+ * Setup to development environment.
  */
 $db['development'] = array(
 	'dsn'	=> '',
@@ -98,7 +98,7 @@ $db['development'] = array(
 );
 
 /**
- * Configurações para o ambiente de produção.
+ * Setup to production environment.
  */
 $db['production'] = array(
 	'dsn'	=> '',
