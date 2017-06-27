@@ -1,4 +1,6 @@
 
+- Update the core of CodeIgniter to 3.1.5
+
 [04/06/2017]
 
 - Renamed classes to first upper-case.
