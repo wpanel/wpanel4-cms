@@ -260,7 +260,7 @@ class Auth
         if($id){
             return $this->model->account_by_id($id);
         } else {
-            return $this->model->acocunt_by_id($this->get_login_data('id'));
+            return $this->model->account_by_id($this->get_login_data('id'));
         }
     }
 
