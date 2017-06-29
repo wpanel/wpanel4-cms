@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -47,32 +47,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Widget
 {
-
+	
     public $module_path;
 
-    function __get($var)
-    {
+    function __get($var) {
         global $CI;
         return $CI->$var;
     }
 
-    function runit($file, $param = null)
-    {
+    function runit($file ,$param = null) 
+    {        
         $args = func_get_args();
         $module = '';
         /* is module in filename? */
-        if (($pos = strrpos($file, '/')) !== FALSE)
-        {
+        if (($pos = strrpos($file, '/')) !== FALSE) {
             $module = substr($file, 0, $pos);
             $file = substr($file, $pos + 1);
         }
         list($path, $file) = Modules::find($file, $module, 'widgets/');
         if ($path === FALSE)
-            $path = APPPATH . 'widgets/';
+            $path = APPPATH.'widgets/';
         Modules::load_file($file, $path);
         $file = ucfirst($file);
         $widget = new $file($param);
         return $widget->run();
     }
-
-}
+} 

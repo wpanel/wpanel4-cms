@@ -1,13 +1,13 @@
-<?php
+<?php 
 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -44,115 +44,103 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  * @link        http://elieldepaula.com.br
  */
-if (!function_exists('html_comment'))
+
+
+if ( ! function_exists('html_comment'))
 {
-
-    function html_comment($comment)
-    {
-        $str = "";
-        $str = "<!-- " . $comment . " -->\n";
-        return $str;
-    }
-
+	function html_comment($comment)
+	{
+		$str = "";
+		$str = "<!-- ".$comment." -->\n";
+		return $str;
+	}
 }
 
-if (!function_exists('title'))
+if ( ! function_exists('title'))
 {
-
-    function title($title)
-    {
-        $str = "";
-        $str = "<title>" . $title . "</title>\n";
-        return $str;
-    }
-
+	function title($title)
+	{
+		$str = "";
+		$str = "<title>".$title."</title>\n";
+		return $str;
+	}
 }
 
-if (!function_exists('html'))
+if ( ! function_exists('html'))
 {
-
-    function html($close = FALSE)
-    {
-        $str = '';
-        if ($close)
-            $str = "\n</html>";
-        else
-            $str = "<html>\n";
-        return $str;
-    }
-
+	function html($close = FALSE)
+	{
+		$str = '';
+		if($close)
+			$str = "\n</html>";
+		 else
+			$str = "<html>\n";
+		return $str;
+	}
 }
 
-if (!function_exists('head'))
+if ( ! function_exists('head'))
 {
-
-    function head($close = FALSE)
-    {
-        $str = '';
-        if ($close)
-            $str = "</head>\n";
-        else
-            $str = "<head>\n";
-        return $str;
-    }
-
+	function head($close = FALSE)
+	{
+		$str = '';
+		if($close)
+			$str = "</head>\n";
+		else
+			$str = "<head>\n";
+		return $str;
+	}
 }
 
-if (!function_exists('body'))
+if ( ! function_exists('body'))
 {
-
-    function body($attributes = '', $close = FALSE)
-    {
-        $str = '';
-        if ($close)
-            $str = "\n</body>\n";
-        else
-            $str = "<body" . _attributes($attributes) . ">\n";
-        return $str;
-    }
-
+	function body($attributes = '', $close = FALSE)
+	{
+		$str = '';
+		if($close)
+			$str = "\n</body>\n";
+		else
+			$str = "<body"._attributes($attributes).">\n";
+		return $str;
+	}
 }
 
-if (!function_exists('div'))
+if ( ! function_exists('div'))
 {
-
-    function div($attributes = '', $close = FALSE)
-    {
-        $str = '';
-        if ($close)
-            $str = "\n</div>\n";
-        else
-            $str = "<div" . _attributes($attributes) . ">\n";
-        return $str;
-    }
-
+	function div($attributes = '', $close = FALSE)
+	{
+		$str = '';
+		if($close)
+			$str = "\n</div>\n";
+		else
+			$str = "<div"._attributes($attributes).">\n";
+		return $str;
+	}
 }
 
-if (!function_exists('hr'))
+if ( ! function_exists('hr'))
 {
-
-    function hr($attributes = '')
-    {
-        return "<hr" . _attributes($attributes) . "/>\n";
-    }
-
+	function hr($attributes = '')
+	{
+			return "<hr"._attributes($attributes)."/>\n";
+	}
 }
 
-if (!function_exists('_attributes'))
+if ( ! function_exists('_attributes'))
 {
 
-    function _attributes($attributes)
-    {
-        if (is_array($attributes))
-        {
-            $atr = '';
-            foreach ($attributes as $key => $value)
-            {
-                $atr .= " " . $key . "=\"" . $value . "\" ";
-            }
-            return $atr;
-        } elseif (is_string($attributes) and strlen($attributes) > 0)
-            $atr = ' ' . $attributes;
-    }
-
+	function _attributes($attributes)
+	{
+		if(is_array($attributes))
+		{
+			$atr = '';
+			foreach($attributes as $key => $value)
+			{
+				$atr .= " " . $key . "=\"".$value."\" ";
+			}
+			return $atr;
+		} 
+		elseif (is_string($attributes) and strlen($attributes) > 0) 
+			$atr = ' ' . $attributes;
+	}
 }

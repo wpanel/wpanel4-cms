@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,243 +28,223 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuarios extends MX_Controller
-{
+class Usuarios extends MX_Controller {
 
-    function __construct()
-    {
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-        $this->load->model('user');
-    }
+	function __construct()
+	{
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+		$this->load->model('user');
+	}
 
-    public function index()
-    {
-        $this->auth->protect('usuarios');
-        $layout_vars = array();
-        $content_vars = array();
+	public function index()
+	{
+		$this->auth->protect('usuarios');
+		$layout_vars = array();
+		$content_vars = array();
         $roles = config_item('users_role');
 
-        $content_vars['usuarios'] = $this->user->get_list()->result();
+		$content_vars['usuarios'] = $this->user->get_list()->result();
         $content_vars['roles'] = $roles;
-        $this->wpanel->load_view('usuarios/index', $content_vars);
-    }
+		$this->wpanel->load_view('usuarios/index', $content_vars);
+	}
 
-    public function add()
-    {
-        $this->auth->protect('usuarios');
-        $this->form_validation->set_rules('username', 'Nome de usuário', 'required');
-        $this->form_validation->set_rules('password', 'Senha', 'required|md5');
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+	public function add()
+	{
+		$this->auth->protect('usuarios');
+		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
+		$this->form_validation->set_rules('password', 'Senha', 'required|md5');
+		$this->form_validation->set_rules('name', 'Nome completo', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
 
-        if ($this->form_validation->run() == FALSE)
-        {
+		if ($this->form_validation->run() == FALSE)
+		{
 
-            $layout_vars = array();
-            $content_vars = array();
+			$layout_vars = array();
+			$content_vars = array();
 
-            $this->wpanel->load_view('usuarios/add', $content_vars);
-        } else
-        {
+			$this->wpanel->load_view('usuarios/add', $content_vars);
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['image'] = $this->user->upload_media('avatar');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['password'] = $this->input->post('password');
-            $dados_save['role'] = $this->input->post('role');
-            $dados_save['created'] = date('Y-m-d H:i:s');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
-            $dados_save['status'] = $this->input->post('status');
-            $dados_save['permissions'] = serialize($this->input->post('permissions'));
+		} else {
 
-            if ($this->user->save($dados_save))
-            {
-                $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                redirect('admin/usuarios');
-            } else
-            {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/usuarios');
-            }
-        }
-    }
+			$dados_save = array();
+			$dados_save['name'] = $this->input->post('name');
+			$dados_save['email'] = $this->input->post('email');
+			$dados_save['skin'] = $this->input->post('skin');
+			$dados_save['image'] = $this->user->upload_media('avatar');
+			$dados_save['username'] = $this->input->post('username');
+			$dados_save['password'] = $this->input->post('password');
+			$dados_save['role'] = $this->input->post('role');
+			$dados_save['created'] = date('Y-m-d H:i:s');
+			$dados_save['updated'] = date('Y-m-d H:i:s');
+			$dados_save['status'] = $this->input->post('status');
+			$dados_save['permissions'] = serialize($this->input->post('permissions'));
 
-    public function edit($id = null)
-    {
+			if($this->user->save($dados_save))
+			{
+				$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+				redirect('admin/usuarios');
+			} else {
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
+				redirect('admin/usuarios');
+			}
+		}
+	}
 
-        $this->auth->protect('usuarios');
+	public function edit($id = null)
+	{
 
-        // Verifica se altera a senha
-        if ($this->input->post('alterar_senha') == '1')
-        {
-            $this->form_validation->set_rules('password', 'Senha', 'required|md5');
-        }
+		$this->auth->protect('usuarios');
 
-        $this->form_validation->set_rules('username', 'Nome de usuário', 'required');
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		// Verifica se altera a senha
+		if($this->input->post('alterar_senha') == '1'){
+			$this->form_validation->set_rules('password', 'Senha', 'required|md5');
+		}
+		
+		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
+		$this->form_validation->set_rules('name', 'Nome completo', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-        if ($this->form_validation->run() == FALSE)
-        {
+		if ($this->form_validation->run() == FALSE)
+		{
 
-            if ($id == null)
-            {
-                $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-                redirect('admin/usuarios');
-            }
+			if($id == null){
+				$this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
+				redirect('admin/usuarios');
+			}
 
-            $layout_vars = array();
-            $content_vars = array();
+			$layout_vars = array();
+			$content_vars = array();
 
-            $content_vars['id'] = $id;
-            $content_vars['row'] = $this->user->get_by_id($id)->row();
-            $this->wpanel->load_view('usuarios/edit', $content_vars);
-        } else
-        {
+			$content_vars['id'] = $id;
+			$content_vars['row'] = $this->user->get_by_id($id)->row();
+			$this->wpanel->load_view('usuarios/edit', $content_vars);
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['role'] = $this->input->post('role');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
-            $dados_save['status'] = $this->input->post('status');
-            $dados_save['permissions'] = serialize($this->input->post('permissions'));
+		} else {
 
-            // Verifica se altera a imagem
-            if ($this->input->post('alterar_imagem') == '1')
-            {
-                $query = $this->user->get_by_id($id)->row();
-                $this->user->remove_media('avatar/' . $query->image);
-                $dados_save['image'] = $this->user->upload_media('avatar');
-            }
+			$dados_save = array();
+			$dados_save['name'] = $this->input->post('name');
+			$dados_save['email'] = $this->input->post('email');
+			$dados_save['skin'] = $this->input->post('skin');
+			$dados_save['username'] = $this->input->post('username');
+			$dados_save['role'] = $this->input->post('role');
+			$dados_save['updated'] = date('Y-m-d H:i:s');
+			$dados_save['status'] = $this->input->post('status');
+			$dados_save['permissions'] = serialize($this->input->post('permissions'));
 
-            // Verifica se altera a senha.
-            if ($this->input->post('alterar_senha') == '1')
-            {
-                $dados_save['password'] = $this->input->post('password');
-            }
+			// Verifica se altera a imagem
+			if($this->input->post('alterar_imagem') == '1'){
+				$query = $this->user->get_by_id($id)->row();
+				$this->user->remove_media('avatar/' . $query->image);
+				$dados_save['image'] = $this->user->upload_media('avatar');
+			}
 
-            if ($this->user->update($id, $dados_save))
-            {
-                if ($this->input->post('alterar_senha') == '1')
-                {
-                    redirect('admin/logout');
-                } else
-                {
-                    $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                    redirect('admin/usuarios');
-                }
-            } else
-            {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/usuarios');
-            }
-        }
-    }
+			// Verifica se altera a senha.
+			if($this->input->post('alterar_senha') == '1'){
+				$dados_save['password'] = $this->input->post('password');
+			}
 
-    public function delete($id = null)
-    {
+			if($this->user->update($id, $dados_save))
+			{
+				if($this->input->post('alterar_senha') == '1'){
+					redirect('admin/logout');
+				} else {
+					$this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
+					redirect('admin/usuarios');
+				}
+			} else {
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
+				redirect('admin/usuarios');
+			}
+		}
+	}
 
-        $this->auth->protect('usuarios');
+	public function delete($id = null)
+	{
 
-        if ($id == null)
-        {
-            $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-            redirect('admin/usuarios');
-        }
+		$this->auth->protect('usuarios');
 
-        if ($this->user->delete($id))
-        {
-            $this->session->set_flashdata('msg_sistema', 'Usuário excluído com sucesso.');
-            redirect('admin/usuarios');
-        } else
-        {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o usuário.');
-            redirect('admin/usuarios');
-        }
-    }
+		if($id == null){
+			$this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
+			redirect('admin/usuarios');
+		}
 
-    public function profile()
-    {
+		if($this->user->delete($id)){
+			$this->session->set_flashdata('msg_sistema', 'Usuário excluído com sucesso.');
+			redirect('admin/usuarios');
+		} else {
+			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir o usuário.');
+			redirect('admin/usuarios');
+		}
+	}
 
-        $id = login_userobject('id');
+	public function profile()
+	{
+		
+		$id = login_userobject('id');
 
-        // Verifica se altera a senha
-        if ($this->input->post('alterar_senha') == '1')
-        {
-            $this->form_validation->set_rules('password', 'Senha', 'required|md5');
-        }
+		// Verifica se altera a senha
+		if($this->input->post('alterar_senha') == '1'){
+			$this->form_validation->set_rules('password', 'Senha', 'required|md5');
+		}
+		
+		$this->form_validation->set_rules('username', 'Nome de usuário', 'required');
+		$this->form_validation->set_rules('name', 'Nome completo', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-        $this->form_validation->set_rules('username', 'Nome de usuário', 'required');
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		if ($this->form_validation->run() == FALSE)
+		{
 
-        if ($this->form_validation->run() == FALSE)
-        {
+			if($id == null){
+				$this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
+				redirect('admin/dashboard');
+			}
 
-            if ($id == null)
-            {
-                $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-                redirect('admin/dashboard');
-            }
+			$layout_vars = array();
+			$content_vars = array();
 
-            $layout_vars = array();
-            $content_vars = array();
+			$content_vars['id'] = $id;
+			$content_vars['row'] = $this->user->get_by_id($id)->row();
+			$this->wpanel->load_view('usuarios/profile', $content_vars);
 
-            $content_vars['id'] = $id;
-            $content_vars['row'] = $this->user->get_by_id($id)->row();
-            $this->wpanel->load_view('usuarios/profile', $content_vars);
-        } else
-        {
+		} else {
 
-            $dados_save = array();
-            $dados_save['name'] = $this->input->post('name');
-            $dados_save['email'] = $this->input->post('email');
-            $dados_save['skin'] = $this->input->post('skin');
-            $dados_save['username'] = $this->input->post('username');
-            $dados_save['updated'] = date('Y-m-d H:i:s');
+			$dados_save = array();
+			$dados_save['name'] = $this->input->post('name');
+			$dados_save['email'] = $this->input->post('email');
+			$dados_save['skin'] = $this->input->post('skin');
+			$dados_save['username'] = $this->input->post('username');
+			$dados_save['updated'] = date('Y-m-d H:i:s');
 
-            // Verifica se altera a imagem
-            if ($this->input->post('alterar_imagem') == '1')
-            {
-                $query = $this->user->get_by_id($id)->row();
-                $this->user->remove_media('avatar/' . $query->image);
-                $dados_save['image'] = $this->user->upload_media('avatar');
-            }
+			// Verifica se altera a imagem
+			if($this->input->post('alterar_imagem') == '1'){
+				$query = $this->user->get_by_id($id)->row();
+				$this->user->remove_media('avatar/' . $query->image);
+				$dados_save['image'] = $this->user->upload_media('avatar');
+			}
 
-            // Verifica se altera a senha.
-            if ($this->input->post('alterar_senha') == '1')
-            {
-                $dados_save['password'] = $this->input->post('password');
-            }
+			// Verifica se altera a senha.
+			if($this->input->post('alterar_senha') == '1'){
+				$dados_save['password'] = $this->input->post('password');
+			}
 
-            if ($this->user->update($id, $dados_save))
-            {
-                if ($this->input->post('alterar_senha') == '1')
-                {
-                    redirect('admin/logout');
-                } else
-                {
-                    $this->session->set_flashdata('msg_sistema', 'Seus dados foram salvos com sucesso.');
-                    redirect('admin/usuarios/profile');
-                }
-            } else
-            {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
-                redirect('admin/usuarios/profile');
-            }
-        }
-    }
-
+			if($this->user->update($id, $dados_save))
+			{
+				if($this->input->post('alterar_senha') == '1'){
+					redirect('admin/logout');
+				} else {
+					$this->session->set_flashdata('msg_sistema', 'Seus dados foram salvos com sucesso.');
+					redirect('admin/usuarios/profile');
+				}
+			} else {
+				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
+				redirect('admin/usuarios/profile');
+			}
+		}
+	}
 }

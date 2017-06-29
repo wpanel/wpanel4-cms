@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +28,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -43,151 +42,143 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @since v1.2.2 12/09/2015
  * @version 2.0.0
  */
-class Logon extends MX_Controller
-{
+class Logon extends MX_Controller {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+	function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function index()
-    {
+	public function index()
+	{
 
-        if ($this->auth->accounts_empty() == TRUE)
-            redirect('setup');
+		if ($this->auth->accounts_empty() == TRUE)
+			redirect('setup');
 
-        $this->form_validation->set_rules('email', wpn_lang('input_email', 'Email'), 'required|valid_email');
-        $this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
+		$this->form_validation->set_rules('email', wpn_lang('input_email', 'Email'), 'required|valid_email');
+		$this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
+		
+		if ($this->form_validation->run() == FALSE)
+			$this->load->load->view('logon/index');
+		else {
+			if($this->auth->login($this->input->post('email'), $this->input->post('password')))
+				return redirect('admin');
+			else {
+				$this->session->set_flashdata('msg_auth', wpn_lang('msg_login_error', 'Your login failed, try again.'));
+				return redirect('admin/login');
+			}
+		}
+	}
 
-        if ($this->form_validation->run() == FALSE)
-            $this->load->load->view('logon/index');
-        else
-        {
-            if ($this->auth->login($this->input->post('email'), $this->input->post('password')))
-                return redirect('admin');
-            else
-            {
-                $this->session->set_flashdata('msg_auth', wpn_lang('msg_login_error', 'Your login failed, try again.'));
-                return redirect('admin/login');
-            }
-        }
-    }
+	/**
+	 * This method does the logout of the user account.
+	 *
+	 * @return void
+	 */
+	public function out()
+	{
+		$this->auth->logout();
+		redirect('admin/login');
+	}
+	
+	/**
+	 * Este método faz o procedimento de recuperação de senhas de usuários do wpanel.
+	 *
+	 * @return void
+	 * @author Eliel de Paula <elieldepaula@gmail.com>
+	 **/
+	public function recovery($recovery_key = null)
+	{
 
-    /**
-     * This method does the logout of the user account.
-     *
-     * @return void
-     */
-    public function out()
-    {
-        $this->auth->logout();
-        redirect('admin/login');
-    }
+		$this->load->library('email');
 
-    /**
-     * Este método faz o procedimento de recuperação de senhas de usuários do wpanel.
-     *
-     * @return void
-     * @author Eliel de Paula <elieldepaula@gmail.com>
-     * */
-    public function recovery($recovery_key = null)
-    {
+		if ($this->wpanel->get_config('usa_smtp') == 1) 
+		{
+			$conf_email = array();
+			$conf_email['protocol'] = 'smtp';
+			$conf_email['smtp_host'] = $this->wpanel->get_config('smtp_servidor');
+			$conf_email['smtp_port'] = $this->wpanel->get_config('smtp_porta');
+			$conf_email['smtp_user'] = $this->wpanel->get_config('smtp_usuario');
+			$conf_email['smtp_pass'] = $this->wpanel->get_config('smtp_senha');
+			$this->email->initialize($conf_email);
+		}
 
-        $this->load->library('email');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-        if ($this->wpanel->get_config('usa_smtp') == 1)
-        {
-            $conf_email = array();
-            $conf_email['protocol'] = 'smtp';
-            $conf_email['smtp_host'] = $this->wpanel->get_config('smtp_servidor');
-            $conf_email['smtp_port'] = $this->wpanel->get_config('smtp_porta');
-            $conf_email['smtp_user'] = $this->wpanel->get_config('smtp_usuario');
-            $conf_email['smtp_pass'] = $this->wpanel->get_config('smtp_senha');
-            $this->email->initialize($conf_email);
-        }
+		if ($this->form_validation->run() == FALSE)
+		{
+			if($recovery_key == null)
+				$this->load->view('logon/recovery');
+			else {
 
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+				$this->load->model('user');
+				$chave	= explode(',', base64_decode(strrev($recovery_key)));
+				$id		= $chave[0];
+				$nome	= $chave[1];
+				$email	= $chave[2];
+				$senha  = md5('123mudar');
 
-        if ($this->form_validation->run() == FALSE)
-        {
-            if ($recovery_key == null)
-                $this->load->view('logon/recovery');
-            else
-            {
+				$dados_save = array();
+				$dados_save['password'] = $senha;
 
-                $this->load->model('user');
-                $chave = explode(',', base64_decode(strrev($recovery_key)));
-                $id = $chave[0];
-                $nome = $chave[1];
-                $email = $chave[2];
-                $senha = md5('123mudar');
+				if($this->user->update($id, $dados_save))
+				{
 
-                $dados_save = array();
-                $dados_save['password'] = $senha;
+					$mensagem = "";
+					$mensagem .= "Olá ".$nome.", esta é uma mensagem automática, não responda este email. \n\n";
+					$mensagem .= "Sua senha de acesso ao painel de controle foi redefinida com sucesso! ";
+					$mensagem .= "Anote os seus novos dados: \n\n";
+					$mensagem .= "Email: ".$email." \n";
+					$mensagem .= "Senha: 123mudar \n\n";
+					$mensagem .= "ATENÇÃO!!!\n\nMude a senha imediatamente após o login, esta é uma senha ";
+					$mensagem .= "temporária e caso não seja alterada seu acesso será revogado. \n\n";
 
-                if ($this->user->update($id, $dados_save))
-                {
+					$this->email->to($email);
+					$this->email->from($this->wpanel->get_config('site_contato'), $this->wpanel->get_config('site_titulo'));
+					$this->email->subject('Senha redefinida');
+					$this->email->message($mensagem);
+					$this->email->send();
 
-                    $mensagem = "";
-                    $mensagem .= "Olá " . $nome . ", esta é uma mensagem automática, não responda este email. \n\n";
-                    $mensagem .= "Sua senha de acesso ao painel de controle foi redefinida com sucesso! ";
-                    $mensagem .= "Anote os seus novos dados: \n\n";
-                    $mensagem .= "Email: " . $email . " \n";
-                    $mensagem .= "Senha: 123mudar \n\n";
-                    $mensagem .= "ATENÇÃO!!!\n\nMude a senha imediatamente após o login, esta é uma senha ";
-                    $mensagem .= "temporária e caso não seja alterada seu acesso será revogado. \n\n";
+					$this->session->set_flashdata('msg_auth', 'Sua senha foi redefinida e enviamos seus novos dados de acesso para seu email, caso não receba verifique sua caixa de SPAM.');
+					redirect('admin/login');
+				} else {
+					$this->session->set_flashdata('msg_recover', 'Houve um problema e sua senha não pode ser redefinida, entre em contato conosco pelo email <b>'.$this->wpanel->get_config('site_contato').'</b>.');
+					redirect('admin/recovery');
+				}
+			}
+		} else {
 
-                    $this->email->to($email);
-                    $this->email->from($this->wpanel->get_config('site_contato'), $this->wpanel->get_config('site_titulo'));
-                    $this->email->subject('Senha redefinida');
-                    $this->email->message($mensagem);
-                    $this->email->send();
+			$this->load->model('user');
 
-                    $this->session->set_flashdata('msg_auth', 'Sua senha foi redefinida e enviamos seus novos dados de acesso para seu email, caso não receba verifique sua caixa de SPAM.');
-                    redirect('admin/login');
-                } else
-                {
-                    $this->session->set_flashdata('msg_recover', 'Houve um problema e sua senha não pode ser redefinida, entre em contato conosco pelo email <b>' . $this->wpanel->get_config('site_contato') . '</b>.');
-                    redirect('admin/recovery');
-                }
-            }
-        } else
-        {
+			$query = $this->user->get_by_field('email', $this->input->post('email', true))->row();
 
-            $this->load->model('user');
+			if(count($query) >= 1)
+			{
 
-            $query = $this->user->get_by_field('email', $this->input->post('email', true))->row();
+				$recovery_key	= strrev(base64_encode($query->id.','.$query->name.','.$query->email));
+				$recovery_link	= base_url('admin/recovery').'/'.$recovery_key;
 
-            if (count($query) >= 1)
-            {
+				$mensagem = "";
+				$mensagem .= "Olá ".$query->name.", esta é uma mensagem automática, não responda este email. \n\n";
+				$mensagem .= "Recebemos uma solicitação de redefinição de senha de acesso ao seu painel de controle ";
+				$mensagem .= "em nosso site. Para concluir a redefinição clique no link abaixo: \n\n";
+				$mensagem .= "Link: ".$recovery_link." \n\n";
+				$mensagem .= "Caso vocẽ não tenha solicitado a redefinição de sua senha por favor ignore esta mensagem. \n\n";
+				$mensagem .= "Data/Hora da solicitação: ".date('d/m/Y H:i')."\n";
+				$mensagem .= "IP da conexão: ".$_SERVER['REMOTE_ADDR']." \n\n";
 
-                $recovery_key = strrev(base64_encode($query->id . ',' . $query->name . ',' . $query->email));
-                $recovery_link = base_url('admin/recovery') . '/' . $recovery_key;
+				$this->email->to($query->email);
+				$this->email->from($this->wpanel->get_config('site_contato'), $this->wpanel->get_config('site_titulo'));
+				$this->email->subject('Redefinição de senha');
+				$this->email->message($mensagem);
+				$this->email->send();
 
-                $mensagem = "";
-                $mensagem .= "Olá " . $query->name . ", esta é uma mensagem automática, não responda este email. \n\n";
-                $mensagem .= "Recebemos uma solicitação de redefinição de senha de acesso ao seu painel de controle ";
-                $mensagem .= "em nosso site. Para concluir a redefinição clique no link abaixo: \n\n";
-                $mensagem .= "Link: " . $recovery_link . " \n\n";
-                $mensagem .= "Caso vocẽ não tenha solicitado a redefinição de sua senha por favor ignore esta mensagem. \n\n";
-                $mensagem .= "Data/Hora da solicitação: " . date('d/m/Y H:i') . "\n";
-                $mensagem .= "IP da conexão: " . $_SERVER['REMOTE_ADDR'] . " \n\n";
-
-                $this->email->to($query->email);
-                $this->email->from($this->wpanel->get_config('site_contato'), $this->wpanel->get_config('site_titulo'));
-                $this->email->subject('Redefinição de senha');
-                $this->email->message($mensagem);
-                $this->email->send();
-
-                $this->session->set_flashdata('msg_auth', 'Enviamos as instruções para redefinição de sua senha no seu email informado no cadastro.');
-                redirect('admin/login');
-            } else
-            {
-                $this->session->set_flashdata('msg_recover', 'Usuário inexistente.');
-                redirect('admin/recovery');
-            }
-        }
-    }
-
+				$this->session->set_flashdata('msg_auth', 'Enviamos as instruções para redefinição de sua senha no seu email informado no cadastro.');
+				redirect('admin/login');
+			} else {
+				$this->session->set_flashdata('msg_recover', 'Usuário inexistente.');
+				redirect('admin/recovery');
+			}
+		}
+	}
 }

@@ -1,13 +1,12 @@
-<?php
-
+<?php 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +28,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -59,8 +58,7 @@ class Menuitens extends MX_Controller
         $this->form_validation->set_rules('label', 'Label', 'required');
         $this->form_validation->set_rules('tipo', 'Tipo', 'required');
 
-        if ($this->form_validation->run() == FALSE)
-        {
+        if ($this->form_validation->run() == FALSE) {
             $this->load->model('post');
             $this->load->model('categoria');
             $this->load->model('menu');
@@ -69,8 +67,7 @@ class Menuitens extends MX_Controller
             $content_vars['categorias'] = $this->categoria->get_list()->result();
             $content_vars['menus'] = $this->menu->get_list()->result();
             $this->wpanel->load_view('menuitens/add', $content_vars);
-        } else
-        {
+        } else {
             $tipo_link = $this->input->post('tipo');
             $dados_save = array();
             $dados_save['menu_id'] = $menu_id;
@@ -100,12 +97,10 @@ class Menuitens extends MX_Controller
                     break;
             }
 
-            if ($this->menu_item->save($dados_save))
-            {
+            if ($this->menu_item->save($dados_save)) {
                 $this->session->set_flashdata('msg_sistema', 'Item de menu salvo com sucesso.');
                 redirect('admin/menus');
-            } else
-            {
+            } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o ítem de menu.');
                 redirect('admin/menus');
             }
@@ -120,11 +115,9 @@ class Menuitens extends MX_Controller
         $this->form_validation->set_rules('label', 'Label', 'required');
         $this->form_validation->set_rules('tipo', 'Tipo', 'required');
 
-        if ($this->form_validation->run() == FALSE)
-        {
+        if ($this->form_validation->run() == FALSE) {
 
-            if ($id == null)
-            {
+            if ($id == null) {
                 $this->session->set_flashdata('msg_sistema', 'Item de menu inexistente.');
                 redirect('admin/menus');
             }
@@ -139,8 +132,7 @@ class Menuitens extends MX_Controller
             $content_vars['id'] = $id;
             $content_vars['row'] = $this->menu_item->get_by_id($id)->row();
             $this->wpanel->load_view('menuitens/edit', $content_vars);
-        } else
-        {
+        } else {
 
 //            $menu_id = $this->input->post('menu_id');
             $tipo_link = $this->input->post('tipo');
@@ -171,12 +163,10 @@ class Menuitens extends MX_Controller
                     break;
             }
 
-            if ($this->menu_item->update($id, $dados_save))
-            {
+            if ($this->menu_item->update($id, $dados_save)) {
                 $this->session->set_flashdata('msg_sistema', 'Item de menu salvo com sucesso.');
                 redirect('admin/menus');
-            } else
-            {
+            } else {
                 $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o item de menu.');
                 redirect('admin/menus');
             }
@@ -186,18 +176,15 @@ class Menuitens extends MX_Controller
     public function delete($id = null)
     {
 
-        if ($id == null)
-        {
+        if ($id == null) {
             $this->session->set_flashdata('msg_sistema', 'Item de menu inexistente.');
             redirect('admin/menus');
         }
 
-        if ($this->menu_item->delete($id))
-        {
+        if ($this->menu_item->delete($id)) {
             $this->session->set_flashdata('msg_sistema', 'Item de menu excluído com sucesso.');
             redirect('admin/menus');
-        } else
-        {
+        } else {
             $this->session->set_flashdata('msg_sistema', 'Erro ao excluir o item de menu.');
             redirect('admin/menus');
         }

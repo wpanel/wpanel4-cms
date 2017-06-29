@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for websites and systems using CodeIgniter.
+ * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2008 - 2017, Eliel de Paula.
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,14 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanel.org
+ * @link        https://wpanelcms.com.br
  */
  defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Defina the user roles to the site.
+ * Define os tipos de usuário serão permitidos no site. 
  */
 $config['auth_account_role'] = array('ROOT'=>'Super-User', 'user' => 'Usuário comum', 'admin' => 'Administrador');
 
@@ -55,15 +55,9 @@ $config['auth_log_access'] = TRUE;
  */
 $config['auth_enable_ip_banned'] = TRUE;
 
-/**
- * Max login attempts.
- */
-$config['auth_max_attempts'] = 10;
+$config['auth_max_attempts'] = 10; // Define o máximo de tentativas de login.
 
-/**
- * Enable autoban IP after the login attempts.
- */
-$config['auth_enable_autoban'] = TRUE;
+$config['auth_enable_autoban'] = TRUE; // Bane automaticamente o IP caso atinja o limite.
 
 /**
  * Type of hash for passwords.
@@ -82,5 +76,20 @@ $config['auth_white_list'] = array(
     'admin',
     'admin/login',
     'admin/dashboard',
-    'admin/accounts/profile'
+    'admin/accounts/profile',
+    // Liberado para testes
+    'admin/modulos',
+    'admin/modulos/add',
+    'admin/modulos/edit/*',
+    'admin/moduloitens/add/*',
+    'admin/moduloitens/edit/*/*',
+    'admin/accounts/activate/*',
+    'admin/accounts/deactivate/*',
+    /*'admin/configuracoes',
+    'admin/configuracoes/index',
+    'gerador',
+    'gerador/main',
+    'gerador/main/gerarModel',
+    'gerador/main/gerarController',
+    'gerador/main/gerarCrud',*/
 );
