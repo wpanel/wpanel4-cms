@@ -1,4 +1,6 @@
 
+[29/06/2017]
+
 - User option link included in the default main menu;
 - Fix Auth library;
 - Fix banner module;
