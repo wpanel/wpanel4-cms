@@ -50,6 +50,11 @@ class Modulos extends MX_Controller {
 	function __construct()
 	{
 		$this->auth->check_permission();
+		$account = $this->auth->account();
+		if ($account->role != 'ROOT') {
+			$this->session->flashdata('msg_sistema', 'Você não pode acessar este módulo.');
+			redirect('admin/dashboard');
+		}
 		$this->load->model(array('module', 'module_action'));
 		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
 	}

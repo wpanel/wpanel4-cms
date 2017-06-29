@@ -178,6 +178,11 @@
 							<?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>'.wpn_lang('mod_user', 'Users').'</span>'); ?>
 						</li>
 					<?php } ?>
+					<?php if(wpn_link_permission('admin/modulos')){ ?>
+						<li <?= wpn_activelink('modulos'); ?>>
+							<?= anchor('admin/modulos', '<i class="fa fa-cogs"></i> <span>'.wpn_lang('mod_modules', 'Módulos').'</span>'); ?>
+						</li>
+					<?php } ?>
 					<?php if(wpn_link_permission('admin/configuracoes')){ ?>
 						<li <?= wpn_activelink('configuracoes'); ?>>
 							<?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>'.wpn_lang('mod_configuration', 'Configurations').'</span>'); ?>

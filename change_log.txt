@@ -1,4 +1,5 @@
 
+- Included module manager to the admin;
 - Fix Auth library;
 - Fix banner module;
 - Setup default database to Sqlite;
