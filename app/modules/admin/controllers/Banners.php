@@ -37,6 +37,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Banners extends MX_Controller
 {
 
+	function __construct()
+	{
+		$this->auth->check_permission();
+		$this->load->model('banner');
+		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+	}
+
 	public function index()
 	{
 		$this->load->library('table');
