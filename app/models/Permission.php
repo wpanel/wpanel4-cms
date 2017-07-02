@@ -1,12 +1,13 @@
 <?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -39,5 +40,32 @@ class Permission extends MY_Model
 
     public $table_name = 'permissions';
     public $primary_key = 'id';
+    public $date_format = 'datetime';
+    protected $soft_deletes = FALSE;
+    protected $log_user = FALSE;
+    protected $set_created = TRUE;
+    protected $set_modified = TRUE;
+
+    /**
+     * Validate an permission user by url.
+     * 
+     * @param int $account_id
+     * @param string $url
+     * @return boolean
+     */
+    public function validate_permission($account_id, $url)
+    {
+        $this->db->select('permissions.*');
+        $this->db->from('permissions');
+        $this->db->join('modules_actions', 'modules_actions.id = permissions.module_action_id');
+        $this->db->where('modules_actions.link', $url);
+        $this->db->where('permissions.account_id', $account_id);
+        $this->db->where('modules_actions.whitelist', 0);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0)
+            return true;
+        else
+            return false;
+    }
 
 }

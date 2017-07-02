@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,19 +29,29 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 
 class Menu_item extends MY_Model 
 {
 
     public $table_name = 'menu_itens';
     public $primary_key = 'id';
+    public $date_format = 'datetime';
+    protected $soft_deletes = false;
+    protected $log_user = TRUE;
+    protected $set_created = TRUE;
+    protected $set_modified = TRUE;
 
+    /**
+     * Delete items by menu id.
+     * 
+     * @param int $menu_id
+     * @return mixed
+     */
     public function delete_by_menu($menu_id)
     {
     	$this->db->where('menu_id', $menu_id);

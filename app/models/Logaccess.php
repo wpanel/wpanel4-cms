@@ -35,17 +35,13 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ipban extends MY_Model
+class Logaccess extends MY_Model
 {
-
-    public $table_name = 'ip_banned';
+    public $table_name = 'log_access';
     public $primary_key = 'id';
     public $date_format = 'datetime';
     protected $soft_deletes = FALSE;
     protected $log_user = FALSE;
     protected $set_created = TRUE;
     protected $set_modified = TRUE;
-
 }
-
-// End of file models/ipban.php
