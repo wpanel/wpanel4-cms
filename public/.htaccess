@@ -1,16 +1,18 @@
 <IfModule mod_rewrite.c>
+
   RewriteEngine On
   
-  # Redirect to HTTPS
+  # Para redirecionamento para o protocolo HTTPS descomente as linhas abaixo.
   #---------------------------------------------------------------------------------------
   # RewriteCond %{HTTPS} off
   # RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L]
   
-  # !IMPORTANT! Set your RewriteBase here and don't forget trailing and leading
-  #  slashes.
-  # If your page resides at
-  #  http://www.example.com/mypage/test1
-  # then use
+  # !IMPORTANTE! Configure seu RewriteBase aqui e não se esqueça de começar e terminar com
+  #  barras.
+  # 
+  # Exemplo, se seu site fica em
+  # http://www.exemplo.com/mypage/test1
+  # então use
   # RewriteBase /mypage/test1/
   #---------------------------------------------------------------------------------------
   RewriteBase /
@@ -22,10 +24,10 @@
 </IfModule>
 
 <IfModule !mod_rewrite.c>
-  # If we don't have mod_rewrite installed, all 404's
-  # can be sent to index.php, and everything works as normal.
-  # Submitted by: ElliotHaughin
 
+  # Se você não tem mod_rewrite instalado, todos os erros 404 podem ser enviados 
+  # para o index.php
+  #---------------------------------------------------------------------------------------
   ErrorDocument 404 /index.php
-</IfModule>
 
+</IfModule>
