@@ -17,6 +17,7 @@
                 <li class="active"><a href="#geral" role="tab" data-toggle="tab">Configurações gerais</a></li>
                 <li><a href="#home" role="tab" data-toggle="tab">Página inicial</a></li>
                 <li><a href="#layout" role="tab" data-toggle="tab">Layout</a></li>
+                <li><a href="#imagens" role="tab" data-toggle="tab">Imagens</a></li>
                 <li><a href="#contato" role="tab" data-toggle="tab">Contatos</a></li>
                 <li><a href="#social" role="tab" data-toggle="tab">Social e compartilhamento</a></li>
                 <li><a href="#backup" role="tab" data-toggle="tab">Backup dos dados</a></li>
@@ -134,6 +135,14 @@
                                     <div class="form-group">
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".modal-logomarca">Alterar</button>
                                     </div>
+                                    <h4>Favicon</h4>
+                                    <hr/>
+                                    <div class="form-group">
+                                        <?php echo img(array('src' => 'media/favicon.ico', 'class' => 'img-responsive img-thumbnail', 'style' => 'margin-top:5px;')); ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".modal-favicon">Alterar</button>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <h4>Imagem de fundo</h4>
@@ -165,6 +174,56 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Painel de configuração imagens-->
+                <div class="tab-pane  panel panel-default" id="imagens">
+                    <div class="panel-heading">
+                        Imagens
+                    </div>
+                    <div class="panel-body">
+                        <p>Defiições de redimensionamento automático das imagens das galerias de fotos.</p>
+                        <hr/>
+
+                        <!-- $resize_image = FALSE, $resize_quality = '100%', $resize_width = '75%', $resize_height = '75%' -->
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="resize_image" value="1" <?= $resize_checked; ?> class="checkbox" />
+                                Redimensionar imagens automaticamente no upload.
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="maintain_ratio" value="1" <?= $ratio_checked; ?> class="checkbox" />
+                                Manter a proporção da imagem
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="image_width">Largura (Width)</label>
+                                    <input type="text" name="image_width" id="image_width" value="<?= $row->image_width ?>" class="form-control" placeholder="Ex: 100%" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="image_height">Altura (Height)</label>
+                                    <input type="text" name="image_height" id="image_height" value="<?= $row->image_height ?>" class="form-control" placeholder="Ex: 100%" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <label for="quality">Qualidade (%)</label>
+                                    <input type="text" name="quality" id="quality" value="<?= $row->quality ?>" class="form-control" placeholder="Ex: 100%" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                                <p><i>Informe valores em porcentagem: %</i></p>
                             </div>
                         </div>
                     </div>
@@ -322,6 +381,30 @@
                 <div class="form-group">
                     <label for="logomarca">Selecione uma nova imagem</label>
                     <input type="file" name="logomarca" id="logomarca" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= form_close(); ?>
+
+<?= form_open_multipart('admin/configuracoes/altfavicon'); ?>
+<div class="modal fade modal-favicon" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Alterar Icone do site</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="favicon">Selecione uma nova imagem</label>
+                    <input type="file" name="favicon" id="favicon" class="form-control" />
+                    <em>Imagem em formato .ico</em>
                 </div>
             </div>
             <div class="modal-footer">

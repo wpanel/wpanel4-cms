@@ -71,8 +71,8 @@ echo $this->wpanel->load_editor();
             echo form_label('Status', 'status');
             echo form_dropdown('status', $options, null, array('class'=>'form-control'));
 
-            echo form_label('Data', 'created');
-            echo form_input(array('name'=>'created', 'type'=>'text', 'value'=>date('d/m/Y'), 'class'=>'form-control'));
+            //echo form_label('Data', 'created');
+            //echo form_input(array('name'=>'created', 'type'=>'text', 'value'=>date('d/m/Y'), 'class'=>'form-control'));
             
             echo close_div(3);
 

@@ -20,7 +20,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Nome completo</label>
-                            <input type="text" name="name" value="<?= $extra_data->name; ?>" class="form-control" />
+                            <input type="text" name="name" value="<?= $extra->name; ?>" class="form-control" />
                             <?= form_error('name'); ?>
                         </div>
                     </div>
@@ -31,25 +31,12 @@
                             <?= form_error('email'); ?>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="password">Senha</label>
-                            <input type="password" name="password" class="form-control" />
-                            <div class="checkbox">
-                                <label>
-                                    <?= form_checkbox('change_password', '1', false); ?>
-                                    Alterar a senha
-                                </label>
-                            </div>
-                            <?= form_error('password'); ?>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
                         <div class="thumbnail">
-                            <?php if($extra_data->avatar){ ?>
-                                <img src="<?= base_url('media/avatar/'.$extra_data->avatar); ?>" class="img-responsive" />
+                            <?php if($extra->avatar){ ?>
+                                <img src="<?= base_url('media/avatar/'.$extra->avatar); ?>" class="img-responsive" />
                             <?php } else { ?>
                                 <img src="<?= base_url('lib/img/no-user.jpg'); ?>" class="img-responsive" />
                             <?php } ?>
@@ -59,7 +46,7 @@
                         <div class="form-group">
                             <label for="userfile">Foto do usuário</label>
                             <input type="file" name="userfile" class="form-control" />
-                            <input type="hidden" name="avatar" value="<?= $extra_data->avatar; ?>"/>
+                            <input type="hidden" name="avatar" value="<?= $extra->avatar; ?>"/>
                             <div class="checkbox">
                                 <label>
                                     <?= form_checkbox('change_avatar', '1', false); ?>
@@ -88,7 +75,7 @@
                             );
                             ?>
                             <label for="skin">Estilo de cor</label>
-                            <?= form_dropdown('skin', $options, array($extra_data->skin), array('class'=>'form-control')); ?>
+                            <?= form_dropdown('skin', $options, array($extra->skin), array('class'=>'form-control')); ?>
                             <?= form_error('skin'); ?>
                         </div>
                     </div>
@@ -98,9 +85,36 @@
                     <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-primary">Salvar alterações</button>
                         <?= anchor('admin/dashboard', 'Cancelar', array('class'=>'btn btn-danger')); ?>
+                        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target=".change-password-modal"><span class="glyphicon glyphicon-exclamation-sign"></span> Alterar senha</button>
                     </div>
                 </div>
             <?= form_close(); ?>
         </div>
     </div>
 </section>
+
+<?= form_open('admin/accounts/changeprofilepassword/'.$row->id); ?>
+<div class="modal fade change-password-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Alteração de senha
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" name="password" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= form_close(); ?>

@@ -86,7 +86,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="role">Tipo do usuário</label>
-                                        <?= form_dropdown('role', config_item('users_role'), 'large', array('class'=>'form-control')); ?>
+                                        <?= form_dropdown('role', config_item('auth_account_role'), 'large', array('class'=>'form-control')); ?>
                                         <?= form_error('role'); ?>
                                     </div>
                                 </div>

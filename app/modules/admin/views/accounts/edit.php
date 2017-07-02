@@ -32,7 +32,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Nome completo</label>
-                                        <input type="text" name="name" value="<?= auth_extra_data('name', $row->extra_data); ?>" class="form-control" />
+                                        <input type="text" name="name" value="<?= $extra->name; ?>" class="form-control" />
                                         <?= form_error('name'); ?>
                                     </div>
                                 </div>
@@ -54,8 +54,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="thumbnail">
-                                        <?php if(auth_extra_data('avatar', $row->extra_data)){ ?>
-                                            <img src="<?= base_url('media/avatar') . '/'.auth_extra_data('avatar', $row->extra_data); ?>" class="img-responsive" />
+                                        <?php if($extra->avatar){ ?>
+                                            <img src="<?= base_url('media/avatar') . '/'.$extra->avatar; ?>" class="img-responsive" />
                                         <?php } else { ?>
                                             <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" />
                                         <?php } ?>
@@ -65,7 +65,7 @@
                                     <div class="form-group">
                                         <label for="userfile">Foto do usuário</label>
                                         <input type="file" name="userfile" class="form-control" />
-                                        <input type="hidden" name="avatar" value="<?= auth_extra_data('avatar', $row->extra_data); ?>"/>
+                                        <input type="hidden" name="avatar" value="<?= $extra->avatar; ?>"/>
                                         <div class="checkbox">
                                             <label>
                                                 <?= form_checkbox('change_avatar', '1', false); ?>
@@ -95,7 +95,7 @@
                                         );
                                         ?>
                                         <label for="skin">Estilo de cor</label>
-                                        <?= form_dropdown('skin', $options, array(auth_extra_data('skin', $row->extra_data)), array('class'=>'form-control')); ?>
+                                        <?= form_dropdown('skin', $options, array($extra->skin), array('class'=>'form-control')); ?>
                                         <?= form_error('skin'); ?>
                                     </div>
                                 </div>
@@ -121,13 +121,13 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="headingOne">
                                                     <h4 class="panel-title">
-                                                        <a 
-                                                            role="button" 
+                                                        <a
+                                                            role="button"
                                                             class="collapsed"
-                                                            data-toggle="collapse" 
-                                                            data-parent="#accordion" 
-                                                            href="#collapse-<?= $mod['id']; ?>" 
-                                                            aria-expanded="true" 
+                                                            data-toggle="collapse"
+                                                            data-parent="#accordion"
+                                                            href="#collapse-<?= $mod['id']; ?>"
+                                                            aria-expanded="true"
                                                             aria-controls="collapse-<?= $mod['id']; ?>">
                                                             <span class="glyphicon glyphicon-triangle-bottom"></span> <?= $mod['name']; ?>
                                                         </a>
@@ -147,12 +147,12 @@
                                                                 <?php foreach($mod['actions'] as $act){ ?>
                                                                     <tr>
                                                                         <td>
-                                                                            <input 
-                                                                            type="checkbox" 
-                                                                            name="permission[]" 
-                                                                            value="<?= $act['id']; ?>" 
-                                                                            class="marcar-<?= $mod['id']; ?>" 
-                                                                            <?php if(has_permission($act['link'], $row->id, true))echo "checked"; ?>
+                                                                            <input
+                                                                            type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="<?= $act['id']; ?>"
+                                                                            class="marcar-<?= $mod['id']; ?>"
+                                                                            <?php if(auth_link_permission($act['link'], $row->id, true))echo "checked"; ?>
                                                                             />
                                                                         </td>
                                                                         <td><?= $act['description']; ?></td>
@@ -180,9 +180,9 @@
                     <div class="col-md-6 text-right">
                         <?php
                         if($row->status == 1)
-                            echo anchor('admin/accounts/deactivate/'.$row->id, 'Desativar usuário', array('class'=>'btn btn-danger')); 
+                            echo anchor('admin/accounts/deactivate/'.$row->id, 'Desativar usuário', array('class'=>'btn btn-danger'));
                         else
-                            echo anchor('admin/accounts/activate/'.$row->id, 'Ativar usuário', array('class'=>'btn btn-success')); 
+                            echo anchor('admin/accounts/activate/'.$row->id, 'Ativar usuário', array('class'=>'btn btn-success'));
                         ?>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
                     </div>
@@ -222,9 +222,9 @@
     function marcardesmarcar(id){
       $('.marcar-'+id).each(
              function(){
-               if ($(this).prop( "checked")) 
+               if ($(this).prop( "checked"))
                $(this).prop("checked", false);
-               else $(this).prop("checked", true);               
+               else $(this).prop("checked", true);
              }
         );
     }

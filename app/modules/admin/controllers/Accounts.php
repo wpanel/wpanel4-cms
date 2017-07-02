@@ -3,11 +3,11 @@
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,48 +29,46 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Accounts extends MX_Controller
+/**
+ * Accounts class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Accounts extends Authenticated_Controller
 {
 
+    /**
+     * Class constructor.
+     */
     function __construct()
     {
+        $this->model_file = 'account';
         parent::__construct();
-        $this->auth->check_permission();
     }
 
+    /**
+     * Index page.
+     */
     public function index()
     {
-        $layout_vars = array();
-        $content_vars = array();
         $this->load->library('table');
         $roles = config_item('users_role');
-        // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
         $this->table->set_heading(
-                '#', 
-                'Nome', 
-                'E-mail', 
-                'Role', 
-                wpn_lang('col_date', 'Date'), 
-                wpn_lang('col_status', 'Status'), 
-                wpn_lang('col_actions', 'Actions')
+                '#', 'Nome', 'E-mail', 'Role', wpn_lang('col_date', 'Date'), wpn_lang('col_status', 'Status'), wpn_lang('col_actions', 'Actions')
         );
-        $query = $this->auth->list_accounts();
+        $query = $this->account->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, 
-                    $this->auth->get_extra_data('name', $row->extra_data), 
-                    $row->email, 
-                    $row->role, 
-                    mdate('%d/%m/%Y', strtotime($row->created)), 
-                    status_post($row->status),
+                    $row->id, json_decode($row->extra_data)->name, $row->email, $row->role, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/accounts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
@@ -78,200 +76,209 @@ class Accounts extends MX_Controller
                     div(null, true)
             );
         }
-        $content_vars['listagem'] = $this->table->generate();
-        $this->wpanel->load_view('accounts/index', $content_vars);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
     }
 
+    /**
+     * Add new account.
+     */
     public function add()
     {
         $this->form_validation->set_rules('password', 'Senha', 'required');
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[accounts.email]');
-        if ($this->form_validation->run() == FALSE){
-            $content_vars = array();
-            $content_vars['query_module'] = $this->auth->list_modules_full();
-            $this->wpanel->load_view('accounts/add', $content_vars);
-        } else {
-
-            // Cria a nova conta.
-            $newaccount = $this->auth->create_account(
-                $this->input->post('email'), 
-                $this->input->post('password'), 
-                $this->input->post('role'), 
-                array(
-                    'name' => $this->input->post('name'),
-                    'skin' => $this->input->post('skin'),
-                    'avatar' => $this->auth->upload_avatar()
-                ),
-                $this->input->post('permission')
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->set_var('query_module', $this->list_modules_full());
+            $this->render();
+        } else
+        {
+            $result = $this->auth->register(
+                    $this->input->post('email'), $this->input->post('password'), $this->input->post('role'), array(
+                'name' => $this->input->post('name'),
+                'skin' => $this->input->post('skin'),
+                'avatar' => $this->wpanel->upload_media('avatar')
+                    ), $this->input->post('permission')
             );
-
-            if ($newaccount > 0) {
-                $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                redirect('admin/accounts');
-            } else {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/accounts');
-            }
+            if ($result > 0)
+                $this->set_message('Usuário salvo com sucesso!', 'success', 'admin/accounts');
+            else
+                $this->set_message('Erro ao salvar o usuário.', 'danger', 'admin/accounts');
         }
     }
 
+    /**
+     * Edit an account.
+     * 
+     * @param int $id
+     */
     public function edit($id = null)
     {
 
+        $query = $this->account->find($id);
+        $extra = (object) json_decode($query->extra_data);
+
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-
-        if ($this->form_validation->run() == FALSE) {
-
-            if ($id == null) {
-                $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-                redirect('admin/usuarios');
-            }
-
-            $content_vars = array();
-
-            $content_vars['query_module'] = $this->auth->list_modules_full();
-            $content_vars['row'] = $this->auth->get_account_by_id($id);
-            $this->wpanel->load_view('accounts/edit', $content_vars);
-
-        } else {
-
-            $extra_data = array();
-            $extra_data['name'] = $this->input->post('name');
-            $extra_data['skin'] = $this->input->post('skin');
-            if($this->input->post('change_avatar'))
-                $extra_data['avatar'] = $this->auth->upload_avatar();
+        if ($this->form_validation->run() == FALSE)
+        {
+            if ($id == null)
+                $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+            $this->set_var('query_module', $this->list_modules_full());
+            $this->set_var('row', $query);
+            $this->set_var('extra', $extra);
+            $this->render();
+        } else
+        {
+            $extra->name = $this->input->post('name');
+            $extra->skin = $this->input->post('skin');
+            if ($this->input->post('change_avatar'))
+                $extra->avatar = $this->wpanel->upload_media('avatar');
             else
-                $extra_data['avatar'] = $this->input->post('avatar');
-
-            // Atualiza uma conta.
-            $updatedaccount = $this->auth->update_account(
-                $id,
-                $this->input->post('email'),
-                $this->input->post('role'),
-                $extra_data,
-                $this->input->post('permission')
+                $extra->avatar = $this->input->post('avatar');
+            $result = $this->auth->update(
+                    $id, $this->input->post('email'), $this->input->post('role'), $extra, $this->input->post('permission')
             );
-
-            if ($updatedaccount > 0) {
-                $this->session->set_flashdata('msg_sistema', 'Usuário salvo com sucesso.');
-                redirect('admin/accounts');
-            } else {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar o usuário.');
-                redirect('admin/accounts');
-            }
+            if ($result > 0)
+                $this->set_message('Usuário salvo com sucesso!', 'success', 'admin/accounts');
+            else
+                $this->set_message('Erro ao salvar o usuário.', 'danger', 'admin/accounts');
         }
     }
 
+    /**
+     * Change an account password.
+     * 
+     * @param int $account_id
+     */
     public function changepassword($account_id = NULL)
     {
-        if($account_id == NULL){
-            $this->session->set_flashdata('msg_sistema', 'Não foi possível alterar a senha.');
-            redirect('admin/accounts');
-        }
-
-        $updatedpassword = $this->auth->change_password(
-            $account_id,
-            NULL,
-            $this->input->post('password', TRUE)
+        if ($account_id == null)
+            $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+        $result = $this->auth->change_password(
+                $account_id, $this->input->post('password', TRUE)
         );
-
-        if ($updatedpassword > 0) {
-            $this->session->set_flashdata('msg_sistema', 'Senha alterada com sucesso.');
-            redirect('admin/accounts/edit/'.$account_id);
-        } else {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao alterar a senha.');
-            redirect('admin/accounts/edit/'.$account_id);
-        }
+        if ($result > 0)
+            $this->set_message('Senha alterada com sucesso!', 'success', 'admin/accounts');
+        else
+            $this->set_message('Erro ao alterar a senha.', 'danger', 'admin/accounts');
     }
 
+    /**
+     * Change an profile password.
+     */
+    public function changeprofilepassword()
+    {
+        $result = $this->auth->change_password(
+                $this->auth->user_id(), $this->input->post('password', TRUE)
+        );
+        if ($result > 0)
+            redirect ('admin/logout');
+        else
+            $this->set_message('Erro ao alterar a senha.', 'danger', 'admin/accounts/profile');
+    }
+
+    /**
+     * Delete an account.
+     * 
+     * @param int $id
+     */
     public function delete($id = null)
     {
-
-        if ($id == null) {
-            $this->session->set_flashdata('msg_sistema', 'Conta de usuário inexistente.');
-            redirect('admin/accounts');
-        }
-
-        if ($this->auth->remove_account($id)) {
-            $this->session->set_flashdata('msg_sistema', 'Conta de usuário excluída com sucesso.');
-            redirect('admin/accounts');
-        } else {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao excluir a conta de usuário.');
-            redirect('admin/accounts');
-        }
+        if ($id == null)
+            $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+        if ($this->auth->delete($id))
+            $this->set_message('Usuário excluído com sucesso!', 'success', 'admin/accounts');
+        else
+            $this->set_message('Erro ao excluir o usuário.', 'danger', 'admin/accounts');
     }
 
+    /**
+     * Edit an account profile.
+     */
     public function profile()
     {
-        // Verifica se altera a senha
+
+        $query = $this->auth->account();
+        $extra = (object) json_decode($query->extra_data);
+
         if ($this->input->post('alterar_senha') == '1')
             $this->form_validation->set_rules('password', 'Senha', 'required');
-
         $this->form_validation->set_rules('name', 'Nome completo', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-
-        if ($this->form_validation->run() == FALSE) {
-            $content_vars = array();
-            $account_data = $this->auth->get_account_by_id($this->auth->get_account_id());
-            if ($account_data->id == null) {
-                $this->session->set_flashdata('msg_sistema', 'Usuário inexistente.');
-                redirect('admin/dashboard');
-            }
-            $content_vars['row'] = $account_data;
-            $content_vars['extra_data'] = $this->auth->get_extra_data(NULL, $account_data->extra_data);
-            $this->wpanel->load_view('accounts/profile', $content_vars);
-        } else {
-            $extra_data = array();
-            $extra_data['name'] = $this->input->post('name');
-            $extra_data['skin'] = $this->input->post('skin');
-            if($this->input->post('change_avatar') == '1')
-                $extra_data['avatar'] = $this->auth->upload_avatar();
+        if ($this->form_validation->run() == FALSE)
+        {
+            if ($query->id == null)
+                $this->set_message('Usuário inexistende.', 'info', 'admin/dashboard');
+            $this->set_var('row', $query);
+            $this->set_var('extra', $extra);
+            $this->render();
+        } else
+        {
+            $extra->name = $this->input->post('name');
+            $extra->skin = $this->input->post('skin');
+            if ($this->input->post('change_avatar') == '1')
+                $extra->avatar = $this->wpanel->upload_media('avatar');
             else
-                $extra_data['avatar'] = $this->input->post('avatar');
+                $extra->avatar = $this->input->post('avatar');
 
-            $updatedaccount = $this->auth->update_account(
-                $this->auth->get_account_id(),
-                $this->input->post('email'),
-                $this->input->post('role'),
-                $extra_data
+            $result = $this->auth->update(
+                    $this->auth->user_id(), $this->input->post('email'), $query->role, $extra
             );
-
-            if ($updatedaccount > 0) {
-                if ($this->input->post('change_password') == '1') {
+            if ($result > 0)
+            {
+                if ($this->input->post('change_password') == '1')
                     redirect('admin/logout');
-                } else {
-                    $this->session->set_flashdata('msg_sistema', 'Seus dados foram salvos com sucesso.');
-                    redirect('admin/accounts/profile');
-                }
-            } else {
-                $this->session->set_flashdata('msg_sistema', 'Erro ao salvar os seus dados.');
-                redirect('admin/accounts/profile');
-            }
+                else
+                    $this->set_message('Seus dados foram alterados com sucesso!', 'success', 'admin/accounts/profile');
+            } else
+                $this->set_message('Erro ao alterar os seus dados.', 'danger', 'admin/accounts/profile');
         }
     }
 
+    /**
+     * Activate an account.
+     * 
+     * @param int $account_id
+     */
     public function activate($account_id = NULL)
     {
-        if($this->auth->activate_account($account_id)){
-            $this->session->set_flashdata('msg_sistema', 'Conta ativada com sucesso.');
-            redirect('admin/accounts/edit/'.$account_id);
-        } else {
-            $this->session->set_flashdata('msg_sistema', 'Não foi possível ativar a conta.');
-            redirect('admin/accounts/edit/'.$account_id);
-        }
+        if ($this->auth->activate($account_id))
+            $this->set_message('Conta ativada com sucesso!', 'success', 'admin/accounts/edit/' . $account_id);
+        else
+            $this->set_message('Não foi possível ativar a conta.', 'danger', 'admin/accounts/edit/' . $account_id);
     }
 
+    /**
+     * Deactivate an account.
+     * 
+     * @param int $account_id
+     */
     public function deactivate($account_id = NULL)
     {
-        if($this->auth->deactivate_account($account_id)){
-            $this->session->set_flashdata('msg_sistema', 'Conta desativada com sucesso.');
-            redirect('admin/accounts/edit/'.$account_id);
-        } else {
-            $this->session->set_flashdata('msg_sistema', 'Não foi possível desativar a conta.');
-            redirect('admin/accounts/edit/'.$account_id);
+        if ($this->auth->deactivate($account_id))
+            $this->set_message('Conta desativada com sucesso!', 'success', 'admin/accounts/edit/' . $account_id);
+        else
+            $this->set_message('Não foi possível desativar a conta.', 'danger', 'admin/accounts/edit/' . $account_id);
+    }
+
+    /**
+     * Return an modules list for permission settings.
+     * 
+     * @return mixed
+     */
+    private function list_modules_full()
+    {
+        $this->load->model(array('module', 'module_action'));
+        $query_module = $this->module->order_by('order', 'asc')->as_array()->find_all();
+        // Adiciona as actions na lista de módulos.
+        foreach ($query_module as $key => $value)
+        {
+            $query_action = $this->module_action->where(array('whitelist' => '0', 'module_id' => $value['id']))->as_array()->find_all();
+            $query_module[$key]['actions'] = $query_action;
         }
+        return $query_module;
     }
 
 }

@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,30 +29,44 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Newsletters extends MX_Controller
+/**
+ * Newsletters class
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Newsletters extends Authenticated_Controller
 {
 
+    /**
+     * Class constructor.
+     */
     function __construct()
     {
-        $this->auth->check_permission();
-        $this->load->model('newsletter');
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+        $this->model_file = 'newsletter';
+        parent::__construct();
     }
 
+    /**
+     * List of emails.
+     */
     public function index()
     {
         $content_vars = array();
-        $contatos = $this->newsletter->get_list()->result();
-        $content_vars['contatos'] = $contatos;
-        $this->wpanel->load_view('newsletter/index', $content_vars);
+        $contatos = $this->newsletter->find_all();
+        $this->set_var('contatos', $contatos);
+        $this->render();
     }
 
+    /**
+     * Export the list do CSV.
+     */
     public function export()
     {
 
@@ -60,7 +75,7 @@ class Newsletters extends MX_Controller
         // Load the DB utility class
         $this->load->dbutil();
 
-        $query = $this->db->query("SELECT id AS 'Código', nome AS 'Nome', email AS 'E-mail', created AS 'Data', ipaddress AS 'IP' FROM newsletter_email");
+        $query = $this->db->query("SELECT id AS 'Código', nome AS 'Nome', email AS 'E-mail', created_on AS 'Data', ipaddress AS 'IP' FROM newsletter_email");
 
         $delimiter = ",";
         $newline = "\r\n";
@@ -70,15 +85,20 @@ class Newsletters extends MX_Controller
 
         // Load the download helper and send the file to your desktop
         $this->load->helper('download');
-        force_download($filename, $csv); 
+        force_download($filename, $csv);
     }
 
+    /**
+     * emtpy the email list.
+     */
     public function clear()
     {
-        if($this->newsletter->empty_table('newsletter_email')){
+        if ($this->newsletter->empty_table('newsletter_email'))
+        {
             $this->session->set_flashdata('msg_sistema', 'Limpeza efetuada com sucesso.');
             redirect('admin/newsletters');
-        } else {
+        } else
+        {
             $this->session->set_flashdata('msg_sistema', 'Erro ao efetuar a limpeza.');
             redirect('admin/newsletters');
         }
