@@ -4,8 +4,7 @@
 </h1>
 
 <div class="row">
-    <div class="col-sm-6 col-sm-6">
-
+    <div class="col-sm-6">
         <?= form_open('users/login', array('class'=>'col-sm-10', 'role'=>'form')); ?>
             <div class="form-group">
                 <label for="email">E-mail</label>
@@ -17,12 +16,14 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Sua senha...">
                 <?= form_error('password'); ?>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <div>
+                <button type="submit" class="btn btn-primary">Login</button>            
+                <?= anchor('users/recovery', 'Esqueci minha senha', array('class' => 'btn btn-link')); ?>
+            </div>
         <?= form_close(); ?>
-
     </div>
-    <div class="col-sm-6 col-sm-6">
-        <h3>Cadastre-se!</h3>
+    <div class="col-sm-6">
+        <h4>Ou Cadastre-se!</h4>
         <p>Crie seu cadastro clicando no botão abaixo.</p>
         <p><?= anchor('users/register', 'Cadastro', array('class' => 'btn btn-primary')); ?></p>
     </div>

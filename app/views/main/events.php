@@ -3,9 +3,9 @@
 <?php foreach($events as $event){ ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
-            <h1><?= anchor('event/'.$event->link, $event->title); ?></h1>
+            <h3><?= anchor('event/'.$event->link, $event->title); ?></h3>
             <p class="text-muted">
-                <span><b>Data</b> <?= mdate('%d/%m/%Y', strtotime($event->created)); ?> | <b>Local</b> <?= $event->description; ?><br/></span>
+                <span><b>Data</b> <?= mdate('%d/%m/%Y', strtotime($event->created_on)); ?> | <b>Local</b> <?= $event->description; ?><br/></span>
             </p>
             <?php
             // Exibe a imagem de capa caso ela exista.

@@ -1,26 +1,30 @@
-<!-- Fancybox aditional libraries. -->
+<!-- Bibliotecas adicionais para o Fancybox. -->
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6'); ?>"></script>
 <link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
-    <div class="col-sm-12 col-md-12">
-        <h1 class="page-header">Galeria de Vídeos</h1>
+    <div class="col-md-12">
+        <h3 class="page-header">Galeria de Vídeos</h3>
     </div>
 </div>
 <div class="row wpn-social-buttons">
-    <div class="col-sm-12 col-md-12">
-        <?= wpn_widget('addthisbuttons'); ?>
+    <div class="col-md-12">
+        <?= $this->widget->load('wpnaddthisbuttons'); ?>
     </div>
 </div>
 <div class="row">
     <?php
     $num_cols = 1;
-    foreach ($videos as $video)
-    {
+    foreach ($videos as $video) {
+
+        /*
+         * Faz um calculo simples para adequar o total
+         * de colunas à class do bootstrap.
+         */
         $col = 12 / $max_cols;
         ?>
-        <div class="col-sm-<?= $col; ?> col-md-<?= $col; ?>">
+        <div class="col-md-<?= $col; ?>">
             <div class="thumbnail">
                 <div class="inner-video">
                     <?php
@@ -40,12 +44,11 @@
         </div>
         <?php
         // Cria uma nova linha de acordo com a quantidade de ítens por linha.
-        if ($num_cols == $max_cols)
-        {
+        if ($num_cols == $max_cols) {
             echo '</div><div class="row">';
             $num_cols = 1;
         } else
-            $num_cols = $num_cols ++;
+            $num_cols = $num_cols + 1;
     }
     ?>
 </div>
