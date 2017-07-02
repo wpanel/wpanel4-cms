@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -47,64 +47,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @category    Helpers
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  * @link        http://elieldepaula.com.br
+ * @since       v1.0.0
  */
-
-if (!function_exists('date_for_mysql')) 
+if (!function_exists('date_for_mysql'))
 {
 
     /**
-    * This helper return an human date to mysql date.
-    *
-    * @param $date string Ex: 10/12/2015
-    * @return string Ex: 2015-12-10
-    */
-    function date_for_mysql($date) 
+     * This helper return an human date to mysql date.
+     *
+     * @param $date string Ex: 10/12/2015
+     * @return string Ex: 2015-12-10
+     */
+    function date_for_mysql($date)
     {
         $desmonta = explode("/", $date);
         $dia = $desmonta[0];
         $mes = $desmonta[1];
         $ano = $desmonta[2];
-        $saida = $ano."-".$mes."-".$dia;
+        $saida = $ano . "-" . $mes . "-" . $dia;
         return $saida;
     }
+
 }
 
-if (!function_exists('date_for_user')) 
+if (!function_exists('date_for_user'))
 {
 
     /**
-    * This helper return an mysql date to human date.
-    *
-    * @param $date string Ex: 2015-12-10
-    * @return string Ex: 10/12/2015
-    */
-    function date_for_user($date) 
+     * This helper return an mysql date to human date.
+     *
+     * @param $date string Ex: 2015-12-10
+     * @return string Ex: 10/12/2015
+     */
+    function date_for_user($date)
     {
         $desmonta = explode("-", $date);
         $ano = $desmonta[0];
         $mes = $desmonta[1];
         $dia = $desmonta[2];
-        $saida = $dia."/".$mes."/".$ano;
+        $saida = $dia . "/" . $mes . "/" . $ano;
         return $saida;
     }
+
 }
 
-if (!function_exists('datetime_for_mysql')) 
+if (!function_exists('datetime_for_mysql'))
 {
 
     /**
-    * This helper return an human date with time to mysql date.
-    *
-    * @param $date string Ex: 10/12/2015 12:00:00
-    * @return string Ex: 2015-12-10 12:00:00
-    */
-    function datetime_for_mysql($date, $show_time = True) 
+     * This helper return an human date with time to mysql date.
+     *
+     * @param $date string Ex: 10/12/2015 12:00:00
+     * @return string Ex: 2015-12-10 12:00:00
+     */
+    function datetime_for_mysql($date, $show_time = True)
     {
         $desmonta = explode(" ", $date);
         $data = $desmonta[0];
         $hora = $desmonta[1];
-        if($show_time)
-            $saida = date_for_mysql($data).' '.$hora;
+        if ($show_time)
+            $saida = date_for_mysql($data) . ' ' . $hora;
         else
             $saida = date_for_mysql($data);
         return $saida;
@@ -112,24 +114,25 @@ if (!function_exists('datetime_for_mysql'))
 
 }
 
-if (!function_exists('datetime_for_user')) 
+if (!function_exists('datetime_for_user'))
 {
 
     /**
-    * This helper return an mysql date with time to human date.
-    *
-    * @param $date string Ex: 2015-12-10 12:00:00
-    * @return string Ex: 10/12/2015 12:00:00
-    */
-    function datetime_for_user($date, $show_time = True) 
+     * This helper return an mysql date with time to human date.
+     *
+     * @param $date string Ex: 2015-12-10 12:00:00
+     * @return string Ex: 10/12/2015 12:00:00
+     */
+    function datetime_for_user($date, $show_time = True)
     {
         $desmonta = explode(" ", $date);
         $data = $desmonta[0];
         $hora = $desmonta[1];
-        if($show_time)
-            $saida = date_for_user($data).' '.$hora;
+        if ($show_time)
+            $saida = date_for_user($data) . ' ' . $hora;
         else
             $saida = date_for_user($data);
         return $saida;
     }
+
 }

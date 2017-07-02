@@ -1,13 +1,13 @@
-<?php 
+<?php
 
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -43,104 +43,166 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @category    Helpers
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  * @link        http://elieldepaula.com.br
+ * @since       v1.0.0
  */
 
-
-if ( ! function_exists('html_comment'))
+if (!function_exists('html_comment'))
 {
-	function html_comment($comment)
-	{
-		$str = "";
-		$str = "<!-- ".$comment." -->\n";
-		return $str;
-	}
+
+    /**
+     * Return an html comment tag.
+     * @param string $comment Comment text.
+     * @return string
+     */
+    function html_comment($comment)
+    {
+        $str = "";
+        $str = "<!-- " . $comment . " -->\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('title'))
+if (!function_exists('title'))
 {
-	function title($title)
-	{
-		$str = "";
-		$str = "<title>".$title."</title>\n";
-		return $str;
-	}
+
+    /**
+     * Return an title tag.
+     * @param string $title
+     * @return string
+     */
+    function title($title)
+    {
+        $str = "";
+        $str = "<title>" . $title . "</title>\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('html'))
+if (!function_exists('html'))
 {
-	function html($close = FALSE)
-	{
-		$str = '';
-		if($close)
-			$str = "\n</html>";
-		 else
-			$str = "<html>\n";
-		return $str;
-	}
+
+    /**
+     * Return an html open or close tag.
+     * 
+     * @param boolean $close
+     * @return string
+     */
+    function html($close = FALSE)
+    {
+        $str = '';
+        if ($close)
+            $str = "\n</html>";
+        else
+            $str = "<html>\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('head'))
+if (!function_exists('head'))
 {
-	function head($close = FALSE)
-	{
-		$str = '';
-		if($close)
-			$str = "</head>\n";
-		else
-			$str = "<head>\n";
-		return $str;
-	}
+
+    /**
+     * Return an head openn or close tag.
+     * 
+     * @param boolean $close
+     * @return string
+     */
+    function head($close = FALSE)
+    {
+        $str = '';
+        if ($close)
+            $str = "</head>\n";
+        else
+            $str = "<head>\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('body'))
+if (!function_exists('body'))
 {
-	function body($attributes = '', $close = FALSE)
-	{
-		$str = '';
-		if($close)
-			$str = "\n</body>\n";
-		else
-			$str = "<body"._attributes($attributes).">\n";
-		return $str;
-	}
+
+    /**
+     * Return an body open or close tag.
+     * 
+     * @param mixed $attributes
+     * @param boolean $close
+     * @return string
+     */
+    function body($attributes = '', $close = FALSE)
+    {
+        $str = '';
+        if ($close)
+            $str = "\n</body>\n";
+        else
+            $str = "<body" . _attributes($attributes) . ">\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('div'))
+if (!function_exists('div'))
 {
-	function div($attributes = '', $close = FALSE)
-	{
-		$str = '';
-		if($close)
-			$str = "\n</div>\n";
-		else
-			$str = "<div"._attributes($attributes).">\n";
-		return $str;
-	}
+
+    /**
+     * Return an div open or close tag.
+     * 
+     * @param mixed $attributes
+     * @param boolean $close
+     * @return string
+     */
+    function div($attributes = '', $close = FALSE)
+    {
+        $str = '';
+        if ($close)
+            $str = "\n</div>\n";
+        else
+            $str = "<div" . _attributes($attributes) . ">\n";
+        return $str;
+    }
+
 }
 
-if ( ! function_exists('hr'))
+if (!function_exists('hr'))
 {
-	function hr($attributes = '')
-	{
-			return "<hr"._attributes($attributes)."/>\n";
-	}
+
+    /**
+     * Return an hr tag.
+     * 
+     * @param mixed $attributes
+     * @return string
+     */
+    function hr($attributes = '')
+    {
+        return "<hr" . _attributes($attributes) . "/>\n";
+    }
+
 }
 
-if ( ! function_exists('_attributes'))
+if (!function_exists('_attributes'))
 {
 
-	function _attributes($attributes)
-	{
-		if(is_array($attributes))
-		{
-			$atr = '';
-			foreach($attributes as $key => $value)
-			{
-				$atr .= " " . $key . "=\"".$value."\" ";
-			}
-			return $atr;
-		} 
-		elseif (is_string($attributes) and strlen($attributes) > 0) 
-			$atr = ' ' . $attributes;
-	}
+    /**
+     * Return an attribute string for some tag.
+     * 
+     * @param mixed $attributes
+     * @return string
+     */
+    function _attributes($attributes)
+    {
+        if (is_array($attributes))
+        {
+            $atr = '';
+            foreach ($attributes as $key => $value)
+            {
+                $atr .= " " . $key . "=\"" . $value . "\" ";
+            }
+            return $atr;
+        } elseif (is_string($attributes) and strlen($attributes) > 0)
+            $atr = ' ' . $attributes;
+    }
+
 }
