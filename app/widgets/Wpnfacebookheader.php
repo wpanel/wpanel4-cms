@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,47 +29,42 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categoryfrompost extends Widget {
+/**
+ * Facebook header class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpnfacebookheader extends Widget
+{
 
-    private $post_id = '';
-    private $pre = '<span class="label label-primary">';
-    private $pos = '</span>';
-
-	function __construct($config = array())
-	{
-		if (count($config) > 0)
-            $this->initialize($config);
-	}
-
-    public function initialize($config = array())
+    /**
+     * Main method of the widget.
+     * 
+     * @return mixed
+     */
+    public function main()
     {
-        foreach ($config as $key => $val){
-            if (isset($this->$key)){
-                $method = 'set_' . $key;
-                if (method_exists($this, $method))
-                    $this->$method($val);
-                else
-                    $this->$key = $val;
-            }
-        }
-        return $this;
-    }
-
-    public function run()
-    {
-        $html = '';
-        $this->load->model('categoria');
-        $query = $this->categoria->get_by_post($this->post_id)->result();
-
-        foreach ($query as $row){
-            $html .= anchor('posts/'.$row->id.'/'.$row->link, $row->title, array('class' => 'label label-warning', 'style'=>'margin-right:5px;'));
-        }
+        $html = "";
+        $html .= "<div id=\"fb-root\"></div>\n";
+        $html .= "<script>\n";
+        $html .= "(function(d, s, id) {\n";
+        $html .= "\tvar js, fjs = d.getElementsByTagName(s)[0];\n";
+        $html .= "\tif (d.getElementById(id))\n";
+        $html .= "\t    return;\n";
+        $html .= "\tjs = d.createElement(s);\n";
+        $html .= "\tjs.id = id;\n";
+        $html .= "\tjs.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0\";\n";
+        $html .= "\tfjs.parentNode.insertBefore(js, fjs);\n";
+        $html .= "\t    }(document, 'script', 'facebook-jssdk'));\n";
+        $html .= "</script>\n";
         return $html;
     }
+
 }

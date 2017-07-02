@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,62 +29,54 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Wpanelmenu extends Widget {
+/**
+ * Main menu class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpnmainmenu extends Widget
+{
 
-    private $menu_id = '';
-    private $ul_style = '';
-    private $li_style = '';
-    
-    private $ul_dropdown = '';
-
-	function __construct($config = array())
-	{
-		if (count($config) > 0) {
-            $this->initialize($config);
-        }
-	}
-
-    public function initialize($config = array())
-    {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key)) {
-                $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
-                    $this->$method($val);
-                } else {
-                    $this->$key = $val;
-                }
-            }
-        }
-        return $this;
-    }
-
-    public function run()
-	{
-		return $this->get_menu($this->menu_id, $this->ul_style, $this->li_style);
-	}
+    protected $menu_id = '';
+    protected $ul_style = '';
+    protected $li_style = '';
+    protected $ul_dropdown = '';
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método faz a exibição de um menu usando o ID como parametro principal.
+     * Class constructor.
      * 
-     * O menu é gerado usando "<ul></ul>" e "<li></li>", os estilos pré-definidos são
-     * os usados pelo Bootstrap, mas pode-se deixar os parametros de estilo em
-     * branco e criar seus próprios estilos usando "ul li {}"
+     * @param mixed $config
+     */
+    function __construct($config = array())
+    {
+        if (count($config) > 0)
+            $this->initialize($config);
+    }
+
+    /**
+     * Main method of the widget.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @return mixed
+     */
+    public function main()
+    {
+        return $this->get_menu($this->menu_id, $this->ul_style, $this->li_style);
+    }
+
+    /**
+     * This method shows an HTML from menu by $id
+     * 
      * @param int $menu_id
      * @param string $ul_style
      * @param string $li_style
      * @return mixed
-     * ---------------------------------------------------------------------------------------------
      */
     private function get_menu($menu_id = null, $ul_style = '', $li_style = '')
     {
@@ -91,12 +84,7 @@ class Wpanelmenu extends Widget {
             return false;
 
         $this->load->model('menu_item');
-        $query = $this->menu_item->get_by_field(
-            'menu_id', 
-            $menu_id, 
-            array('field' => 'ordem', 'order' => 'asc'),
-            null
-        )->result();
+        $query = $this->menu_item->order_by('ordem', 'asc')->find_many_by('menu_id', $menu_id);
 
         $html = "";
         $html .= "<ul class=\"" . $ul_style . "\">";
@@ -107,7 +95,7 @@ class Wpanelmenu extends Widget {
                 $html .= "<li class=\"" . $li_style . "\">";
             else
                 $html .= "<li>";
-            
+
             switch ($row->tipo)
             {
                 case 'link':
@@ -126,7 +114,7 @@ class Wpanelmenu extends Widget {
                         $html .= anchor($row->href, $row->label);
                     break;
                 case 'submenu':
-                    $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" >" . $row->label . " <span class=\"caret\"></span></a>";
+                    $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\"  data-submenu>" . $row->label . " <span class=\"caret\"></span></a>";
                     $html .= $this->get_menu($row->href, 'dropdown-menu', 'dropdown-submenu');
                     break;
             }

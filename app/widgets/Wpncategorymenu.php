@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,76 +29,85 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categorymenu extends Widget {
+/**
+ * Category menu class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpncategorymenu extends Widget
+{
 
-    private $inicial_id = '0';
-    private $main_attr = '';
-    private $item_attr = '';
+    protected $inicial_id = '0';
+    protected $main_attr = '';
+    protected $item_attr = '';
 
-	function __construct($config = array())
-	{
-		if (count($config) > 0) {
-            $this->initialize($config);
-        }
-	}
-
-    public function initialize($config = array())
+    function __construct($config = array())
     {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key)) {
-                $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
-                    $this->$method($val);
-                } else {
-                    $this->$key = $val;
-                }
-            }
-        }
-        return $this;
+        if (count($config) > 0)
+            $this->initialize($config);
     }
 
+    /**
+     * Set an array of html attributes to the output.
+     * 
+     * @param mixed $attributes
+     * @return string
+     */
     private function _attributes($attributes)
     {
-        if (is_array($attributes)) {
+        if (is_array($attributes))
+        {
             $atr = '';
             foreach ($attributes as $key => $value)
             {
                 $atr .= $key . "=\"" . $value . "\" ";
             }
             return $atr;
-        } elseif (is_string($attributes) and strlen($attributes) > 0) {
+        } elseif (is_string($attributes) and strlen($attributes) > 0)
+        {
             $atr = ' ' . $attributes;
         }
     }
 
-    public function run()
-	{
-		return $this->get_category($this->inicial_id);
-	}
+    /**
+     * Main method of the widget.
+     * 
+     * @return mixed
+     */
+    public function main()
+    {
+        return $this->get_category($this->inicial_id);
+    }
 
+    /**
+     * Get the category list by $id
+     * 
+     * @param int $id
+     * @return string
+     */
     private function get_category($id)
     {
 
         $this->load->model('categoria');
-        $query = $this->categoria->get_by_field('category_id', $id, array('field'=>'title', 'order'=>'asc'), null, 'id, title, link')->result();
+        $query = $this->categoria->order_by('title', 'asc')->find_many_by('category_id', $id);
 
         $html = '';
         $html .= '<ul ' . $this->_attributes($this->main_attr) . '>';
-        foreach ($query as $row){
+        foreach ($query as $row)
+        {
             $html .= '<li ' . $this->_attributes($this->item_attr) . '>' . anchor('/posts/' . $row->id . '/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '</li>';
             $html .= $this->get_category($row->id);
         }
         $html .= '</ul>';
 
         return $html;
-
     }
 
 }

@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,24 +29,48 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Background extends Widget {
+/**
+ * Slide banner class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpnslidebanner extends Widget
+{
 
-    public function run()
-	{
+    protected $position = '';
+    protected $class_name = '';
+    protected $interval = '5000';
+    protected $cycle = 'true';
 
-        $html = "";
-        $html .= "<style type=\"text/css\">\n";
-        $html .= "\tbody {\n";
-        if(wpn_config('background'))$html .= "\t\tbackground-image: url('" . base_url('media/'.wpn_config('background')) ."');\n";
-        if(wpn_config('bgcolor'))$html .= "\t\tbackground-color: " . wpn_config('bgcolor') . ";\n";
-        $html .= "\t}\n";
-        $html .= "\t</style>\n";
-        return $html;
-	}
+    function __construct($config = array())
+    {
+        if (count($config) > 0)
+            $this->initialize($config);
+    }
+
+    /**
+     * Main method of the widget.
+     * 
+     * @return mixed
+     */
+    public function main()
+    {
+
+        $this->load->model('banner');
+        $query = $this->banner->order_by('sequence', 'asc')->find_many_by(array('position' => $this->position, 'status' => 1));
+        
+        $data = array(
+            'banners' => $query,
+            'class_name' => $this->class_name
+        );
+        $this->load->view('widgets/slidebanner', $data);
+    }
+
 }

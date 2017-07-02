@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,50 +29,29 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tagsfrompost extends Widget {
+/**
+ * Form newsletter class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpnformnewsletter extends Widget
+{
 
-    private $tags = '';
-    private $pre = '<span class="label label-primary">';
-    private $pos = '</span>';
-
-	function __construct($config = array())
-	{
-		if (count($config) > 0) {
-            $this->initialize($config);
-        }
-	}
-
-    public function initialize($config = array())
+    /**
+     * Main method of the widget.
+     * 
+     * @return mixed
+     */
+    public function main()
     {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key)) {
-                $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
-                    $this->$method($val);
-                } else {
-                    $this->$key = $val;
-                }
-            }
-        }
-        return $this;
-    }
-
-    public function run()
-    {
-        $str = '';
-        $x = explode(',', $this->tags);
-        foreach ($x as $value)
-        {
-            $str .= $this->pre . $value . $this->pos . ' ';
-        }
-        return $str;
+        $this->load->view('widgets/formnewsletter');
     }
 
 }

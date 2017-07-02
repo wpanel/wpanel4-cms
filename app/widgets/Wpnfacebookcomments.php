@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 /**
  * WPanel CMS
  *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
+ * An open source Content Manager System for websites and systems using CodeIgniter.
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2008 - 2017, Eliel de Paula.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,42 +29,48 @@
  *
  * @package     WpanelCms
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
+ * @copyright   Copyright (c) 2008 - 2017, Eliel de Paula. (https://elieldepaula.com.br/)
  * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @link        https://wpanel.org
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Sitedescription extends Widget {
+/**
+ * Facebook comments class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ * @since v1.0.0
+ */
+class Wpnfacebookcomments extends Widget
+{
 
-    private $classname = '';
+    /**
+     * URI
+     * @var string
+     */
+    protected $link = '';
 
-	function __construct($config = array())
-	{
-		if (count($config) > 0) {
+    /**
+     * Class constructor.
+     * @param mixed $config
+     */
+    function __construct($config = array())
+    {
+        if (count($config) > 0) {
             $this->initialize($config);
         }
-	}
-
-    public function initialize($config = array())
-    {
-        foreach ($config as $key => $val)
-        {
-            if (isset($this->$key)) {
-                $method = 'set_' . $key;
-                if (method_exists($this, $method)) {
-                    $this->$method($val);
-                } else {
-                    $this->$key = $val;
-                }
-            }
-        }
-        return $this;
     }
 
-    public function run()
-	{
-		return "<div class=\"".$this->classname."\" ><p>" . wpn_config('site_desc') . "</p></div>";
-	}
+    /**
+     * Main method of the widget.
+     * 
+     * @return mixed
+     */
+    public function main()
+    {
+        $html = "";
+        $html .= "<div class=\"fb-comments\" data-href=\"" . $this->link . "\" data-num-posts=\"15\" data-width=\"100%\"></div>";
+        return $html;
+    }
 
 }
