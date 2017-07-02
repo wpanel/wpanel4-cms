@@ -35,7 +35,7 @@ Thumbs.db
 composer.lock
 
 # Sqlite
-app/db/*.sqlite
+app/database/*.sqlite
 
 # Avatar
 public/media/avatar/*.jpg
