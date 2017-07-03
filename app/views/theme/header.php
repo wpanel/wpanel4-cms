@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?= $this->widget->load('wpntitle'); ?>
         <?= wpn_meta(); ?>
+        <?= $this->widget->load('wpntitle'); ?>
         <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('media/favicon.ico'); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="canonical" href="<?= current_url(); ?>" />

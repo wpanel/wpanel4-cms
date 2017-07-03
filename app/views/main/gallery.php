@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!-- Bibliotecas adicionais para o Fancybox. -->
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
@@ -26,16 +27,17 @@
         $col = 12 / $max_cols;
         ?>
         <div class="col-md-<?= $col; ?>">
-        <?php
-        $conf_foto = array(
-            'src' => base_url('/media/albuns/' . $album->id . '/' . $row->filename),
-            'class' => 'img-responsive',
-            'alt' => $row->descricao
-        );
-        // Link antigo para exibição da foto em outra página.
-        // echo anchor('foto/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
-        ?>
-            <a href="<?= base_url('media/albuns/' . $album->id . '/' . $row->filename); ?>" class="fancybox" rel="group"><?= img($conf_foto); ?></a>
+            <?php
+            $conf_foto = array(
+                'src' => base_url('/media/albuns/' . $album->id . '/' . $row->filename),
+                'class' => 'img-responsive',
+                'alt' => $row->descricao
+            );
+            // Link para exibição da foto em outra página.
+             echo anchor('picture/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
+            ?>
+            <!-- Link para exibição com lightbox.--> 
+            <!--<a href="<?= base_url('media/albuns/' . $album->id . '/' . $row->filename); ?>" class="fancybox" rel="group"><?= img($conf_foto); ?></a>-->
             <h4><?= $row->descricao; ?></h4>
         </div>
     <?php

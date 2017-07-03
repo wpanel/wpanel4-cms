@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!-- Bibliotecas adicionais para o Fancybox. -->
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
@@ -32,10 +33,11 @@
                         'src' => 'http://img.youtube.com/vi/' . $video->link . '/0.jpg',
                         'class' => 'img-responsive'
                     );
-                    // Link antigo para exibição do vídeo em outra página.
-                    // echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
+                    // Este link faz exibição do vídeo em outra página.
+                    echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
                     ?>
-                    <a href="https://www.youtube.com/watch?v=<?= $video->link; ?>" class="fancybox-media" ><?= img($image_properties); ?></a>
+                    <!-- Este link usa o lightbox para exibição do vídeo. -->
+                    <!-- <a href="https://www.youtube.com/watch?v=<?= $video->link; ?>" class="fancybox-media" ><?= img($image_properties); ?></a> -->
                 </div>
             </div>
             <div class="caption">
