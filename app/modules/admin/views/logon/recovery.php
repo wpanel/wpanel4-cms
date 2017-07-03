@@ -51,7 +51,7 @@
 				</div>
 				<?= form_close(); ?>
 			</div><!-- /.login-box-body -->
-                        <p class="text-center" style="padding-top:20px;">&copy; Wpanel CMS <?= date('Y') ?>, todos os direitos reservados.<br/><?= wpn_lang('wpn_developed', 'Developed by'); ?> <a href="http://dotsistemas.com.br" target="_blank">Dot Sistemas</a>.</p>
+            <p class="text-center" style="padding-top:20px;">&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. Todos os direitos reservados.</p>
 		</div><!-- /.login-box -->
 
 		<!-- jQuery 2.1.4 -->

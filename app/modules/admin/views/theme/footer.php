@@ -4,7 +4,7 @@
                 <div class="pull-right hidden-xs">
                 <?php echo wpn_lang('wpn_pagerendered', 'Page rendered in'); ?> <strong>{elapsed_time}</strong> <?php echo wpn_lang('wpn_seconds', 'Seconds'); ?>. Versão <?php echo WPN_VERSION; ?>
                 </div>
-                <p>&copy; Wpanel-PRO <?php echo date('Y') ?>, todos os direitos reservados a <a href="http://dotsistemas.com.br" target="_blank">Dot Sistemas</a>.</p>
+                <p>&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. Todos os direitos reservados.</p>
             </footer>
         </div>
         <script>
