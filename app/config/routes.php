@@ -30,20 +30,21 @@ $route['setup/firstadmin'] 		= 'setup/main/firstadmin';
 |  Rotas do site
 | -------------------------------------------------------------------
 */
-$route['posts'] 				= 'main/posts';
-$route['posts/(:any)'] 			= 'main/posts/$1';
+$route['posts'] 		= 'main/posts';
+$route['posts/(:any)'] 		= 'main/posts/$1';
 $route['posts/(:any)/(:any)'] 	= 'main/posts/$1';
-$route['post/(:any)'] 			= 'main/post/$1';
-$route['events']				= 'main/events';
-$route['event/(:any)'] 			= 'main/post/$1';
-$route['search']				= 'main/search';
-$route['galleries'] 			= 'main/galleries';
+$route['post/(:any)'] 		= 'main/post/$1';
+$route['events']		= 'main/events';
+$route['event/(:any)'] 		= 'main/post/$1';
+$route['search']		= 'main/search';
+$route['galleries'] 		= 'main/galleries';
 $route['gallery/(:any)/(:any)'] = 'main/gallery/$1';
 $route['picture/(:any)/(:any)'] = 'main/picture/$2';
-$route['videos'] 				= 'main/videos';
+$route['videos']                = 'main/videos';
+$route['video/(:any)']          = 'main/video/$1';
 $route['video/(:any)/(:any)'] 	= 'main/video/$1';
-$route['newsletter'] 			= 'main/newsletter';
-$route['contact'] 				= 'main/contact';
+$route['newsletter']    	= 'main/newsletter';
+$route['contact'] 		= 'main/contact';
 $route['rss']               	= 'main/rss';
 
 /* End of file routes.php */
