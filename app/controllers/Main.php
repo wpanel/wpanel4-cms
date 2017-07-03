@@ -18,7 +18,7 @@ class Main extends MY_Controller
 {
 
     /**
-     * Class constructor.
+     * Construtor da classe.
      *
      * @return void
      */
@@ -26,33 +26,35 @@ class Main extends MY_Controller
     {
 
         /**
-         * Here are some options provided by the MY_Controller class, you
-         * can adjust as you need to your project.
+         * ---------------------------------------------------------------------
+         * Aqui ficam disponíveis algumas opções disponibilizadas pela classe
+         * MY_Controller que você pode ajustar de acordo com seu projeto.
+         * ---------------------------------------------------------------------
          */
+        
         /**
-         * Enable the CodeIgniter Profile.
+         * Ativa o profiler (Forensics).
          */
-        // $this->show_profiler = TRUE;
+        $this->show_profiler = false;
 
         /**
-         * Set the 'col' number of the mosaic views.
+         * Informa o número de colunas do layout 'Mosaico'.
          */
         $this->wpn_cols_mosaic = 3;
 
         /**
-         * Set the default post view: list (default) or mosaic.
+         * Informa a view padrão para as postagens: 'list' ou 'mosaic'.
          */
         $this->wpn_posts_view = 'mosaic';
 
         parent::__construct();
         $this->wpanel->check_setup();
+        
     }
 
     /**
-     * You can use this method to create 'custom' home page to your site and
-     * then select the 'custom' page in the admin configuration panel.
-     *
-     * @return void
+     * Você pode usar este método para criar uma página inicial personalizada e
+     * então selecionar como padrão no painel de controle.
      */
     public function custom()
     {
@@ -61,9 +63,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method index() select the configured home page of the site.
-     *
-     * @return void
+     * Este método retorna a página inicial configurada no painel de controle.
      */
     public function index()
     {
@@ -76,25 +76,23 @@ class Main extends MY_Controller
                 $this->posts(wpn_config('home_id'));
                 break;
             default:
-                return $this->custom();
+                $this->custom();
                 break;
         }
     }
 
     /**
-     * The method posts() retuns a list of posts, it can be categoryzed and
-     * can be a list or mosaic view.
+     * Retorna uma lista de posts que pode ser por categoria. A exibição pode
+     * ser em mosaico ou em lista.
      *
-     * @param $category_id Int Category ID.
-     * @return void
+     * @param $category_id Int Id da categoria.
      */
     public function posts($category_id = null)
     {
-        $view_title = '';
-        $view_description = '';
+
         $this->load->model('post');
         $this->load->model('categoria');
-        // Check if is a categoryzed list.
+
         if ($category_id == null)
         {
             $this->set_var('posts', $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '0', 'status' => '1')));
@@ -108,40 +106,48 @@ class Main extends MY_Controller
             $view_title = $qry_category->title;
             $this->wpn_posts_view = strtolower($qry_category->view);
         }
-        // Send $max_cols if the view is mosaic type.
+
         if ($this->wpn_posts_view == 'mosaic')
             $this->set_var('max_cols', $this->wpn_cols_mosaic);
+        
         $this->wpanel->set_meta_title($view_title);
         $this->view('main/posts_' . $this->wpn_posts_view)->render();
+        
     }
 
     /**
-     * The method post() shows a post by link or by ID if $use_id = True.
+     * Este método exibe uma postagem usando um link ou Id como referência.
      *
-     * @param $link mixed Link or ID field of the post.
-     * @param $use_id boolean Indicates if $link is a ID.
-     * @return void
+     * @param $var mixed Link ou ID da postagem.
+     * @param $use_id boolean Indica que $var é um Id.
      */
-    public function post($link = '', $use_id = false)
+    public function post($var = null, $use_id = false)
     {
-        if ($link == '')
+        if ($var === null)
             show_404();
+        
         $this->load->model('post');
+        
         if ($use_id)
-            $query = $this->post->find($link);
+            $query = $this->post->find($var);
         else
-            $query = $this->post->find_by('link', $link);
+            $query = $this->post->find_by('link', $var);
+        
         $this->set_var('post', $query);
+        
         if (count($query) <= 0)
             show_404();
+        
         if ($query->status == 0)
             show_error('Esta página foi suspensa temporariamente', 404);
+        
         $this->wpanel->set_meta_description($query->description);
         $this->wpanel->set_meta_keywords($query->tags);
         $this->wpanel->set_meta_title($query->title);
+        
         if (file_exists('./media/capas/' . $query->image))
             $this->wpanel->set_meta_image(base_url('media/capas/' . $query->image));
-        // Select the spacific type of view according to type of post.
+
         switch ($query->page)
         {
             case '1':
@@ -157,16 +163,13 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method events() shows a list of posts typed as 'event'.
-     *
-     * @return void
+     * Este método exibe uma lista de postagens em formato de lista de eventos.
      */
     public function events()
     {
-        $view_title = 'Eventos';
         $this->load->model('post');
         $query = $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '2', 'status' => '1'));
-        $this->wpanel->set_meta_title($view_title);
+        $this->wpanel->set_meta_title('Eventos');
         $this->wpanel->set_meta_description('Lista de eventos');
         $this->wpanel->set_meta_keywords(' eventos, agenda');
         $this->set_var('events', $query);
@@ -174,10 +177,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method search() make a simple search function into the Posts.
-     *
-     * @todo Melhorar a view de resultados usando um estilo de tabela.
-     * @return void
+     * Busca simples no cadastro de postagens.
      */
     public function search()
     {
@@ -190,9 +190,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method albuns() list all the available galeries of the site.
-     *
-     * @return void
+     * Lista as galerias de fotos.
      */
     public function galleries()
     {
@@ -207,28 +205,33 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method album() shows a list of pictures of a galery selected by $album_id.
+     * Lista as fotos de uma galeria indicada pelo  Id.
      *
-     * @param $album_id Int ID of the galery.
-     * @return void
+     * @param $album_id Int Id da galeria.
      */
     public function gallery($album_id = null)
     {
-        if ($album_id == null)
+        if ($album_id === null)
             show_404();
+        
         $this->load->model('gallery');
         $this->load->model('picture');
         $query_album = $this->gallery->find($album_id);
+        
         if (count($query_album) <= 0)
             show_404();
+        
         if ($query_album->status == 0)
             show_error('Este álbum foi suspenso temporariamente', 404);
+        
         $query_pictures = $this->picture->find_many_by(array('album_id' => $album_id, 'status' => 1));
         $this->wpanel->set_meta_description($query_album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($query_album->titulo);
+        
         if (file_exists('./media/capas/' . $query_album->capa))
             $this->wpanel->set_meta_image(base_url('media/capas' . '/' . $query_album->capa));
+        
         $this->set_var('album', $query_album);
         $this->set_var('pictures', $query_pictures);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
@@ -236,41 +239,43 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method foto() shows the picture selected by $picture_id, it only works
-     * if you are not using the lightbox plugin.
+     * Exibe a foto indicada pelo Id. Este método é indicado quando você
+     * não quer usar o plugin lightbox.
      *
-     * @param $picture_id Int Id of the picture.
-     * @return void
-     * @deprecated since version 4.0
+     * @param $picture_id Int Id da imagem.
      */
     public function picture($picture_id = null)
     {
-        if ($picture_id == null)
+        
+        if ($picture_id === null)
             show_404();
+        
         $this->load->model('gallery');
         $this->load->model('picture');
+        
         $query_picture = $this->picture->find($picture_id);
         $query_album = $this->gallery->find($query_picture->album_id);
+        
         if (count($query_picture) <= 0)
             show_404();
+        
         if ($query_picture->status == 0)
             show_error('Esta foto foi suspensa temporariamente', 404);
+        
         $this->wpanel->set_meta_description($query_picture->descricao);
         $this->wpanel->set_meta_keywords('album, fotos');
         $this->wpanel->set_meta_title($query_picture->descricao);
+        
         if (file_exists('./media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename))
             $this->wpanel->set_meta_image(base_url('media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename));
+        
         $this->set_var('album', $query_album);
         $this->set_var('picture', $query_picture);
         $this->render();
     }
 
     /**
-     * The method videos() shows a list of videos from youtube. The videos is not
-     * loaded automaticaly from the channel, it must be inserted into the control
-     * panel by the manager.
-     *
-     * @return void
+     * Lista os vídeos do Youtube que foram cadastrados no painel de controle.
      */
     public function videos()
     {
@@ -285,35 +290,34 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method video() shows a video selected by $code.
+     * Exibe um vídeo indicado pelo Código do vídeo.
      *
-     * @param $code string Youtube code for the video.
-     * @return void
-     * @deprecated since version 4.0
+     * @param $code string Código do vídeo no youtube.
      */
     public function video($code = null)
     {
-        if ($code == null)
+        if ($code === null)
             show_404();
+        
         $this->load->model('video');
         $query_video = $this->video->find_by(array('link' => $code, 'status' => 1));
+        
         if (count($query_video) <= 0)
             show_404();
+        
         if ($query_video->status == 0)
             show_error('Este vídeo foi suspenso temporariamente', 404);
-        $this->data_content['video'] = $query_video;
+        
+        $this->set_var('video', $query_video);
         $this->wpanel->set_meta_description($query_video->titulo);
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title($query_video->titulo);
         $this->wpanel->set_meta_image('http://img.youtube.com/vi/' . $code . '/0.jpg');
-        $this->render('video');
+        $this->render();
     }
 
     /**
-     * The method contact() creates a full functional 'Contact Page' for the site.
-     *
-     * @todo Criar a opção de inserir a mensagem no banco de dados e no painel de contorle.
-     * @return void
+     * Formulário de contato com captcha.
      */
     public function contact()
     {
@@ -331,12 +335,12 @@ class Main extends MY_Controller
             $this->render();
         } else
         {
-            // Receive the values of the form.
+            // Recebe o formulário.
             $nome = $this->input->post('nome');
             $email = $this->input->post('email');
             $telefone = $this->input->post('telefone');
             $mensagem = $this->input->post('mensagem');
-            // Make a message string.
+            // Monta a mensagem.
             $msg = "";
             $msg .= "Mensagem enviada pelo site.\n\n";
             $msg .= "Nome: $nome\n";
@@ -364,10 +368,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method rss() creates a XML page to Feed Readers with a list of posts.
-     *
-     * @todo Criar o metodo de categorizar esta lista de feed.
-     * @return void
+     * Gera um RSS com a lista de postagens para os "Feed Readers".
      */
     public function rss()
     {
@@ -396,10 +397,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method newsletter() show a form to insert contact for newsletter.
-     *
-     * @todo Enviar uma mensagem de confirmação do cadastro para o email.
-     * @return void
+     * Formulário de captação de leads (emails newsletters).
      */
     public function newsletter()
     {
