@@ -1,3 +1,8 @@
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
 $(document).ready(function() {
 
     // Mostra a janela modal de alerta quando for usada.

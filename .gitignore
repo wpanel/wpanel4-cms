@@ -37,6 +37,9 @@ composer.lock
 # Sqlite
 app/database/*.sqlite
 
+# Captcha
+public/captcha/*.jpg
+
 # Avatar
 public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
