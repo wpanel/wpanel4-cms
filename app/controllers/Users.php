@@ -19,31 +19,22 @@ class Users extends MY_Controller
 {
 
     /**
-     * Class constructor.
-     *
-     * @return void
+     * Constructor da classe.
      */
     function __construct()
     {
 
         /**
-         * Here are some options provided by the MY_Controller class, you
-         * can adjust as you need to your project.
+         * ---------------------------------------------------------------------
+         * Aqui ficam disponíveis algumas opções disponibilizadas pela classe
+         * MY_Controller que você pode ajustar de acordo com seu projeto.
+         * ---------------------------------------------------------------------
          */
+        
         /**
-         * Enable the CodeIgniter Profile.
+         * Ativa o profiler (Forensics).
          */
-//        $this->show_profiler = TRUE;
-
-        /**
-         * Set the 'col' number of the mosaic views.
-         */
-        // $this->wpn_cols_mosaic = 3;
-
-        /**
-         * Set the default post view: list (default) or mosaic.
-         */
-        // $this->wpn_posts_view = 'mosaic';
+        $this->show_profiler = false;
 
         parent::__construct();
         $this->wpanel->check_setup();
@@ -56,9 +47,7 @@ class Users extends MY_Controller
     }
 
     /**
-     * User dashboard.
-     * 
-     * @return void
+     * Dashboard do usuário.
      */
     public function index()
     {
@@ -70,9 +59,7 @@ class Users extends MY_Controller
     }
 
     /**
-     * This is an stant-alone account register page.
-     * 
-     * @return  void
+     * Registro de novos usuários.
      */
     public function register()
     {
@@ -99,9 +86,7 @@ class Users extends MY_Controller
     }
 
     /**
-     * Simple register success information.
-     * 
-     * @return void
+     * Mensagem de sucesso no registro do usuário.
      */
     public function registerok()
     {
@@ -110,9 +95,8 @@ class Users extends MY_Controller
     }
 
     /**
-     * This method activate an account by token.
+     * Método para ativação de contas de usuário pelo Token.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param string $token
      */
     public function activate($token)
@@ -130,9 +114,8 @@ class Users extends MY_Controller
     }
 
     /**
-     * Recovery the password of the account.
+     * Recuperação de senhas de contas de usuário.
      * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
      * @param string $token
      */
     public function recovery($token = NULL)
@@ -164,10 +147,7 @@ class Users extends MY_Controller
     }
 
     /**
-     * Profile user account page.
-     * 
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * @return void
+     * Perfil do usuário.
      */
     public function profile()
     {
@@ -185,7 +165,6 @@ class Users extends MY_Controller
             $this->form_validation->set_rules('password', 'Senha', 'required');
         if ($this->form_validation->run() == FALSE)
         {
-
             $this->wpanel->set_meta_title('Área de usuários');
             $this->set_var('account', $query);
             $this->set_var('profile', $profile);
@@ -209,9 +188,7 @@ class Users extends MY_Controller
     }
 
     /**
-     * Login and register page, also have links to login with facebook and G+.
-     * 
-     * @return mixed
+     * Página de login de usuários.
      */
     public function login()
     {
@@ -231,13 +208,10 @@ class Users extends MY_Controller
     }
 
     /**
-     * Logout the user.
-     * 
-     * @return void
+     * Loogut de usuários.
      */
     public function logout()
     {
-        $this->facebook->destroySession();
         $this->auth->logout();
         redirect();
     }
