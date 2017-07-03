@@ -1,7 +1,15 @@
-<?php $this->load->view('theme/header'); ?>
-<?php if (isset($notice)) : ?>
-    <?php echo $notice; ?>
-<?php else : ?>
-<?php endif; ?>
-<?= $view_content ?>
-<?php $this->load->view('theme/footer'); ?>
+<?php 
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$this->load->view('theme/header');
+
+if (isset($notice)) {
+    echo $notice;
+}
+
+echo $view_content;
+
+$this->load->view('theme/footer'); 
+
+?>

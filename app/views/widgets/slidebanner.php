@@ -14,7 +14,7 @@
             
                 $image_properties = array(
                     'src' => 'media/banners/' . $row->content,
-                    'class' => '',
+                    'class' => 'img-slide',
                 );
 
                 echo img($image_properties);

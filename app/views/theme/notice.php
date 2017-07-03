@@ -1,6 +1,7 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!--
 
-Show alert messages with bootstrap alert.
+Mostra mensagens de alerta com o elemento alert do bootstrap.
 
 -->
 <?php if (isset($notice) && is_array($notice)) : ?>
@@ -16,7 +17,7 @@ Show alert messages with bootstrap alert.
 
 <!--
 
-Show alert messages with bootstrap modal.
+Mostra mensagens de alerta com o elemento modal do bootstrap.
 
 <?php if (isset($notice) && is_array($notice)) : ?>
     <div class="modal fade" id="message_modal" tabindex="-1" role="dialog">

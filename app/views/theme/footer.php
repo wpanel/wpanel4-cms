@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
                 </div>
                 <div class="col-md-3 wpn-sidebar">
                     <h4 class="page-header">
@@ -18,15 +19,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <h4 class="page-header">Sobre</h4>
                     <?= $this->widget->load('Wpnsitedescription'); ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <h4 class="page-header">Newsletter</h4>
                     <?= $this->widget->load('Wpnformnewsletter'); ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4">
                     <h4 class="page-header">Social</h4>
                     <?= $this->widget->load('wpnlikebox'); ?>
                 </div>
@@ -37,21 +38,11 @@
                 </div>
             </div>
         </div>
+        <!-- Javascript -->
+        <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
+        <?= wpn_asset('js', 'bootstrap.min.js'); ?>
+        <?= wpn_asset('js', 'bootstrap-submenu.min.js'); ?>
+        <?= wpn_asset('js', 'wpanel.js'); ?>
     </body>
-    <script type="text/javascript">
-
-    $(document).ready(function() {
-
-        // Shows the modal alert if is used.
-        $('#message_modal').modal('show');
-
-        // Get the sub-sub-menu.
-        $(function(){
-            $('[data-submenu]').submenupicker();
-        });
-
-    });
-
-    </script>
     <?= $this->widget->load('wpnganalytics'); ?>
 </html>
