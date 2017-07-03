@@ -40,6 +40,9 @@ app/database/*.sqlite
 # Captcha
 public/captcha/*.jpg
 
+# Files
+public/media/files/*
+
 # Avatar
 public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
