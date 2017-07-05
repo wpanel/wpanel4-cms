@@ -1,7 +1,16 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header"><?= $album->titulo; ?></h3>
+        <h1 class="page-header"><?= $album->titulo; ?></h1>
         <p><?= $album->descricao; ?></p>
         <p><?= mdate('%d/%m/%Y', strtotime($album->created_on)); ?></p>
         <!-- <hr/> -->

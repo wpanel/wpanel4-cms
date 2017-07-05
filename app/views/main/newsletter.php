@@ -1,4 +1,17 @@
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <?php
+
+// TODO Remover este aviso e usar o notice padrão do template.
+
 /**
  * Mostra a mensagem de retorno de sucesso ou erro
  * ao enviar o cadastro.
@@ -9,8 +22,8 @@ if ($msg_newsletter) {
 }
 ?>
 <div class="row">
-    <div class="col-md-6">
-        <h1>Newsletter</h1>
+    <div class="col-md-12">
+        <h1 class="page-header">Newsletter</h1>
         <p>Cadastre seu email em nossa lista para que você receba todas as nossas novidades em primeira mão!</p>
     </div>
 </div>

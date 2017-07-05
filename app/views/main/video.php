@@ -1,7 +1,16 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header"><?= $video->titulo; ?></h3>
+        <h1 class="page-header"><?= $video->titulo; ?></h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">

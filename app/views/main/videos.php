@@ -1,4 +1,13 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <!-- Bibliotecas adicionais para o Fancybox. -->
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
@@ -6,7 +15,7 @@
 <link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header">Galeria de Vídeos</h3>
+        <h1 class="page-header">Galeria de Vídeos</h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">

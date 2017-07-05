@@ -1,6 +1,16 @@
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header">Fale conosco</h3>
+        <h1 class="page-header">Fale conosco</h1>
     </div>
 </div>
 

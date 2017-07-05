@@ -1,6 +1,16 @@
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="page-header">Álbuns de Fotos</h3>
+        <h1 class="page-header">Álbuns de Fotos</h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">
@@ -39,7 +49,7 @@
                 }
                 ?>
             <h4>
-            <?= anchor('gallery/' . $album->id . '/' . wpn_fakelink($album->titulo), $album->titulo); ?><br/>
+                <?= anchor('gallery/' . $album->id . '/' . wpn_fakelink($album->titulo), $album->titulo); ?><br/>
                 <small><?= mdate('%d/%m/%Y', strtotime($album->created_on)); ?></small>
             </h4>
         </div>

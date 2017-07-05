@@ -1,4 +1,14 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
+
                 </div>
                 <div class="col-md-3 wpn-sidebar">
                     <h4 class="page-header">
@@ -38,11 +48,6 @@
                 </div>
             </div>
         </div>
-        <!-- Javascript -->
-        <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
-        <?= wpn_asset('js', 'bootstrap.min.js'); ?>
-        <?= wpn_asset('js', 'bootstrap-submenu.min.js'); ?>
-        <?= wpn_asset('js', 'wpanel.js'); ?>
     </body>
     <?= $this->widget->load('wpnganalytics'); ?>
 </html>

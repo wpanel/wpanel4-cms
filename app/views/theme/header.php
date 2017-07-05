@@ -1,4 +1,13 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +23,11 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Estilo do template -->
         <?= wpn_asset('css', 'template.css'); ?>
+        <!-- Javascript -->
+        <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
+        <?= wpn_asset('js', 'bootstrap.min.js'); ?>
+        <?= wpn_asset('js', 'bootstrap-submenu.min.js'); ?>
+        <?= wpn_asset('js', 'wpanel.js'); ?>
         <!-- Widgets do cabeçalho -->
         <?= $this->widget->load('wpnfacebookheader'); ?>
         <?= $this->widget->load('wpnaddthisheader'); ?>

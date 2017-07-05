@@ -1,6 +1,16 @@
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <!-- Mostra o título da categoria caso esteja listando uma. -->
 <?php if (isset($view_title)) { ?>
-    <h3 class="page-header"><?= $view_title; ?></h3>
+    <h1 class="page-header"><?= $view_title; ?></h1>
     <p><?= $view_description; ?></p>
 <?php } ?>
 <!-- Mostra a lista de postagens. -->

@@ -1,6 +1,16 @@
+<?php 
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed'); 
+
+?>
 <div class="row wpn-postagem">
     <div class="col-md-12">
-        <h1><?= $post->title; ?></h1>
+        <h1 class="page-header"><?= $post->title; ?></h1>
         <p class="text-muted">
             <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
             <?php if($post->page==0){ ?>
