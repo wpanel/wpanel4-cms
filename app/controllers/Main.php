@@ -67,6 +67,10 @@ class Main extends MY_Controller
      */
     public function index()
     {
+        
+        // Exibe/Oculta o slide do topo.
+        $this->set_var('show_slide', true);
+        
         switch (wpn_config('home_tipo'))
         {
             case 'page':

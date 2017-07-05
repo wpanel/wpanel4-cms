@@ -58,9 +58,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </nav>
             </div>
+            <?php if (@$show_slide) { ?>
             <div class="row hidden-xs">
                 <?= $this->widget->load('wpnslidebanner', array('position'=>'slide')); ?>
             </div>
+            <?php } ?>
         </div>
         <div class="container wpn-container">
             <div class="row">
