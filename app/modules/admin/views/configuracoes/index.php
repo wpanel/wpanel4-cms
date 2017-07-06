@@ -18,6 +18,7 @@
                 <li><a href="#home" role="tab" data-toggle="tab">Página inicial</a></li>
                 <li><a href="#layout" role="tab" data-toggle="tab">Layout</a></li>
                 <li><a href="#imagens" role="tab" data-toggle="tab">Imagens</a></li>
+                <li><a href="#media" role="tab" data-toggle="tab">Exibição de mídia</a></li>
                 <li><a href="#contato" role="tab" data-toggle="tab">Contatos</a></li>
                 <li><a href="#social" role="tab" data-toggle="tab">Social e compartilhamento</a></li>
                 <li><a href="#backup" role="tab" data-toggle="tab">Backup dos dados</a></li>
@@ -175,6 +176,31 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Painel de exibição de mídia-->
+                <div class="tab-pane panel panel-default" id="media">
+                    <div class="panel-heading">
+                        Configuração de exibição de mídia
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            
+                            <!--<p>Definições de exibição das fotos.</p>-->
+                            <!--<hr/>-->
+                            <div class="form-group">
+                                <label for="home_category">Forma de exibição das fotos</label>
+                                <?= form_dropdown('media_show_photo', array('normal'=>'Abrir em outra janela', 'fancybox'=>'Exibir com FancyBox'), $row->media_show_photo, array('class' => 'form-control')); ?>
+                            </div>
+                            
+                            <!--<p>Definições de exibição dos vídeos.</p>-->
+                            <!--<hr/>-->
+                            <div class="form-group">
+                                <label for="home_category">Formas de exibição dos vídeos</label>
+                                <?= form_dropdown('media_show_video', array('normal'=>'Abrir em outra janela', 'fancybox'=>'Exibir com FancyBox'), $row->media_show_video, array('class' => 'form-control')); ?>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

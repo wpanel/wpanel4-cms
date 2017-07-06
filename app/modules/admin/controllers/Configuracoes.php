@@ -138,6 +138,9 @@ class Configuracoes extends Authenticated_Controller
             $configs->image_width = $this->input->post('image_width');
             $configs->image_height = $this->input->post('image_height');
             $configs->quality = $this->input->post('quality');
+            // Definições de exibição de mídia.
+            $configs->media_show_photo = $this->input->post('media_show_photo');
+            $configs->media_show_video = $this->input->post('media_show_video');
             // Mantém os dados das imagens.
             $configs->logomarca = $configs->logomarca;
             $configs->background = $configs->background;
