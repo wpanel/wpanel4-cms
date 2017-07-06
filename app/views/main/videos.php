@@ -38,15 +38,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="thumbnail">
                 <div class="inner-video">
                     <?php
-                    $image_properties = array(
+                    $conf_foto = array(
                         'src' => 'http://img.youtube.com/vi/' . $video->link . '/0.jpg',
                         'class' => 'img-responsive'
                     );
-                    // Este link faz exibição do vídeo em outra página.
-                    echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($image_properties));
+                    
+                    // Monta o link de acordo com a definição de exibição das configurações.
+                    switch (wpn_config('media_show_video')) {
+                        case 'normal':
+                            echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($conf_foto));
+                            break;
+                        case 'fancybox':
+                            echo anchor('https://www.youtube.com/watch?v='.$video->link, img($conf_foto) ,array('class' => 'fancybox-media'));
+                            break;
+                    }
+
                     ?>
-                    <!-- Este link usa o lightbox para exibição do vídeo. -->
-                    <!-- <a href="https://www.youtube.com/watch?v=<?= $video->link; ?>" class="fancybox-media" ><?= img($image_properties); ?></a> -->
                 </div>
             </div>
             <div class="caption">

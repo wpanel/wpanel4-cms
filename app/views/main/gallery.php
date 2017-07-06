@@ -42,11 +42,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'class' => 'img-responsive',
                 'alt' => $row->descricao
             );
-            // Link para exibição da foto em outra página.
-             echo anchor('picture/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
+            
+            // Monta o link de acordo com a definição de exibição das configurações.
+            switch (wpn_config('media_show_photo')) {
+                case 'normal':
+                    echo anchor('picture/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
+                    break;
+                case 'fancybox':
+                    echo anchor(base_url('media/albuns/' . $album->id . '/' . $row->filename), img($conf_foto) ,array('class' => 'fancybox', 'role' => 'group'));
+                    break;
+            }
+            
             ?>
-            <!-- Link para exibição com lightbox.--> 
-            <!--<a href="<?= base_url('media/albuns/' . $album->id . '/' . $row->filename); ?>" class="fancybox" rel="group"><?= img($conf_foto); ?></a>-->
             <h4><?= $row->descricao; ?></h4>
         </div>
     <?php
