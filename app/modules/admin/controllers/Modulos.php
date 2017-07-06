@@ -36,12 +36,12 @@ class Modulos extends Authenticated_Controller
     {
         $this->load->library('table');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
-        $this->table->set_heading('#', 'Nome', 'Ícone', 'No menu', 'Ações');
+        $this->table->set_heading('#', 'Nome', 'Ações');
         $query = $this->module->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->name, $row->icon, sim_nao($row->show_in_menu),
+                    $row->id, $row->name,
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/modulos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
@@ -66,11 +66,11 @@ class Modulos extends Authenticated_Controller
         {
             $data = array();
             $data['name'] = $this->input->post('name');
-            $data['icon'] = $this->input->post('icon');
-            if ($this->input->post('show_in_menu') == '1')
+            $data['icon'] = ''; // $this->input->post('icon');
+            //if ($this->input->post('show_in_menu') == '1')
                 $data['show_in_menu'] = '1';
-            else
-                $data['show_in_menu'] = '0';
+            //else
+            //    $data['show_in_menu'] = '0';
             $data['order'] = 0;
 
             $new_module = $this->module->insert($data);
@@ -105,12 +105,12 @@ class Modulos extends Authenticated_Controller
 
             $data = array();
             $data['name'] = $this->input->post('name');
-            $data['icon'] = $this->input->post('icon');
+            //$data['icon'] = $this->input->post('icon');
 
-            if ($this->input->post('show_in_menu') == '1')
-                $data['show_in_menu'] = '1';
-            else
-                $data['show_in_menu'] = '0';
+            //if ($this->input->post('show_in_menu') == '1')
+            //    $data['show_in_menu'] = '1';
+            //else
+            //    $data['show_in_menu'] = '0';
 
             $data['order'] = 0;
 
