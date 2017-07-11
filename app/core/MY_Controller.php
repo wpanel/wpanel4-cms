@@ -284,24 +284,21 @@ class MY_Controller extends CI_Controller {
      * @param string $type    The string to be included as the CSS class of the containing div.
      * @param string $redirect The url to redirect after set the message. Optional.
      */
-    public function set_message($message='', $type='info', $redirect = '')
+    public function set_message($message='', $type='info', $redirect = null)
     {
         if (!empty($message))
         {
             if (isset($this->session))
-            {
                 $this->session->set_flashdata('message', $type .'::'. $message);
-            }
 
             $this->message = array(
                 'type'      => $type,
                 'message'   => $message
             );
         }
-        if(!empty($redirect))
-        {
+
+        if($redirect !== null)
             redirect($redirect);
-        }
     }
 
     //--------------------------------------------------------------------
@@ -340,18 +337,14 @@ class MY_Controller extends CI_Controller {
         if (empty($message))
         {
             if (empty($this->message['message']))
-            {
                 return '';
-            }
 
             $return = $this->message;
         }
 
         // Clear our session data so we don't get extra messages on rare occassions.
         if (class_exists('CI_Session'))
-        {
             $this->session->set_flashdata('message', '');
-        }
 
         return $return;
     }
