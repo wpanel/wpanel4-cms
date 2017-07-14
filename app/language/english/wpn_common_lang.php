@@ -63,7 +63,7 @@ $lang['bot_view_site']              = "View Site";
 /**
  * Setup
  */
-$lang['first_account_success'] = 'CAccount succefull created';
+$lang['first_account_success'] = 'Account succefull created';
 $lang['first_account_error'] = 'Can´t create this account';
 
 /**
@@ -71,7 +71,7 @@ $lang['first_account_error'] = 'Can´t create this account';
  */
 $lang['mod_dashboard']              = "Dashboard";
 $lang['mod_event']                  = "Events";
-$lang['mod_galery']                 = "Galery";
+$lang['mod_galery']                 = "Gallery";
 $lang['mod_banners']                = "Banners";
 $lang['mod_category']               = "Category";
 $lang['mod_configuration']          = "Configurations";
