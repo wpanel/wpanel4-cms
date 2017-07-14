@@ -63,7 +63,7 @@ $lang['bot_view_site']              = "View Site";
 /**
  * Setup
  */
-$lang['first_account_success'] = 'CAccount succefull created';
+$lang['first_account_success'] = 'Account succefull created';
 $lang['first_account_error'] = 'Can´t create this account';
 
 /**
