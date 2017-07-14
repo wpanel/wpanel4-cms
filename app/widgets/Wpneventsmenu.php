@@ -64,7 +64,7 @@ class Wpneventsmenu extends Widget
         $html .= '<ul ' . $this->_attributes($this->attributes) . '>';
         foreach ($query as $key => $row)
         {
-            $html .= '<li>' . anchor('event/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '<br/><small>' . $row->description . '</small><br/><small>' . date('d/m/Y', strtotime($row->created)) . '</small></li>';
+            $html .= '<li>' . anchor('event/' . $row->link, '<span class="glyphicon glyphicon-chevron-right"></span> ' . $row->title) . '<br/><small>' . $row->description . '</small><br/><small>' . date('d/m/Y', strtotime($row->created_on)) . '</small></li>';
         }
         $html .= '</ul>';
         return $html;
