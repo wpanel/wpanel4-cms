@@ -109,7 +109,10 @@ class Menus extends Authenticated_Controller
     {
         $this->load->model('post');
         $query = $this->post->find_by('link', $post_link);
-        return $query->title;
+        if(count($query) > 0)
+            return $query->title;
+        else
+            return '-';
     }
 
     /**
