@@ -37,11 +37,13 @@ class Wpnslidebanner extends Widget
         $this->load->model('banner');
         $query = $this->banner->order_by('sequence', 'asc')->find_many_by(array('position' => $this->position, 'status' => 1));
         
-        $data = array(
-            'banners' => $query,
-            'class_name' => $this->class_name
-        );
-        $this->load->view('widgets/slidebanner', $data);
+        if (count($query) > 0) {
+            $data = array(
+                'banners' => $query,
+                'class_name' => $this->class_name
+            );
+            $this->load->view('widgets/slidebanner', $data);
+        }
     }
 
 }
