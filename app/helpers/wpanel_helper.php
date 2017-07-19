@@ -185,21 +185,20 @@ if (!function_exists('wpn_lang'))
      * Return a language key.
      *
      * @param string $key Key
-     * @param string $default default value
      * @param string $file Language file name
      * @return string
      */
-    function wpn_lang($key, $default, $file = 'wpn_common')
+    function wpn_lang($key, $file = null)
     {
         $CI = & get_instance();
         $lang = wpn_config('language');
-        if (isset($file))
+        if ($file)
             $CI->lang->load($file, $lang);
         $line = $CI->lang->line($key, false);
         if ($line)
             return $line;
         else
-            return $default;
+            return "[$key]";
     }
 
 }

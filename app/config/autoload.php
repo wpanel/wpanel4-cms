@@ -96,7 +96,7 @@ $autoload['config'] = array('wpanel', 'auth');
 |
 */
 
-$autoload['language'] = array();
+$autoload['language'] = array('wpn_common');
 
 
 /*
