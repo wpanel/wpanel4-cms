@@ -21,6 +21,7 @@ class Accounts extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = 'account';
+        $this->language_file = 'wpn_account_lang';
         parent::__construct();
     }
 
@@ -33,7 +34,7 @@ class Accounts extends Authenticated_Controller
         $roles = config_item('users_role');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
         $this->table->set_heading(
-                '#', 'Nome', 'E-mail', 'Role', wpn_lang('col_date', 'Date'), wpn_lang('col_status', 'Status'), wpn_lang('col_actions', 'Actions')
+                '#', wpn_lang('field_name'), wpn_lang('field_email'), wpn_lang('field_role'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
         );
         $query = $this->account->find_all();
         foreach ($query as $row)
@@ -43,7 +44,7 @@ class Accounts extends Authenticated_Controller
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/accounts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/accounts/delete/' . $row->id) . '\');">' . glyphicon('trash') . '</button>' .
+                    anchor('admin/accounts/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
@@ -56,9 +57,9 @@ class Accounts extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('password', 'Senha', 'required');
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[accounts.email]');
+        $this->form_validation->set_rules('password', wpn_lang('field_password'), 'required');
+        $this->form_validation->set_rules('name', wpn_lang('field_name'), 'required');
+        $this->form_validation->set_rules('email', wpn_lang('field_email'), 'required|valid_email|is_unique[accounts.email]');
         if ($this->form_validation->run() == FALSE)
         {
             $this->set_var('query_module', $this->list_modules_full());
@@ -66,16 +67,16 @@ class Accounts extends Authenticated_Controller
         } else
         {
             $result = $this->auth->register(
-                    $this->input->post('email'), $this->input->post('password'), $this->input->post('role'), array(
-                'name' => $this->input->post('name'),
-                'skin' => $this->input->post('skin'),
-                'avatar' => $this->wpanel->upload_media('avatar')
-                    ), $this->input->post('permission')
+                $this->input->post('email'), $this->input->post('password'), $this->input->post('role'), array(
+                    'name' => $this->input->post('name'),
+                    'skin' => $this->input->post('skin'),
+                    'avatar' => $this->wpanel->upload_media('avatar')
+                ), $this->input->post('permission')
             );
             if ($result > 0)
-                $this->set_message('Usuário salvo com sucesso!', 'success', 'admin/accounts');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/accounts');
             else
-                $this->set_message('Erro ao salvar o usuário.', 'danger', 'admin/accounts');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/accounts');
         }
     }
 
@@ -90,12 +91,12 @@ class Accounts extends Authenticated_Controller
         $query = $this->account->find($id);
         $extra = (object) json_decode($query->extra_data);
 
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('name', wpn_lang('field_name'), 'required');
+        $this->form_validation->set_rules('email', wpn_lang('field_email'), 'required|valid_email');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/accounts');
             $this->set_var('query_module', $this->list_modules_full());
             $this->set_var('row', $query);
             $this->set_var('extra', $extra);
@@ -109,12 +110,12 @@ class Accounts extends Authenticated_Controller
             else
                 $extra->avatar = $this->input->post('avatar');
             $result = $this->auth->update(
-                    $id, $this->input->post('email'), $this->input->post('role'), $extra, $this->input->post('permission')
+                $id, $this->input->post('email'), $this->input->post('role'), $extra, $this->input->post('permission')
             );
             if ($result > 0)
-                $this->set_message('Usuário salvo com sucesso!', 'success', 'admin/accounts');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/accounts');
             else
-                $this->set_message('Erro ao salvar o usuário.', 'danger', 'admin/accounts');
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/accounts');
         }
     }
 
@@ -126,14 +127,14 @@ class Accounts extends Authenticated_Controller
     public function changepassword($account_id = NULL)
     {
         if ($account_id == null)
-            $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/accounts');
         $result = $this->auth->change_password(
-                $account_id, $this->input->post('password', TRUE)
+            $account_id, $this->input->post('password', TRUE)
         );
         if ($result > 0)
-            $this->set_message('Senha alterada com sucesso!', 'success', 'admin/accounts');
+            $this->set_message(wpn_lang('message_password_change_success'), 'success', 'admin/accounts');
         else
-            $this->set_message('Erro ao alterar a senha.', 'danger', 'admin/accounts');
+            $this->set_message(wpn_lang('message_password_change_error'), 'danger', 'admin/accounts');
     }
 
     /**
@@ -147,7 +148,7 @@ class Accounts extends Authenticated_Controller
         if ($result > 0)
             redirect ('admin/logout');
         else
-            $this->set_message('Erro ao alterar a senha.', 'danger', 'admin/accounts/profile');
+            $this->set_message(wpn_lang('message_password_change_profile_error'), 'danger', 'admin/accounts/profile');
     }
 
     /**
@@ -158,11 +159,11 @@ class Accounts extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message('Usuário inexistende.', 'info', 'admin/accounts');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/accounts');
         if ($this->auth->delete($id))
-            $this->set_message('Usuário excluído com sucesso!', 'success', 'admin/accounts');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/accounts');
         else
-            $this->set_message('Erro ao excluir o usuário.', 'danger', 'admin/accounts');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/accounts');
     }
 
     /**
@@ -175,13 +176,13 @@ class Accounts extends Authenticated_Controller
         $extra = (object) json_decode($query->extra_data);
 
         if ($this->input->post('alterar_senha') == '1')
-            $this->form_validation->set_rules('password', 'Senha', 'required');
-        $this->form_validation->set_rules('name', 'Nome completo', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+            $this->form_validation->set_rules('password', wpn_lang('field_password'), 'required');
+        $this->form_validation->set_rules('name', wpn_lang('field_name'), 'required');
+        $this->form_validation->set_rules('email', wpn_lang('field_email'), 'required|valid_email');
         if ($this->form_validation->run() == FALSE)
         {
             if ($query->id == null)
-                $this->set_message('Usuário inexistende.', 'info', 'admin/dashboard');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/dashboard');
             $this->set_var('row', $query);
             $this->set_var('extra', $extra);
             $this->render();
@@ -195,16 +196,16 @@ class Accounts extends Authenticated_Controller
                 $extra->avatar = $this->input->post('avatar');
 
             $result = $this->auth->update(
-                    $this->auth->user_id(), $this->input->post('email'), $query->role, $extra
+                $this->auth->user_id(), $this->input->post('email'), $query->role, $extra
             );
             if ($result > 0)
             {
                 if ($this->input->post('change_password') == '1')
                     redirect('admin/logout');
                 else
-                    $this->set_message('Seus dados foram alterados com sucesso!', 'success', 'admin/accounts/profile');
+                    $this->set_message(wpn_lang('message_update_profile_success'), 'success', 'admin/accounts/profile');
             } else
-                $this->set_message('Erro ao alterar os seus dados.', 'danger', 'admin/accounts/profile');
+                $this->set_message(wpn_lang('message_update_profile_error'), 'danger', 'admin/accounts/profile');
         }
     }
 
@@ -216,9 +217,9 @@ class Accounts extends Authenticated_Controller
     public function activate($account_id = NULL)
     {
         if ($this->auth->activate($account_id))
-            $this->set_message('Conta ativada com sucesso!', 'success', 'admin/accounts/edit/' . $account_id);
+            $this->set_message(wpn_lang('message_activate_success'), 'success', 'admin/accounts/edit/' . $account_id);
         else
-            $this->set_message('Não foi possível ativar a conta.', 'danger', 'admin/accounts/edit/' . $account_id);
+            $this->set_message(wpn_lang('message_activate_error'), 'danger', 'admin/accounts/edit/' . $account_id);
     }
 
     /**
@@ -229,9 +230,9 @@ class Accounts extends Authenticated_Controller
     public function deactivate($account_id = NULL)
     {
         if ($this->auth->deactivate($account_id))
-            $this->set_message('Conta desativada com sucesso!', 'success', 'admin/accounts/edit/' . $account_id);
+            $this->set_message(wpn_lang('message_deactivate_success'), 'success', 'admin/accounts/edit/' . $account_id);
         else
-            $this->set_message('Não foi possível desativar a conta.', 'danger', 'admin/accounts/edit/' . $account_id);
+            $this->set_message(wpn_lang('message_deactivate_error'), 'danger', 'admin/accounts/edit/' . $account_id);
     }
 
     /**
