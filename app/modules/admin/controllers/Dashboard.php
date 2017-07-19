@@ -21,6 +21,7 @@ class Dashboard extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = array('post', 'banner', 'gallery', 'video');
+        $this->language_file = 'wpn_dashboard_lang';
         parent::__construct();
 
         if (auth_login_data('role') == 'user')

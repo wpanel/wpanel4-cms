@@ -31,3 +31,21 @@ $lang['wpn_pagerendered'] = "Página renderizada em";
 $lang['wpn_seconds'] = "segundos";
 $lang['wpn_version'] = "Versão";
 $lang['wpn_copyright'] = "Todos os direitos reservados";
+$lang['wpn_actions'] = "Ações";
+// Mensagens genéricas para os CRUDS.
+$lang['wpn_message_confirm'] = "Deseja mesmo excluir este registro? Esta operação não poderá ser desfeita.";
+$lang['wpn_message_inexistent'] = "Registro inexistente";
+$lang['wpn_message_save_success'] = "Registro salvo com sucesso!";
+$lang['wpn_message_save_error'] = "Erro ao salvar o registro.";
+$lang['wpn_message_update_success'] = "Registro atualizado com sucesso!";
+$lang['wpn_message_update_error'] = "Erro ao atualizar o registro.";
+$lang['wpn_message_delete_success'] = "Registro excluído com sucesso!";
+$lang['wpn_message_delete_error'] = "Erro ao excluir o registro.";
+// Caixa de confirmação.
+$lang['wpn_confirmbox_title'] = "Confirme por favor";
+$lang['wpn_confirmbox_ok'] = "Confirmar";
+$lang['wpn_confirmbox_cancel'] = "Cancelar";
+// Botões genéricos. 
+$lang['wpn_bot_new'] = "Novo registro";
+$lang['wpn_bot_save'] = "Salvar";
+$lang['wpn_bot_cancel'] = "Cancelar";

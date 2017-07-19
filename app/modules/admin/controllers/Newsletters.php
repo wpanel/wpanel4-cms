@@ -21,6 +21,7 @@ class Newsletters extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = 'newsletter';
+        $this->language_file = 'wpn_newsletter_lang';
         parent::__construct();
     }
 

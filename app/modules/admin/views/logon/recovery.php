@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Admin WPanel | <?= wpn_lang('wpn_recoverypass', 'Password recovery'); ?></title>
+		<title>Admin WPanel | <?= wpn_lang('logon_recovery_title'); ?></title>
 		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 		<!-- bootstrap 3.3.4 -->
 		<link href="<?= base_url('lib/css') ?>/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,6 @@
 				<b>Admin</b>WPanel
 			</div><!-- /.login-logo -->
 			<div class="login-box-body">
-				<p class="login-box-msg"><?= wpn_lang('wpn_recoverypass', 'Password recovery'); ?></p>
 				<?php
 				$msg_sistema = $this->session->flashdata('msg_recover');
 				if ($msg_sistema)
@@ -34,24 +33,23 @@
 				?>
 				<div class="row">
 					<div class="col-md-12">
-						<p><?= wpn_lang('wpn_msg_recovery', 'Inform your email, then we\'ll send instructions to recovery your password.'); ?></p>
+						<p><?= wpn_lang('logon_recovery_instructions'); ?></p>
 					</div>
 				</div>
 				<div class="form-group has-feedback">
-					<label class="control-label" for="email"><?= wpn_lang('lab_email', 'Email'); ?></label>
-					<input class="form-control" id="email" name="email" placeholder="<?= wpn_lang('pch_youremail', 'Your email'); ?>" type="email"/>
+					<input class="form-control" id="email" name="email" placeholder="<?= wpn_lang('logon_email'); ?>" type="email"/>
 					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 					<?= form_error('email');?>
 				</div>
 				<div class="row">
-					<div class="col-xs-8">&nbsp;&nbsp;<?= anchor('admin/login', wpn_lang('lnk_back', 'Back')); ?></div>
+					<div class="col-xs-8">&nbsp;&nbsp;<?= anchor('admin/login', wpn_lang('logon_link_back')); ?></div>
 					<div class="col-xs-4">
-						<button type="submit" class="btn btn-primary btn-block btn-flat"><?= wpn_lang('bot_send', 'Send'); ?></button>
+						<button type="submit" class="btn btn-primary btn-block btn-flat"><?= wpn_lang('logon_bot_recovery'); ?></button>
 					</div>
 				</div>
 				<?= form_close(); ?>
 			</div><!-- /.login-box-body -->
-            <p class="text-center" style="padding-top:20px;">&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. Todos os direitos reservados.</p>
+            <p class="text-center" style="padding-top:20px;">&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. <?= wpn_lang('wpn_copyright'); ?>.</p>
 		</div><!-- /.login-box -->
 
 		<!-- jQuery 2.1.4 -->

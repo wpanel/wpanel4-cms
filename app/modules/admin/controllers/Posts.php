@@ -21,6 +21,7 @@ class Posts extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = array('post', 'categoria', 'post_categoria');
+        $this->language_file = 'wpn_post_lang';
         parent::__construct();
     }
 
@@ -33,7 +34,7 @@ class Posts extends Authenticated_Controller
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
         $this->table->set_heading(
-                '#', wpn_lang('col_title', 'Title'), wpn_lang('col_date', 'Date'), wpn_lang('col_status', 'Status'), wpn_lang('col_actions', 'Actions')
+                '#', wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
         );
         $query = $this->post->order_by('created_on', 'desc')->where('page', 0)->find_all();
 
@@ -44,7 +45,7 @@ class Posts extends Authenticated_Controller
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/posts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/posts/delete/' . $row->id) . '\');">' . glyphicon('trash') . '</button>' .
+                    anchor('admin/posts/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))).
                     div(null, true)
             );
         }
@@ -93,9 +94,9 @@ class Posts extends Authenticated_Controller
                     $cat_save['category_id'] = $cat_id;
                     $this->post_categoria->insert($cat_save);
                 }
-                $this->set_message('Postagem salva com sucesso!', 'success', 'admin/posts');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/posts');
             } else
-                $this->set_message('Erro ao salvar a postagem.', 'danger', 'admin/posts');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/posts');
         }
     }
 
@@ -110,7 +111,7 @@ class Posts extends Authenticated_Controller
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Postagem inexistente!', 'info', 'admin/posts');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             // Prepara a lista de categorias.
             $query = $this->categoria->find_all();
             $categorias = array();
@@ -161,9 +162,9 @@ class Posts extends Authenticated_Controller
                     $cat_save['category_id'] = $cat_id;
                     $this->post_categoria->insert($cat_save);
                 }
-                $this->set_message('Postagem salva com sucesso!', 'success', 'admin/posts');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/posts');
             } else
-                $this->set_message('Erro ao salvar a postagem.', 'danger', 'admin/posts');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'danger', 'admin/posts');
         }
     }
 
@@ -175,13 +176,13 @@ class Posts extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message('Postagem inexistente!', 'info', 'admin/posts');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
         $postagem = $this->post->find($id);
         $this->wpanel->remove_media('capas/' . $postagem->image);
         if ($this->post->delete($id))
-            $this->set_message('Postagem excluída com sucesso!', 'success', 'admin/posts');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/posts');
         else
-            $this->set_message('Erro ao excluir a postagem', 'danger', 'admin/posts');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'danger', 'admin/posts');
     }
 
 }

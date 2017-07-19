@@ -12,6 +12,8 @@
 
         /**
          * Esta função faz a confirmação de exclusão no WPanel.
+         * 
+         * @deprecated
          */
         function confirmar(link){
             bootbox.dialog({
@@ -35,10 +37,23 @@
         }
 
         /**
-         * Esta função aplica o plugin dataTable nas listagens do WPanel.
+         * Funções que utilizam o JQuery.
          */
         $(function(){
 
+            // Janela de confirmação.
+            $('a[data-confirm]').click(function(ev) {
+                var href = $(this).attr('href');
+                if (!$('#dataConfirmModal').length) {
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h4 id="dataConfirmLabel">Confirme por favor</h4></div><div class="modal-body"></div><div class="modal-footer"><button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button><a class="btn btn-success" id="dataConfirmOK">Confirmar</a></div></div></div></div>');
+                } 
+                $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                $('#dataConfirmOK').attr('href', href);
+                $('#dataConfirmModal').modal({show:true});
+                return false;
+            });
+
+            // DataTable.
             $("#grid").dataTable({
                 language: {
                     search: "Pesquisar na tabela: ",
