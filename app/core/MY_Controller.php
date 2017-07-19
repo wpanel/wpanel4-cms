@@ -84,6 +84,9 @@ class MY_Controller extends CI_Controller {
         // Language & Model Files
         //--------------------------------------------------------------------
 
+        $this->config->set_item('language', wpn_config('language'));
+        $this->lang->load('wpn_common_lang');
+
         if (!is_null($this->language_file)) $this->lang->load($this->language_file, wpn_config('language'));
 
         if (!is_null($this->model_file))
