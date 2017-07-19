@@ -26,7 +26,7 @@ class Newsletters extends Authenticated_Controller
     }
 
     /**
-     * List of emails.
+     * Lista de emails.
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class Newsletters extends Authenticated_Controller
     }
 
     /**
-     * Export the list do CSV.
+     * Exporta a lista de emails para um arquivo CSV.
      */
     public function export()
     {
@@ -47,7 +47,7 @@ class Newsletters extends Authenticated_Controller
         // Load the DB utility class
         $this->load->dbutil();
 
-        $query = $this->db->query("SELECT id AS 'Código', nome AS 'Nome', email AS 'E-mail', created_on AS 'Data', ipaddress AS 'IP' FROM newsletter_email");
+        $query = $this->db->query("SELECT id AS '".wpn_lang('field_id')."', nome AS '".wpn_lang('field_name')."', email AS '".wpn_lang('field_email')."', created_on AS '".wpn_lang('field_created_on')."', ipaddress AS '".wpn_lang('field_ip')."' FROM newsletter_email");
 
         $delimiter = ",";
         $newline = "\r\n";
@@ -61,19 +61,14 @@ class Newsletters extends Authenticated_Controller
     }
 
     /**
-     * emtpy the email list.
+     * Limpa a lista de emails.
      */
     public function clear()
     {
         if ($this->newsletter->empty_table('newsletter_email'))
-        {
-            $this->session->set_flashdata('msg_sistema', 'Limpeza efetuada com sucesso.');
-            redirect('admin/newsletters');
-        } else
-        {
-            $this->session->set_flashdata('msg_sistema', 'Erro ao efetuar a limpeza.');
-            redirect('admin/newsletters');
-        }
+            $this->set_message(wpn_lang('message_clear_ok'), 'success', 'admin/newsletters');
+        else
+        $this->set_message(wpn_lang('message_clear_error'), 'success', 'admin/newsletters');
     }
 
 }

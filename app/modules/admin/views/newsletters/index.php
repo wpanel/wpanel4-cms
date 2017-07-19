@@ -3,10 +3,10 @@
 <section class="content-header">
     <h1>
         <?= wpn_lang('module_title'); ?>
-        <small>Exporte os emails para newsletter.</small>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
         <li><i class="fa fa-envelope-o"></i> <?= wpn_lang('module_title'); ?></li>
     </ol>
 </section>
@@ -14,10 +14,10 @@
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lista de contatos</h3>
+            <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
                 <?= anchor('admin/newsletters/export', glyphicon('download').wpn_lang('bot_export_csv'), array('class' => 'btn btn-success')); ?>
-                <button class="btn btn-danger" onClick="return confirmar('<?= site_url('admin/newsletters/clear'); ?>');"><?= glyphicon('trash'); ?> <?= wpn_lang('bot_clear_table'); ?></button>
+                <?= anchor('admin/newsletters/clear', glyphicon('trash').wpn_lang('bot_clear_table'), array('class' => 'btn btn-danger', 'data-confirm' => wpn_lang('message_confirm'))); ?>
             </div>
         </div>
         <div class="box-body">
