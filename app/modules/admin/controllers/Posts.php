@@ -58,7 +58,7 @@ class Posts extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('title', 'Título', 'required');
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             // Prepara a lista de categorias.
@@ -107,7 +107,7 @@ class Posts extends Authenticated_Controller
      */
     public function edit($id = null)
     {
-        $this->form_validation->set_rules('title', 'Título', 'required');
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)

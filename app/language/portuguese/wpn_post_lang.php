@@ -8,18 +8,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Titles and texts.
+ * Arquivo de idioma do módulo admin Posts.
+ * 
+ * @language portuguese
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ */
+
+/**
+ * Títulos e textos diversos.
  */ 
 $lang['module_title'] = "Postagens";
 $lang['module_description'] = "Gerencie suas postagens aqui.";
-$lang['news_note'] = "Atenção! O wPanel não faz envio de mensagens em massa, utilize um serviço separado para isso.";
 $lang['module_index'] = "Lista de postagens";
 $lang['module_add'] = "Cadastro de postagem";
 $lang['module_edit'] = "Alteração de postagem";
 
 
 /**
- * Table fields.
+ * Campos da tabela.
  */
 $lang['field_id'] = "Código";
 $lang['field_title'] = "Título da postagem";
@@ -33,12 +39,12 @@ $lang['field_created_on'] = "Criado em";
 $lang['field_ip'] = "IP";
 
 /**
- * Buttons
+ * Botões específicos.
  */ 
 $lang['post_bot_new_category'] = "Categorias";
 
 /**
- * Other
+ * Outros
  */ 
 $lang['no_folder_image'] = "Nenhuma imagem carregada";
 $lang['change_folder'] = "Alterar a imagem";
