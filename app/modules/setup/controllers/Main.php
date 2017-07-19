@@ -36,10 +36,10 @@ class Main extends MY_Controller
         if ($this->auth->accounts_empty() == FALSE)
             redirect('admin/login');
 
-        $this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
-        $this->form_validation->set_rules('name', wpn_lang('input_fullname', 'Full name'), 'required');
-        $this->form_validation->set_rules('email', wpn_lang('input_validemail', 'Valid email'), 'required|valid_email');
-        $this->form_validation->set_rules('agree', wpn_lang('input_agree', 'Terms of use'), 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('name', 'Full name', 'required');
+        $this->form_validation->set_rules('email', 'Valid email', 'required|valid_email');
+        $this->form_validation->set_rules('agree', 'Terms of use', 'required');
 
         if ($this->form_validation->run() == FALSE)
             $this->load->view('setup/index', $this->layout_vars);
@@ -58,11 +58,11 @@ class Main extends MY_Controller
                 // Activate the first user account.
                 $this->auth->activate($result);
 
-                $this->session->set_flashdata('msg_sistema', wpn_lang('first_account_success', 'Account succefull created'));
+                $this->session->set_flashdata('msg_sistema', 'Account succefull created');
                 redirect('admin/login');
             } else
             {
-                $this->session->set_flashdata('msg_sistema', wpn_lang('first_account_error', 'Can´t create this account'));
+                $this->session->set_flashdata('msg_sistema', 'Can´t create this account');
                 redirect('setup');
             }
         }
