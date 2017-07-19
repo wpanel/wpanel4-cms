@@ -2,9 +2,9 @@
             </div>
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                <?php echo wpn_lang('wpn_pagerendered', 'Page rendered in'); ?> <strong>{elapsed_time}</strong> <?php echo wpn_lang('wpn_seconds', 'Seconds'); ?>. Versão <?php echo WPN_VERSION; ?>
+                <?php echo wpn_lang('wpn_pagerendered'); ?> <strong>{elapsed_time}</strong> <?php echo wpn_lang('wpn_seconds'); ?>. <?= wpn_lang('wpn_version'); ?> <?php echo WPN_VERSION; ?>
                 </div>
-                <p>&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. Todos os direitos reservados.</p>
+                <p>&copy; <?php echo date('Y') ?> <a href="http://wpanel.org" target="_blank">Wpanel CMS</a>. <?= wpn_lang('wpn_copyright'); ?>.</p>
             </footer>
         </div>
         <script>

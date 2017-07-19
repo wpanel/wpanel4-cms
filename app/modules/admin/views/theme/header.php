@@ -81,7 +81,7 @@
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
                             <li>
-                                <?= anchor('', '<span class="fa fa-globe fa-lg fa-2x"></span><span class="hidden-xs">&nbsp;&nbsp;Visualizar o site</span>', array('target' => '_blank')); ?>
+                                <?= anchor('', '<span class="fa fa-globe fa-lg fa-2x"></span><span class="hidden-xs">&nbsp;&nbsp;'.wpn_lang('link_view_site').'</span>', array('target' => '_blank')); ?>
                             </li>
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
@@ -95,16 +95,16 @@
                                         <img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
                                         <p>
                                             <?= auth_extra_data('name'); ?>
-                                            <small><?= wpn_lang('wpn_since', 'Since'); ?> <?= datetime_for_user(auth_login_data('created_on'), false); ?></small>
+                                            <small><?= wpn_lang('wpn_since'); ?> <?= datetime_for_user(auth_login_data('created_on'), false); ?></small>
                                         </p>
                                     </li>
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <?= anchor('admin/accounts/profile', glyphicon('user') . wpn_lang('lnk_profile', 'Profile'), array('class' => 'btn btn-primary btn-flat')); ?>
+                                            <?= anchor('admin/accounts/profile', glyphicon('user') . wpn_lang('link_profile'), array('class' => 'btn btn-primary btn-flat')); ?>
                                         </div>
                                         <div class="pull-right">
-                                            <?= anchor('/admin/logout', glyphicon('off') . wpn_lang('lnk_logout', 'Logout'), array('class' => 'btn btn-danger btn-flat')); ?>
+                                            <?= anchor('/admin/logout', glyphicon('off') . wpn_lang('link_logout'), array('class' => 'btn btn-danger btn-flat')); ?>
                                         </div>
                                     </li>
                                 </ul>
@@ -129,15 +129,15 @@
                     </div>
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="header"><?= wpn_lang('wpn_mainoptions', 'MAIN OPTIONS'); ?></li>
+                        <li class="header"><?= wpn_lang('wpn_mainoptions'); ?></li>
                         <li <?= wpn_activelink('dashboard'); ?>>
-                            <?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>' . wpn_lang('mod_dashboard', 'Dashboard') . '</span>'); ?>
+                            <?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>' . wpn_lang('wpn_menu_dashboard') . '</span>'); ?>
                         </li>
                         <!-- Menu Portal -->
                         <li class="treeview <?= wpn_activelink(array('posts', 'categorias', 'pages', 'events', 'banners', 'galleries', 'fotos', 'videos', 'enquetes', 'enqrespostas', 'comments'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-globe"></i>
-                                <span>Portal</span>
+                                <span><?= wpn_lang('wpn_menu_portal'); ?></span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -145,32 +145,32 @@
                             <ul class="treeview-menu">
                                 <?php if (auth_link_permission('admin/posts')) { ?>
                                     <li <?= wpn_activelink(array('posts', 'categorias')); ?>>
-                                        <?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('mod_post', 'Posts') . '</span>'); ?>
+                                        <?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('wpn_menu_post') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/pages')) { ?>
                                     <li <?= wpn_activelink('pages'); ?>>
-                                        <?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('mod_page', 'Pages') . '</span>'); ?>
+                                        <?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('wpn_menu_page') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/events')) { ?>
                                     <li <?= wpn_activelink('events'); ?>>
-                                        <?= anchor('admin/events', ' <i class="fa fa-calendar"></i> <span>' . wpn_lang('mod_event', 'Events') . '</span>'); ?>
+                                        <?= anchor('admin/events', ' <i class="fa fa-calendar"></i> <span>' . wpn_lang('wpn_menu_event') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/banners')) { ?>
                                     <li <?= wpn_activelink('banners'); ?>>
-                                        <?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>' . wpn_lang('mod_banner', 'Banners') . '</span>'); ?>
+                                        <?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>' . wpn_lang('wpn_menu_banner') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/galleries')) { ?>
                                     <li <?= wpn_activelink('galleries'); ?>
-                                        <?= wpn_activelink('pictures'); ?>><?= anchor('admin/galleries', '<i class="fa fa-camera"></i> <span>' . wpn_lang('mod_galery', 'Galery') . '</span>'); ?>
+                                        <?= wpn_activelink('pictures'); ?>><?= anchor('admin/galleries', '<i class="fa fa-camera"></i> <span>' . wpn_lang('wpn_menu_gallery') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/videos')) { ?>
                                     <li <?= wpn_activelink('videos'); ?>>
-                                        <?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>' . wpn_lang('mod_video', 'Videos') . '</span>'); ?>
+                                        <?= anchor('admin/videos', '<i class="fa fa-film"></i> <span>' . wpn_lang('wpn_menu_video') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                             </ul>
@@ -179,40 +179,40 @@
                         <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'configuracoes', 'modulos'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-gears"></i>
-                                <span>Sistema</span>
+                                <span><?= wpn_lang('wpn_menu_system'); ?></span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul class="treeview-menu">
                                 <?php if (auth_link_permission('admin/menus')) { ?>
-                                    <li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>' . wpn_lang('mod_menu', 'Menus') . '</span>'); ?>
+                                    <li <?= wpn_activelink('menus'); ?> <?= wpn_activelink('menuitens'); ?>><?= anchor('admin/menus', '<i class="fa fa-reorder"></i> <span>' . wpn_lang('wpn_menu_menu') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/newsletters')) { ?>
                                     <li <?= wpn_activelink('newsletters'); ?>>
-                                        <?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>' . wpn_lang('mod_newsletter', 'Newsletters') . '</span>'); ?>
+                                        <?= anchor('admin/newsletters', '<i class="fa fa-envelope-o"></i> <span>' . wpn_lang('wpn_menu_newsletter') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/accounts')) { ?>
                                     <li <?= wpn_activelink('accounts'); ?>>
-                                        <?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>' . wpn_lang('mod_user', 'Users') . '</span>'); ?>
+                                        <?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>' . wpn_lang('wpn_menu_account') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/configuracoes')) { ?>
                                     <li <?= wpn_activelink('configuracoes'); ?>>
-                                        <?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>' . wpn_lang('mod_configuration', 'Configurations') . '</span>'); ?>
+                                        <?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_configuration') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/modulos')) { ?>
                                     <li <?= wpn_activelink('modulos'); ?>>
-                                        <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>Módulos</span>'); ?>
+                                        <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
                                     </li>
                                 <?php } ?>
                             </ul>
                         </li>
                         <li>
-                            <?= anchor('admin/logout', '<i class="fa fa-sign-out"></i> <span>Sair</span>'); ?>
+                            <?= anchor('admin/logout', '<i class="fa fa-sign-out"></i> <span>'.wpn_lang('wpn_menu_logout').'</span>'); ?>
                         </li>
                     </ul>
                 </section>
