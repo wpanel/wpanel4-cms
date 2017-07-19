@@ -23,6 +23,7 @@ class Ipbanneds extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = 'ipban';
+        $this->language_file = 'wpn_ipbanned_lang';
         parent::__construct();
     }
 
@@ -33,7 +34,7 @@ class Ipbanneds extends Authenticated_Controller
     {
         $this->load->library('table');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
-        $this->table->set_heading('#', 'Endereço IP', 'Data', 'Ações');
+        $this->table->set_heading('#', wpn_lang('field_ip'), wpn_lang('field_created_on'), wpn_lang('wpn_actions'));
         $query = $this->ipban->find_all();
         foreach ($query as $row)
         {
@@ -41,7 +42,7 @@ class Ipbanneds extends Authenticated_Controller
                     $row->id, $row->ip_address, date('d/m/Y H:i:s', strtotime($row->created_on)),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/ipbanneds/delete/' . $row->id) . '\');">' . glyphicon('trash') . '</button>' .
+                    anchor('admin/ipbanneds/delete/' . $row->id, glyphicon('trash'), array('class'=>'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
@@ -54,7 +55,7 @@ class Ipbanneds extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('ip_address', 'Endereço IP', 'required');
+        $this->form_validation->set_rules('ip_address', wpn_lang('field_ip'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->render();
@@ -63,9 +64,9 @@ class Ipbanneds extends Authenticated_Controller
             $data = array();
             $data['ip_address'] = $this->input->post('ip_address');
             if ($this->ipban->insert($data))
-                $this->set_message('Registro salvo com sucesso!', 'success', 'admin/ipbanneds');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/ipbanneds');
             else
-                $this->set_message('Erro ao salvar o registro.', 'danger', 'admin/ipbanneds');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/ipbanneds');
         }
     }
 
@@ -77,11 +78,11 @@ class Ipbanneds extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message('Registro inexistente', 'info', 'admin/ipbanneds');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/ipbanneds');
         if ($this->ipban->delete($id))
-            $this->set_message('Registro excluído com sucesso!', 'success', 'admin/ipbanneds');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/ipbanneds');
         else
-            $this->set_message('Erro ao excluir o registro.', 'danger', 'admin/ipbanneds');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/ipbanneds');
     }
 
 }
