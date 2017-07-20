@@ -18,6 +18,7 @@ class Configuracoes extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = array('categoria', 'post', 'configuracao');
+        $this->language_file = 'wpn_configuration_lang';
         parent::__construct();
     }
 
@@ -30,14 +31,14 @@ class Configuracoes extends Authenticated_Controller
         $category_check = '';
         $page_check = '';
         $smtp_checked = '';
-        $this->form_validation->set_rules('site_titulo', 'Título do site', 'required');
+        $this->form_validation->set_rules('site_titulo', wpn_lang('site_titulo'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $query_categorias = $this->categoria->order_by('title', 'asc')->find_all();
             $query_posts = $this->post->order_by('title', 'asc')->find_all();
             // Monta a lista de categorias.
             $opt_categoria = array();
-            $opt_categoria[''] = 'Listar postagens de todas as categorias.';
+            $opt_categoria[''] = wpn_lang('list_posts_from_all_categories');
             foreach ($query_categorias as $value)
             {
                 $opt_categoria[$value->id] = $value->title;
@@ -145,9 +146,9 @@ class Configuracoes extends Authenticated_Controller
             $configs->logomarca = $configs->logomarca;
             $configs->background = $configs->background;
             if ($this->configuracao->save_config($configs))
-                $this->set_message('Configuração salva com sucesso!', 'success', 'admin/configuracoes');
+                $this->set_message(wpn_lang('message_save_success'), 'success', 'admin/configuracoes');
             else
-                $this->set_message('Erro ao salvar a configuração.', 'danger', 'admin/configuracoes');
+                $this->set_message(wpn_lang('message_save_error'), 'danger', 'admin/configuracoes');
         }
     }
 
@@ -160,9 +161,9 @@ class Configuracoes extends Authenticated_Controller
         $this->wpanel->remove_media($configs->logomarca);
         $configs->logomarca = $this->wpanel->upload_media('', '*', 'logomarca');
         if ($this->configuracao->save_config($configs))
-            $this->set_message('Logomarca salva com sucesso!', 'success', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_logo_success'), 'success', 'admin/configuracoes');
         else
-            $this->set_message('Erro ao salvar a logomarca.', 'danger', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_logo_success'), 'danger', 'admin/configuracoes');
     }
     
     /**
@@ -174,9 +175,9 @@ class Configuracoes extends Authenticated_Controller
         $this->wpanel->remove_media($configs->favicon);
         $configs->favicon = $this->wpanel->upload_media('', '*', 'favicon', 'favicon.ico');
         if ($this->configuracao->save_config($configs))
-            $this->set_message('Logomarca salva com sucesso!', 'success', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_favicon_success'), 'success', 'admin/configuracoes');
         else
-            $this->set_message('Erro ao salvar a logomarca.', 'danger', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_favicon_success'), 'danger', 'admin/configuracoes');
     }
 
     /**
@@ -188,9 +189,9 @@ class Configuracoes extends Authenticated_Controller
         $this->wpanel->remove_media($configs->background);
         $configs->background = $this->wpanel->upload_media('', '*', 'background');
         if ($this->configuracao->save_config($configs))
-            $this->set_message('Imagem de fundo salva com sucesso!', 'success', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_background_success'), 'success', 'admin/configuracoes');
         else
-            $this->set_message('Erro ao salvar a imagem de fundo.', 'danger', 'admin/configuracoes');
+            $this->set_message(wpn_lang('message_background_success'), 'danger', 'admin/configuracoes');
     }
 
 }
