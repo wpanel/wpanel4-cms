@@ -34,6 +34,7 @@ $lang['wpn_copyright'] = "Todos os direitos reservados";
 $lang['wpn_actions'] = "Ações";
 // Mensagens genéricas para os CRUDS.
 $lang['wpn_message_confirm'] = "Deseja mesmo excluir este registro? Esta operação não poderá ser desfeita.";
+$lang['wpn_message_no_module_permission'] = "Você não tem permissão para acessar este módulo.";
 $lang['wpn_message_inexistent'] = "Registro inexistente";
 $lang['wpn_message_save_success'] = "Registro salvo com sucesso!";
 $lang['wpn_message_save_error'] = "Erro ao salvar o registro.";
