@@ -8,13 +8,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Este arquivo contém a tradução para Português do Brasil
- * do módulo Logon.php 
+ * Arquivo de idioma do logon.
+ * 
+ * @language Portuguese
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 
 $lang['logon_message'] = "Acesse com seu login";
 $lang['logon_email'] = "E-mail";
 $lang['logon_password'] = "Senha";
+$lang['input_email'] = "E-mail";
+$lang['input_password'] = "Senha";
 $lang['logon_link_recovery'] = "Recuperar senha";
 $lang['logon_bot_login'] = "Login";
 $lang['logon_recovery_title'] = "";

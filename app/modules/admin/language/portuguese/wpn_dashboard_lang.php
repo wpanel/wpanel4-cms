@@ -10,13 +10,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Arquivo de idioma do módulo Dashboard.
  * 
+ * @language Português
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 
-
-/**
- * Titles and texts.
- */ 
 $lang['module_title'] = "Painel de controle";
 $lang['dash_welcome'] = "Seja bem vindo ao painel de controle do Wpanel CMS.";
 $lang['dash_hello'] = "Olá";

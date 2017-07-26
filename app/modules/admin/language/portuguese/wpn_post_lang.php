@@ -10,23 +10,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Arquivo de idioma do módulo admin Posts.
  * 
- * @language portuguese
+ * @language Portuguese
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 
-/**
- * Títulos e textos diversos.
- */ 
 $lang['module_title'] = "Postagens";
 $lang['module_description'] = "Gerencie suas postagens aqui.";
 $lang['module_index'] = "Lista de postagens";
 $lang['module_add'] = "Cadastro de postagem";
 $lang['module_edit'] = "Alteração de postagem";
-
-
-/**
- * Campos da tabela.
- */
 $lang['field_id'] = "Código";
 $lang['field_title'] = "Título da postagem";
 $lang['field_description'] = "Descrição para os mecanismos de busca (No máximo 160 caracteres.)";
@@ -37,14 +29,6 @@ $lang['field_tags'] = "Palavras-chave (Separe com vírgula)";
 $lang['field_status'] = "Status";
 $lang['field_created_on'] = "Criado em";
 $lang['field_ip'] = "IP";
-
-/**
- * Botões específicos.
- */ 
 $lang['post_bot_new_category'] = "Categorias";
-
-/**
- * Outros
- */ 
 $lang['no_folder_image'] = "Nenhuma imagem carregada";
 $lang['change_folder'] = "Alterar a imagem";
