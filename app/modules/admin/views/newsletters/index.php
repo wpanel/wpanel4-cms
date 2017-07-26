@@ -16,8 +16,8 @@
         <div class="box-header with-border">
             <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/newsletters/export', glyphicon('download').wpn_lang('bot_export_csv'), array('class' => 'btn btn-success')); ?>
-                <?= anchor('admin/newsletters/clear', glyphicon('trash').wpn_lang('bot_clear_table'), array('class' => 'btn btn-danger', 'data-confirm' => wpn_lang('message_confirm'))); ?>
+                <?= anchor('admin/newsletters/export', glyphicon('download').wpn_lang('bot_export_csv'), array('class' => 'btn btn-sm btn-success')); ?>
+                <?= anchor('admin/newsletters/clear', glyphicon('trash').wpn_lang('bot_clear_table'), array('class' => 'btn btn-sm btn-danger', 'data-confirm' => wpn_lang('message_confirm'))); ?>
             </div>
         </div>
         <div class="box-body">

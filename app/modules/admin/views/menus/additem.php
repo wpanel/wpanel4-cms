@@ -1,60 +1,60 @@
 <section class="content-header">
     <h1>
-        Menus
-        <small>Gerencie os menús e opções de navegação do site aqui.</small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/menus'); ?>"><i class="fa fa-reorder"></i> Menus</a></li>
-        <li>Cadastro de ítem de menu</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/menus'); ?>"><i class="fa fa-reorder"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('module_add_item'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Cadastro de ítem de menu</h3>
+            <h3 class="box-title"><?= wpn_lang('module_add_item'); ?></h3>
         </div>
         <div class="box-body">
-            <?= form_open('admin/menuitens/add/' . $menu_id, array('role'=>'form')); ?>
+            <?= form_open('admin/menus/additem/' . $menu_id, array('role'=>'form')); ?>
                 <div class="form-group">
-                    <label for="label">Label do link</label>
+                    <label for="label"><?= wpn_lang('field_label'); ?></label>
                     <input type="text" name="label" id="label" class="form-control" />
                     <?= form_error('label'); ?>
                 </div>
                 <div class="form-group">
-                    <p><label for="tipo">Tipo de link</label></p>
+                    <p><label for="tipo"><?= wpn_lang('field_type'); ?></label></p>
                     <div class="radio">
                         <label id="tipo_link">
                             <input type="radio" name="tipo" id="tipo_link" value="link" checked="checked" />
-                            Link externo
+                            <?= wpn_lang('opt_external_link'); ?>
                         </label>
                         <label>
                             <input type="radio" name="tipo" id="tipo_post" value="post" />
-                            Página ou postagem
+                            <?= wpn_lang('opt_page_post'); ?>
                         </label>
                         <label>
                             <input type="radio" name="tipo" id="tipo_posts" value="posts" />
-                            Lista de postagens
+                            <?= wpn_lang('opt_post_list'); ?>
                         </label>
                         <label>
                             <input type="radio" name="tipo" id="tipo_funcional" value="funcional" />
-                            Página funcional
+                            <?= wpn_lang('opt_functional'); ?>
                         </label>
                         <label>
                             <input type="radio" name="tipo" id="tipo_submenu" value="submenu" />
-                            Sub-Menu
+                            <?= wpn_lang('opt_submenu'); ?>
                         </label>
                     </div>
                     <?= form_error('tipo'); ?>
                 </div>
                 <div class="form-group" id="form_link">
-                    <label for="link">Link externo</label>
+                    <label for="link"><?= wpn_lang('field_link'); ?></label>
                     <input type="text" name="link" id="link" class="form-control" />
                     <?= form_error('link'); ?>
                 </div>
                 <div class="form-group" id="form_post" style="display: none;">
-                    <label for="post_id">Página ou Postagem</label>
+                    <label for="post_id"><?= wpn_lang('opt_page_post'); ?></label>
                     <select class="form-control" name="post_id" id="post_id">
                         <?php
                         foreach ($posts as $row_post)
@@ -65,7 +65,7 @@
                     </select>
                 </div>
                 <div class="form-group" id="form_posts" style="display: none;">
-                    <label for="categoria_id">Listagem de categoria</label>
+                    <label for="categoria_id"><?= wpn_lang('opt_post_list'); ?></label>
                     <select class="form-control" name="categoria_id" id="categoria_id">
                         <?php
                         foreach ($categorias as $row_cat)
@@ -76,7 +76,7 @@
                     </select>
                 </div>
                 <div class="form-group" id="form_funcional" style="display: none;">
-                    <label for="funcional">Página funcional</label>
+                    <label for="funcional"><?= wpn_lang('opt_functional'); ?></label>
                     <select class="form-control" name="funcional" id="funcional">
                         <?php foreach(config_item('funcional_links') as $key => $value){ ?>
                             <option value="<?= $key; ?>"><?= $value ?></option>
@@ -84,9 +84,9 @@
                     </select>
                 </div>
                 <div class="form-group" id="form_submenu" style="display: none;">
-                    <label for="funcional">Sub-menu</label>
+                    <label for="funcional"><?= wpn_lang('opt_submenu'); ?></label>
                     <select class="form-control" name="submenu" id="funcional">
-                        <option value="">[Selecione um menu]</option>
+                        <option value=""><?= wpn_lang('wpn_select'); ?></option>
                         <?php foreach($menus as $row_menu){ ?>
                         <option value="<?= $row_menu->id; ?>"><?= $row_menu->nome; ?></option>
                         <?php } ?>
@@ -95,15 +95,15 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="ordem">Ordem de exibição</label>
+                            <label for="ordem"><?= wpn_lang('field_order'); ?></label>
                             <input type="text" name="ordem" id="ordem" class="form-control" />
                             <?= form_error('ordem'); ?>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                    <?= anchor('admin/menus', 'Cancelar', array('class' => 'btn btn-danger')); ?>
+                    <button type="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
+                    <?= anchor('admin/menus', wpn_lang('wpn_bot_cancel'), array('class' => 'btn btn-danger')); ?>
                 </div>
             </form>
         </div>

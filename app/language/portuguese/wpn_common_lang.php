@@ -42,6 +42,7 @@ $lang['wpn_message_update_success'] = "Registro atualizado com sucesso!";
 $lang['wpn_message_update_error'] = "Erro ao atualizar o registro.";
 $lang['wpn_message_delete_success'] = "Registro excluído com sucesso!";
 $lang['wpn_message_delete_error'] = "Erro ao excluir o registro.";
+$lang['wpn_select'] = "[Selecione]";
 // Caixa de confirmação.
 $lang['wpn_confirmbox_title'] = "Confirme por favor";
 $lang['wpn_confirmbox_ok'] = "Confirmar";
