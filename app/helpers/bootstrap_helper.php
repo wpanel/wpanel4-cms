@@ -305,7 +305,7 @@ if (!function_exists('page_header'))
 	/**
 	 * Gera um page-header.
 	 **/
-	function page_header($title, $size = 'h1', $subtitle = '')
+	function page_header($title, $size = '1', $subtitle = '')
 	{
 		$str = "";
 		$str .= "<div class=\"page-header\">\n";
