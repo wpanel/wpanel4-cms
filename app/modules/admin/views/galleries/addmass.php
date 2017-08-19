@@ -1,36 +1,36 @@
 <section class="content-header">
     <h1>
-        Álbuns de foto
-        <small>Gerencie os álbuns de foto do site aqui.</small>
+        <?= wpn_lang('submodule_title'); ?>
+        <small><?= wpn_lang('submodule_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> Álbuns</a></li>
-        <li>Cadastro de foto em massa</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('submodule_add'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Cadastro de foto em massa</h3>
+            <h3 class="box-title"><?= wpn_lang('title_mass_upload'); ?></h3>
         </div>
         <div class="box-body">
             <?= form_open_multipart('admin/galleries/addmass/' . $album_id, array('role' => 'form')); ?>
             <div class="form-group">
-                <label>Selecione as imagens</label>
+                <label><?= wpn_lang('field_mass_files'); ?></label>
                 <input type="file" name="pictures[]" multiple="multiple" class="form-control" />
                 <?= form_error('pictures'); ?>
             </div>
             <div class="form-group">
-                <label>Descrição</label>
+                <label><?= wpn_lang('field_description'); ?></label>
                 <input type="text" name="descricao" value="<?= set_value('descricao'); ?>" class="form-control" />
                 <?= form_error('descricao'); ?>
             </div>
             <div class="row">
                 <div class="col-sm-3 col-md-3">
                     <div class="form-group">
-                        <label>Status</label>
+                        <label><?= wpn_lang('field_status'); ?></label>
                         <select name="status" class="form-control">
                             <option value="0">Indisponível</option>
                             <option value="1">Publicado</option>

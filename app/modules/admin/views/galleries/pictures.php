@@ -2,27 +2,27 @@
 
 <section class="content-header">
     <h1>
-        Álbuns de picture
-        <small>Gerencie os álbuns de picture do site aqui.</small>
+        <?= wpn_lang('submodule_title'); ?>
+        <small><?= wpn_lang('submodule_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> Álbuns</a></li>
-        <li>Fotos</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('submodule_title'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lista de pictures</h3>
+            <h3 class="box-title"><?= wpn_lang('submodule_index'); ?></h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/galleries', glyphicon('chevron-left') . 'Voltar', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/galleries', glyphicon('chevron-left') . wpn_lang('wpn_bot_back'), array('class' => 'btn btn-sm btn-primary')); ?>
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addsinglepicture">
-                    <?= glyphicon('plus-sign'); ?> Enviar fotos individualmente
+                    <?= glyphicon('plus-sign'); ?> <?= wpn_lang('bot_individual_upload'); ?>
                 </button>
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addmasspicture">
-                    <?= glyphicon('plus-sign'); ?> Enviar fotos em massa
+                    <?= glyphicon('plus-sign'); ?> <?= wpn_lang('bot_mass_upload'); ?>
                 </button>
             </div>
         </div>
@@ -39,22 +39,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Enviar fotos individualmente</h4>
+                <h4 class="modal-title" id="myModalLabel"><?= wpn_lang('title_individual_upload'); ?></h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Selecione a imagem</label>
+                    <label><?= wpn_lang('field_filename'); ?></label>
                     <input type="file" name="userfile" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label>Descrição</label>
+                    <label><?= wpn_lang('field_description'); ?></label>
                     <input type="text" name="descricao" value="<?= set_value('descricao'); ?>" class="form-control" />
                     <?= form_error('descricao'); ?>
                 </div>
                 <div class="row">
                     <div class="col-sm-3 col-md-3">
                         <div class="form-group">
-                            <label>Status</label>
+                            <label><?= wpn_lang('field_status'); ?></label>
                             <select class="form-control" name="status">
                                 <option value="0">Indisponível</option>
                                 <option value="1">Publicado</option>
@@ -79,23 +79,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Enviar fotos em massa</h4>
+                <h4 class="modal-title" id="myModalLabel"><?= wpn_lang('title_mass_upload'); ?></h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Selecione as imagens</label>
+                    <label><?= wpn_lang('field_mass_files'); ?></label>
                     <input type="file" name="pictures[]" multiple="multiple" class="form-control" />
                     <?= form_error('pictures'); ?>
                 </div>
                 <div class="form-group">
-                    <label>Descrição</label>
+                    <label><?= wpn_lang('field_description'); ?></label>
                     <input type="text" name="descricao" value="<?= set_value('descricao'); ?>" class="form-control" />
                     <?= form_error('descricao'); ?>
                 </div>
                 <div class="row">
                     <div class="col-sm-3 col-md-3">
                         <div class="form-group">
-                            <label>Status</label>
+                            <label><?= wpn_lang('field_status'); ?></label>
                             <select name="status" class="form-control">
                                 <option value="0">Indisponível</option>
                                 <option value="1">Publicado</option>

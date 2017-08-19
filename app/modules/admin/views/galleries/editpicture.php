@@ -1,27 +1,32 @@
 <section class="content-header">
     <h1>
-        Álbuns de foto
-        <small>Gerencie os álbuns de foto do site aqui.</small>
+        <?= wpn_lang('submodule_title'); ?>
+        <small><?= wpn_lang('submodule_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> Álbuns</a></li>
-        <li>Alteração de foto</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/galleries'); ?>"><i class="fa fa-camera"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('submodule_edit'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Alteração de foto</h3>
+            <h3 class="box-title"><?= wpn_lang('submodule_edit'); ?></h3>
         </div>
         <div class="box-body">
             <?= form_open_multipart('admin/galleries/editpicture/' . $row->id, array('role' => 'form')); ?>
             <div class="form-group">
-                <label>Selecione a imagem</label>
+                <label><?= wpn_lang('field_filename'); ?></label>
                 <input type="file" name="userfile" class="form-control" />
             </div>
-            <p style="margin-top:15px;"><b>Pré-visualização da imagem:</b></p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="alterar_imagem" value="1" />
+                    <?= wpn_lang('change_image'); ?>
+                </label>
+            </div>
             <?php
             $data = array(
                 'src' => 'media/albuns/' . $row->album_id . '/' . $row->filename,
@@ -30,18 +35,12 @@
             );
             echo img($data);
             ?>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="alterar_imagem" value="1" />
-                    Alterar a imagem.
-                </label>
-            </div>
             <div class="form-group">
-                <label>Descrição</label>
+                <label><?= wpn_lang('field_description'); ?></label>
                 <input type="text" name="descricao" value="<?= $row->descricao; ?>" class="form-control" />
             </div>
             <div class="form-group">
-                <label>Status</label>
+                <label><?= wpn_lang('field_status'); ?></label>
                 <select name="status" class="form-control">
                     <option value="0" <?php if ($row->status == 0) {
                         echo 'selected';

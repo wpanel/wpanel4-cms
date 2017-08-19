@@ -21,6 +21,7 @@ class Galleries extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = array('gallery', 'picture');
+        $this->language_file = 'wpn_gallery_lang';
         parent::__construct();
     }
 
@@ -32,7 +33,7 @@ class Galleries extends Authenticated_Controller
         $this->load->library('table');
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
-        $this->table->set_heading('#', 'Capa', 'Título', 'Data', 'Status', 'Ações');
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_folder'), wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
         $query = $this->gallery->find_all();
         foreach ($query as $row)
         {
@@ -47,7 +48,7 @@ class Galleries extends Authenticated_Controller
                     $row->id, $capa, anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture') . $row->titulo), mdate('%d/%m/%Y - %H:%i', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture'), array('class' => 'btn btn-default')) .
                     anchor('admin/galleries/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    anchor('admin/galleries/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => 'Deseja mesmo excluir esta galeria? Esta ação não poderá ser desfeita.')) .
+                    anchor('admin/galleries/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
@@ -60,7 +61,7 @@ class Galleries extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('titulo', 'Título', 'required');
+        $this->form_validation->set_rules('titulo', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->render();
@@ -74,9 +75,9 @@ class Galleries extends Authenticated_Controller
             $new_post = $this->gallery->insert($data);
             mkdir('./media/albuns/' . $new_post);
             if ($new_post)
-                $this->set_message('Álbum salvo com sucesso!', 'success', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/galleries');
             else
-                $this->set_message('Erro ao salvar o álbum.', 'danger', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/galleries');
         }
     }
 
@@ -87,11 +88,11 @@ class Galleries extends Authenticated_Controller
      */
     public function edit($id = null)
     {
-        $this->form_validation->set_rules('titulo', 'Título', 'required');
+        $this->form_validation->set_rules('titulo', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Álbum inexistente.', 'info', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/galleries');
             $this->set_var('id', $id);
             $this->set_var('row', $this->gallery->find($id));
             $this->render();
@@ -109,9 +110,9 @@ class Galleries extends Authenticated_Controller
             }
             $new_post = $this->gallery->update($id, $data);
             if ($new_post)
-                $this->set_message('Álbum salvo com sucesso!', 'success', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/galleries');
             else
-                $this->set_message('Erro ao salvar o álbum.', 'danger', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/galleries');
         }
     }
 
@@ -124,15 +125,15 @@ class Galleries extends Authenticated_Controller
     {
 
         if ($id == null)
-            $this->set_message('Álbum inexistente.', 'info', 'admin/galleries');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/galleries');
 
         $this->picture->delete_by_album($id);
         $query = $this->gallery->find($id);
         $this->wpanel->remove_media('capas/' . $query->capa);
         if ($this->gallery->delete($id))
-            $this->set_message('Álbum excluído com sucesso!', 'success', 'admin/galleries');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/galleries');
         else
-            $this->set_message('Erro ao excluir o álbum.', 'danger', 'admin/galleries');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/galleries');
     }
 
     /**
@@ -147,7 +148,7 @@ class Galleries extends Authenticated_Controller
         $this->table->set_template(
             array('table_open' => '<table id="grid" class="table table-striped">')
         );
-        $this->table->set_heading('#', 'Imagem', 'Descricao', 'Data', 'Status', 'Ações');
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_filename'), wpn_lang('field_description'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
         $query = $this->picture->order_by('created_on', 'desc')->find_many_by('album_id', $album_id);
         foreach ($query as $row)
         {
@@ -177,7 +178,7 @@ class Galleries extends Authenticated_Controller
      */
     public function addpicture($album_id)
     {
-        $this->form_validation->set_rules('descricao', 'Foto', 'required');
+        $this->form_validation->set_rules('descricao', wpn_lang('field_description'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->set_var('album_id', $album_id);
@@ -191,9 +192,9 @@ class Galleries extends Authenticated_Controller
             $data['filename'] = $this->wpanel->upload_media('albuns/' . $album_id);
             $new_post = $this->picture->insert($data);
             if ($new_post)
-                $this->set_message('Foto salva com sucesso!', 'success', 'admin/galleries/pictures/' . $album_id);
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/galleries/pictures/' . $album_id);
             else
-                $this->set_message('Erro ao salvar a foto.', 'danger', 'admin/galleries/pictures/' . $album_id);
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/galleries/pictures/' . $album_id);
         }
     }
 
@@ -205,9 +206,9 @@ class Galleries extends Authenticated_Controller
     public function addmass($album_id = null)
     {
         if ($album_id == null)
-            $this->set_message('Álbum de fotos inexistente.', 'info', 'admin/galleries');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/galleries');
 
-        $this->form_validation->set_rules('descricao', 'Foto', 'required');
+        $this->form_validation->set_rules('descricao', wpn_lang('field_description'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->set_var('album_id', $album_id);
@@ -234,10 +235,10 @@ class Galleries extends Authenticated_Controller
                     $data['filename'] = $nome . '.' . $extensao;
                     $uploads = $this->picture->insert($data);
                 } else
-                    $this->set_message('Não foi possível enviar as fotos.', 'danger', 'admin/galleries/pictures/' . $album_id);
+                    $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/galleries/pictures/' . $album_id);
             }
             /* Fim do laço do upload */
-            $this->set_message('Fotos salvas com sucesso!', 'success', 'admin/galleries/pictures/' . $album_id);
+            $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/galleries/pictures/' . $album_id);
         }
     }
 
@@ -249,11 +250,11 @@ class Galleries extends Authenticated_Controller
     public function editpicture($id = null)
     {
         $row = $this->picture->find($id);
-        $this->form_validation->set_rules('descricao', 'Descrição', 'required');
+        $this->form_validation->set_rules('descricao', wpn_lang('field_description'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Foto inexistente.', 'info', 'admin/galleries');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/galleries');
             $this->set_var('id', $id);
             $this->set_var('row', $row);
             $this->render();
@@ -268,9 +269,9 @@ class Galleries extends Authenticated_Controller
                 $data['filename'] = $this->wpanel->upload_media('albuns/' . $query->album_id . '/');
             }
             if ($this->picture->update($id, $data))
-                $this->set_message('Foto salva com sucesso!', 'success', 'admin/galleries/pictures/' . $row->album_id);
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/galleries/pictures/' . $row->album_id);
             else
-                $this->set_message('Erro ao salvar a foto.', 'danger', 'admin/galleries/pictures/' . $row->album_id);
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/galleries/pictures/' . $row->album_id);
         }
     }
 
@@ -282,13 +283,13 @@ class Galleries extends Authenticated_Controller
     public function delpicture($id = null)
     {
         if ($id == null)
-            $this->set_message('Foto inexistente', 'info', 'admin/galleries');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/galleries');
         $qry_picture = $this->picture->find($id);
         $this->wpanel->remove_media('albuns/' . $qry_picture->album_id . '/' . $qry_picture->filename);
         if ($this->picture->delete($id))
-            $this->set_message('Foto excluída com sucesso!', 'success', 'admin/galleries/pictures/' . $qry_picture->album_id);
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/galleries/pictures/' . $qry_picture->album_id);
         else
-            $this->set_message('Erro ao excluir a foto.', 'danger', 'admin/galleries/pictures/' . $qry_picture->album_id);
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/galleries/pictures/' . $qry_picture->album_id);
     }
 
 }

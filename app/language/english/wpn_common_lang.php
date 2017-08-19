@@ -55,3 +55,4 @@ $lang['wpn_confirmbox_cancel'] = "Cancel";
 $lang['wpn_bot_new'] = "New record";
 $lang['wpn_bot_save'] = "Save";
 $lang['wpn_bot_cancel'] = "Cancel";
+$lang['wpn_bot_back'] = "Back";
