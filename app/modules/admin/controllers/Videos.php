@@ -21,6 +21,7 @@ class Videos extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = 'video';
+        $this->language_file = 'wpn_video_lang';
         parent::__construct();
     }
 
@@ -31,15 +32,15 @@ class Videos extends Authenticated_Controller
     {
         $this->load->library('table');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
-        $this->table->set_heading('Id', 'Titulo', 'Descricao', 'Status', 'Ações');
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_description'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
         $query = $this->video->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->titulo, $row->descricao, status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
-                    anchor('admin/videos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/videos/delete/' . $row->id) . '\');">' . glyphicon('trash') . '</button>' .
-                    div(null, true)
+                $row->id, $row->titulo, $row->descricao, status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                anchor('admin/videos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                anchor('admin/videos/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
+                div(null, true)
             );
         }
         $this->set_var('listagem', $this->table->generate());
@@ -51,8 +52,8 @@ class Videos extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('titulo', 'Título', 'required');
-        $this->form_validation->set_rules('link', 'Link', 'required');
+        $this->form_validation->set_rules('titulo', wpn_lang('field_title'), 'required');
+        $this->form_validation->set_rules('link', wpn_lang('field_link'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->render();
@@ -64,9 +65,9 @@ class Videos extends Authenticated_Controller
             $data['link'] = $this->get_youtube_code($this->input->post('link'));
             $data['status'] = $this->input->post('status');
             if ($this->video->insert($data))
-                $this->set_message('Vídeo salvo com sucesso!', 'success', 'admin/videos');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/videos');
             else
-                $this->set_message('Erro ao salvar o vídeo', 'danger', 'admin/videos');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/videos');
         }
     }
 
@@ -77,11 +78,11 @@ class Videos extends Authenticated_Controller
      */
     public function edit($id = null)
     {
-        $this->form_validation->set_rules('titulo', 'Título', 'required');
+        $this->form_validation->set_rules('titulo', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Vídeo inexistente.', 'info', 'admin/videos');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/videos');
             $this->set_var('row', $this->video->find($id));
             $this->render();
         } else
@@ -92,9 +93,9 @@ class Videos extends Authenticated_Controller
             $data['link'] = $this->get_youtube_code($this->input->post('link'));
             $data['status'] = $this->input->post('status');
             if ($this->video->update($id, $data))
-                $this->set_message('Vídeo salvo com sucesso!', 'success', 'admin/videos');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/videos');
             else
-                $this->set_message('Erro ao salvar o vídeo', 'danger', 'admin/videos');
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/videos');
         }
     }
 
@@ -106,11 +107,11 @@ class Videos extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message('Vídeo inexistente.', 'info', 'admin/videos');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/videos');
         if ($this->video->delete($id))
-            $this->set_message('Vídeo excluído com sucesso!', 'success', 'admin/videos');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/videos');
         else
-            $this->set_message('Erro ao excluir o vídeo', 'danger', 'admin/videos');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/videos');
     }
 
     /**
