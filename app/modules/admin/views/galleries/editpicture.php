@@ -16,7 +16,7 @@
             <h3 class="box-title">Alteração de foto</h3>
         </div>
         <div class="box-body">
-            <?= form_open_multipart('admin/pictures/edit/' . $row->id, array('role' => 'form')); ?>
+            <?= form_open_multipart('admin/galleries/editpicture/' . $row->id, array('role' => 'form')); ?>
             <div class="form-group">
                 <label>Selecione a imagem</label>
                 <input type="file" name="userfile" class="form-control" />
@@ -44,21 +44,21 @@
                 <label>Status</label>
                 <select name="status" class="form-control">
                     <option value="0" <?php if ($row->status == 0) {
-                echo 'selected';
-            } ?> >Indisponível</option>
+                        echo 'selected';
+                    } ?> >Indisponível</option>
                     <option value="1" <?php if ($row->status == 1) {
-                echo 'selected';
-            } ?> >Publicado</option>
+                        echo 'selected';
+                    } ?> >Publicado</option>
                 </select>
             </div>
             <hr/>
             <div class="row">
                 <div class="col-sm-12 col-md-12">
-                    <button type="submit" class="btn btn-primary">Salvar as alterações</button>
-                    &nbsp; <?= anchor('admin/pictures/index/' . $row->album_id, 'Cancelar', array('class' => 'btn btn-danger')); ?>
+                    <button type="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
+                    &nbsp; <?= anchor('admin/galleries/pictures/' . $row->album_id, wpn_lang('wpn_bot_cancel'), array('class' => 'btn btn-danger')); ?>
                 </div>
             </div>
-<?= form_close(); ?>
+            <?= form_close(); ?>
         </div>
     </div>
 </section>
