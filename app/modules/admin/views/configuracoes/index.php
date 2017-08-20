@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="home_category"><?= wpn_lang('field_etxt_editor'); ?></label>
+                                <label for="home_category"><?= wpn_lang('field_text_editor'); ?></label>
                                 <?php
                                 $available_editors = config_item('available_editors');
                                 echo form_dropdown('text_editor', $available_editors, array($row->text_editor), array('class' => 'form-control'));
