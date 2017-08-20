@@ -192,8 +192,8 @@ class Users extends MY_Controller
      */
     public function login()
     {
-        $this->form_validation->set_rules('email', wpn_lang('input_email', 'Email'), 'required|valid_email');
-        $this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
+        $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Senha', 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->wpanel->set_meta_title('Login de usuários');
