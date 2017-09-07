@@ -1146,6 +1146,75 @@ class MY_Model extends CI_Model {
 
         return $data;
     }
+    
+    /**
+     * Get the validation rules for the model.
+     *
+     * @uses $empty_validation_rules Observer to generate validation rules if
+     * they are empty.
+     *
+     * @param string $type The type of validation rules to retrieve: 'update' or
+     * 'insert'. If 'insert', appends rules set in $insert_validation_rules.
+     *
+     * @return array The validation rules for the model or an empty array.
+     */
+    public function get_validation_rules($type = 'update')
+    {
+        $temp_validation_rules = $this->validation_rules;
+        // When $validation_rules is empty (or not an array), try to generate the
+        // rules by triggering the $empty_validation_rules observer.
+        if (empty($temp_validation_rules) || ! is_array($temp_validation_rules)) {
+            $temp_validation_rules = $this->trigger('empty_validation_rules', $temp_validation_rules);
+            if (empty($temp_validation_rules) || ! is_array($temp_validation_rules)) {
+                return [];
+            }
+            // If the observer returns a non-empty array, prevent calling it again
+            // for this instance of the model.
+            $this->validation_rules = $temp_validation_rules;
+        }
+        // If this is not an insert or there are no insert rules, it's time to go.
+        if ($type != 'insert'
+            || ! is_array($this->insert_validation_rules)
+            || empty($this->insert_validation_rules)
+        ) {
+            return $temp_validation_rules;
+        }
+        // Update the validation rules with the insert rules.
+        // Get the index for each field in the validation rules.
+        $fieldIndexes = [];
+        foreach ($temp_validation_rules as $key => $validation_rule) {
+            $fieldIndexes[$validation_rule['field']] = $key;
+        }
+        foreach ($this->insert_validation_rules as $key => $rule) {
+            if (is_array($rule)) {
+                $insert_rule = $rule;
+            } else {
+                // If $key isn't a field name and $insert_rule isn't an array,
+                // there's nothing useful to do, so skip it.
+                if (is_numeric($key)) {
+                    continue;
+                }
+                $insert_rule = [
+                    'field' => $key,
+                    'rules' => $rule,
+                ];
+            }
+            // If the field is already in the validation rules, update the
+            // validation rule to merge the insert rule (replace empty rules).
+            if (isset($fieldIndexes[$insert_rule['field']])) {
+                $fieldKey = $fieldIndexes[$insert_rule['field']];
+                if (empty($temp_validation_rules[$fieldKey]['rules'])) {
+                    $temp_validation_rules[$fieldKey]['rules'] = $insert_rule['rules'];
+                } else {
+                    $temp_validation_rules[$fieldKey]['rules'] .= "|{$insert_rule['rules']}";
+                }
+            } else {
+                // Otherwise, add the insert rule to the validation rules
+                $temp_validation_rules[] = $insert_rule;
+            }
+        }
+        return $temp_validation_rules;
+    }
 
     //--------------------------------------------------------------------
 
@@ -1206,7 +1275,7 @@ class MY_Model extends CI_Model {
      *
      * @return array/bool       The original data or FALSE
      */
-    public function validate($data, $type='update')
+    public function validate($data, $type='update') // x
     {
         if ($this->skip_validation === TRUE)
         {

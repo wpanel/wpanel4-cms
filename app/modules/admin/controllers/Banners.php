@@ -78,7 +78,7 @@ class banners extends Authenticated_Controller
             if ($this->banner->insert($data))
                 $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/banners');
             else
-                $this->set_message(wpn_lang('wpn_message_save_error'), 'damger', 'admin/banners');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/banners');
         }
     }
 
