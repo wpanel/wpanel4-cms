@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Define os tipos de usuário serão permitidos no site. 
  */
-$config['auth_account_role'] = array('ROOT'=>'Super-User', 'user' => 'Usuário comum', 'admin' => 'Administrador');
+$config['auth_account_role'] = array('ROOT'=>'Desenvolvedor', 'user' => 'Usuário comum', 'admin' => 'Administrador');
 
 /**
  * Verifica as permissões em todos os links com Hook (global).

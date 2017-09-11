@@ -31,7 +31,7 @@ class Accounts extends Authenticated_Controller
     public function index()
     {
         $this->load->library('table');
-        $roles = config_item('users_role');
+        $roles = config_item('auth_account_role');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
         $this->table->set_heading(
                 '#', wpn_lang('field_name'), wpn_lang('field_email'), wpn_lang('field_role'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
@@ -40,7 +40,7 @@ class Accounts extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, json_decode($row->extra_data)->name, $row->email, $row->role, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
+                    $row->id, json_decode($row->extra_data)->name, $row->email, $roles[$row->role], mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/accounts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .

@@ -176,7 +176,7 @@
                             </ul>
                         </li>
                         <!-- Menu Sistema -->
-                        <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'configuracoes', 'modulos'), 2, 'active'); ?>">
+                        <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'configuracoes'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-gears"></i>
                                 <span><?= wpn_lang('wpn_menu_system'); ?></span>
@@ -204,13 +204,32 @@
                                         <?= anchor('admin/configuracoes', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_configuration') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
-                                <?php if (auth_link_permission('admin/modulos')) { ?>
-                                    <li <?= wpn_activelink('modulos'); ?>>
-                                        <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
-                                    </li>
-                                <?php } ?>
                             </ul>
                         </li>
+                        <?php if($this->auth->is_root()): ?>
+                        <!-- Menu Desenvolvedor -->
+                            <li class="treeview <?= wpn_activelink(array('generator', 'modulos'), 2, 'active'); ?>">
+                                <a href="#">
+                                    <i class="fa fa-code"></i>
+                                    <span><?= wpn_lang('wpn_menu_developer'); ?></span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <?php if (auth_link_permission('admin/generator')) { ?>
+                                        <li <?= wpn_activelink('generator'); ?>>
+                                            <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if (auth_link_permission('admin/modulos')) { ?>
+                                        <li <?= wpn_activelink('modulos'); ?>>
+                                            <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                         <li>
                             <?= anchor('admin/logout', '<i class="fa fa-sign-out"></i> <span>'.wpn_lang('wpn_menu_logout').'</span>'); ?>
                         </li>
