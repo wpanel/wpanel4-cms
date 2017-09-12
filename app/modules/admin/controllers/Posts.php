@@ -32,11 +32,30 @@ class Posts extends Authenticated_Controller
     {
         $this->load->library('table');
         // Template da tabela
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
+        $this->table->set_template(array('table_open' => '<table class="table table-condensed table-striped">'));
         $this->table->set_heading(
                 '#', wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
         );
-        $query = $this->post->order_by('created_on', 'desc')->where('page', 0)->find_all();
+
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->post->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/posts/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+
+        $query = $this->post->limit($limit, $offset)
+                            ->order_by('created_on', 'desc')
+                            ->where('page', 0)
+                            ->select('id, title, created_on, status')
+                            ->find_all();
 
         foreach ($query as $row)
         {
@@ -49,6 +68,9 @@ class Posts extends Authenticated_Controller
                     div(null, true)
             );
         }
+
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
         $this->set_var('listagem', $this->table->generate());
         $this->render();
     }

@@ -21,7 +21,22 @@
             </div>
         </div>
         <div class="box-body">
-            <?= $listagem; ?>
+
+            <div class="table-responsive">
+                <?= $listagem; ?>
+            </div>
+            
+            <hr/>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-sm-12 col-md-12">
+                    <span class="total">Total de <b><?= $total_rows; ?></b> registros.</span>
+                    <nav class="text-center">
+                        <?= $pagination_links; ?>
+                    </nav>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
