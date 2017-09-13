@@ -32,7 +32,7 @@ class Posts extends Authenticated_Controller
     {
         $this->load->library('table');
         // Template da tabela
-        $this->table->set_template(array('table_open' => '<table class="table table-condensed table-striped">'));
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
         $this->table->set_heading(
                 '#', wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
         );
@@ -42,7 +42,7 @@ class Posts extends Authenticated_Controller
         $limit = 10;
         $uri_segment = 5;
         $offset = $this->uri->segment($uri_segment);
-        $total_rows = $this->post->count_by('deleted', '0');
+        $total_rows = $this->post->count_by(array('page' => 0, 'deleted' => '0'));
         $config = array();
         $config['base_url'] = site_url('admin/posts/index/pag');
         $config['total_rows'] = $total_rows;
