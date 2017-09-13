@@ -35,7 +35,7 @@ class Main extends MY_Controller
         /**
          * Ativa o profiler (Forensics).
          */
-        $this->show_profiler = false;
+        $this->show_profiler = true;
 
         /**
          * Informa o número de colunas do layout 'Mosaico'.
@@ -99,11 +99,16 @@ class Main extends MY_Controller
 
         if ($category_id == null)
         {
-            $this->set_var('posts', $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '0', 'status' => '1')));
+            $this->set_var('posts', $this->post
+                    ->order_by('created_on', 'desc')
+                    ->select('id, title, link, image, content, created_on')
+                    ->find_many_by(array('page' => '0', 'status' => '1')));
             $view_title = 'Todas as postagens';
         } else
         {
-            $qry_category = $this->categoria->find($category_id);
+            $qry_category = $this->categoria
+                    ->select('id, title, description, view')
+                    ->find($category_id);
             $this->set_var('posts', $this->post->get_by_category($category_id, 'desc')->result());
             $this->set_var('view_title', $qry_category->title);
             $this->set_var('view_description', $qry_category->description);
@@ -132,10 +137,15 @@ class Main extends MY_Controller
         
         $this->load->model('post');
         
-        if ($use_id)
-            $query = $this->post->find($var);
-        else
-            $query = $this->post->find_by('link', $var);
+        if ($use_id) {
+            $query = $this->post
+                ->select('id, title, content, link, tags, image, page, description, status, created_on')
+                ->find($var);
+        } else {
+            $query = $this->post
+                ->select('id, title, content, link, tags, image, page, description, status, created_on')
+                ->find_by('link', $var);
+        }
         
         $this->set_var('post', $query);
         

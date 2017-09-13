@@ -34,7 +34,7 @@ class Post extends MY_Model
      * */
     public function get_by_category($category_id = 0, $order = 'asc', $limit = array())
     {
-        $this->db->select('posts.*, posts_categories.post_id, posts_categories.category_id');
+        $this->db->select('posts.id, posts.title, posts.link, posts.image, posts.content, posts.created_on, posts_categories.post_id, posts_categories.category_id');
         $this->db->from($this->table_name);
         $this->db->join('posts_categories', 'posts_categories.post_id = posts.id');
         $this->db->where('posts_categories.category_id', $category_id);
