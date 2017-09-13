@@ -67,7 +67,10 @@ class Wpncategorymenu extends Widget
     {
 
         $this->load->model('categoria');
-        $query = $this->categoria->order_by('title', 'asc')->find_many_by('category_id', $id);
+        $query = $this->categoria
+                ->select('id, title, link')
+                ->order_by('title', 'asc')
+                ->find_many_by('category_id', $id);
 
         $html = '';
         $html .= '<ul ' . $this->_attributes($this->main_attr) . '>';

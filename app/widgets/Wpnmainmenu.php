@@ -55,7 +55,10 @@ class Wpnmainmenu extends Widget
             return false;
 
         $this->load->model('menu_item');
-        $query = $this->menu_item->order_by('ordem', 'asc')->find_many_by('menu_id', $menu_id);
+        $query = $this->menu_item
+                ->select('href, label, tipo')
+                ->order_by('ordem', 'asc')
+                ->find_many_by('menu_id', $menu_id);
 
         $html = "";
         $html .= "<ul class=\"" . $ul_style . "\">";

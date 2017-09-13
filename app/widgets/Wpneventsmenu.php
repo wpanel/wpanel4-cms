@@ -59,7 +59,10 @@ class Wpneventsmenu extends Widget
     public function main()
     {
         $this->load->model('post');
-        $query = $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '2', 'status' => '1'));
+        $query = $this->post
+                ->select('title, description, link, created_on')
+                ->order_by('created_on', 'desc')
+                ->find_many_by(array('page' => '2', 'status' => '1'));
         $html = '';
         $html .= '<ul ' . $this->_attributes($this->attributes) . '>';
         foreach ($query as $key => $row)

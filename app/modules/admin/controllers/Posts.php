@@ -84,7 +84,7 @@ class Posts extends Authenticated_Controller
         if ($this->form_validation->run() == FALSE)
         {
             // Prepara a lista de categorias.
-            $query = $this->categoria->find_all();
+            $query = $this->categoria->select('id, title')->find_all();
             $categorias = array();
             foreach ($query as $row)
             {
@@ -135,14 +135,14 @@ class Posts extends Authenticated_Controller
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             // Prepara a lista de categorias.
-            $query = $this->categoria->find_all();
+            $query = $this->categoria->select('id, title')->find_all();
             $categorias = array();
             foreach ($query as $row)
             {
                 $categorias[$row->id] = $row->title;
             }
             // Prepara as categorias selecionadas.
-            $query = $this->post_categoria->find_many_by('post_id', $id);
+            $query = $this->post_categoria->select('category_id')->find_many_by('post_id', $id);
             $cat_select = array();
             foreach ($query as $x => $row)
             {

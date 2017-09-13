@@ -33,7 +33,7 @@ class Categoria extends MY_Model
      */
     public function get_by_post($post_id = 0, $order = 'asc', $limit = array())
     {
-        $this->db->select('categories.*, posts_categories.post_id, posts_categories.category_id');
+        $this->db->select('categories.id, categories.title, categories.link, posts_categories.post_id, posts_categories.category_id');
         $this->db->from($this->table_name);
         $this->db->join('posts_categories', 'posts_categories.category_id = categories.id');
         $this->db->where('posts_categories.post_id', $post_id);
@@ -54,7 +54,7 @@ class Categoria extends MY_Model
     {
         if ($id)
         {
-            $query = $this->find($id);
+            $query = $this->select('title')->find($id);
             return $query->title;
         } else
             return false;

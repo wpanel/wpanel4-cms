@@ -35,7 +35,10 @@ class Wpnslidebanner extends Widget
     {
 
         $this->load->model('banner');
-        $query = $this->banner->order_by('sequence', 'asc')->find_many_by(array('position' => $this->position, 'status' => 1));
+        $query = $this->banner
+                ->select('content')
+                ->order_by('sequence', 'asc')
+                ->find_many_by(array('position' => $this->position, 'status' => 1));
         
         if (count($query) > 0) {
             $data = array(
