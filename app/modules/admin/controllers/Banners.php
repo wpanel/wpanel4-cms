@@ -35,9 +35,28 @@ class banners extends Authenticated_Controller
         $options = config_item('banner_positions');
         $this->load->library('table');
         // Template da tabela
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
         $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_position'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
-        $query = $this->banner->order_by('sequence', 'asc')->find_all();
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->banner->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/banners/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->banner->limit($limit, $offset)
+                            ->order_by('sequence', 'asc')
+                            ->select('id, title, position, created_on, status')
+                            ->find_all();
+        
         foreach ($query as $row)
         {
             $this->table->add_row(
@@ -53,6 +72,8 @@ class banners extends Authenticated_Controller
             );
         }
 
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
         $this->set_var('listagem', $this->table->generate());
         $this->render();
     }
