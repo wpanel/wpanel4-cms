@@ -15,17 +15,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Dash extends MY_Model
 {
 
+    /**
+     * Este método retorna os totais de cada conteúdo para exibição
+     * na dashboard do usuário.
+     * 
+     * @param string $modulo
+     * @param string $tipo
+     * @return int
+     */
     public function calcula_totais($modulo, $tipo = 0)
     {
-
-        $this->db->where('user_id', $this->auth->get_account_id());
-
-        if ($modulo == 'posts')
-            $this->db->where('page', $tipo);
-
-        $this->db->from($modulo);
-
-        return $this->db->count_all_results();
+        $wheres = array();
+        $wheres['user_id'] = $this->auth->get_account_id();
+        if ($modulo == 'posts')$wheres['page'] = $tipo;
+        return $this->count_by($wheres);
     }
 
 }
