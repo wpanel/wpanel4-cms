@@ -71,6 +71,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     ?>
 </div>
 
+<div class="row">
+    <div class="col-sm-12 col-md-12 text-center">
+        <?= $pagination_links; ?>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('.fancybox-media').fancybox({

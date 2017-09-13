@@ -20,10 +20,10 @@ $route['404_override'] 			= '';
 |  Rotas do Setup
 | -------------------------------------------------------------------
 */
-$route['setup'] 				= 'setup/main';
-$route['setup/migrate'] 		= 'setup/main/migrate';
+$route['setup'] 		= 'setup/main';
+$route['setup/migrate'] 	= 'setup/main/migrate';
 $route['setup/migrate/(:any)'] 	= 'setup/main/migrate/$1';
-$route['setup/firstadmin'] 		= 'setup/main/firstadmin';
+$route['setup/firstadmin']      = 'setup/main/firstadmin';
 
 /*
 | -------------------------------------------------------------------
@@ -38,9 +38,15 @@ $route['events']		= 'main/events';
 $route['event/(:any)'] 		= 'main/post/$1';
 $route['search']		= 'main/search';
 $route['galleries'] 		= 'main/galleries';
-$route['gallery/(:any)/(:any)'] = 'main/gallery/$1';
+$route['galleries/pag']         = 'main/galleries';
+$route['galleries/pag/(:any)'] 	= 'main/galleries/pag/$1';
+$route['gallery/(:any)/(:any)'] = 'main/gallery/$1/$2';
+$route['gallery/(:any)/(:any)/pag'] = 'main/gallery/$1/$2';
+$route['gallery/(:any)/(:any)/pag/(:any)'] = 'main/gallery/$1/$2/pag/$3';
 $route['picture/(:any)/(:any)'] = 'main/picture/$2';
 $route['videos']                = 'main/videos';
+$route['videos/pag']            = 'main/videos';
+$route['videos/pag/(:any)']     = 'main/videos/pag/$1';
 $route['video/(:any)']          = 'main/video/$1';
 $route['video/(:any)/(:any)'] 	= 'main/video/$1';
 $route['newsletter']    	= 'main/newsletter';

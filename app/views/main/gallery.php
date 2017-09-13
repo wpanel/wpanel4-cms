@@ -67,24 +67,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 }
 ?>
 </div>
-<div class="row" style="margin-top: 20px;">
-    <div class="col-md-12">
-        <h3 class="page-header">Comentários</h3>
-<?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('album/' . $album->id))); ?>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 text-center">
+        <?= $pagination_links; ?>
     </div>
 </div>
 
-<div class="row wpn-ads">
+<div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-0286050943868335"
-             data-ad-slot="6888761431"
-             data-ad-format="auto"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        <h3 class="page-header">Comentários</h3>
+        <?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('album/' . $album->id))); ?>
     </div>
 </div>
 

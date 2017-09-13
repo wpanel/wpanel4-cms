@@ -209,10 +209,31 @@ class Main extends MY_Controller
     public function galleries()
     {
         $this->load->model('gallery');
-        $query = $this->gallery->order_by('created_on', 'desc')->find_many_by('status', 1);
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 3;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->gallery->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('galleries/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->gallery
+                ->limit($limit, $offset)
+                ->select('id, titulo, capa, created_on')
+                ->order_by('created_on', 'desc')
+                ->find_many_by('status', 1);
+        
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
+        $this->set_var('pagination_links', $this->pagination->create_links());
         $this->set_var('albuns', $query);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
         $this->render();
@@ -223,14 +244,31 @@ class Main extends MY_Controller
      *
      * @param $album_id Int Id da galeria.
      */
-    public function gallery($album_id = null)
+    public function gallery($album_id = null, $fake_link = '')
     {
         if ($album_id === null)
             show_404();
         
         $this->load->model('gallery');
         $this->load->model('picture');
-        $query_album = $this->gallery->find($album_id);
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 12;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->picture->count_by(array('album_id' => $album_id, 'status' => 1, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('gallery/'.$album_id.'/'.$fake_link.'/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query_album = $this->gallery
+                ->select('id, titulo, capa, descricao, status, created_on')
+                ->find($album_id);
         
         if (count($query_album) <= 0)
             show_404();
@@ -238,7 +276,11 @@ class Main extends MY_Controller
         if ($query_album->status == 0)
             show_error('Este álbum foi suspenso temporariamente', 404);
         
-        $query_pictures = $this->picture->find_many_by(array('album_id' => $album_id, 'status' => 1));
+        $query_pictures = $this->picture
+                ->select('id, filename, descricao')
+                ->limit($limit, $offset)
+                ->find_many_by(array('album_id' => $album_id, 'status' => 1));
+        
         $this->wpanel->set_meta_description($query_album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($query_album->titulo);
@@ -246,6 +288,7 @@ class Main extends MY_Controller
         if (file_exists('./media/capas/' . $query_album->capa))
             $this->wpanel->set_meta_image(base_url('media/capas' . '/' . $query_album->capa));
         
+        $this->set_var('pagination_links', $this->pagination->create_links());
         $this->set_var('album', $query_album);
         $this->set_var('pictures', $query_pictures);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
@@ -267,8 +310,12 @@ class Main extends MY_Controller
         $this->load->model('gallery');
         $this->load->model('picture');
         
-        $query_picture = $this->picture->find($picture_id);
-        $query_album = $this->gallery->find($query_picture->album_id);
+        $query_picture = $this->picture
+                ->select('id, album_id, filename, descricao, status')
+                ->find($picture_id);
+        $query_album = $this->gallery
+                ->select('id, titulo, descricao, created_on')
+                ->find($query_picture->album_id);
         
         if (count($query_picture) <= 0)
             show_404();
@@ -294,10 +341,30 @@ class Main extends MY_Controller
     public function videos()
     {
         $this->load->model('video');
-        $query_videos = $this->video->order_by('created_on', 'desc')->find_many_by('status', 1);
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 3;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->video->count_by(array('status' => 1, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('videos/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query_videos = $this->video
+                ->limit($limit, $offset)
+                ->select('id, titulo, link')
+                ->order_by('created_on', 'desc')
+                ->find_many_by('status', 1);
         $this->wpanel->set_meta_description('Lista de vídeos');
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title('Vídeos');
+        $this->set_var('pagination_links', $this->pagination->create_links());
         $this->set_var('videos', $query_videos);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
         $this->render();
@@ -314,7 +381,9 @@ class Main extends MY_Controller
             show_404();
         
         $this->load->model('video');
-        $query_video = $this->video->find_by(array('link' => $code, 'status' => 1));
+        $query_video = $this->video
+                ->select('titulo, descricao, link, status')
+                ->find_by(array('link' => $code, 'status' => 1));
         
         if (count($query_video) <= 0)
             show_404();
