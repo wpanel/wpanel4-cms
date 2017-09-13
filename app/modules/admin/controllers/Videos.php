@@ -31,18 +31,41 @@ class Videos extends Authenticated_Controller
     public function index()
     {
         $this->load->library('table');
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
-        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_description'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
-        $query = $this->video->find_all();
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->video->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/videos/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->video->limit($limit, $offset)
+                            //->order_by('sequence', 'asc')
+                            ->select('id, titulo, created_on, status')
+                            ->find_all();
+        
+        //$query = $this->video->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                $row->id, $row->titulo, $row->descricao, status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                $row->id, $row->titulo, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                 anchor('admin/videos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                 anchor('admin/videos/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                 div(null, true)
             );
         }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
         $this->set_var('listagem', $this->table->generate());
         $this->render();
     }
