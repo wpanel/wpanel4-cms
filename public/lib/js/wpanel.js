@@ -55,6 +55,9 @@
 
             // DataTable.
             $("#grid").dataTable({
+                "bPaginate": false,
+                //"paging": false,
+                "bInfo": false,
                 language: {
                     search: "Pesquisar na tabela: ",
                     lengthMenu: "Mostrar  _MENU_  registros por vez.",
