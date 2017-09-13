@@ -15,24 +15,24 @@
             <h3 class="box-title"><?= wpn_lang('module_add'); ?></h3>
         </div>
         <div class="box-body">
-			<form action="<?= site_url('admin/ipbanneds/add'); ?>" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
-				
-				<div class="form-group">
-					<label for="id" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_ip'); ?></label>
-					<div class="col-sm-3 col-md-3">
-						<input type="text" name="ip_address" id="ip_address" class="form-control" />
-						<?= form_error('ip_address'); ?>
-					</div>
-				</div>
-				
-				<hr/>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10">
-						<button type="submit" class="btn btn-primary" ><?= wpn_lang('wpn_bot_save'); ?></button>
-						<?= anchor('admin/ipbanneds', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
-					</div>
-				</div>
-			</form>
+            <form action="<?= site_url('admin/ipbanneds/add'); ?>" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
+
+                <div class="form-group">
+                    <label for="id" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_ip'); ?></label>
+                    <div class="col-sm-3 col-md-3">
+                        <input type="text" name="ip_address" id="ip_address" class="form-control" />
+                        <?= form_error('ip_address'); ?>
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary" ><?= wpn_lang('wpn_bot_save'); ?></button>
+                        <?= anchor('admin/ipbanneds', wpn_lang('wpn_bot_cancel'), array('class' => 'btn btn-danger')); ?>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </section>

@@ -18,11 +18,52 @@
             <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
                 <?= anchor('admin/accounts', glyphicon('user') . wpn_lang('wpn_menu_account'), array('class' => 'btn btn-sm btn-info')); ?>
-                <?= anchor('admin/ipbanneds/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addIp">
+                    <?= glyphicon('plus-sign'); ?> <?= wpn_lang('wpn_bot_new'); ?>
+                </button>
             </div>
         </div>
         <div class="box-body">
-            <?= $listagem; ?>
+            
+            <div class="table-responsive">
+                <?= $listagem; ?>
+            </div>
+            
+            <hr/>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-sm-12 col-md-12">
+                    <span class="total">Total de <b><?= $total_rows; ?></b> registros.</span>
+                    <nav class="text-center">
+                        <?= $pagination_links; ?>
+                    </nav>
+                </div>
+            </div>
+            
         </div>
     </div>
 </section>
+
+<!--Modal addIp-->
+<?= form_open_multipart('admin/ipbanneds/add', array('role'=>'form')); ?>
+<div class="modal fade" id="addIp" tabindex="-1" role="dialog" aria-labelledby="addIp">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><?= wpn_lang('module_add'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label><?= wpn_lang('field_ip'); ?></label>
+                    <input type="text" name="ip_address" id="ip_address" class="form-control" placeholder="000.000.000.000" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><?= wpn_lang('wpn_bot_cancel'); ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= form_close(); ?>
