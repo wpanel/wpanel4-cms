@@ -30,8 +30,9 @@ class Newsletters extends Authenticated_Controller
      */
     public function index()
     {
-        $content_vars = array();
-        $contatos = $this->newsletter->find_all();
+        $contatos = $this->newsletter
+                ->select('id, nome, email, created_on, ipaddress')
+                ->find_all();
         $this->set_var('contatos', $contatos);
         $this->render();
     }
