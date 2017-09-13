@@ -32,9 +32,29 @@ class Galleries extends Authenticated_Controller
     {
         $this->load->library('table');
         // Template da tabela
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
         $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_folder'), wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
-        $query = $this->gallery->find_all();
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->gallery->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/galleries/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->gallery->limit($limit, $offset)
+                            //->order_by('sequence', 'asc')
+                            ->select('id, titulo, capa, created_on, status')
+                            ->find_all();
+        
+        //$query = $this->gallery->find_all();
         foreach ($query as $row)
         {
             $capa_properties = array(
@@ -45,13 +65,16 @@ class Galleries extends Authenticated_Controller
             );
             $capa = img($capa_properties);
             $this->table->add_row(
-                    $row->id, $capa, anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture') . $row->titulo), mdate('%d/%m/%Y - %H:%i', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                    $row->id, $capa, anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture') . $row->titulo), mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture'), array('class' => 'btn btn-default')) .
                     anchor('admin/galleries/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                     anchor('admin/galleries/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
         $this->set_var('listagem', $this->table->generate());
         $this->render();
     }
@@ -146,10 +169,29 @@ class Galleries extends Authenticated_Controller
         $this->load->library('table');
         // Template da tabela
         $this->table->set_template(
-            array('table_open' => '<table id="grid" class="table table-striped">')
+            array('table_open' => '<table id="grid" class="table table-condensed table-striped">')
         );
         $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_filename'), wpn_lang('field_description'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
-        $query = $this->picture->order_by('created_on', 'desc')->find_many_by('album_id', $album_id);
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 6;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->picture->count_by(array('album_id' => $album_id, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('admin/galleries/pictures/'.$album_id.'/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->picture->limit($limit, $offset)
+                            ->order_by('created_on', 'desc')
+                            ->select('id, title, filename, descricao, created_on, status')
+                            ->find_many_by('album_id', $album_id);
+
         foreach ($query as $row)
         {
             $capa_properties = array(
@@ -160,12 +202,15 @@ class Galleries extends Authenticated_Controller
             );
             $imagem = img($capa_properties);
             $this->table->add_row(
-                $row->id, $imagem, $row->descricao, mdate('%d/%m/%Y - %H:%i', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                $row->id, $imagem, $row->descricao, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                 anchor('admin/galleries/editpicture/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                 anchor('admin/galleries/delpicture/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => 'Deseja mesmo excluir esta imagem? Esta ação não poderá ser desfeita.')) .
                 div(null, true)
             );
         }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
         $this->set_var('album_id', $album_id);
         $this->set_var('listagem', $this->table->generate());
         $this->render();
