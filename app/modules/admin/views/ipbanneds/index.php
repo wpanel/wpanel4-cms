@@ -33,7 +33,7 @@
 
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-sm-12 col-md-12">
-                    <span class="total">Total de <b><?= $total_rows; ?></b> registros.</span>
+                    <span class="total"><?= wpn_lang('pag_total_of'); ?> <b><?= $total_rows; ?></b> <?= wpn_lang('pag_records'); ?>.</span>
                     <nav class="text-center">
                         <?= $pagination_links; ?>
                     </nav>
