@@ -176,7 +176,7 @@
                             </ul>
                         </li>
                         <!-- Menu Sistema -->
-                        <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'configuracoes'), 2, 'active'); ?>">
+                        <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'ipbanneds', 'configuracoes'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-gears"></i>
                                 <span><?= wpn_lang('wpn_menu_system'); ?></span>
@@ -195,7 +195,7 @@
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/accounts')) { ?>
-                                    <li <?= wpn_activelink('accounts'); ?>>
+                                    <li <?= wpn_activelink(array('accounts', 'ipbanneds')); ?>>
                                         <?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>' . wpn_lang('wpn_menu_account') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
