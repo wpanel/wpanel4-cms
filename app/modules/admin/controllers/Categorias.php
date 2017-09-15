@@ -19,6 +19,7 @@ class Categorias extends Authenticated_Controller
     function __construct()
     {
         $this->model_file = 'categoria';
+        $this->language_file = 'wpn_category_lang';
         parent::__construct();
     }
 
@@ -31,7 +32,7 @@ class Categorias extends Authenticated_Controller
         $posts_views = config_item('posts_views');
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
-        $this->table->set_heading('#', 'Título', 'Categoria-pai', 'Visão', 'Ações');
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_category'), wpn_lang('field_view'), wpn_lang('wpn_actions'));
         
         // Paginação
         // -------------------------------------------------------------------
@@ -51,13 +52,12 @@ class Categorias extends Authenticated_Controller
                             ->select('id, title, category_id, view')
                             ->find_all();
         
-        //$query = $this->categoria->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
                     $row->id, $row->title, $this->categoria->get_title_by_id($row->category_id), $posts_views[$row->view], div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/categorias/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
-                    '<button class="btn btn-default" onClick="return confirmar(\'' . site_url('admin/categorias/delete/' . $row->id) . '\');">' . glyphicon('trash') . '</button>' .
+                    anchor('admin/categorias/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
@@ -73,7 +73,7 @@ class Categorias extends Authenticated_Controller
      */
     public function add()
     {
-        $this->form_validation->set_rules('title', 'Título', 'required');
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             // Prepara a lista de categorias.
@@ -95,9 +95,9 @@ class Categorias extends Authenticated_Controller
             $data['category_id'] = $this->input->post('category_id');
             $data['view'] = $this->input->post('view');
             if ($this->categoria->insert($data))
-                $this->set_message('Categoria salva com sucesso!', 'success', 'admin/categorias');
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/categorias');
             else
-                $this->set_message('Erro ao salvar a categoria.', 'danger', 'admin/categorias');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/categorias');
         }
     }
 
@@ -108,11 +108,11 @@ class Categorias extends Authenticated_Controller
      */
     public function edit($id = null)
     {
-        $this->form_validation->set_rules('title', 'Título', 'required');
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
             if ($id == null)
-                $this->set_message('Categoria inexistente.', 'info', 'admin/categorias');
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/categorias');
             // Prepara a lista de categorias.
             $query = $this->categoria->find_all();
             $options = array();
@@ -133,9 +133,9 @@ class Categorias extends Authenticated_Controller
             $data['category_id'] = $this->input->post('category_id');
             $data['view'] = $this->input->post('view');
             if ($this->categoria->update($id, $data))
-                $this->set_message('Categoria salva com sucesso!', 'success', 'admin/categorias');
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/categorias');
             else
-                $this->set_message('Erro ao salvar a categoria.', 'danger', 'admin/categorias');
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/categorias');
         }
     }
 
@@ -147,11 +147,11 @@ class Categorias extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message('Categoria inexistente.', 'info', 'admin/categorias');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/categorias');
         if ($this->categoria->delete($id))
-            $this->set_message('Categoria excluída com sucesso!', 'success', 'admin/categorias');
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/categorias');
         else
-            $this->set_message('Erro ao excluir a categoria.', 'danger', 'admin/categorias');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/categorias');
     }
 
 }
