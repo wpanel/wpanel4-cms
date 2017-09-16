@@ -276,7 +276,7 @@ class MY_Model extends CI_Model {
     }
 
     //--------------------------------------------------------------------
-
+    
     //--------------------------------------------------------------------
     // CRUD Methods
     //--------------------------------------------------------------------
@@ -454,7 +454,7 @@ class MY_Model extends CI_Model {
     public function insert($data)
     {
         $data = $this->trigger('before_insert', $data);
-
+        
         if ($this->skip_validation === FALSE)
         {
             $data = $this->validate($data, 'insert');
@@ -477,19 +477,35 @@ class MY_Model extends CI_Model {
             $data[$this->created_by_field] = $this->auth->user_id();
         }
 
+        $this->dbw->trans_begin();
+        
         $this->dbw->insert($this->table_name, $data);
-
-        if ($this->return_insert_id)
+        
+        if($this->db->trans_status() === FALSE)
         {
-            $id = $this->dbw->insert_id();
-
-            $this->trigger('after_insert', $id);
-        }
-        else
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
         {
-            $id = true;
-        }
 
+            $this->dbw->trans_commit();
+        
+            if ($this->return_insert_id)
+            {
+                $id = $this->dbw->insert_id();
+
+                $this->trigger('after_insert', $id);
+            }
+            else
+            {
+                $id = true;
+            }
+        
+        }
         return $id;
     }
 
@@ -528,7 +544,22 @@ class MY_Model extends CI_Model {
 
         unset($data['batch']);
 
-        return $this->dbw->insert_batch($this->table_name, $data);
+        $this->dbw->trans_begin();
+        
+        $result = $this->dbw->insert_batch($this->table_name, $data);
+                
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
+            return $result;
+        }
     }
 
     //--------------------------------------------------------------------
@@ -553,6 +584,8 @@ class MY_Model extends CI_Model {
             }
         }
 
+        $this->dbw->trans_begin();
+        
         $this->dbw->where($this->primary_key, $id);
 
         if ($this->log_user)
@@ -563,10 +596,23 @@ class MY_Model extends CI_Model {
         $this->dbw->set($data);
 
         $result = $this->dbw->update($this->table_name);
+                
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        $this->trigger('after_update', array($data, $result));
+            $this->trigger('after_update', array($data, $result));
 
-        return $result;
+            return $result;
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -601,14 +647,29 @@ class MY_Model extends CI_Model {
             $row = $this->trigger('before_update', $row);
         }
 
+        $this->dbw->trans_begin();
+        
         $result = $this->dbw->update_batch($this->table_name, $data, $where_key);
-
-        foreach ($data as &$row)
+                
+        if($this->db->trans_status() === FALSE)
         {
-            $this->trigger('after_update', array($row, $result));
-        }
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        return $result;
+            foreach ($data as &$row)
+            {
+                $this->trigger('after_update', array($row, $result));
+            }
+
+            return $result;
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -643,13 +704,28 @@ class MY_Model extends CI_Model {
             }
         }
 
+        $this->dbw->trans_begin();
+        
         $this->dbw->where_in($this->primary_key, $ids);
         $this->dbw->set($data);
         $result = $this->dbw->update($this->table_name);
+                
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        $this->trigger('after_update', array($data, $result));
+            $this->trigger('after_update', array($data, $result));
 
-        return $result;
+            return $result;
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -689,12 +765,28 @@ class MY_Model extends CI_Model {
             }
         }
 
+        $this->dbw->trans_begin();
+        
         $this->dbw->set($data);
         $result = $this->dbw->update($this->table_name);
+        
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        $this->trigger('after_update', array($data, $result));
+            $this->trigger('after_update', array($data, $result));
 
-        return $result;
+            return $result;
+        
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -718,12 +810,27 @@ class MY_Model extends CI_Model {
             }
         }
 
+        $this->dbw->trans_begin();
+        
         $this->dbw->set($data);
         $result = $this->dbw->update($this->table_name);
+        
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        $this->trigger('after_update', array($data, $result));
+            $this->trigger('after_update', array($data, $result));
 
-        return $result;
+            return $result;
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -738,7 +845,9 @@ class MY_Model extends CI_Model {
     {
         $this->trigger('before_delete', $id);
 
-         $this->dbw->where($this->primary_key, $id);
+        $this->dbw->trans_begin();
+        
+        $this->dbw->where($this->primary_key, $id);
 
         if ($this->soft_deletes)
         {
@@ -751,10 +860,23 @@ class MY_Model extends CI_Model {
         else {
             $result = $this->dbw->delete($this->table_name);
         }
+        
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
 
-        $this->trigger('after_delete', $result);
+            $this->trigger('after_delete', $result);
 
-        return $result;
+            return $result;
+        
+        }
     }
 
     //--------------------------------------------------------------------
@@ -824,7 +946,25 @@ class MY_Model extends CI_Model {
      */
     public function empty_table($table = NULL)
     {
-        return $this->db->empty_table($table);
+        
+        $this->dbw->trans_begin();
+        
+        $result = $this->db->empty_table($table);
+        
+        if($this->db->trans_status() === FALSE)
+        {
+            
+            $this->dbw->trans_rollback();
+            
+            return FALSE;
+            
+        } 
+        else 
+        {
+
+            return $result;
+
+        }
     }
 
     //--------------------------------------------------------------------
