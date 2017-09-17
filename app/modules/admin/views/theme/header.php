@@ -217,8 +217,23 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
+                                    <?php if (auth_link_permission('admin/developers/logs')) { ?>
+                                        <li <?= wpn_activelink('developers'); ?>>
+                                            <?= anchor('admin/developers/logs', '<i class="fa fa-cog"></i> <span>Logs</span>'); ?>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if (auth_link_permission('admin/developers/migration')) { ?>
+                                        <li <?= wpn_activelink('developers/migration'); ?>>
+                                            <?= anchor('admin/developers/migration', '<i class="fa fa-cog"></i> <span>Migrations</span>'); ?>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if (auth_link_permission('admin/backups')) { ?>
+                                        <li <?= wpn_activelink('developers'); ?>>
+                                            <?= anchor('admin/backups', '<i class="fa fa-cog"></i> <span>Backups</span>'); ?>
+                                        </li>
+                                    <?php } ?>
                                     <?php if (auth_link_permission('admin/generator')) { ?>
-                                        <li <?= wpn_activelink('generator'); ?>>
+                                        <li <?= wpn_activelink('developers'); ?>>
                                             <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
                                         </li>
                                     <?php } ?>
