@@ -1,7 +1,6 @@
 <?php
 
-/* 
- * Este arquivo de linguagem está vazio e só existe para evitar erros de 
- * carretamento. as variáveis foram transferidas para wpn_common_lang.php
- */
-
+$lang['pagination_first_link'] =  "|<";
+$lang['pagination_next_link'] = ">";
+$lang['pagination_prev_link'] = "<";
+$lang['pagination_last_link'] =  ">|";
