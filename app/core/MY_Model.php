@@ -272,7 +272,7 @@ class MY_Model extends CI_Model {
             $this->dbr = $this->dbw;
         }
 
-        log_message('debug', 'BF_Model Class Initialized');
+        log_message('debug', 'MY_Model Class Initialized');
     }
 
     //--------------------------------------------------------------------
