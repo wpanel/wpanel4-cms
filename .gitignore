@@ -31,6 +31,12 @@ Icon?
 # Windows
 Thumbs.db
 
+# Logs
+app/logs/*.php
+
+# BackupsDb
+public/media/backupdb/*.sql
+
 # Composer
 composer.lock
 

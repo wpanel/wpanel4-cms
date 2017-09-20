@@ -208,7 +208,7 @@
                         </li>
                         <?php if($this->auth->is_root()): ?>
                         <!-- Menu Desenvolvedor -->
-                            <li class="treeview <?= wpn_activelink(array('generator', 'modulos'), 2, 'active'); ?>">
+                            <li class="treeview <?= wpn_activelink(array('developers', 'generator', 'modulos'), 2, 'active'); ?>">
                                 <a href="#">
                                     <i class="fa fa-code"></i>
                                     <span><?= wpn_lang('wpn_menu_developer'); ?></span>
@@ -217,31 +217,21 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <?php if (auth_link_permission('admin/developers/logs')) { ?>
-                                        <li <?= wpn_activelink('developers'); ?>>
-                                            <?= anchor('admin/developers/logs', '<i class="fa fa-cog"></i> <span>Logs</span>'); ?>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if (auth_link_permission('admin/developers/migration')) { ?>
-                                        <li <?= wpn_activelink('developers/migration'); ?>>
-                                            <?= anchor('admin/developers/migration', '<i class="fa fa-cog"></i> <span>Migrations</span>'); ?>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if (auth_link_permission('admin/backups')) { ?>
-                                        <li <?= wpn_activelink('developers'); ?>>
-                                            <?= anchor('admin/backups', '<i class="fa fa-cog"></i> <span>Backups</span>'); ?>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if (auth_link_permission('admin/generator')) { ?>
-                                        <li <?= wpn_activelink('developers'); ?>>
-                                            <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
-                                        </li>
-                                    <?php } ?>
-                                    <?php if (auth_link_permission('admin/modulos')) { ?>
-                                        <li <?= wpn_activelink('modulos'); ?>>
-                                            <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
-                                        </li>
-                                    <?php } ?>
+                                    <!-- <li <?= wpn_activelink('migration', 3); ?>>
+                                        <?= anchor('admin/developers/migration', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_migrations') . '</span>'); ?>
+                                    </li>
+                                    <li <?= wpn_activelink('generator'); ?>>
+                                        <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
+                                    </li> -->
+                                    <li <?= wpn_activelink('logs', 3); ?>>
+                                        <?= anchor('admin/developers/logs', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_logs') . '</span>'); ?>
+                                    </li>
+                                    <li <?= wpn_activelink('backups', 3); ?>>
+                                        <?= anchor('admin/developers/backups', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_backups') . '</span>'); ?>
+                                    </li>
+                                    <li <?= wpn_activelink('modulos'); ?>>
+                                        <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
+                                    </li>
                                 </ul>
                             </li>
                         <?php endif; ?>

@@ -21,7 +21,6 @@
                 <li><a href="#media" role="tab" data-toggle="tab"><?= wpn_lang('tab_media'); ?></a></li>
                 <li><a href="#contato" role="tab" data-toggle="tab"><?= wpn_lang('tab_contact'); ?></a></li>
                 <li><a href="#social" role="tab" data-toggle="tab"><?= wpn_lang('tab_socialmedia'); ?></a></li>
-                <li><a href="#backup" role="tab" data-toggle="tab"><?= wpn_lang('tab_backup'); ?></a></li>
             </ul>
             <div class="tab-content">
                 <!--Painel de configuração geral-->
@@ -346,20 +345,6 @@
                                 <label for="link_likebox"><?= wpn_lang('field_link_likebox'); ?></label>
                                 <input type="text" name="link_likebox" id="link_likebox" value="<?= $row->link_likebox ?>" class="form-control" placeholder="<?= wpn_lang('place_likebox'); ?>" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Painel de backup dos dados -->
-                <div class="tab-pane  panel panel-default" id="backup">
-                    <div class="panel-heading">
-                        <?= wpn_lang('tab_backup'); ?>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <p><?= wpn_lang('backup_line_1'); ?></p>
-                            <p><?= wpn_lang('backup_line_2'); ?></p>
-                            <p class="text-danger"><?= wpn_lang('backup_line_3'); ?></p>
-                            <p><?= anchor('admin/backups/execute', '<span class="glyphicon glyphicon-circle-arrow-down"></span> ' . wpn_lang('bot_backup'), array('class' => 'btn btn-success')); ?></p>
                         </div>
                     </div>
                 </div>
