@@ -48,14 +48,16 @@ class Developers extends Authenticated_Controller
                 $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
                 $this->table->set_heading(wpn_lang('log_filename'), wpn_lang('wpn_actions'));
                 $map = directory_map(APPPATH . 'logs/', 0, false);
-                for ($i = 1; $i < sizeof($map); $i++) {
-                    $this->table->add_row(
-                        str_replace('.php', '', $map[$i]), 
-                        '<div class="btn-group btn-group-xs">'.
-                        anchor('admin/developers/logs/'.str_replace('.php', '', $map[$i]), glyphicon('eye-open'), array('class' => 'btn btn-xs btn-default')) . 
-                        anchor('admin/developers/deletelog/'.str_replace('.php', '', $map[$i]), glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
-                        '</div>'
-                    );
+                for ($i = 0; $i < sizeof($map); $i++) {
+                    if($map[$i] != 'index.html'){
+                        $this->table->add_row(
+                            str_replace('.php', '', $map[$i]), 
+                            '<div class="btn-group btn-group-xs">'.
+                            anchor('admin/developers/logs/'.str_replace('.php', '', $map[$i]), glyphicon('eye-open'), array('class' => 'btn btn-xs btn-default')) . 
+                            anchor('admin/developers/deletelog/'.str_replace('.php', '', $map[$i]), glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
+                            '</div>'
+                        );
+                    }
                 }
                 $listagem = $this->table->generate();
             }
@@ -110,24 +112,31 @@ class Developers extends Authenticated_Controller
             // Template da tabela
             $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
             $this->table->set_heading(wpn_lang('backup_filename'), wpn_lang('wpn_actions'));
-            $map = directory_map(FCPATH . 'media/backupdb/', 0, false);
-            for ($i = 1; $i < sizeof($map); $i++) {
-                $this->table->add_row(
-                    str_replace('.php', '', $map[$i]), 
-                    '<div class="btn-group btn-group-xs">'.
-                    anchor('admin/developers/downloadbackup/'.$map[$i], glyphicon('download'), array('class' => 'btn btn-xs btn-default')). 
-                    anchor('admin/developers/deletebackup/'.$map[$i], glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
-                    '</div>'
-                );
-            }$this->set_var('compatible', $compatible);
+            $map = directory_map(FCPATH . 'media/backupdb/', 0, false);//, array('index.html'));
+            for ($i = 0; $i < sizeof($map); $i++) {
+                if($map[$i] != 'index.html'){
+                    $this->table->add_row(
+                        str_replace('.php', '', $map[$i]), 
+                        '<div class="btn-group btn-group-xs">'.
+                        anchor('admin/developers/downloadbackup/'.$map[$i], glyphicon('download'), array('class' => 'btn btn-xs btn-default')). 
+                        anchor('admin/developers/deletebackup/'.$map[$i], glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
+                        '</div>'
+                    );
+                }
+            }
+            $this->set_var('compatible', $compatible);
             $this->set_var('listagem', $this->table->generate());
             $this->render();
         }
     }
     
+    /**
+     * Apaga um arquivo de log.
+     * 
+     * @param string $filename
+     */
     public function deletelog($filename)
     {
-        //$this->load->helper('file');
         if(unlink(APPPATH.'logs/' . $filename . '.php'))
             $this->set_message(wpn_lang('msg_dellog_success'), 'success', 'admin/developers/logs');
         else
@@ -156,6 +165,34 @@ class Developers extends Authenticated_Controller
             $this->set_message(wpn_lang('msg_delbkp_success'), 'success', 'admin/developers/backups');
         else
             $this->set_message(wpn_lang('msg_delbkp_error'), 'danger', 'admin/developers/backups');
+    }
+    
+    public function modmigration()
+    {
+        //echo "tela de manutanção das migraçãoes...\n";
+        //echo "Versão: " . $this->migration->current();
+        
+        // Faz a listagem dos arquivos de log.
+        $this->load->helper('directory');
+        $this->load->library('table');
+        // Template da tabela
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(wpn_lang('backup_filename'), wpn_lang('wpn_actions'));
+        $map = directory_map(APPPATH . 'database/migrations/', 0, false);
+        for ($i = 0; $i < sizeof($map); $i++) {
+            if($map[$i] != 'index.html'){
+                $this->table->add_row(
+                    str_replace('.php', '', $map[$i]), 
+                    '<div class="btn-group btn-group-xs">'.
+                    anchor('admin/developers/downloadbackup/'.$map[$i], glyphicon('download'), array('class' => 'btn btn-xs btn-default')). 
+                    anchor('admin/developers/deletebackup/'.$map[$i], glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
+                    '</div>'
+                );
+            }
+        }
+        //$this->set_var('compatible', $compatible);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
     }
     
     /**
