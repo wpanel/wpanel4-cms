@@ -217,17 +217,19 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <!-- <li <?= wpn_activelink('migration', 3); ?>>
+                                    <!--
+                                    <li <?= wpn_activelink('migration', 3); ?>>
                                         <?= anchor('admin/developers/migration', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_migrations') . '</span>'); ?>
                                     </li>
                                     <li <?= wpn_activelink('generator'); ?>>
                                         <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
-                                    </li> -->
+                                    </li>
+                                    -->
                                     <li <?= wpn_activelink('logs', 3); ?>>
-                                        <?= anchor('admin/developers/logs', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_logs') . '</span>'); ?>
+                                        <?= anchor('admin/developers/logs', '<i class="fa fa-exclamation-circle"></i> <span>' . wpn_lang('wpn_menu_logs') . '</span>'); ?>
                                     </li>
                                     <li <?= wpn_activelink('backups', 3); ?>>
-                                        <?= anchor('admin/developers/backups', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_backups') . '</span>'); ?>
+                                        <?= anchor('admin/developers/backups', '<i class="fa fa-database"></i> <span>' . wpn_lang('wpn_menu_backups') . '</span>'); ?>
                                     </li>
                                     <li <?= wpn_activelink('modulos'); ?>>
                                         <?= anchor('admin/modulos', '<i class="fa fa-plug"></i> <span>'.wpn_lang('wpn_menu_modules').'</span>'); ?>
