@@ -37,7 +37,6 @@ class Users extends MY_Controller
         $this->show_profiler = false;
 
         parent::__construct();
-        $this->wpanel->check_setup();
 
         if ($this->auth->is_logged() and $this->auth->is_admin())
         {

@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Main extends MY_Controller
+class Main extends CI_Controller
 {
 
     var $layout_vars = array();
@@ -32,6 +32,10 @@ class Main extends MY_Controller
      */
     public function index()
     {
+        // Gera o banco de dados inicial.
+        $this->load->library('migration');
+        $this->migration->latest();
+        
         // Check if accounts is empty.
         if ($this->auth->accounts_empty() == FALSE)
             redirect('admin/login');

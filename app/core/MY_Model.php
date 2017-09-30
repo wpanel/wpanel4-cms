@@ -258,13 +258,7 @@ class MY_Model extends CI_Model {
          */
         if (!isset($this->db))
         {
-            /*
-             * Check if database was created by migrations.
-             */
-            if(!$this->load->database()){
-                $this->load->library('migration');
-                $this->migration->latest();
-            }
+            $this->load->database();
         }
 
         if ( ! is_object($this->dbw))

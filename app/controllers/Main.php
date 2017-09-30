@@ -48,7 +48,6 @@ class Main extends MY_Controller
         $this->wpn_posts_view = 'mosaic';
 
         parent::__construct();
-        $this->wpanel->check_setup();
         
     }
 

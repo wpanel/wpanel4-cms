@@ -117,18 +117,6 @@ class Wpanel
     }
 
     /**
-     * Check the first admin user.
-     *
-     * @return mixed
-     */
-    public function check_setup()
-    {
-        $this->load->model('auth_model');
-        if ($this->auth->accounts_empty() == TRUE)
-            redirect('setup');
-    }
-
-    /**
      * Set the meta_description value.
      *
      * @param string $value
