@@ -21,6 +21,7 @@ class Developers extends Authenticated_Controller
     function __construct()
     {
         $this->language_file = 'wpn_developers_lang';
+        $this->model_file = 'DevelopersModel';
         parent::__construct();
     }
     
@@ -167,32 +168,105 @@ class Developers extends Authenticated_Controller
             $this->set_message(wpn_lang('msg_delbkp_error'), 'danger', 'admin/developers/backups');
     }
     
-    public function modmigration()
+    public function modmigration($version = FALSE)
     {
-        //echo "tela de manutanção das migraçãoes...\n";
-        //echo "Versão: " . $this->migration->current();
         
-        // Faz a listagem dos arquivos de log.
-        $this->load->helper('directory');
-        $this->load->library('table');
-        // Template da tabela
-        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
-        $this->table->set_heading(wpn_lang('backup_filename'), wpn_lang('wpn_actions'));
-        $map = directory_map(APPPATH . 'database/migrations/', 0, false);
-        for ($i = 0; $i < sizeof($map); $i++) {
-            if($map[$i] != 'index.html'){
-                $this->table->add_row(
-                    str_replace('.php', '', $map[$i]), 
-                    '<div class="btn-group btn-group-xs">'.
-                    anchor('admin/developers/downloadbackup/'.$map[$i], glyphicon('download'), array('class' => 'btn btn-xs btn-default')). 
-                    anchor('admin/developers/deletebackup/'.$map[$i], glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
-                    '</div>'
-                );
+//         print_r($this->migration->find_migrations());
+        
+        if ($version === FALSE) {
+
+            // Faz a listagem dos arquivos de log.
+            $this->load->helper('directory');
+            $this->load->library('table');
+            // Template da tabela
+            $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+            $this->table->set_heading(wpn_lang('backup_filename'), '', wpn_lang('wpn_actions'));
+            $map = directory_map(APPPATH . 'database/migrations/', 0, false);
+            for ($i = 0; $i < sizeof($map); $i++) {
+                if($map[$i] != 'index.html'){
+                    
+                    $temp_id = explode("_", $map[$i]);
+                    $id_migration = $temp_id[0];
+                    $filename = str_replace('.php', '', $map[$i]);
+                    
+                    if($temp_id[0] == $this->DevelopersModel->get_migration_version())
+                        $label_versao = '<span class="label label-danger">'. wpn_lang('actual_version').'</span>';
+                    else
+                        $label_versao = '';
+                    
+                    $this->table->add_row(
+                        $filename,
+                        $label_versao, 
+                        '<div class="btn-group btn-group-xs">'.
+                        anchor('admin/developers/modmigration/'.$id_migration, glyphicon('refresh'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_updateversion'))). 
+                        anchor('admin/developers/downloadmigration/'.$filename, glyphicon('download'), array('class' => 'btn btn-xs btn-default')). 
+                        anchor('admin/developers/deletemigration/'.$filename, glyphicon('trash'), array('class' => 'btn btn-xs btn-default', 'data-confirm' => wpn_lang('msg_confirm_delete'))) .
+                        '</div>'
+                    );
+                }
             }
+            
+            $this->set_var('lista_migrations', form_dropdown('versao', $this->DevelopersModel->get_migration_list()));
+            $this->set_var('listagem', $this->table->generate());
+            $this->render();
+
+        } else {
+            // Executa a migração para uma versão específica.
+            if ($this->migration->version($version) === FALSE)
+                $this->set_message(wpn_lang('msg_updatemigration_error'), 'danger', 'admin/developers/modmigration');
+            else
+                $this->set_message(wpn_lang('msg_updatemigration_success'), 'success', 'admin/developers/modmigration');
         }
-        //$this->set_var('compatible', $compatible);
-        $this->set_var('listagem', $this->table->generate());
-        $this->render();
+    }
+    
+    /**
+     * Executa o migration para a última versão.
+     */
+    public function lastmigration()
+    {
+        if ($this->migration->latest() === FALSE)
+            $this->set_message(wpn_lang('msg_updatemigration_error'), 'danger', 'admin/developers/modmigration');
+        else
+            $this->set_message(wpn_lang('msg_updatemigration_success'), 'success', 'admin/developers/modmigration');
+    }
+
+    /**
+     * Carrega um novo arquivo de migração.
+     */
+    public function uploadmigration()
+    {
+        $config['upload_path'] = APPPATH . 'database/migrations/';
+        $config['allowed_types']        = '*';
+        $config['remove_spaces'] = TRUE;
+        $config['file_ext_tolower'] = TRUE;
+
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('userfile'))
+            $this->set_message(wpn_lang('msg_uploadmigration_success'), 'success', 'admin/developers/modmigration');
+        else
+            $this->set_message(wpn_lang('msg_uploadmigration_error'), 'danger', 'admin/developers/modmigration');
+    }
+
+    /**
+     * Este método faz o download de um arquivo de migration.
+     * 
+     * @param string $filename
+     */
+    public function downloadmigration($filename) {
+        $this->load->helper('download');
+        force_download(APPPATH . 'database/migrations/' . $filename . '.php', null);
+    }
+    
+    /**
+     * Este método faz a excusão de um arquivo de migration.
+     * 
+     * @param string $filename
+     */
+    public function deletemigration($filename) {
+        if(unlink(APPPATH.'database/migrations/' . $filename . '.php'))
+            $this->set_message(wpn_lang('msg_delmigration_success'), 'success', 'admin/developers/modmigration');
+        else
+            $this->set_message(wpn_lang('msg_delmigration_error'), 'danger', 'admin/developers/modmigration');
     }
     
     /**
