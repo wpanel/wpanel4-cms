@@ -133,9 +133,11 @@ class Accounts extends Authenticated_Controller
             $result = $this->auth->update(
                 $id, $this->input->post('email'), $this->input->post('role'), $extra, $this->input->post('permission')
             );
-            if ($result > 0)
+            if ($result > 0){
+                if($id == $this->auth->user_id())
+                    $this->session->set_userdata('extra_data', $extra);
                 $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/accounts');
-            else
+            } else
                 $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/accounts');
         }
     }
@@ -221,6 +223,7 @@ class Accounts extends Authenticated_Controller
             );
             if ($result > 0)
             {
+                $this->session->set_userdata('extra_data', $extra);
                 if ($this->input->post('change_password') == '1')
                     redirect('admin/logout');
                 else
