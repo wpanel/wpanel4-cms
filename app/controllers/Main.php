@@ -35,7 +35,7 @@ class Main extends MY_Controller
         /**
          * Ativa o profiler (Forensics).
          */
-        $this->show_profiler = true;
+        $this->show_profiler = FALSE;
 
         /**
          * Informa o número de colunas do layout 'Mosaico'.

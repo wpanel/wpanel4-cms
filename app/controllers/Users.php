@@ -34,7 +34,7 @@ class Users extends MY_Controller
         /**
          * Ativa o profiler (Forensics).
          */
-        $this->show_profiler = false;
+        $this->show_profiler = FALSE;
 
         parent::__construct();
 
