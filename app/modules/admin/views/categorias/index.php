@@ -22,7 +22,9 @@
         <div class="box-body">
             
              <div class="table-responsive">
-                <?= $listagem; ?>
+                 <div class="container-fluid">
+                    <?= $listagem; ?>
+                 </div>
             </div>
             
             <hr/>

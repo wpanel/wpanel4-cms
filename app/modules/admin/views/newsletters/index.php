@@ -24,34 +24,38 @@
             <p class="text-danger">
                 <?= wpn_lang('news_note'); ?>
             </p>
-
-            <table id="grid" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th><?= wpn_lang('field_name') ?></th>
-                        <th><?= wpn_lang('field_email') ?></th>
-                        <th><?= wpn_lang('field_created_on') ?></th>
-                        <th><?= wpn_lang('field_ip'); ?></th>
-                    </tr>
-                </thead>
-                <tbody class="sortable">
-                    <?php
-                    foreach($contatos as $row){
-                        ?>
-                        <tr id="item-<?= $row->id; ?>" style="cursor:move;">
-                            <td><?= $row->id; ?></td>
-                            <td><?= $row->nome; ?></td>
-                            <td><?= $row->email; ?></td>
-                            <td><?= datetime_for_user($row->created_on); ?></td>
-                            <td><?= $row->ipaddress; ?></td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-
+            
+            <div class="table-responsive">
+                <div class="container-fluid">
+                    
+                    <table id="grid" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><?= wpn_lang('field_name') ?></th>
+                                <th><?= wpn_lang('field_email') ?></th>
+                                <th><?= wpn_lang('field_created_on') ?></th>
+                                <th><?= wpn_lang('field_ip'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody class="sortable">
+                            <?php
+                            foreach($contatos as $row){
+                                ?>
+                                <tr id="item-<?= $row->id; ?>" style="cursor:move;">
+                                    <td><?= $row->id; ?></td>
+                                    <td><?= $row->nome; ?></td>
+                                    <td><?= $row->email; ?></td>
+                                    <td><?= datetime_for_user($row->created_on); ?></td>
+                                    <td><?= $row->ipaddress; ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </section>
