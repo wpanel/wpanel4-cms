@@ -217,11 +217,10 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <!--
                                     <li <?= wpn_activelink('migration', 3); ?>>
-                                        <?= anchor('admin/developers/migration', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_migrations') . '</span>'); ?>
+                                        <?= anchor('admin/developers/modmigration', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_migrations') . '</span>'); ?>
                                     </li>
-                                    <li <?= wpn_activelink('generator'); ?>>
+                                    <!-- <li <?= wpn_activelink('generator'); ?>>
                                         <?= anchor('admin/generator', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_generator') . '</span>'); ?>
                                     </li>
                                     -->
