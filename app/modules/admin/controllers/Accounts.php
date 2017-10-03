@@ -164,10 +164,10 @@ class Accounts extends Authenticated_Controller
     public function changeprofilepassword()
     {
         $result = $this->auth->change_password(
-                $this->auth->user_id(), $this->input->post('password', TRUE)
+            $this->auth->user_id(), $this->input->post('password', TRUE)
         );
         if ($result > 0)
-            redirect ('admin/logout');
+            redirect('admin/logout');
         else
             $this->set_message(wpn_lang('message_password_change_profile_error'), 'danger', 'admin/accounts/profile');
     }

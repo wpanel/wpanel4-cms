@@ -54,5 +54,6 @@ $config['auth_white_list'] = array(
     'admin',
     'admin/login',
     'admin/dashboard',
-    'admin/accounts/profile'
+    'admin/accounts/profile',
+    'admin/accounts/changeprofilepassword'
 );

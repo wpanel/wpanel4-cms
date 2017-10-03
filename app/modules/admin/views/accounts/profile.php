@@ -93,12 +93,12 @@
     </div>
 </section>
 
-<?= form_open('admin/accounts/changeprofilepassword/'.$row->id); ?>
+<?= form_open('admin/accounts/changeprofilepassword'); ?>
 <div class="modal fade change-password-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <?= wpn_lang('modal_change_password'); ?>
+                <?= wpn_lang('modal_change_password'); ?> <?= $this->auth->user_id() ?>
             </div>
             <div class="modal-body">
                 <div class="row">
