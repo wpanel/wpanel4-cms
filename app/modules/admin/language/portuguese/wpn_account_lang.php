@@ -21,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $lang['module_title'] = "Contas de usuários";
 $lang['module_description'] = "Gerencia as contas de usuários.";
 $lang['module_index'] = "Lista de contas";
+$lang['module_access'] = "Lista de acessos";
 $lang['module_add'] = "Cadastro de conta";
 $lang['module_edit'] = "Alteração de conta";
 $lang['profile_title'] = "Perfil do usuário";
@@ -31,6 +32,7 @@ $lang['profile_description'] = "Alteração dos dados do usuário";
  * Campos da tabela.
  */
 $lang['field_id'] = "Código";
+$lang['field_ip'] = "IP";
 $lang['field_name'] = "Nome";
 $lang['field_email'] = "E-mail";
 $lang['field_password'] = "Senha";
@@ -41,6 +43,7 @@ $lang['field_description'] = "Descrição";
 $lang['field_link'] = "Link";
 $lang['field_status'] = "Status";
 $lang['field_created_on'] = "Criado em";
+$lang['field_access_data'] = "Data do acesso";
 $lang['field_change_avatar'] = "Alterar a foto do usuário";
 
 /**

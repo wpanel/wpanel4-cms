@@ -20,7 +20,7 @@ class Accounts extends Authenticated_Controller
      */
     function __construct()
     {
-        $this->model_file = 'account';
+        $this->model_file = array('account', 'logaccess');
         $this->language_file = 'wpn_account_lang';
         parent::__construct();
     }
@@ -61,9 +61,52 @@ class Accounts extends Authenticated_Controller
                     $row->id, json_decode($row->extra_data)->name, $row->email, $roles[$row->role], mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
+                    anchor('admin/accounts/access/' . $row->id, glyphicon('eye-open'), array('class' => 'btn btn-default')) .
                     anchor('admin/accounts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                     anchor('admin/accounts/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
+            );
+        }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
+    }
+
+    /**
+     * Access log page.
+     */
+    public function access($account_id = NULL)
+    {
+        $this->load->library('table');
+		$this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(
+                wpn_lang('field_ip'), wpn_lang('field_access_data')
+        );
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->logaccess->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/accounts/access/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->logaccess->limit($limit, $offset)
+                            ->select('ip_address, created_on')
+                            ->find_all();
+        
+        foreach ($query as $row)
+        {
+            $this->table->add_row(
+                    $row->ip_address, mdate('%d/%m/%Y %H:%i:%s', strtotime($row->created_on))
             );
         }
         
