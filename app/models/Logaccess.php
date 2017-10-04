@@ -18,7 +18,7 @@ class Logaccess extends MY_Model
     public $primary_key = 'id';
     public $date_format = 'datetime';
     protected $soft_deletes = FALSE;
-    protected $log_user = FALSE;
+    protected $log_user = TRUE;
     protected $set_created = TRUE;
     protected $set_modified = TRUE;
 }

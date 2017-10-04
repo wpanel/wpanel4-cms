@@ -338,9 +338,9 @@ class Auth
         $query = $this->account->find_by(array('email' => $email, 'password' => $this->_hash_password($password), 'status' => 1));
         if ($query)
         {
-            $this->_add_access($query->id);
             $this->_clear_attempt();
             $this->_set_session($query);
+            $this->_add_access($query->id);
             return TRUE;
         } else
         {
