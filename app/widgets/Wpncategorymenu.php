@@ -66,8 +66,8 @@ class Wpncategorymenu extends Widget
     private function get_category($id)
     {
 
-        $this->load->model('categoria');
-        $query = $this->categoria
+        $this->load->model('category');
+        $query = $this->category
                 ->select('id, title, link')
                 ->order_by('title', 'asc')
                 ->find_many_by('category_id', $id);

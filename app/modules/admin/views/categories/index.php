@@ -16,7 +16,7 @@
         <div class="box-header with-border">
             <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/categorias/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/categories/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">

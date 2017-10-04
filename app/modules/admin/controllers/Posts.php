@@ -20,7 +20,7 @@ class Posts extends Authenticated_Controller
      */
     function __construct()
     {
-        $this->model_file = array('post', 'categoria', 'post_categoria');
+        $this->model_file = array('post', 'category', 'post_categoria');
         $this->language_file = 'wpn_post_lang';
         parent::__construct();
     }
@@ -84,7 +84,7 @@ class Posts extends Authenticated_Controller
         if ($this->form_validation->run() == FALSE)
         {
             // Prepara a lista de categorias.
-            $query = $this->categoria->select('id, title')->find_all();
+            $query = $this->category->select('id, title')->find_all();
             $categorias = array();
             foreach ($query as $row)
             {
@@ -135,7 +135,7 @@ class Posts extends Authenticated_Controller
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             // Prepara a lista de categorias.
-            $query = $this->categoria->select('id, title')->find_all();
+            $query = $this->category->select('id, title')->find_all();
             $categorias = array();
             foreach ($query as $row)
             {

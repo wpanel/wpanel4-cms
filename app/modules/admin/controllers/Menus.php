@@ -20,7 +20,7 @@ class Menus extends Authenticated_Controller
      */
     function __construct()
     {
-        $this->model_file = array('menu_item', 'post', 'categoria', 'menu');
+        $this->model_file = array('menu_item', 'post', 'category', 'menu');
         $this->language_file = 'wpn_menu_lang';
         parent::__construct();
     }
@@ -133,7 +133,7 @@ class Menus extends Authenticated_Controller
         {
             $this->set_var('menu_id', $menu_id);
             $this->set_var('posts', $this->post->find_all());
-            $this->set_var('categorias', $this->categoria->find_all());
+            $this->set_var('categorias', $this->category->find_all());
             $this->set_var('menus', $this->menu->find_all());
             $this->render();
         } else
@@ -186,7 +186,7 @@ class Menus extends Authenticated_Controller
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/menus');
             $this->set_var('posts', $this->post->find_all());
-            $this->set_var('categorias', $this->categoria->find_all());
+            $this->set_var('categorias', $this->category->find_all());
             $this->set_var('menus', $this->menu->find_all());
             $this->set_var('id', $id);
             $this->set_var('row', $this->menu_item->find($id));
@@ -311,8 +311,8 @@ class Menus extends Authenticated_Controller
      */
     private function get_titulo_categoria($categoria_id)
     {
-        $this->load->model('categoria');
-        $query = $this->categoria->find($categoria_id);
+//        $this->load->model('category');
+        $query = $this->category->find($categoria_id);
         return $query->title;
     }
 

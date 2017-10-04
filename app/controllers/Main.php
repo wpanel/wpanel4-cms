@@ -94,7 +94,7 @@ class Main extends MY_Controller
     {
 
         $this->load->model('post');
-        $this->load->model('categoria');
+        $this->load->model('category');
 
         if ($category_id == null)
         {
@@ -105,7 +105,7 @@ class Main extends MY_Controller
             $view_title = 'Todas as postagens';
         } else
         {
-            $qry_category = $this->categoria
+            $qry_category = $this->category
                     ->select('id, title, description, view')
                     ->find($category_id);
             $this->set_var('posts', $this->post->get_by_category($category_id, 'desc')->result());

@@ -133,7 +133,7 @@
                             <?= anchor('admin/dashboard', '<i class="fa fa-dashboard"></i> <span>' . wpn_lang('wpn_menu_dashboard') . '</span>'); ?>
                         </li>
                         <!-- Menu Portal -->
-                        <li class="treeview <?= wpn_activelink(array('posts', 'categorias', 'pages', 'events', 'banners', 'galleries', 'fotos', 'videos', 'enquetes', 'enqrespostas', 'comments'), 2, 'active'); ?>">
+                        <li class="treeview <?= wpn_activelink(array('posts', 'categories', 'pages', 'events', 'banners', 'galleries', 'fotos', 'videos', 'enquetes', 'enqrespostas', 'comments'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-globe"></i>
                                 <span><?= wpn_lang('wpn_menu_portal'); ?></span>
@@ -143,7 +143,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <?php if (auth_link_permission('admin/posts')) { ?>
-                                    <li <?= wpn_activelink(array('posts', 'categorias')); ?>>
+                                    <li <?= wpn_activelink(array('posts', 'categories')); ?>>
                                         <?= anchor('admin/posts', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('wpn_menu_post') . '</span>'); ?>
                                     </li>
                                 <?php } ?>

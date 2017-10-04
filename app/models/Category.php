@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Categoria extends MY_Model
+class Category extends MY_Model
 {
 
     public $table_name = 'categories';

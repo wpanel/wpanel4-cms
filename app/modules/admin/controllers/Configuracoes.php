@@ -17,7 +17,7 @@ class Configuracoes extends Authenticated_Controller
 
     function __construct()
     {
-        $this->model_file = array('categoria', 'post', 'configuracao');
+        $this->model_file = array('category', 'post', 'configuracao');
         $this->language_file = 'wpn_configuration_lang';
         parent::__construct();
     }
@@ -34,7 +34,7 @@ class Configuracoes extends Authenticated_Controller
         $this->form_validation->set_rules('site_titulo', wpn_lang('site_titulo'), 'required');
         if ($this->form_validation->run() == FALSE)
         {
-            $query_categorias = $this->categoria->order_by('title', 'asc')->find_all();
+            $query_categorias = $this->category->order_by('title', 'asc')->find_all();
             $query_posts = $this->post->order_by('title', 'asc')->find_all();
             // Monta a lista de categorias.
             $opt_categoria = array();

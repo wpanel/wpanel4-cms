@@ -17,7 +17,7 @@
             <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
                 <?= anchor('admin/posts/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
-                <?= anchor('admin/categorias', glyphicon('th-list') . wpn_lang('post_bot_new_category'), array('class' => 'btn btn-sm btn-default')); ?>
+                <?= anchor('admin/categories', glyphicon('th-list') . wpn_lang('post_bot_new_category'), array('class' => 'btn btn-sm btn-default')); ?>
             </div>
         </div>
         <div class="box-body">

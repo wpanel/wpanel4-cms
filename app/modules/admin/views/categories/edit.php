@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
-        <li><a href="<?= site_url('admin/categorias'); ?>"><i class="fa fa-tag"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><a href="<?= site_url('admin/categories'); ?>"><i class="fa fa-tag"></i> <?= wpn_lang('module_title'); ?></a></li>
         <li><?= wpn_lang('module_edit'); ?></li>
     </ol>
 </section>
@@ -16,7 +16,7 @@
             <h3 class="box-title"><?= wpn_lang('module_edit'); ?></h3>
         </div>
         <div class="box-body">
-            <?= form_open('admin/categorias/edit/'.$row->id, array('role'=>'form')); ?>
+            <?= form_open('admin/categories/edit/'.$row->id, array('role'=>'form')); ?>
                 <div class="form-group" >
                     <label for="title"><?= wpn_lang('field_title'); ?></label>
                     <input type="text" name="title" value="<?= $row->title; ?>" class="form-control"  />
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
-                <?= anchor('admin/categorias', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
+                <?= anchor('admin/categories', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
             <?= form_close(); ?>
         </div>
     </div>
