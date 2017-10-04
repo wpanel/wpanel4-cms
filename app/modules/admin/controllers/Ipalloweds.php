@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Ipbanneds extends Authenticated_Controller
+class Ipalloweds extends Authenticated_Controller
 {
 
     /**
@@ -22,8 +22,8 @@ class Ipbanneds extends Authenticated_Controller
      */
     function __construct()
     {
-        $this->model_file = 'ipban';
-        $this->language_file = 'wpn_ipbanned_lang';
+        $this->model_file = 'ipallowed';
+        $this->language_file = 'wpn_ipallowed_lang';
         parent::__construct();
     }
 
@@ -34,7 +34,7 @@ class Ipbanneds extends Authenticated_Controller
     {
         $this->load->library('table');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
-        $this->table->set_heading('#', wpn_lang('field_ip'), wpn_lang('field_created_on'), wpn_lang('wpn_actions'));
+        $this->table->set_heading('#', wpn_lang('field_description'), wpn_lang('field_ip'), wpn_lang('field_created_on'), wpn_lang('wpn_actions'));
         
         // Paginação
         // -------------------------------------------------------------------
@@ -43,24 +43,24 @@ class Ipbanneds extends Authenticated_Controller
         $offset = $this->uri->segment($uri_segment);
         $total_rows = $this->ipban->count_by('deleted', '0');
         $config = array();
-        $config['base_url'] = site_url('admin/ipbanneds/index/pag');
+        $config['base_url'] = site_url('admin/ipalloweds/index/pag');
         $config['total_rows'] = $total_rows;
         $config['per_page'] = $limit;
         $this->pagination->initialize($config);
         // -------------------------------------------------------------------
         // Fim - Paginação
         
-        $query = $this->ipban
-                ->select('id, ip_address, created_on')
+        $query = $this->ipallowed
+                ->select('id, description, ip_address, created_on')
                 ->limit($limit, $offset)
                 ->find_all();
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->ip_address, date('d/m/Y H:i:s', strtotime($row->created_on)),
+                    $row->id, $row->description, $row->ip_address, date('d/m/Y H:i:s', strtotime($row->created_on)),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
-                    anchor('admin/ipbanneds/delete/' . $row->id, glyphicon('trash'), array('class'=>'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
+                    anchor('admin/ipalloweds/delete/' . $row->id, glyphicon('trash'), array('class'=>'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                     div(null, true)
             );
         }
@@ -82,11 +82,12 @@ class Ipbanneds extends Authenticated_Controller
         } else
         {
             $data = array();
+            $data['description'] = $this->input->post('description');
             $data['ip_address'] = $this->input->post('ip_address');
-            if ($this->ipban->insert($data))
-                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/ipbanneds');
+            if ($this->ipallowed->insert($data))
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/ipalloweds');
             else
-                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/ipbanneds');
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/ipalloweds');
         }
     }
 
@@ -98,11 +99,11 @@ class Ipbanneds extends Authenticated_Controller
     public function delete($id = null)
     {
         if ($id == null)
-            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/ipbanneds');
-        if ($this->ipban->delete($id))
-            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/ipbanneds');
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/ipalloweds');
+        if ($this->ipallowed->delete($id))
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/ipalloweds');
         else
-            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/ipbanneds');
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/ipalloweds');
     }
 
 }

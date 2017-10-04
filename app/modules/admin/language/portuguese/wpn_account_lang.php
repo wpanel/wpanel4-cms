@@ -48,6 +48,7 @@ $lang['field_change_avatar'] = "Alterar a foto do usuário";
  */ 
 $lang['wpn_bot_new'] = "Nova conta";
 $lang['bot_banned_ip'] = "IP's Banidos";
+$lang['bot_allowed_ip'] = "IP's Permitidos";
 $lang['tab_userdata'] = "Dados do usuário";
 $lang['tab_permissions'] = "Permissões";
 $lang['bot_change_password'] = "Alterar senha";

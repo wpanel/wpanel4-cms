@@ -45,7 +45,7 @@ class Auth
         if (count($config) > 0)
             $this->initialize($config);
 
-        $this->load->model(array('account', 'permission', 'ipban', 'logaccess', 'ipattempt', 'module_action'));
+        $this->load->model(array('account', 'permission', 'ipban', 'ipallowed', 'logaccess', 'ipattempt', 'module_action'));
 
         log_message('debug', "Auth Class Initialized");
     }
@@ -699,12 +699,16 @@ class Auth
      * @return boolean
      */
     private function _is_banned()
-    {
-        $result = $this->ipban->count_by('ip_address', $_SERVER['REMOTE_ADDR']);
-        if($result > 0)
-            return TRUE;
-        else
+    {        
+        if ($this->ipallowed->is_whitelisted($_SERVER['REMOTE_ADDR'])) {
             return FALSE;
+        } else {
+            $result = $this->ipban->count_by('ip_address', $_SERVER['REMOTE_ADDR']);
+            if($result > 0)
+                return TRUE;
+            else
+                return FALSE;
+        }
     }
 
     /**

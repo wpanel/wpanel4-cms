@@ -17,6 +17,7 @@
             <div class="box-tools pull-right">
                 <?= anchor('admin/accounts/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
                 <?= anchor('admin/ipbanneds', glyphicon('ban-circle') . wpn_lang('bot_banned_ip'), array('class' => 'btn btn-sm btn-danger')); ?>
+                <?= anchor('admin/ipalloweds', glyphicon('check') . wpn_lang('bot_allowed_ip'), array('class' => 'btn btn-sm btn-success')); ?>
             </div>
         </div>
         <div class="box-body">
