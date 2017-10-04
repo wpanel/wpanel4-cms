@@ -295,12 +295,11 @@ class Menus extends Authenticated_Controller
      */
     private function get_titulo_postagem($post_link)
     {
-        $this->load->model('post');
         $query = $this->post->find_by('link', $post_link);
         if(count($query) > 0)
             return $query->title;
         else
-            return '-';
+            return '<span class="label label-danger">Error</span>';
     }
 
     /**
@@ -311,22 +310,26 @@ class Menus extends Authenticated_Controller
      */
     private function get_titulo_categoria($categoria_id)
     {
-//        $this->load->model('category');
         $query = $this->category->find($categoria_id);
-        return $query->title;
+        if(count($query))
+            return $query->title;
+        else
+            return '<span class="label label-danger">Error</span>';
     }
 
     /**
-     * return menu title.
+     * Return menu title.
      * 
      * @param int $menu_id
      * @return string
      */
     private function get_titulo_menu($menu_id)
     {
-        $this->load->model('menu');
         $query = $this->menu->find($menu_id);
-        return $query->nome;
+        if(count($query))
+            return $query->nome;
+        else
+            return '<span class="label label-danger">Error</span>';
     }
 
 }
