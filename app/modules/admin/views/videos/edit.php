@@ -13,7 +13,6 @@
     <div class="panel panel-default">
         <div class="panel-heading"><?= wpn_lang('module_edit') ?></div>
         <div class="panel-body">
-
             <?= form_open('admin/videos/edit/' . $row->id, array('class' => 'form-horizontal', 'role' => 'form')); ?>
             <div class="form-group">
                 <label for="titulo" class="col-sm-2 col-md-2"><?= wpn_lang('field_title') ?></label>
@@ -26,6 +25,12 @@
                 <label for="descricao" class="col-sm-2 col-md-2"><?= wpn_lang('field_description') ?></label>
                 <div class="col-sm-10 col-md-10">
                     <textarea class="form-control" id="descricao" name="descricao"  rows=""><?= $row->descricao; ?></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tags" class="col-sm-2 col-md-2"><?= wpn_lang('field_tags') ?></label>
+                <div class="col-sm-10 col-md-10">
+                    <input type="text"  class="form-control" id="tags" name="tags" value="<?= $row->tags; ?>" />
                 </div>
             </div>
             <div class="form-group">

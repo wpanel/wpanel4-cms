@@ -381,7 +381,7 @@ class Main extends MY_Controller
         
         $this->load->model('video');
         $query_video = $this->video
-                ->select('titulo, descricao, link, status')
+                ->select('titulo, descricao, link, tags, status')
                 ->find_by(array('link' => $code, 'status' => 1));
         
         if (count($query_video) <= 0)

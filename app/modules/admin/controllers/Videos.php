@@ -85,6 +85,7 @@ class Videos extends Authenticated_Controller
             $data = array();
             $data['titulo'] = $this->input->post('titulo');
             $data['descricao'] = $this->input->post('descricao');
+            $data['tags'] = $this->input->post('tags');
             $data['link'] = $this->get_youtube_code($this->input->post('link'));
             $data['status'] = $this->input->post('status');
             if ($this->video->insert($data))
@@ -113,6 +114,7 @@ class Videos extends Authenticated_Controller
             $data = array();
             $data['titulo'] = $this->input->post('titulo');
             $data['descricao'] = $this->input->post('descricao');
+            $data['tags'] = $this->input->post('tags');
             $data['link'] = $this->get_youtube_code($this->input->post('link'));
             $data['status'] = $this->input->post('status');
             if ($this->video->update($id, $data))

@@ -28,6 +28,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="tags" class="col-sm-2 col-md-2"><?= wpn_lang('field_tags') ?></label>
+                <div class="col-sm-10 col-md-10">
+                    <input type="text"  class="form-control" id="tags" name="tags" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="link" class="col-sm-2 col-md-2"><?= wpn_lang('field_link') ?></label>
                 <div class="col-sm-6 col-md-6">
                     <input type="text"  class="form-control" id="link" name="link" value="<?= set_value('link'); ?>" />
