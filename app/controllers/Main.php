@@ -266,7 +266,7 @@ class Main extends MY_Controller
         // Fim - Paginação
         
         $query_album = $this->gallery
-                ->select('id, titulo, capa, descricao, status, created_on')
+                ->select('id, titulo, capa, descricao, tags, status, created_on')
                 ->find($album_id);
         
         if (count($query_album) <= 0)

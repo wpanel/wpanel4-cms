@@ -74,6 +74,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <!-- Mostra as palavras-chave do album.. -->
+        <?= $this->widget->load('wpntagsfrompost', array('tags'=>$album->tags)); ?>
+    </div>
+</div>
+
 <div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
         <h3 class="page-header">Comentários</h3>

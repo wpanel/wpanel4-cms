@@ -27,6 +27,10 @@
                 <textarea name="descricao" rows="5" class="form-control"><?= set_value('descricao'); ?></textarea>
                 <?= form_error('descricao'); ?>
             </div>
+            <div class="form-group">
+                <label for="tags"><?= wpn_lang('field_tags'); ?></label>
+                <input type="text" name="tags" class="form-control" />
+            </div>
             <div class="row">
                 <div class="col-sm-4 col-md-4">
                     <div class="form-group">

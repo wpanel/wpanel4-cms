@@ -27,6 +27,10 @@
                 <textarea name="descricao" rows="5" class="form-control"><?= $row->descricao; ?></textarea>
                 <?= form_error('descricao'); ?>
             </div>
+            <div class="form-group">
+                <label for="tags"><?= wpn_lang('field_tags'); ?></label>
+                <input type="text" name="tags" value="<?= $row->tags; ?>" class="form-control" />
+            </div>
             <div class="row">
                 <div class="col-sm-5 col-md-5">
                     <div class="form-group">

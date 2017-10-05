@@ -93,6 +93,7 @@ class Galleries extends Authenticated_Controller
             $data = array();
             $data['titulo'] = $this->input->post('titulo');
             $data['descricao'] = $this->input->post('descricao');
+            $data['tags'] = $this->input->post('tags');
             $data['status'] = $this->input->post('status');
             $data['capa'] = $this->wpanel->upload_media('capas');
             $new_post = $this->gallery->insert($data);
@@ -124,6 +125,7 @@ class Galleries extends Authenticated_Controller
             $data = array();
             $data['titulo'] = $this->input->post('titulo');
             $data['descricao'] = $this->input->post('descricao');
+            $data['tags'] = $this->input->post('tags');
             $data['status'] = $this->input->post('status');
             if ($this->input->post('alterar_imagem') == '1')
             {
@@ -189,7 +191,7 @@ class Galleries extends Authenticated_Controller
         
         $query = $this->picture->limit($limit, $offset)
                             ->order_by('created_on', 'desc')
-                            ->select('id, title, filename, descricao, created_on, status')
+                            ->select('id, filename, descricao, created_on, status')
                             ->find_many_by('album_id', $album_id);
 
         foreach ($query as $row)

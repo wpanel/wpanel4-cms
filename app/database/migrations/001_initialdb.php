@@ -128,6 +128,10 @@ class Migration_Initialdb extends CI_Migration
             'type' => 'text',
             'null' => TRUE
         ),
+        'tags' => array(
+            'type' => 'text',
+            'null' => TRUE
+        ),
         'capa' => array(
             'type' => 'varchar',
             'constraint' => 200,
@@ -670,6 +674,10 @@ class Migration_Initialdb extends CI_Migration
             'null' => FALSE
         ),
         'descricao' => array(
+            'type' => 'text',
+            'null' => TRUE
+        ),
+        'tags' => array(
             'type' => 'text',
             'null' => TRUE
         ),

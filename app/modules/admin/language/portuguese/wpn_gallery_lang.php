@@ -27,6 +27,7 @@ $lang['submodule_edit'] = "Alteração de foto";
 $lang['field_id'] = "Código";
 $lang['field_title'] = "Título";
 $lang['field_description'] = "Descrição";
+$lang['field_tags'] = "Palavras-chave";
 $lang['field_folder'] = "Imagem";
 $lang['field_created_on'] = "Data";
 $lang['field_filename'] = "Imagem";
