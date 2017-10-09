@@ -79,10 +79,10 @@
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+                            <?= $this->widget->load('notificate'); ?>
                             <li>
                                 <?= anchor('', '<span class="fa fa-globe fa-lg fa-2x"></span><span class="hidden-xs">&nbsp;&nbsp;'.wpn_lang('link_view_site').'</span>', array('target' => '_blank')); ?>
                             </li>
-                            <?= $this->widget->load('notificate'); ?>
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -176,7 +176,7 @@
                             </ul>
                         </li>
                         <!-- Menu Sistema -->
-                        <li class="treeview <?= wpn_activelink(array('menus', 'newsletters', 'accounts', 'ipbanneds', 'configuracoes'), 2, 'active'); ?>">
+                        <li class="treeview <?= wpn_activelink(array('menus', 'notifications', 'newsletters', 'accounts', 'ipbanneds', 'configuracoes'), 2, 'active'); ?>">
                             <a href="#">
                                 <i class="fa fa-gears"></i>
                                 <span><?= wpn_lang('wpn_menu_system'); ?></span>
@@ -197,6 +197,11 @@
                                 <?php if (auth_link_permission('admin/accounts')) { ?>
                                     <li <?= wpn_activelink(array('accounts', 'ipbanneds')); ?>>
                                         <?= anchor('admin/accounts', '<i class="fa fa-users"></i> <span>' . wpn_lang('wpn_menu_account') . '</span>'); ?>
+                                    </li>
+                                <?php } ?>
+                                <?php if (auth_link_permission('admin/notifications')) { ?>
+                                    <li <?= wpn_activelink('notifications'); ?>>
+                                        <?= anchor('admin/notifications', '<i class="fa fa-bell-o"></i> <span>' . wpn_lang('wpn_menu_notification') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
                                 <?php if (auth_link_permission('admin/configuracoes')) { ?>

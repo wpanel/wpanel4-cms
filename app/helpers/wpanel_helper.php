@@ -138,6 +138,25 @@ if (!function_exists('status_post'))
 
 }
 
+if (!function_exists('status_notification'))
+{
+
+    /**
+     * Return a bootstrap label tag according to the notification status.
+     *
+     * @param $status int Notification status.
+     * @return string
+     * */
+    function status_notification($status)
+    {
+        if ($status == '1')
+            return '<span class="label label-success">Lido</span>';
+        else
+            return '<span class="label label-info">Não lido</span>';
+    }
+
+}
+
 if (!function_exists('sim_nao'))
 {
 

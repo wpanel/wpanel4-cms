@@ -22,6 +22,12 @@ class Notification extends MY_Model
     protected $set_created = TRUE;
     protected $set_modified = TRUE;
     
+    /**
+     * Cria uma nova notificação, ignora caso já exista uma com a mesma URL.
+     * 
+     * @param array $data
+     * @return int
+     */
     public function new_notification($data)
     {
         $total = $this->count_by('url', $data['url']);

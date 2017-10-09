@@ -8,7 +8,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Classe Wpntitle.
+ * Classe Notificate.
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
@@ -22,8 +22,17 @@ class Notificate extends Widget
      */
     public function main()
     {
-         return "Notificação\n";
-        //$this->load->view('widgets/formnewsletter');
+        $this->get_notifications();
+    }
+    
+    /**
+     * Monta a lista de notificações.
+     */
+    private function get_notifications()
+    {
+        $this->load->model('notification');
+        $query = $this->notification->find_many_by('status', 0);
+        $this->load->view('widgets/notificate', array('query' => $query));
     }
 
 }
