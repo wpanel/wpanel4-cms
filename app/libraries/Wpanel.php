@@ -448,5 +448,42 @@ class Wpanel
             return FALSE;
         
     }
+    
+    /**
+     * Check for from Wpanel.org.
+     * 
+     * @return boolean
+     */
+    public function check_news()
+    {
+        $this->load->library('curl');
+        $this->load->model('notification');
+        $url  = 'http://localhost:8000/api/v1/news'; //TODO revisar a URL da API.
+        $data = array(
+            'app_token' => wpn_config('app_token'),
+            'ip_address' => $this->input->server('REMOTE_ADDR'),
+            'url' => base_url()
+        );
+        $this->curl->create($url);
+        $this->curl->post($data);
+        $result = $this->curl->execute();
+        $httpcode = $this->curl->info;
+        if($httpcode['http_code'] === 200) {
+            $query = json_decode($result);
+            foreach($query as $row) {
+                if(@$row->link) {
+                    $data_save = array(
+                        'title' => $row->title,
+                        'description' => $row->description,
+                        'url' => $row->link,
+                        'status' => 0
+                    );
+                    $this->notification->new_notification($data_save);
+                }
+            }
+            return TRUE;
+        } else
+            return FALSE;
+    }
 
 }

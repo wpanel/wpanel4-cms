@@ -49,12 +49,20 @@ class Main extends CI_Controller
             $this->load->view('setup/index', $this->layout_vars);
         else
         {
+            // Set App token.
+            $this->load->model('configuracao');
+            $this->load->library('wpanel');
+            $configs = $this->configuracao->load_config();
+            $configs->app_token = md5($this->input->post('email', TRUE) . time());
+            $this->configuracao->save_config($configs);
+            $this->wpanel->check_news();
+            // Register the root user.
             $result = $this->auth->register(
                     $this->input->post('email', TRUE), $this->input->post('password', TRUE), 'ROOT', array(
-                'name' => $this->input->post('name'),
-                'skin' => 'blue',
-                'avatar' => ''
-                    )
+                    'name' => $this->input->post('name'),
+                    'skin' => 'blue',
+                    'avatar' => ''
+                )
             );
             if ($result > 0)
             {

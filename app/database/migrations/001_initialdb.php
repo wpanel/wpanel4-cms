@@ -656,6 +656,38 @@ class Migration_Initialdb extends CI_Migration
             'null' => TRUE,
         ),
     );
+    
+    /**
+     * NewsNotifications table fields.
+     * @var mixed 
+     */
+    protected $newsnotifications_fields = array(
+        'id' => array(
+            'type' => 'int',
+            'constraint' => 11,
+            'unsigned' => TRUE,
+            'auto_increment' => TRUE
+        ),
+        'title' => array(
+            'type' => 'varchar',
+            'constraint' => 200,
+            'null' => FALSE
+        ),
+        'description' => array(
+            'type' => 'text',
+            'null' => TRUE
+        ),
+        'url' => array(
+            'type' => 'varchar',
+            'constraint' => 255,
+            'null' => FALSE
+        ),
+        'status' => array(
+            'type' => 'int',
+            'constraint' => 1,
+            'null' => TRUE
+        ),
+    );
 
     /**
      * Video table fields.
@@ -792,6 +824,14 @@ class Migration_Initialdb extends CI_Migration
         $this->dbforge->create_table('posts_categories', true);
 
         /**
+         * Generate NewsNotifications table.
+         */
+        $this->dbforge->add_field($this->newsnotifications_fields);
+        $this->dbforge->add_field($this->common_fields);
+        $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->create_table('newsnotifications', true);
+        
+        /**
          * Generate videos table.
          */
         $this->dbforge->add_field($this->videos_fields);
@@ -884,6 +924,7 @@ class Migration_Initialdb extends CI_Migration
         $this->dbforge->drop_table('banners', true);
         $this->dbforge->drop_table('captcha', true);
         $this->dbforge->drop_table('categories', true);
+        $this->dbforge->drop_table('newsnotifications', true);
         $this->dbforge->drop_table('fotos', true);
         $this->dbforge->drop_table('menus', true);
         $this->dbforge->drop_table('menu_itens', true);

@@ -82,6 +82,7 @@
                             <li>
                                 <?= anchor('', '<span class="fa fa-globe fa-lg fa-2x"></span><span class="hidden-xs">&nbsp;&nbsp;'.wpn_lang('link_view_site').'</span>', array('target' => '_blank')); ?>
                             </li>
+                            <?= $this->widget->load('notificate'); ?>
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">

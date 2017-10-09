@@ -54,8 +54,8 @@ class Widget
      */
     public function load($file, $param = null)
     {
-        //print_r($file);
-        $module = '';
+        $file = ucfirst($file);
+        $module = $this->router->module;
         if (($pos = strrpos($file, '/')) !== FALSE)
         {
             $module = substr($file, 0, $pos);
