@@ -22,6 +22,7 @@ class Dashboard extends Authenticated_Controller
     {
         $this->model_file = array('post', 'banner', 'gallery', 'video');
         $this->language_file = 'wpn_dashboard_lang';
+        $this->wpanel->check_news();
         parent::__construct();
 
         if (auth_login_data('role') == 'user')
