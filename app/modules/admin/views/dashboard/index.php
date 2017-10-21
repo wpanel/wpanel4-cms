@@ -90,7 +90,7 @@ else
                 <div class="col-md-4" style="margin-top:10px;">
                     <a 
                         href="<?= site_url('admin/accounts'); ?>"
-                        class="btn btn-warning btn-lg btn-block" 
+                        class="btn btn-primary btn-lg btn-block" 
                         style="padding-top:30px;padding-bottom:30px;">
                         <span class="glyphicon glyphicon-user"></span> <?= wpn_lang('dash_manage_accounts'); ?>
                     </a>
@@ -98,7 +98,7 @@ else
                 <div class="col-md-4" style="margin-top:10px;">
                     <a 
                         href="<?= site_url('admin/configuracoes'); ?>" 
-                        class="btn btn-danger btn-lg btn-block" 
+                        class="btn btn-primary btn-lg btn-block" 
                         style="padding-top:30px;padding-bottom:30px;">
                         <span class="glyphicon glyphicon-cog"></span> <?= wpn_lang('dash_configurations'); ?>
                     </a>
@@ -106,7 +106,7 @@ else
                 <div class="col-md-4" style="margin-top:10px;">
                     <a 
                         href="<?= site_url(); ?>" target="_blank" 
-                        class="btn btn-success btn-lg btn-block" 
+                        class="btn btn-primary btn-lg btn-block" 
                         style="padding-top:30px;padding-bottom:30px;">
                         <span class="glyphicon glyphicon-globe"></span> <?= wpn_lang('dash_view_site'); ?>
                     </a>
