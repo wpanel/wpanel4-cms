@@ -134,24 +134,27 @@ class Posts extends Authenticated_Controller
         {
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
+            $query = $this->post->find_by(array('id' => $id, 'page' => 0));
+            if(count($query) == 0)
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             // Prepara a lista de categorias.
-            $query = $this->category->select('id, title')->find_all();
+            $query_cat = $this->category->select('id, title')->find_all();
             $categorias = array();
-            foreach ($query as $row)
+            foreach ($query_cat as $row)
             {
                 $categorias[$row->id] = $row->title;
             }
             // Prepara as categorias selecionadas.
-            $query = $this->post_categoria->select('category_id')->find_many_by('post_id', $id);
+            $query_selected_cat = $this->post_categoria->select('category_id')->find_many_by('post_id', $id);
             $cat_select = array();
-            foreach ($query as $x => $row)
+            foreach ($query_selected_cat as $x => $row)
             {
                 $cat_select[$x] = $row->category_id;
             }
             $this->set_var('id', $id);
             $this->set_var('categorias', $categorias);
             $this->set_var('cat_select', $cat_select);
-            $this->set_var('row', $this->post->find($id));
+            $this->set_var('row', $query);
             $this->render();
         } else
         {

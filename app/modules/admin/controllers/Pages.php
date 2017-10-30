@@ -117,8 +117,11 @@ class Pages extends Authenticated_Controller
         {
             if ($id == null)
                 $this->set_message('Página inexistente.', 'info', 'admin/pages');
+            $query = $this->post->find_by(array('id' => $id, 'page' => 1));
+            if(count($query) == 0)
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/pages');
             $this->set_var('id', $id);
-            $this->set_var('row', $this->post->find($id));
+            $this->set_var('row', $query);
             $this->render();
         } else
         {
