@@ -95,6 +95,6 @@ class Notifications extends Authenticated_Controller
     {
         $query = $this->notification->find($id);
         $this->notification->update($id, array('status' => 1));
-        redirect($query->url);
+        redirect('http://wpanel.org/post/'.$query->url);
     }
 }

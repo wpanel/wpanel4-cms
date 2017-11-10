@@ -458,7 +458,7 @@ class Wpanel
     {
         $this->load->library('curl');
         $this->load->model('notification');
-        $url  = 'http://localhost:8000/api/v1/news'; //TODO revisar a URL da API.
+        $url  = 'https://wpanel.org/api/v1/news';
         $data = array(
             'app_token' => wpn_config('app_token'),
             'ip_address' => $this->input->server('REMOTE_ADDR'),

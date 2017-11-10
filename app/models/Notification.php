@@ -31,7 +31,7 @@ class Notification extends MY_Model
     public function new_notification($data)
     {
         $total = $this->count_by('url', $data['url']);
-        if(!$total >= 1)
+        if($total <= 0)
            return @$this->insert($data);
     }
     
