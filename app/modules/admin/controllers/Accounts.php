@@ -126,6 +126,10 @@ class Accounts extends Authenticated_Controller
         $this->form_validation->set_rules('email', wpn_lang('field_email'), 'required|valid_email|is_unique[accounts.email]');
         if ($this->form_validation->run() == FALSE)
         {
+            $roles = config_item('auth_account_role');
+            if(!$this->auth->is_root())
+                unset($roles['ROOT']);
+            $this->set_var('roles', $roles);
             $this->set_var('query_module', $this->list_modules_full());
             $this->render();
         } else
@@ -161,6 +165,10 @@ class Accounts extends Authenticated_Controller
         {
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/accounts');
+            $roles = config_item('auth_account_role');
+            if(!$this->auth->is_root())
+                unset($roles['ROOT']);
+            $this->set_var('roles', $roles);
             $this->set_var('query_module', $this->list_modules_full());
             $this->set_var('row', $query);
             $this->set_var('extra', $extra);

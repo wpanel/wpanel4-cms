@@ -95,7 +95,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="role"><?= wpn_lang('field_role'); ?></label>
-                                        <?= form_dropdown('role', config_item('auth_account_role'), array($row->role), array('class'=>'form-control')); ?>
+                                        <?= form_dropdown('role', $roles, array($row->role), array('class'=>'form-control')); ?>
                                         <?= form_error('role'); ?>
                                     </div>
                                 </div>
