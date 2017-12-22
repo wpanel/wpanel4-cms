@@ -117,7 +117,7 @@ switch (ENVIRONMENT)
  * This variable must contain the full URI of the site.
  * Set the protocol as you need with http:// or https://
  */
-$base_url = "http://" . $_SERVER['HTTP_HOST'];
+$base_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
 $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 define('BASE_URL', $base_url);
 

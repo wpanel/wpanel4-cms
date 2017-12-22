@@ -222,7 +222,7 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li <?= wpn_activelink('migration', 3); ?>>
+                                    <li <?= wpn_activelink('modmigration', 3); ?>>
                                         <?= anchor('admin/developers/modmigration', '<i class="fa fa-cog"></i> <span>' . wpn_lang('wpn_menu_migrations') . '</span>'); ?>
                                     </li>
                                     <!-- <li <?= wpn_activelink('generator'); ?>>
