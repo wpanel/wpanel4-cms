@@ -303,11 +303,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="usa_ssl" value="ssl" <?= $ssl_checked; ?> class="checkbox" />
-                                            <?= wpn_lang('field_use_ssl'); ?>
-                                        </label>
+                                    <div class="form-group">
+                                        <label for="smtp_crypto"><?= wpn_lang('field_use_ssl'); ?></label>
+                                        <select class="form-control" name="smtp_crypto">
+                                            <option value="0" <?= ($row->smtp_crypto == '0' ? 'selected="selected"' : ''); ?>>None</option>
+                                            <option value="ssl" <?= ($row->smtp_crypto == 'ssl' ? 'selected="selected"' : ''); ?>>SSL</option>
+                                            <option value="tls" <?= ($row->smtp_crypto == 'tls' ? 'selected="selected"' : ''); ?>>TLS</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

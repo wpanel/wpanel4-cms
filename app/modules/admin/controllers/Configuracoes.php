@@ -74,10 +74,6 @@ class Configuracoes extends Authenticated_Controller
             else
                 $smtp_checked = '';
 
-            if ($configs->usa_ssl == 'ssl')
-                $ssl_checked = 'checked';
-            else
-                $ssl_checked = '';
             // Organiza as caixas de checagem do redimensionamento de imagens.
             if ($configs->resize_image == 1)
                 $resize_checked = 'checked';
@@ -95,7 +91,6 @@ class Configuracoes extends Authenticated_Controller
             $this->set_var('page_check', $page_check);
             $this->set_var('custom_check', $custom_check);
             $this->set_var('smtp_checked', $smtp_checked);
-            $this->set_var('ssl_checked', $ssl_checked);
             $this->set_var('resize_checked', $resize_checked);
             $this->set_var('ratio_checked', $ratio_checked);
             $this->set_var('editor', $this->wpanel->load_editor());
@@ -130,7 +125,7 @@ class Configuracoes extends Authenticated_Controller
             $configs->usa_smtp = $this->input->post('usa_smtp');
             $configs->smtp_servidor = $this->input->post('smtp_servidor');
             $configs->smtp_porta = $this->input->post('smtp_porta');
-            $configs->usa_ssl = $this->input->post('usa_ssl');
+            $configs->smtp_crypto = $this->input->post('smtp_crypto');
             $configs->smtp_usuario = $this->input->post('smtp_usuario');
             $configs->smtp_senha = $this->input->post('smtp_senha');
             // Definições de redimensionamento das imagens das galerias.

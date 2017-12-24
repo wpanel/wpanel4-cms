@@ -307,7 +307,7 @@ class Wpanel
             $config['smtp_user'] = wpn_config("smtp_usuario");
             $config['smtp_pass'] = wpn_config("smtp_senha");
             $config['smtp_port'] = wpn_config("smtp_porta");
-            $config['smtp_crypto'] = wpn_config("smtp_ssl");
+            if (wpn_config("smtp_crypto") != '0')$config['smtp_crypto'] = wpn_config("smtp_crypto");
             $config['mailtype'] = $data['html'] ? 'html' : 'text';
             $config['validate'] = TRUE;
             $config['protocol'] = 'sendmail';
