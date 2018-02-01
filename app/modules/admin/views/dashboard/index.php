@@ -25,7 +25,7 @@ else
                 <div class="col-md-4 col-sm-4">
                     <h2><?= wpn_lang('dash_hello'); ?> <?= auth_extra_data('name'); ?>.</h2>
                     <p><?= auth_extra_data('name'); ?> - <?= auth_login_data('email'); ?></p>
-                    <p><?= wpn_lang('dash_since'); ?> <?= datetime_for_user(auth_login_data('created_on'), 0); ?></p>
+                    <p><?= wpn_lang('dash_since'); ?> <?= mdate(config_item('user_date_format'), strtotime(auth_login_data('created_on'))); ?></p>
                     <p><?= anchor('admin/accounts/profile', wpn_lang('dash_link_manageprofile'), array('class' => 'btn btn-primary')); ?></p>
                 </div>
                 <div class="col-md-5 col-sm-5">

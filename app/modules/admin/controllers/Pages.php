@@ -60,7 +60,7 @@ class Pages extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->title, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
+                    $row->id, $row->title, mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/pages/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .

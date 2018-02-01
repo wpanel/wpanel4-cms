@@ -60,7 +60,7 @@ class Posts extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->title . '<br/><small>' . $this->widget->load('wpncategoryfrompost', array('post_id' => $row->id)) . '</small>', mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
+                    $row->id, $row->title . '<br/><small>' . $this->widget->load('wpncategoryfrompost', array('post_id' => $row->id)) . '</small>', mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/posts/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .

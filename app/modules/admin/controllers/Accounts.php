@@ -58,7 +58,7 @@ class Accounts extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, json_decode($row->extra_data)->name, $row->email, $roles[$row->role], mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status),
+                    $row->id, json_decode($row->extra_data)->name, $row->email, $roles[$row->role], mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/accounts/access/' . $row->id, glyphicon('eye-open'), array('class' => 'btn btn-default')) .

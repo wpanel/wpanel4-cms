@@ -46,7 +46,7 @@
                                     <td><?= $row->id; ?></td>
                                     <td><?= $row->nome; ?></td>
                                     <td><?= $row->email; ?></td>
-                                    <td><?= datetime_for_user($row->created_on); ?></td>
+                                    <td><?= mdate(config_item('user_date_format'), strtotime($row->created_on)); ?></td>
                                     <td><?= $row->ipaddress; ?></td>
                                 </tr>
                                 <?php

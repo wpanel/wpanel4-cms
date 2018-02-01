@@ -59,7 +59,7 @@ class Events extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->title, datetime_for_user($row->created_on, false), status_post($row->status),
+                    $row->id, $row->title, mdate(config_item('user_date_format'), strtotime($row->created_on, false)), status_post($row->status),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/events/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .

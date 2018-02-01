@@ -15,6 +15,29 @@ $config['available_languages'] = array(
     'portuguese' => array('locale' => 'pt_BR', 'label' => 'Português')
 );
 
+/**
+ * Define o formato das datas para o usuário.
+ */
+$config['user_date_format'] = '%d/%m/%Y';
+
+/**
+ * Define o formato das datas para o banco de dados.
+ */
+$config['db_date_format'] = '%Y-%m-%d';
+
+/**
+ * Define o formato das data e hora para o usuário.
+ */
+$config['user_datetime_format'] = '%d/%m/%Y %H:%i:%s';
+
+/**
+ * Define o formato das data e hora para o banco de dados.
+ */
+$config['db_datetime_format'] = '%Y-%m-%d %H:%i:%s';
+
+/**
+ * Define os editores de texto disponíveis no sistema.
+ */
 $config['available_editors'] = array('ckeditor'=>'CKEditor', 'tinymce'=>'TinyMCE');
 
 /**

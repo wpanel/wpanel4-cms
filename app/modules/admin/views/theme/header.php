@@ -95,7 +95,7 @@
                                         <img src="<?= $avatar; ?>" class="img-circle" alt="<?= auth_extra_data('name'); ?>" />
                                         <p>
                                             <?= auth_extra_data('name'); ?>
-                                            <small><?= wpn_lang('wpn_since'); ?> <?= datetime_for_user(auth_login_data('created_on'), false); ?></small>
+                                            <small><?= wpn_lang('wpn_since'); ?> <?= mdate(config_item('user_date_format'), strtotime(auth_login_data('created_on'))); ?></small>
                                         </p>
                                     </li>
                                     <!-- Menu Footer-->

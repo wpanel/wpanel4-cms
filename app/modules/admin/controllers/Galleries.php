@@ -65,7 +65,7 @@ class Galleries extends Authenticated_Controller
             );
             $capa = img($capa_properties);
             $this->table->add_row(
-                    $row->id, $capa, anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture') . $row->titulo), mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                    $row->id, $capa, anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture') . $row->titulo), mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/galleries/pictures/' . $row->id, glyphicon('picture'), array('class' => 'btn btn-default')) .
                     anchor('admin/galleries/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                     anchor('admin/galleries/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
@@ -204,7 +204,7 @@ class Galleries extends Authenticated_Controller
             );
             $imagem = img($capa_properties);
             $this->table->add_row(
-                $row->id, $imagem, $row->descricao, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                $row->id, $imagem, $row->descricao, mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                 anchor('admin/galleries/editpicture/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                 anchor('admin/galleries/delpicture/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => 'Deseja mesmo excluir esta imagem? Esta ação não poderá ser desfeita.')) .
                 div(null, true)

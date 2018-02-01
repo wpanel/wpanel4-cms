@@ -57,7 +57,7 @@ class Ipalloweds extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                    $row->id, $row->description, $row->ip_address, date('d/m/Y H:i:s', strtotime($row->created_on)),
+                    $row->id, $row->description, $row->ip_address, mdate(config_item('user_date_format'), strtotime($row->created_on)),
                     // Ícones de ações
                     div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/ipalloweds/delete/' . $row->id, glyphicon('trash'), array('class'=>'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .

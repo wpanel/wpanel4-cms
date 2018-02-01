@@ -57,7 +57,7 @@ class Videos extends Authenticated_Controller
         foreach ($query as $row)
         {
             $this->table->add_row(
-                $row->id, $row->titulo, mdate('%d/%m/%Y', strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
+                $row->id, $row->titulo, mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status), div(array('class' => 'btn-group btn-group-xs')) .
                 anchor('admin/videos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                 anchor('admin/videos/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
                 div(null, true)
