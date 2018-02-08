@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Ipbanneds extends Authenticated_Controller
+class Ipbanneds extends Authenticated_admin_controller
 {
 
     /**

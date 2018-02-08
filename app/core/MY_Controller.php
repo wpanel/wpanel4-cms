@@ -572,19 +572,39 @@ class MY_Controller extends CI_Controller {
  */
 class Authenticated_Controller extends MY_Controller {
 
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
 
-        if($this->auth->is_logged() and $this->auth->is_user()){
-            $this->auth->logout();
-            $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', '');
-        }
-
-        $this->auth->check_permission();
-
+        if (!$this->auth->is_logged() == TRUE)
+            $this->set_message('Esta área é destinada somente a usuários logados.', 'danger', '');
     }
 
     //--------------------------------------------------------------------
 
+}
+
+/*
+    ADMIN AUTHENTICATED CONTROLLER
+
+    Simply makes sure that someone is logged in and ready to roll.
+ */
+class Authenticated_admin_controller extends MY_Controller {
+    
+    function __construct()
+    {
+        parent::__construct();
+        
+        if ($this->auth->is_logged() == TRUE) {
+            if (!$this->auth->is_root()) {
+                if ($this->auth->is_user() or $this->auth->is_company())
+                    $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', '');
+
+                $this->auth->check_permission();
+
+            }
+        } else
+            $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', 'admin/login');
+    }
+    
 }

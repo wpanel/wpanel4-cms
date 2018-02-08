@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Notifications extends Authenticated_Controller
+class Notifications extends Authenticated_admin_controller
 {
     function __construct()
     {

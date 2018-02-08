@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Categories extends Authenticated_Controller
+class Categories extends Authenticated_admin_controller
 {
 
     function __construct()

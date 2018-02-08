@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Events extends Authenticated_Controller
+class Events extends Authenticated_admin_controller
 {
 
     /**
