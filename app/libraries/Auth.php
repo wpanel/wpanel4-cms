@@ -544,6 +544,8 @@ class Auth
                 return TRUE;
             if ($this->_in_whitelist($this->_prepare_url($url)))
                 return TRUE;
+            if ($this->_is_paginate($url))
+                return TRUE;
             if ($this->permission->validate_permission($this->user_id(), $this->_prepare_url($url)) === false)
             {
                 $this->session->flashdata('msg_sistema', 'User don\'t has permission.');
@@ -552,6 +554,21 @@ class Auth
             }
             return TRUE;
         }
+    }
+
+    /**
+     * Libera a permissão no caso de uma paginação.
+     *
+     * @param String $url
+     * @return Bool
+     */
+    private function _is_paginate($url)
+    {
+        $x = explode('/', $url);
+        if ($x[3] == 'pag')
+            return TRUE;
+        else
+            return FALSE;
     }
 
     /**
