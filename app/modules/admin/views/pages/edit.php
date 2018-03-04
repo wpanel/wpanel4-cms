@@ -46,6 +46,12 @@ echo $this->wpanel->load_editor();
                                 echo '<p>'.wpn_lang('no_folder_image').'</p>';
                             }
                             ?>
+                            <div class="checkbox" >
+                                <label>
+                                    <input type="checkbox" name="alterar_imagem" value="1" class="checkbox"  />
+                                    <?= wpn_lang('change_folder'); ?>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">
