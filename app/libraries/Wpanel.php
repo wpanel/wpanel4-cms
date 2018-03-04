@@ -310,7 +310,7 @@ class Wpanel
             if (wpn_config("smtp_crypto") != '0')$config['smtp_crypto'] = wpn_config("smtp_crypto");
             $config['mailtype'] = $data['html'] ? 'html' : 'text';
             $config['validate'] = TRUE;
-            $config['protocol'] = 'sendmail';
+            $config['protocol'] = 'smtp';
             $config['mailpath'] = '/usr/sbin/sendmail';
             $config['charset'] = 'utf-8';
             $config['wordwrap'] = TRUE;
