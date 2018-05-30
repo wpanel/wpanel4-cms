@@ -40,7 +40,7 @@ $config['auth_enable_autoban'] = TRUE;
 /**
  * Define o tipo de hash para a senha.
  * 
- * php - Utiliza as classes nativas do PHP.
+ * php (recomendado) - Utiliza as classes nativas do PHP.
  * sha512 - Cria o hash das senhas usando sha512.
  * md5 - Cria o hash das senhas usando MD5.
  */
