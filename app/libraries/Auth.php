@@ -301,7 +301,7 @@ class Auth
             $new_password = $this->_generate_pass();
             $data_update = array(
                 'token' => $this->_generate_token(),
-                'password' => md5($new_password)
+                'password' => $this->_hash_password($new_password)
             );
             if ($this->account->update($account->id, $data_update))
             {
@@ -335,13 +335,17 @@ class Auth
     {
         if ($this->config->item('auth_enable_ip_banned') and $this->_is_banned())
             return FALSE;
-        $query = $this->account->find_by(array('email' => $email, 'password' => $this->_hash_password($password), 'status' => 1));
+        $query = $this->account->find_by(array('email' => $email, 'status' => 1));
         if ($query)
         {
-            $this->_clear_attempt();
-            $this->_set_session($query);
-            $this->_add_access($query->id);
-            return TRUE;
+            if ($this->_check_hash_password($query->id, $password, $query->password)) {
+                $this->_clear_attempt();
+                $this->_set_session($query);
+                $this->_add_access($query->id);
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         } else
         {
             if ($this->_num_attempts() >= $this->config->item('auth_max_attempts'))
@@ -653,9 +657,49 @@ class Auth
             case 'md5':
                 return md5($password . $this->auth_password_hash_salt);
                 break;
-
-            case 'something': //TODO Codificar outras opções de criptografia aqui.
-                // ...
+            case 'sha512':
+                return hash('sha512', $password . $this->auth_password_hash_salt);
+                break;
+            case 'php' :
+                return password_hash($password, PASSWORD_DEFAULT);
+                break;
+        }
+    }
+    
+    /**
+     * Check an password hash.
+     * 
+     * @param int $account_id Account ID.
+     * @param string $password
+     * @param string $hash
+     * @return boolean
+     */
+    private function _check_hash_password($account_id, $password, $hash)
+    {
+        switch ($this->auth_password_hash_type)
+        {
+            case 'md5':
+                if ($hash == md5($password . $this->auth_password_hash_salt))
+                    return TRUE;
+                else
+                    return FALSE;
+                break;
+            case 'sha512':
+                if ($hash == hash('sha512', $password . $this->auth_password_hash_salt))
+                    return TRUE;
+                else
+                    return FALSE;
+                break;
+            case 'php' :
+                if (password_verify($password, $hash)) {
+                    if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
+                        // salva o novo hash.
+                        $data = array('password' => $this->_hash_password($password));
+                        $this->account->update($account_id, $data);
+                    }
+                    return TRUE;
+                } else
+                    return FALSE;
                 break;
         }
     }
