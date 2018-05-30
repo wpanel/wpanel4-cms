@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <head>
         <?= wpn_meta(); ?>
         <?= $this->widget->load('wpntitle'); ?>
-        <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('media/favicon.ico'); ?>">
+        <link rel="shortcut icon" type="image/x-icon" href="<?= base_url('media/' . wpn_config('favicon')); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="canonical" href="<?= current_url(); ?>" />
         <!-- Bootstrap -->
