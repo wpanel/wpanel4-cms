@@ -194,7 +194,7 @@ class Main extends MY_Controller
      */
     public function search()
     {
-        $search_terms = $this->input->post('search');
+        $search_terms = $this->input->post('search', TRUE);
         $this->load->model('post');
         $this->set_var('search_terms', $search_terms);
         $this->set_var('results', $this->post->busca_posts($search_terms)->result());
