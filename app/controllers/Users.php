@@ -72,15 +72,19 @@ class Users extends MY_Controller
             $this->render();
         } else
         {
-            $extra_data = array(
-                'name' => $this->input->post('name'),
-                'avatar' => '',
-                'skin' => ''
-            );
-            if ($this->auth->register($this->input->post('email'), $this->input->post('password'), 'user', $extra_data))
-                redirect('users/registerok');
-            else
-                $this->set_message('Sua conta não pode ser criada, verifique seus dados e tente novamente.', 'danger', 'users/register');
+            try {
+                $extra_data = array(
+                    'name' => $this->input->post('name'),
+                    'avatar' => '',
+                    'skin' => ''
+                );
+                if ($this->auth->register($this->input->post('email'), $this->input->post('password'), 'user', $extra_data))
+                    redirect('users/registerok');
+                else
+                    $this->set_message('Sua conta não pode ser criada, verifique seus dados e tente novamente.', 'danger', 'users/register');
+            } catch (Exception $ex) {
+                $this->set_message('Ocorreu um erro: ' . $ex->getMessage(), 'danger', 'users/register');
+            }
         }
     }
 
@@ -107,8 +111,7 @@ class Users extends MY_Controller
             $this->render();
         } catch (Exception $e)
         {
-            //TODO Verificar forma de tratar o erro com o usuário.
-            $this->set_message('Sua conta não pode ser ativada, verifique seus dados e tente novamente.', 'danger', 'users');
+            $this->set_message('Sua conta não pode ser ativada, verifique seus dados e tente novamente. Erro: ' . $e->getMessage(), 'danger', 'users');
         }
     }
 
@@ -170,19 +173,25 @@ class Users extends MY_Controller
             $this->render();
         } else
         {
-
             // Salva os dados adicionais na coluna 'extra_data' na tabela accounts.
             $profile->name = $this->input->post('name');
-            //$profile->demo = $this->input->post('demo');
+            /*
+             * Aqui você pode definir novos campos de dados extra para ser
+             * salvo no campo extra_data na tabela accounts.
+             */
 
-            if ($this->auth->update($query->id, $this->input->post('email'), 'user', $profile))
-            {
-                // Verifica se deve alterar a senha do usuário.
-                if ($this->input->post('alt_password'))
-                    $this->auth->change_password($query->id, $this->input->post('password'));
-                $this->set_message('Seus dados foram alterados com sucesso.', 'success', 'users/profile');
-            } else
-                $this->set_message('Houve um erro inesperado e seus dados não puderam ser alterados. Tente novamente mais tarde.', 'danger', 'users/profile');
+            try {
+                if ($this->auth->update($query->id, $this->input->post('email'), 'user', $profile))
+                {
+                    if ($this->input->post('alt_password'))
+                        $this->auth->change_password($query->id, $this->input->post('password'));
+                    $this->set_message('Seus dados foram alterados com sucesso.', 'success', 'users/profile');
+                } else
+                    $this->set_message('Houve um erro inesperado e seus dados não puderam ser alterados. Tente novamente mais tarde.', 'danger', 'users/profile');
+            } catch (Exception $ex) {
+                $this->set_message('Ocorreu um erro: ' . $ex->getMessage(), 'danger', 'users/profile');
+            }
+            
         }
     }
 
