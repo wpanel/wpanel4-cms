@@ -450,7 +450,7 @@ class Wpanel
     }
     
     /**
-     * Check for from Wpanel.org.
+     * Check for news from Wpanel.org.
      * 
      * @return boolean
      */
@@ -458,7 +458,7 @@ class Wpanel
     {
         $this->load->library('curl');
         $this->load->model('notification');
-        $url  = 'https://wpanel.org/api/v1/news';
+        $url  = 'https://api.wpanel.org/v1/news';
         $data = array(
             'app_token' => wpn_config('app_token'),
             'ip_address' => $this->input->server('REMOTE_ADDR'),
@@ -470,7 +470,7 @@ class Wpanel
         $httpcode = $this->curl->info;
         if($httpcode['http_code'] === 200) {
             $query = json_decode($result);
-            foreach($query as $row) {
+            foreach($query->output as $row) {
                 if(@$row->link) {
                     $data_save = array(
                         'title' => $row->title,
