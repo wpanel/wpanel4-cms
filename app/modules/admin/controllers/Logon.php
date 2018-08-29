@@ -4,7 +4,6 @@
  * @copyright Eliel de Paula <dev@elieldepaula.com.br>
  * @license http://wpanel.org/license
  */
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -37,15 +36,13 @@ class Logon extends MY_Controller
         $this->form_validation->set_rules('email', wpn_lang('input_email'), 'required|valid_email');
         $this->form_validation->set_rules('password', wpn_lang('input_password'), 'required');
 
-        if ($this->form_validation->run() == FALSE)
-            $this->load->view('logon/index');
-        else
-        {
-            if ($this->auth->login($this->input->post('email'), $this->input->post('password')))
-            {
+        if ($this->form_validation->run() == FALSE) {
+            $this->set_var('title', 'Login');
+            $this->layout('logon')->render();
+        } else {
+            if ($this->auth->login($this->input->post('email'), $this->input->post('password'))) {
                 return redirect('admin');
-            } else
-            {
+            } else {
                 $this->session->set_flashdata('msg_auth', wpn_lang('logon_login_error'));
                 return redirect('admin/login');
             }
@@ -70,35 +67,30 @@ class Logon extends MY_Controller
      */
     public function recovery($token = NULL)
     {
+        $this->set_var('title', 'Password recovery');
         $this->form_validation->set_rules('email', wpn_lang('logon_email'), 'required|valid_email');
-        if ($this->form_validation->run() == FALSE)
-        {
-            if ($token)
-            {
-                if ($this->auth->recovery($token))
-                    $this->view('users/recovery_done')->render();
-                else
-                {
+        if ($this->form_validation->run() == FALSE) {
+            if ($token) {
+                if ($this->auth->recovery($token)) {
+                    $this->layout('logon')->view('logon/recovery_done')->render();
+                } else {
                     $this->session->set_flashdata('msg_recover', wpn_lang('logon_recovery_invalid_link'));
                     redirect('admin/recovery');
                 }
-            } else
-                $this->load->view('logon/recovery');
-        } else
-        {
+            } else {
+                $this->layout('logon')->render();
+            }
+        } else {
             $email = $this->input->post('email');
-            if ($this->auth->email_exists($email) == FALSE)
-            {
+            if ($this->auth->email_exists($email) == FALSE) {
                 $this->session->set_flashdata('msg_recover', wpn_lang('logon_recovery_invalid_email'));
                 redirect('admin/recovery');
             }
 
-            if ($this->auth->send_recovery($email))
-            {
+            if ($this->auth->send_recovery($email)) {
                 $this->session->set_flashdata('msg_auth', wpn_lang('logon_recovery_success'));
                 redirect('admin/login');
-            } else
-            {
+            } else {
                 $this->session->set_flashdata('msg_recover', wpn_lang('logon_recovery_error'));
                 redirect('admin/recovery');
             }
