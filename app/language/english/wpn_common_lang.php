@@ -61,3 +61,5 @@ $lang['wpn_bot_new'] = "New record";
 $lang['wpn_bot_save'] = "Save";
 $lang['wpn_bot_cancel'] = "Cancel";
 $lang['wpn_bot_back'] = "Back";
+$lang['pag_total_of'] = 'Total of';
+$lang['pag_records'] = 'records';

@@ -98,7 +98,7 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <?= wpn_lang('modal_change_password'); ?> <?= $this->auth->user_id() ?>
+                <?= wpn_lang('modal_change_password'); ?>
             </div>
             <div class="modal-body">
                 <div class="row">
