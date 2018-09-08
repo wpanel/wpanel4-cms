@@ -25,6 +25,7 @@ $lang['wpn_menu_system'] = "System";
 $lang['wpn_menu_developer'] = "Developer";
 $lang['wpn_menu_generator'] = "Generator";
 $lang['wpn_menu_migrations'] = "Migrations";
+$lang['wpn_menu_notification'] = "Notifications";
 $lang['wpn_menu_logs'] = "Logs";
 $lang['wpn_menu_backups'] = "Backups";
 $lang['wpn_menu_logout'] = "Logout";

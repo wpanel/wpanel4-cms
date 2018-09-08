@@ -19,10 +19,9 @@ $lang['module_description'] = "Manage user accounts.";
 $lang['module_index'] = "List of accounts";
 $lang['module_add'] = "New account";
 $lang['module_edit'] = "Account update";
-
+$lang['module_access'] = "Access log";
 $lang['profile_title'] = 'Profile';
 $lang['profile_description'] = 'Manage your profile';
-
 $lang['field_name'] = "Name";
 $lang['field_email'] = "Email";
 $lang['field_role'] = "Role";
@@ -34,32 +33,18 @@ $lang['field_link'] = "Link";
 $lang['field_change_avatar'] = "Change avatar";
 $lang['field_created_on'] = "Created on";
 $lang['field_status'] = "Status";
-
+$lang['field_ip'] = "IP";
+$lang['field_access_data'] = "Date";
 $lang['wpn_bot_new'] = 'New account';
 $lang['bot_banned_ip']= 'Banned IPs';
 $lang['bot_allowed_ip'] = 'Allowed IPs';
 $lang['bot_deactivate'] = 'Deactivate account';
 $lang['bot_activate'] = 'Activate account';
 $lang['bot_change_password'] = 'Change password';
-
-
-
 $lang['tab_userdata'] = "User data";
 $lang['tab_permissions'] = "Permissions";
-
 $lang['modal_change_password'] = 'Change password';
-
 $lang['message_deactivate_success'] = 'Account deactivated successfuly';
 $lang['message_deactivate_error'] = 'Account deactivated error';
 $lang['message_activate_success'] = 'Account activated successfuly';
 $lang['message_activate_error'] = 'Account activated error';
-
-
-
-
-//$lang['field_tags'] = "Tags";
-//$lang['field_ip'] = "IP";
-//$lang['post_bot_new_category'] = "Categories";
-//$lang['no_folder_image'] = "No image loaded";
-//$lang['change_folder'] = "Change image";
-//$lang['use_comma'] = "Separate with comma.";
