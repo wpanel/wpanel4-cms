@@ -296,7 +296,7 @@ class Menus extends Authenticated_admin_controller
     private function get_titulo_postagem($post_link)
     {
         $query = $this->post->find_by('link', $post_link);
-        if(count($query) > 0)
+        if(@count($query) > 0)
             return $query->title;
         else
             return '<span class="label label-danger">Error</span>';
@@ -311,7 +311,7 @@ class Menus extends Authenticated_admin_controller
     private function get_titulo_categoria($categoria_id)
     {
         $query = $this->category->find($categoria_id);
-        if(count($query))
+        if(@count($query))
             return $query->title;
         else
             return '<span class="label label-danger">Error</span>';
