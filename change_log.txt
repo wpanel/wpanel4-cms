@@ -1,3 +1,15 @@
+[05/02/2018]
+- Desenvolvimento regular.
+
+[29/06/2017]
+
+- User option link included in the default main menu;
+- Fix Auth library;
+- Fix banner module;
+- Setup default database to Sqlite;
+- Clear database folder;
+- Fix Loader error;
+- Update the core of CodeIgniter to 3.1.5
 
 [04/06/2017]
 

@@ -36,21 +36,15 @@ function is_logged(){
         $x = explode(';', $contents);
         foreach($x as $key => $value){
             $y = explode('|', $value);
-            if(test_y($y)){
+            if ($y[0] == 'logged_in') {
                 $output = true;
                 break;
+            } else {
+                $output = false;
             }
         }
     }
     return $output;
-}
-
-function test_y($y){
-    if($y[0] == 'logged_in'){
-        return true;
-        break;
-    } else
-        return false;
 }
 
 ?>

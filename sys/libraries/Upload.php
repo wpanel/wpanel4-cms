@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -678,10 +678,8 @@ class CI_Upload {
 			$this->set_error('upload_bad_filename', 'debug');
 			return FALSE;
 		}
-		else
-		{
-			return $new_filename;
-		}
+
+		return $new_filename;
 	}
 
 	// --------------------------------------------------------------------
@@ -1218,21 +1216,31 @@ class CI_Upload {
 		// We'll need this to validate the MIME info string (e.g. text/plain; charset=us-ascii)
 		$regexp = '/^([a-z\-]+\/[a-z0-9\-\.\+]+)(;\s.+)?$/';
 
-		// Fileinfo extension - most reliable method
-		$finfo = @finfo_open(FILEINFO_MIME);
-		if (is_resource($finfo)) // It is possible that a FALSE value is returned, if there is no magic MIME database file found on the system
+		/**
+		 * Fileinfo extension - most reliable method
+		 *
+		 * Apparently XAMPP, CentOS, cPanel and who knows what
+		 * other PHP distribution channels EXPLICITLY DISABLE
+		 * ext/fileinfo, which is otherwise enabled by default
+		 * since PHP 5.3 ...
+		 */
+		if (function_exists('finfo_file'))
 		{
-			$mime = @finfo_file($finfo, $file['tmp_name']);
-			finfo_close($finfo);
-
-			/* According to the comments section of the PHP manual page,
-			 * it is possible that this function returns an empty string
-			 * for some files (e.g. if they don't exist in the magic MIME database)
-			 */
-			if (is_string($mime) && preg_match($regexp, $mime, $matches))
+			$finfo = @finfo_open(FILEINFO_MIME);
+			if (is_resource($finfo)) // It is possible that a FALSE value is returned, if there is no magic MIME database file found on the system
 			{
-				$this->file_type = $matches[1];
-				return;
+				$mime = @finfo_file($finfo, $file['tmp_name']);
+				finfo_close($finfo);
+
+				/* According to the comments section of the PHP manual page,
+				 * it is possible that this function returns an empty string
+				 * for some files (e.g. if they don't exist in the magic MIME database)
+				 */
+				if (is_string($mime) && preg_match($regexp, $mime, $matches))
+				{
+					$this->file_type = $matches[1];
+					return;
+				}
 			}
 		}
 
@@ -1302,7 +1310,7 @@ class CI_Upload {
 			}
 		}
 
-		// Fall back to the deprecated mime_content_type(), if available (still better than $_FILES[$field]['type'])
+		// Fall back to mime_content_type(), if available (still better than $_FILES[$field]['type'])
 		if (function_exists('mime_content_type'))
 		{
 			$this->file_type = @mime_content_type($file['tmp_name']);

@@ -12,13 +12,12 @@
                 else
                     echo "             <div class=\"item\">\n";
             
-                $image_properties = array(
+                $conf_foto = array(
                     'src' => 'media/banners/' . $row->content,
-                    'style' => 'width:100%;',
-                    'class' => '',
+                    'class' => 'img-slide',
                 );
 
-                echo img($image_properties);
+                echo img($conf_foto);
                 echo "</div>\n";
 
                 $laco = $laco + 1;

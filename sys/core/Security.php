@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -134,7 +134,9 @@ class CI_Security {
 	 */
 	protected $_never_allowed_str =	array(
 		'document.cookie' => '[removed]',
+		'(document).cookie' => '[removed]',
 		'document.write'  => '[removed]',
+		'(document).write'  => '[removed]',
 		'.parentNode'     => '[removed]',
 		'.innerHTML'      => '[removed]',
 		'-moz-binding'    => '[removed]',
@@ -152,7 +154,7 @@ class CI_Security {
 	 */
 	protected $_never_allowed_regex = array(
 		'javascript\s*:',
-		'(document|(document\.)?window)\.(location|on\w*)',
+		'(\(?document\)?|\(?window\)?(\.document)?)\.(location|on\w*)',
 		'expression\s*(\(|&\#40;)', // CSS and IE
 		'vbscript\s*:', // IE, surprise!
 		'wscript\s*:', // IE
@@ -224,12 +226,9 @@ class CI_Security {
 			}
 		}
 
-		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if ( ! isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name])
-			OR $_POST[$this->_csrf_token_name] !== $_COOKIE[$this->_csrf_cookie_name]) // Do the tokens match?
-		{
-			$this->csrf_show_error();
-		}
+		// Check CSRF token validity, but don't error on mismatch just yet - we'll want to regenerate
+		$valid = isset($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name])
+			&& hash_equals($_POST[$this->_csrf_token_name], $_COOKIE[$this->_csrf_cookie_name]);
 
 		// We kill this since we're done and we don't want to pollute the _POST array
 		unset($_POST[$this->_csrf_token_name]);
@@ -244,6 +243,11 @@ class CI_Security {
 
 		$this->_csrf_set_hash();
 		$this->csrf_set_cookie();
+
+		if ($valid !== TRUE)
+		{
+			$this->csrf_show_error();
+		}
 
 		log_message('info', 'CSRF token verified');
 		return $this;
@@ -352,9 +356,9 @@ class CI_Security {
 		// Is the string an array?
 		if (is_array($str))
 		{
-			while (list($key) = each($str))
+			foreach ($str as $key => &$value)
 			{
-				$str[$key] = $this->xss_clean($str[$key]);
+				$str[$key] = $this->xss_clean($value);
 			}
 
 			return $str;
@@ -499,7 +503,7 @@ class CI_Security {
 		 * Becomes: &lt;blink&gt;
 		 */
 		$pattern = '#'
-			.'<((?<slash>/*\s*)(?<tagName>[a-z0-9]+)(?=[^a-z0-9]|$)' // tag start and name, followed by a non-tag character
+			.'<((?<slash>/*\s*)((?<tagName>[a-z0-9]+)(?=[^a-z0-9]|$)|.+)' // tag start and name, followed by a non-tag character
 			.'[^\s\042\047a-z0-9>/=]*' // a valid attribute character immediately after the tag would count as a separator
 			// optional attributes
 			.'(?<attributes>(?:[\s\042\047/=]*' // non-attribute characters, excluding > (tag close) for obvious reasons
@@ -537,6 +541,14 @@ class CI_Security {
 		$str = preg_replace(
 			'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si',
 			'\\1\\2&#40;\\3&#41;',
+			$str
+		);
+
+		// Same thing, but for "tag functions" (e.g. eval`some code`)
+		// See https://github.com/bcit-ci/CodeIgniter/issues/5420
+		$str = preg_replace(
+			'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si',
+			'\\1\\2&#96;\\3&#96;',
 			$str
 		);
 
@@ -851,7 +863,7 @@ class CI_Security {
 		// For other tags, see if their attributes are "evil" and strip those
 		elseif (isset($matches['attributes']))
 		{
-			// We'll store the already fitlered attributes here
+			// We'll store the already filtered attributes here
 			$attributes = array();
 
 			// Attribute-catching pattern
@@ -867,7 +879,7 @@ class CI_Security {
 			// Each iteration filters a single attribute
 			do
 			{
-				// Strip any non-alpha characters that may preceed an attribute.
+				// Strip any non-alpha characters that may precede an attribute.
 				// Browsers often parse these incorrectly and that has been a
 				// of numerous XSS issues we've had.
 				$matches['attributes'] = preg_replace('#^[^a-z]+#i', '', $matches['attributes']);
@@ -925,7 +937,7 @@ class CI_Security {
 		return str_replace(
 			$match[1],
 			preg_replace(
-				'#href=.*?(?:(?:alert|prompt|confirm)(?:\(|&\#40;)|javascript:|livescript:|mocha:|charset=|window\.|document\.|\.cookie|<script|<xss|d\s*a\s*t\s*a\s*:)#si',
+				'#href=.*?(?:(?:alert|prompt|confirm)(?:\(|&\#40;|`|&\#96;)|javascript:|livescript:|mocha:|charset=|window\.|\(?document\)?\.|\.cookie|<script|<xss|d\s*a\s*t\s*a\s*:)#si',
 				'',
 				$this->_filter_attributes($match[1])
 			),
@@ -953,7 +965,7 @@ class CI_Security {
 		return str_replace(
 			$match[1],
 			preg_replace(
-				'#src=.*?(?:(?:alert|prompt|confirm|eval)(?:\(|&\#40;)|javascript:|livescript:|mocha:|charset=|window\.|document\.|\.cookie|<script|<xss|base64\s*,)#si',
+				'#src=.*?(?:(?:alert|prompt|confirm|eval)(?:\(|&\#40;|`|&\#96;)|javascript:|livescript:|mocha:|charset=|window\.|\(?document\)?\.|\.cookie|<script|<xss|base64\s*,)#si',
 				'',
 				$this->_filter_attributes($match[1])
 			),

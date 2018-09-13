@@ -1,26 +1,74 @@
+# Eclipse
+.project
+.settings
+.buildpath
+
+# Netbeans
+/nbproject
+/nbproject/*
+
+# PHP Storm
+.idea
+.idea/*
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+.*.sw[a-z]
+*.un~i
+tags
+
+# OsX
 .DS_Store
 .DS_Store?
+Icon?
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+
+# Windows
 Thumbs.db
+
+# Logs
+app/logs/*.php
+
+# BackupsDb
+public/media/backupdb/*.sql
+
+# Composer
 composer.lock
 
-app/sessions/wpanel_*
-app/db/*.sqlite
+# Sqlite
+app/database/*.sqlite
 
+# Captcha
+public/captcha/*.jpg
+
+# Files
+public/media/files/*
+
+# Avatar
 public/media/avatar/*.jpg
 public/media/avatar/*.jpeg
 public/media/avatar/*.png
 public/media/avatar/*.gif
 
+# Albuns
 public/media/albuns/*/*.jpg
 public/media/albuns/*/*.jpeg
 public/media/albuns/*/*.png
 public/media/albuns/*/*.gif
 
+# Banners
 public/media/banners/*.jpg
 public/media/banners/*.jpeg
 public/media/banners/*.png
 public/media/banners/*.gif
+
+# Capas
+public/media/capas/*.jpg
+public/media/capas/*.jpeg
+public/media/capas/*.png
+public/media/capas/*.gif

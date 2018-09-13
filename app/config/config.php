@@ -22,10 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$base_url = "http://" . $_SERVER['HTTP_HOST'];
-$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
-
-$config['base_url'] = $base_url;
+$config['base_url'] = BASE_URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +135,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = APPPATH.'libraries\/autoload.php';
+$config['composer_autoload'] = APPPATH.'libraries/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -215,7 +212,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------

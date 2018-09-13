@@ -1,26 +1,44 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <section class="content-header">
     <h1>
-        Contas de usuário
-        <small>Gerencie as contas de usuário aqui.</small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><i class="fa fa-users"></i> Contas de usuário</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><i class="fa fa-users"></i> <?= wpn_lang('module_title'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lista de contas</h3>
+            <h3 class="box-title"><?= wpn_lang('module_index'); ?></h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/accounts/add', glyphicon('plus-sign') . 'Novo cadastro', array('class' => 'btn btn-sm btn-primary')); ?>
-                <?= anchor('admin/ipbanneds', glyphicon('ban-circle') . 'IP\'s banidos ', array('class' => 'btn btn-sm btn-danger')); ?>
+                <?= anchor('admin/accounts/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/ipbanneds', glyphicon('ban-circle') . wpn_lang('bot_banned_ip'), array('class' => 'btn btn-sm btn-danger')); ?>
+                <?= anchor('admin/ipalloweds', glyphicon('check') . wpn_lang('bot_allowed_ip'), array('class' => 'btn btn-sm btn-success')); ?>
             </div>
         </div>
         <div class="box-body">
-            <?= $listagem; ?>
+            
+            <div class="table-responsive">
+                <div class="container-fluid">
+                    <?= $listagem; ?>
+                </div>
+            </div>
+            
+            <hr/>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-sm-12 col-md-12">
+                    <span class="total"><?= wpn_lang('pag_total_of'); ?> <b><?= $total_rows; ?></b> <?= wpn_lang('pag_records'); ?>.</span>
+                    <nav class="text-center">
+                        <?= $pagination_links; ?>
+                    </nav>
+                </div>
+            </div>
+            
         </div>
     </div>
 </section>

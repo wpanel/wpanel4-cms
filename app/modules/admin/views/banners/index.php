@@ -2,71 +2,42 @@
 
 <section class="content-header">
     <h1>
-        Banners
-        <small>Gerencie os banners exibidos no site aqui.</small>
+        <?= wpn_lang('module_title') ?>
+        <small><?= wpn_lang('module_description') ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><i class="fa fa-shirtsinbulk"></i> Banners</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard') ?></a></li>
+        <li><i class="fa fa-shirtsinbulk"></i> <?= wpn_lang('module_title') ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lista de banners</h3>
+            <h3 class="box-title"><?= wpn_lang('module_index') ?></h3>
             <div class="box-tools pull-right">
-                <?= anchor('admin/banners/add', glyphicon('plus-sign') . 'Novo banner', array('class' => 'btn btn-sm btn-primary')); ?>
+                <?= anchor('admin/banners/add', glyphicon('plus-sign') . wpn_lang('wpn_bot_new'), array('class' => 'btn btn-sm btn-primary')); ?>
             </div>
         </div>
         <div class="box-body">
-            <table id="grid" class="table table-striped">
-			    <thead>
-			        <tr>
-			            <th>#</th>
-			            <th>Título</th>
-			            <th>Posição</th>
-			            <th>Status</th>
-			            <th>Ações</th>
-			        </tr>
-			    </thead>
-			    <tbody class="sortable">
-			        <?php
-			        foreach($query as $row){
-			            ?>
-    			        <tr id="item-<?= $row->id; ?>" style="cursor:move;">
-    			            <td><?= $row->id; ?></td>
-    			            <td><?= $row->title; ?></td>
-    			            <td><?= $options[$row->position]; ?></td>
-    			            <td><?= status_post($row->status); ?></td>
-    			            <td>
-    			                <div class="btn-group btn-group-xs">
-    			                    <?= anchor('admin/banners/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')); ?>
-    			                    <button class="btn btn-default" onClick="return confirmar('<?= site_url('admin/banners/delete/'.$row->id); ?>');"><?= glyphicon('trash'); ?></button>
-    			                </div>
-    			            </td>
-    			        </tr>
-    			        <?php
-			        }
-			        ?>
-			    </tbody>
-			</table>
+            
+            <div class="table-responsive">
+                <div class="container-fluid">
+                    <?= $listagem; ?>
+                </div>
+            </div>
+            
+            <hr/>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-sm-12 col-md-12">
+                    <span class="total"><?= wpn_lang('pag_total_of'); ?> <b><?= $total_rows; ?></b> <?= wpn_lang('pag_records'); ?>.</span>
+                    <nav class="text-center">
+                        <?= $pagination_links; ?>
+                    </nav>
+                </div>
+            </div>
+            
         </div>
     </div>
 </section>
-<script type="text/javascript">
-    $(function(){
-        $(".sortable").sortable({
-            axis: 'y',
-            update: function (event, ui) {
-                var data = $(this).sortable('serialize');
-                alert(data);
-                $.ajax({
-                    data: data,
-                    type: 'POST',
-                    url: '<?= site_url("admin/banners/update_sequence"); ?>'
-                });
-            }
-        });
-    });
-</script>
