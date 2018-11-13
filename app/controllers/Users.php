@@ -1,103 +1,64 @@
 <?php
 
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
- defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * This class have the basic methods to manage an public user area into an website.
+ * Classe Users
+ *
+ * Esta classe contém os métodos básicos para gerenciamento de usuários
+ * no site.
  * 
- * @package     WpanelCms
- * @subpackage  Controllers
- * @category    Controllers
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @extends     MY_Controller
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 class Users extends MY_Controller
 {
 
     /**
-     * Class constructor.
-     *
-     * @return void
+     * Constructor da classe.
      */
     function __construct()
     {
 
         /**
-         * Here are some options provided by the MY_Controller class, you
-         * can adjust as you need to your project.
+         * ---------------------------------------------------------------------
+         * Aqui ficam disponíveis algumas opções disponibilizadas pela classe
+         * MY_Controller que você pode ajustar de acordo com seu projeto.
+         * ---------------------------------------------------------------------
          */
+        
         /**
-         * Enable the CodeIgniter Profile.
+         * Ativa o profiler (Forensics).
          */
-        // $this->wpn_profiler = TRUE;
-
-        /**
-         * Chose the template folder.
-         */
-        // $this->wpn_template = 'default';
-
-        /**
-         * Set the 'col' number of the mosaic views.
-         */
-        // $this->wpn_cols_mosaic = 3;
-
-        /**
-         * Set the default post view: list (default) or mosaic.
-         */
-        // $this->wpn_posts_view = 'mosaic';
+        $this->show_profiler = FALSE;
 
         parent::__construct();
-        $this->wpanel->check_setup();
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+
+        if ($this->auth->is_logged() and $this->auth->is_admin())
+        {
+            $this->set_message('Esta área é destinada somente a usuários comuns.', 'info', '');
+            $this->auth->logout();
+        }
     }
 
     /**
-     * User dashboard.
+     * Dashboard do usuário.
      */
     public function index()
     {
         // Check the login.
-        if (!is_logged())
+        if (!$this->auth->is_logged())
             redirect('users/login');
         $this->wpanel->set_meta_title('Área de usuários');
-        $this->render('users_index');
+        $this->render();
     }
 
     /**
-     * Create new user account.
+     * Registro de novos usuários.
      */
     public function register()
     {
@@ -108,126 +69,159 @@ class Users extends MY_Controller
         if ($this->form_validation->run() == FALSE)
         {
             $this->wpanel->set_meta_title('Cadastro de usuários');
-            $this->render('users_register');
+            $this->render();
         } else
         {
-            $extra_data = array(
-                'name' => $this->input->post('name'),
-                'avatar' => '',
-                'skin' => ''
-            );
-            if ($this->auth->create_account($this->input->post('email'), $this->input->post('password'), 'user', $extra_data))
-                redirect('users/registerok');
-            else
-            {
-                $this->notice('Sua conta não pode ser criada. Verifique seus dados e tente novamente.', 'Erro!', 'danger');
-                redirect('users/register');
+            try {
+                $extra_data = array(
+                    'name' => $this->input->post('name'),
+                    'avatar' => '',
+                    'skin' => ''
+                );
+                if ($this->auth->register($this->input->post('email'), $this->input->post('password'), 'user', $extra_data))
+                    redirect('users/registerok');
+                else
+                    $this->set_message('Sua conta não pode ser criada, verifique seus dados e tente novamente.', 'danger', 'users/register');
+            } catch (Exception $ex) {
+                $this->set_message('Ocorreu um erro: ' . $ex->getMessage(), 'danger', 'users/register');
             }
         }
     }
 
     /**
-     * Show success page to new users.
+     * Mensagem de sucesso no registro do usuário.
      */
     public function registerok()
     {
         $this->wpanel->set_meta_title('Cadastro de usuários');
-        $this->render('users_registerok');
+        $this->render();
     }
 
     /**
-     * User profile.
+     * Método para ativação de contas de usuário pelo Token.
+     * 
+     * @param string $token
      */
-    public function profile()
+    public function activate($token)
     {
-        // Check the login
-        if (!is_logged())
-            redirect('users/login');
+        try
+        {
+            $this->auth->activate_token_account($token);
+            $this->wpanel->set_meta_title('Ativação de usuários');
+            $this->render();
+        } catch (Exception $e)
+        {
+            $this->set_message('Sua conta não pode ser ativada, verifique seus dados e tente novamente. Erro: ' . $e->getMessage(), 'danger', 'users');
+        }
+    }
 
-        $this->form_validation->set_rules('name', 'Nome', 'required');
+    /**
+     * Recuperação de senhas de contas de usuário.
+     * 
+     * @param string $token
+     */
+    public function recovery($token = NULL)
+    {
         $this->form_validation->set_rules('email', 'E-Mail', 'required|valid_email');
         if ($this->form_validation->run() == FALSE)
         {
-            $query = $this->auth->get_account_by_id();
-            $this->data_content['row'] = $query;
-            $this->data_content['extra'] = (object) json_decode($query->extra_data);
-            $this->wpanel->set_meta_title('Área de usuários');
-            $this->render('users_profile');
+
+            if ($token)
+            {
+                if ($this->auth->recovery($token))
+                    $this->view('users/recovery_done')->render();
+                else
+                    $this->set_message('Link de confirmação inválido.', 'danger', 'users/recovery');
+            } else
+                $this->view('users/recovery_form')->render();
         } else
         {
-            $extra_data = array(
-                'name' => $this->input->post('name'),
-                'avatar' => '',
-                'skin' => ''
-            );
-            if ($this->auth->update_account($this->auth->get_login_data('id'), $this->input->post('email'), 'user', $extra_data))
-            {
-                $this->notice('Sua conta foi atualizada com sucesso!', 'Sucesso!', 'success');
-                redirect('users/profile');
-            } else
-            {
-                $this->notice('Sua conta não pode ser atualizada, verifique os dados e tente novamente', 'Erro!', 'danger');
-                redirect('users/profile');
-            }
+
+            $email = $this->input->post('email');
+            if ($this->auth->email_exists($email) == FALSE)
+                $this->set_message('O e-mail informado não existe em nosso cadastro.', 'danger', 'users/recovery');
+
+            if ($this->auth->send_recovery($email))
+                $this->view('users/recovery_sent')->render();
+            else
+                $this->set_message('Houve um erro inesperado e sua senha não pode ser redefinida. Tente novamente mais tarde.', 'danger', 'users/recovery');
         }
     }
 
     /**
-     * Login the user.
+     * Perfil do usuário.
+     */
+    public function profile()
+    {
+        // Verifica o login.
+        if (!$this->auth->is_logged())
+            redirect('users/login');
+
+        // Recupera os dados do usuário.
+        $query = $this->auth->account();
+        $profile = $this->auth->profile();
+
+        $this->form_validation->set_rules('name', 'Nome', 'required');
+        $this->form_validation->set_rules('email', 'E-Mail', 'required|valid_email');
+        if ($this->input->post('alt_password'))
+            $this->form_validation->set_rules('password', 'Senha', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->wpanel->set_meta_title('Área de usuários');
+            $this->set_var('account', $query);
+            $this->set_var('profile', $profile);
+            $this->render();
+        } else
+        {
+            // Salva os dados adicionais na coluna 'extra_data' na tabela accounts.
+            $profile->name = $this->input->post('name');
+            /*
+             * Aqui você pode definir novos campos de dados extra para ser
+             * salvo no campo extra_data na tabela accounts.
+             */
+
+            try {
+                if ($this->auth->update($query->id, $this->input->post('email'), 'user', $profile))
+                {
+                    if ($this->input->post('alt_password'))
+                        $this->auth->change_password($query->id, $this->input->post('password'));
+                    $this->set_message('Seus dados foram alterados com sucesso.', 'success', 'users/profile');
+                } else
+                    $this->set_message('Houve um erro inesperado e seus dados não puderam ser alterados. Tente novamente mais tarde.', 'danger', 'users/profile');
+            } catch (Exception $ex) {
+                $this->set_message('Ocorreu um erro: ' . $ex->getMessage(), 'danger', 'users/profile');
+            }
+            
+        }
+    }
+
+    /**
+     * Página de login de usuários.
      */
     public function login()
     {
-        $this->form_validation->set_rules('email', wpn_lang('input_email', 'Email'), 'required|valid_email');
-        $this->form_validation->set_rules('password', wpn_lang('input_password', 'Password'), 'required');
+        $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Senha', 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->wpanel->set_meta_title('Login de usuários');
-            $this->render('users_login');
+            $this->render();
         } else
         {
             if ($this->auth->login($this->input->post('email'), $this->input->post('password')))
-                redirect('users');
+                return redirect('users');
             else
-            {
-                $this->notice('Seu login falhou, tente novamente.', 'Erro!', 'danger');
-                redirect('users/login');
-            }
+                $this->set_message('Seu login falhou, tente novamente.', 'danger', 'users/login');
         }
     }
 
     /**
-     * Logout the user.
+     * Loogut de usuários.
      */
     public function logout()
     {
         $this->auth->logout();
         redirect();
-    }
-
-    /**
-     * Change user password.
-     */
-    public function change_password()
-    {
-        $this->form_validation->set_rules('actual_password', 'Senha atual', 'required');
-        $this->form_validation->set_rules('new_password', 'Nova senha', 'required');
-        $this->form_validation->set_rules('conf_password', 'Confirmação de senha', 'required|matches[new_password]');
-        if ($this->form_validation->run() == FALSE)
-        {
-            $this->notice('Sua senha não pode ser alterada, tente novamente.', 'Erro!', 'danger');
-            return redirect('users/profile');
-        } else
-        {
-            if ($this->auth->change_password($this->auth->get_login_data('id'), $this->input->post('actual_password'), $this->input->post('new_password')))
-            {
-                $this->notice('Sua senha foi alterada com sucesso.', 'Sucesso!', 'success');
-                redirect('users/profile');
-            } else
-            {
-                $this->notice('Sua senha não pode ser alterada, tente novamente.', 'Erro!', 'danger');
-                redirect('users/profile');
-            }
-        }
     }
 
 }

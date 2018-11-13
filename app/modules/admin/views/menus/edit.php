@@ -1,19 +1,19 @@
 <section class="content-header">
     <h1>
-        Menus
-        <small>Gerencie os menús e opções de navegação do site aqui.</small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/menus'); ?>"><i class="fa fa-reorder"></i> Menus</a></li>
-        <li>Alteração de menu</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/menus'); ?>"><i class="fa fa-reorder"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('module_edit'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Alteração de menu</h3>
+            <h3 class="box-title"><?= wpn_lang('module_edit'); ?></h3>
         </div>
         <div class="box-body">
         	<?php
@@ -21,7 +21,7 @@
 			echo form_open_multipart('admin/menus/edit/'.$row->id, array('role' => 'form'));
 
 			echo div(array('class' => 'form-group'));
-			echo form_label('Nome do menu', 'nome');
+			echo form_label(wpn_lang('field_nome'), 'nome');
 			echo form_input(array('name' => 'nome', 'value' => $row->nome, 'class' => 'form-control'));
 			echo form_error('nome');
 			echo close_div();
@@ -57,12 +57,12 @@
 			        array(
 			            'type' => 'submit',
 			            'name' => 'submit',
-			            'content' => 'Salvar as alterações',
+			            'content' => wpn_lang('wpn_bot_save'),
 			            'class' => 'btn btn-primary'
 			        )
 			);
 			echo nbs();
-			echo anchor('admin/menus', 'Cancelar', array('class' => 'btn btn-danger'));
+			echo anchor('admin/menus', wpn_lang('wpn_bot_cancel'), array('class' => 'btn btn-danger'));
 			echo close_div(2);
 
 			echo form_close();

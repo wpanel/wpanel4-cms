@@ -1,137 +1,96 @@
 <?php
 
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Wpanel Library Class
+ * Classe da biblioteca Wpanel.
  *
  * This class maintain the methods widely used in WpanelCms.
- *
- * @package     WpanelCms
- * @subpackage  Libraries
- * @category    Libraries
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @link        https://wpanelcms.com.br
- * @version     0.0.1
+
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Wpanel 
+class Wpanel
 {
 
     /**
      * Config itens from config.json.
-     * 
+     *
      * @var $wpanel_config mixed
      */
     protected $wpanel_config;
-    
+
     /**
      * Description for meta tags.
-     * 
+     *
      * @var $meta_description String
      */
     protected $meta_description = '';
-    
+
     /**
      * Image for meta tags.
-     * 
+     *
      * @var $meta_image string
      */
     protected $meta_image = '';
-    
+
     /**
      * Key words for meta tags
-     * 
+     *
      * @var $meta_keywords string
-     */ 
+     */
     protected $meta_keywords = '';
-    
+
     /**
      * Title for meta tags.
-     * 
+     *
      * @var $meta_title string
      */
     protected $meta_title = '';
 
     /**
      * Class constructor.
-     * 
+     *
      * @return void
      */
-    public function __construct($config = array()) 
+    public function __construct($config = array())
     {
         if (count($config) > 0)
             $this->initialize($config);
-        try {
-            
-        } catch (Exception $e) {
-            // echo $e->getMessage();
-        }
-        log_message('debug', "Wpanel Class Initialized");
+        log_message('debug', "Wpanel class initialized");
     }
 
     /**
      * Get the instance of CI.
-     * 
+     *
      * @return mixed
      */
-    public function __get($var) 
+    public function __get($var)
     {
         return get_instance()->$var;
     }
 
     /**
-     * ---------------------------------------------------------------------------------------------
-     * Este método preenche uma lista de atributos passados
-     * em forma de array em um elemento HTML
+     * This method creates a list of HTML parametters sent by array.
      *
-     * @return mixed
-     * @author Eliel de Paula <dev@elieldepaula.com.br>
-     * ---------------------------------------------------------------------------------------------
+     * @return string
      */
-    private function _attributes($attributes) 
+    private function _attributes($attributes)
     {
-        if (is_array($attributes)) {
+        if (is_array($attributes))
+        {
             $atr = '';
-            foreach ($attributes as $key => $value) {
+            foreach ($attributes as $key => $value)
+            {
                 $atr .= $key . "=\"" . $value . "\" ";
             }
             return $atr;
         } elseif (is_string($attributes) and strlen($attributes) > 0)
             $atr = ' ' . $attributes;
-        
     }
 
     /**
@@ -141,93 +100,115 @@ class Wpanel
      * @param $config array()
      * @return void
      */
-    public function initialize($config = array()) 
+    public function initialize($config = array())
     {
-        foreach ($config as $key => $val) {
-            if (isset($this->$key)) {
+        foreach ($config as $key => $val)
+        {
+            if (isset($this->$key))
+            {
                 $method = 'set_' . $key;
                 if (method_exists($this, $method))
                     $this->$method($val);
                 else
                     $this->$key = $val;
-                
             }
         }
         return $this;
     }
-    
-    /**
-     * Check the first admin user.
-     * 
-     * @return mixed
-     */
-    public function check_setup()
-	{
-		$this->load->model('auth_model');
-		if ($this->auth->accounts_empty() == TRUE)
-			redirect('setup');
-	}
 
-    // ----- Encapsulation for meta tags | begin. ----- //
+    /**
+     * Set the meta_description value.
+     *
+     * @param string $value
+     */
     public function set_meta_description($value)
     {
         $this->meta_description = $value;
     }
 
-    public function get_meta_description() 
+    /**
+     * Get the meta_descriptinon value.
+     *
+     * @return string
+     */
+    public function get_meta_description()
     {
         return $this->meta_description;
     }
 
-    public function set_meta_image($value) 
+    /**
+     * Set the meta_image value.
+     *
+     * @param string $value
+     */
+    public function set_meta_image($value)
     {
         $this->meta_image = $value;
     }
 
-    public function get_meta_image() 
+    /**
+     * Get the meta_image value
+     *
+     * @return string
+     */
+    public function get_meta_image()
     {
         return $this->meta_image;
     }
 
-    public function set_meta_keywords($value) 
+    /**
+     * Set the meta_keywords value.
+     *
+     * @param string $value
+     */
+    public function set_meta_keywords($value)
     {
         $this->meta_keywords = $value;
     }
 
-    public function get_meta_keywords() 
+    /**
+     * get the meta_keywords value.
+     *
+     * @return string
+     */
+    public function get_meta_keywords()
     {
         return $this->meta_keywords;
     }
 
-    public function set_meta_title($value) 
+    /**
+     * Set the meta_title value.
+     *
+     * @param string $value
+     */
+    public function set_meta_title($value)
     {
-        $this->meta_title = $value .' | '. $this->get_config('site_titulo');
+        $this->meta_title = $value . ' | ' . $this->get_config('site_titulo');
     }
 
+    /**
+     * Get the meta_title value;
+     *
+     * @return string
+     */
     public function get_meta_title()
     {
         return $this->meta_title;
     }
-    // ----- Encapsulation for meta tags | end. ----- //
 
-    /* ----- Methods for the Website. ----- */
-    
     /**
      * Return a full meta-tag to be inserted into the <head> of the site.
      *
      * @return mixed
      */
-    public function get_meta() 
+    public function get_meta()
     {
-        // Recupera a variável 'Locale'.
         $available_languages = config_item('available_languages');
         $locale = $available_languages[$this->get_config('language')]['locale'];
-        // Trata a variável 'Description'.
         if (!$this->meta_description)
             $this->meta_description = $this->get_config('site_desc');
-        // Trata a imagem de exibição.
-        if(!$this->meta_image)
-            $this->meta_image = base_url('media/'.$this->get_config('logomarca'));
+        if (!$this->meta_image)
+            $this->meta_image = base_url('media/' . $this->get_config('logomarca'));
         $meta = array(
             array('name' => 'Content-type', 'content' => 'text/html; charset=' . config_item('charset'), 'type' => 'equiv'),
             array('name' => 'robots', 'content' => 'all'),
@@ -255,7 +236,7 @@ class Wpanel
      * @param $item String
      * @return mixed
      */
-    public function get_config($item = null) 
+    public function get_config($item = null)
     {
         $this->load->model('configuracao');
         return $this->configuracao->get_config($item);
@@ -268,10 +249,11 @@ class Wpanel
      * @todo Revisar este código de 'invocaçao' do editor.
      * @todo Adicionar o filemanager no tinyMCE.
      */
-    public function load_editor() 
+    public function load_editor()
     {
         $html = '';
-        switch (wpn_config('text_editor')) {
+        switch (wpn_config('text_editor'))
+        {
             case 'ckeditor':
                 $html .= "\n\n<script type=\"text/javascript\" src=\"" . base_url('lib/plugins/ckeditor/ckeditor.js') . "\"></script>\n";
                 return $html;
@@ -296,20 +278,6 @@ class Wpanel
     }
 
     /**
-     * Load the group of views to the control panel.
-     * 
-     * @param string $view
-     * @param array $dados
-     * @return mixed
-     */
-    public function load_view($view, $dados = null) 
-    {
-        $this->load->view('layout/header');
-        $this->load->view($view, $dados);
-        $this->load->view('layout/footer');
-    }
-
-    /**
      * Send an email from the website.
      *
      * Example of array:
@@ -322,33 +290,35 @@ class Wpanel
      *        'subject' => '',
      *        'message' => '',
      *    )
-     * 
+     *
      * @param array $data
      * @return bool
      */
     public function send_email($data = NULL)
     {
-        if($data == NULL)
+        if ($data == NULL)
             return FALSE;
         // Load the library.
         $this->load->library('email');
         // Check if use SMTP.
-        if(wpn_config("usa_smtp")){
+        if (wpn_config("usa_smtp"))
+        {
             $config['smtp_host'] = wpn_config("smtp_servidor");
             $config['smtp_user'] = wpn_config("smtp_usuario");
             $config['smtp_pass'] = wpn_config("smtp_senha");
             $config['smtp_port'] = wpn_config("smtp_porta");
-            $config['smtp_crypto'] = wpn_config("smtp_ssl");
+            if (wpn_config("smtp_crypto") != '0')$config['smtp_crypto'] = wpn_config("smtp_crypto");
             $config['mailtype'] = $data['html'] ? 'html' : 'text';
             $config['validate'] = TRUE;
-            $config['protocol'] = 'sendmail';
+            $config['protocol'] = 'smtp';
             $config['mailpath'] = '/usr/sbin/sendmail';
             $config['charset'] = 'utf-8';
             $config['wordwrap'] = TRUE;
 
             $this->email->initialize($config);
             $this->email->from(wpn_config('smtp_usuario'), wpn_config('site_titulo'));
-        } else {
+        } else
+        {
             $this->email->from($data['from_email'], wpn_config('site_titulo'));
         }
 
@@ -356,14 +326,164 @@ class Wpanel
         $this->email->to($data['to']);
         $this->email->subject($data['subject']);
         $this->email->message($data['message']);
-        
+
         // Verify the succes of the send.
-        if ($this->email->send()) {
+        if ($this->email->send())
+        {
             log_message('debug', $this->email->print_debugger() . " Success");
             return TRUE;
-        } else {
+        } else
+        {
             log_message('debug', $this->email->print_debugger() . " Error");
             return FALSE;
         }
     }
+
+    /**
+     * Upload a file.
+     *
+     * @param $path String Path where the file must be saved.
+     * @param $types String File type: gif|jpg|png.
+     * @param $fieldname String Field name of the form.
+     * @param $filename String Optional file name..
+     * @return mixed
+     */
+    public function upload_media($path, $types = '*', $fieldname = 'userfile', $filename = null)
+    {
+        $config['upload_path'] = FCPATH . 'media/' . $path . '/';
+        $config['remove_spaces'] = TRUE;
+        $config['file_ext_tolower'] = TRUE;
+        $config['allowed_types'] = $types;
+        if ($filename == null)
+            $config['file_name'] = md5(date('YmdHis'));
+        else
+            $config['file_name'] = $filename;
+
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload($fieldname))
+        {
+            $upload_data = array();
+            $upload_data = $this->upload->data();
+
+            if (wpn_config('resize_image') == 1)
+            {
+                $resize['image_library'] = 'gd2';
+                $resize['source_image'] = $upload_data['full_path'];
+                $resize['maintain_ratio'] = wpn_config('maintain_ratio');
+                $resize['quality'] = wpn_config('quality');
+                if (!wpn_config('image_width') == '')
+                    $resize['width'] = $upload_data['image_width'] * str_replace('%', '', wpn_config('image_width')) / 100;
+                if (!wpn_config('image_height') == '')
+                    $resize['height'] = $upload_data['image_height'] * str_replace('%', '', wpn_config('image_height')) / 100;
+                $this->load->library('image_lib', $resize);
+                if (!$this->image_lib->resize())
+                {
+                    // print_r($resize);
+                    // echo "<br/>";
+                    // print_r($upload_data);
+                    print_r($this->image_lib->display_errors());
+                    exit;
+                }
+            }
+
+            return $upload_data['file_name'];
+        } else
+            return false;
+    }
+
+    /**
+     * Remove an uploaded file.
+     *
+     * @param $file String - Full path to the file.
+     * @return boolean
+     */
+    public function remove_media($file)
+    {
+        $filename = FCPATH . 'media/' . $file;
+        if (file_exists($filename))
+        {
+            if (unlink($filename))
+                return TRUE;
+            else
+                return FALSE;
+        } else
+            return FALSE;
+    }
+    
+    /**
+     * Read an Json file and return the content as object.
+     * 
+     * @param string $filename Full path to the file.
+     * @return mixed
+     */
+    public function read_json($filename = NULL)
+    {
+        
+        if($filename == NULL)
+            return FALSE;
+        
+        $json = file_get_contents($filename);
+        $result = (object) json_decode($json);
+        return $result;
+        
+    }
+    
+    /**
+     * Write a Json file.
+     * 
+     * @param mixed $data Could be an Array or an Object.
+     * @param string $filename Full path to the file.
+     * @return boolean
+     */
+    public function write_json($data, $filename = NULL)
+    {
+        
+        if($filename == NULL)
+            return FALSE;
+        
+        $json = json_encode($data);
+        if (write_file($filename, $json))
+            return TRUE;
+        else
+            return FALSE;
+        
+    }
+    
+    /**
+     * Check for news from Wpanel.org.
+     * 
+     * @return boolean
+     */
+    public function check_news()
+    {
+        $this->load->library('curl');
+        $this->load->model('notification');
+        $url  = 'https://api.wpanel.org/v1/news';
+        $data = array(
+            'app_token' => wpn_config('app_token'),
+            'ip_address' => $this->input->server('REMOTE_ADDR'),
+            'url' => base_url()
+        );
+        $this->curl->create($url);
+        $this->curl->post($data);
+        $result = $this->curl->execute();
+        $httpcode = $this->curl->info;
+        if($httpcode['http_code'] === 200) {
+            $query = json_decode($result);
+            foreach($query->output as $row) {
+                if(@$row->link) {
+                    $data_save = array(
+                        'title' => $row->title,
+                        'description' => $row->description,
+                        'url' => $row->link,
+                        'status' => 0
+                    );
+                    $this->notification->new_notification($data_save);
+                }
+            }
+            return TRUE;
+        } else
+            return FALSE;
+    }
+
 }

@@ -1,116 +1,77 @@
-<?php 
+<?php
 
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Main Controller Class
+ * Classe Main
  *
- * This class maintain the methods of the basic website. It was thought that
- * you add more resources to your project creating new Controller Classes
- * extending MY_Controller Class to get the common features.
+ * Contém os métodos básicos do site.
  *
- * @package     WpanelCms
- * @subpackage  Controllers
- * @category    Controllers
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @link        https://wpanelcms.com.br
- * @version     0.0.1
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
-class Main extends MY_Controller 
+class Main extends MY_Controller
 {
 
     /**
-     * Class constructor.
+     * Construtor da classe.
      *
      * @return void
      */
-    function __construct() 
+    function __construct()
     {
-        
-        /**
-         * Here are some options provided by the MY_Controller class, you
-         * can adjust as you need to your project.
-         */
-        
-        /**
-         * Enable the CodeIgniter Profile.
-         */
-        // $this->wpn_profiler = TRUE;
-        
-        /**
-         * Chose the template folder.
-         */
 
-        // $this->wpn_template = 'default';
+        /**
+         * ---------------------------------------------------------------------
+         * Aqui ficam disponíveis algumas opções disponibilizadas pela classe
+         * MY_Controller que você pode ajustar de acordo com seu projeto.
+         * ---------------------------------------------------------------------
+         */
         
         /**
-         * Set the 'col' number of the mosaic views.
+         * Ativa o profiler (Forensics).
          */
-        // $this->wpn_cols_mosaic = 3;
-        
+        $this->show_profiler = FALSE;
+
         /**
-         * Set the default post view: list (default) or mosaic.
+         * Informa o número de colunas do layout 'Mosaico'.
          */
-        // $this->wpn_posts_view = 'mosaic';
-        
+        $this->wpn_cols_mosaic = 3;
+
+        /**
+         * Informa a view padrão para as postagens: 'list' ou 'mosaic'.
+         */
+        $this->wpn_posts_view = 'mosaic';
+
         parent::__construct();
-        $this->wpanel->check_setup();
         
     }
-
+    
     /**
-     * You can use this method to create 'custom' home page to your site and
-     * then select the 'custom' page in the admin configuration panel.
-     *
-     * @return void
+     * Você pode usar este método para criar uma página inicial personalizada e
+     * então selecionar como padrão no painel de controle.
      */
-    public function custom() 
+    public function custom()
     {
         $this->wpanel->set_meta_title('Início');
-        $this->render('custom');
+        $this->view('main/custom')->render();
     }
 
     /**
-     * The method index() select the configured home page of the site.
-     *
-     * @return void
+     * Este método retorna a página inicial configurada no painel de controle.
      */
-    public function index() 
+    public function index()
     {
-        switch (wpn_config('home_tipo')) {
+        
+        // Exibe/Oculta o slide do topo.
+        $this->set_var('show_slide', true);
+        
+        switch (wpn_config('home_tipo'))
+        {
             case 'page':
                 $this->post(wpn_config('home_id'), true);
                 break;
@@ -118,328 +79,361 @@ class Main extends MY_Controller
                 $this->posts(wpn_config('home_id'));
                 break;
             default:
-                return $this->custom();
+                $this->custom();
                 break;
         }
     }
 
     /**
-     * The method posts() retuns a list of posts, it can be categoryzed and
-     * can be a list or mosaic view.
+     * Retorna uma lista de posts que pode ser por categoria. A exibição pode
+     * ser em mosaico ou em lista.
      *
-     * @param $category_id Int Category ID.
-     * @return void
+     * @param $category_id Int Id da categoria.
      */
-    public function posts($category_id = null) 
+    public function posts($category_id = null)
     {
-        $view_title = '';
-        $view_description = '';
+
         $this->load->model('post');
-        $this->load->model('categoria');
-        // Check if is a categoryzed list.
-        if ($category_id == null) {
-            $this->data_content['posts'] = $this->post->get_by_field(
-                array('page' => '0', 'status' => '1'), 
-                null, 
-                array('field' => 'created', 'order' => 'desc'), 
-                null, 
-                'id, title, description, content, link, image, created'
-            )->result();
+        $this->load->model('category');
+
+        if ($category_id == null)
+        {
+            $this->set_var('posts', $this->post
+                    ->order_by('created_on', 'desc')
+                    ->select('id, title, link, image, content, created_on')
+                    ->find_many_by(array('page' => '0', 'status' => '1')));
             $view_title = 'Todas as postagens';
-        } else {
-            $qry_category = $this->categoria->get_by_id($category_id, null, null, 'title, description, view')->row();
-            $this->data_content['posts'] = $this->post->get_by_category($category_id, 'desc')->result();
-            $this->data_content['view_title'] = $qry_category->title;
-            $this->data_content['view_description'] = $qry_category->description;
+        } else
+        {
+            $qry_category = $this->category
+                    ->select('id, title, description, view')
+                    ->find($category_id);
+            $this->set_var('posts', $this->post->get_by_category($category_id, 'desc')->result());
+            $this->set_var('view_title', $qry_category->title);
+            $this->set_var('view_description', $qry_category->description);
             $view_title = $qry_category->title;
             $this->wpn_posts_view = strtolower($qry_category->view);
         }
-        // Send $max_cols if the view is mosaic type.
-        if($this->wpn_posts_view == 'mosaic')
-            $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
+
+        if ($this->wpn_posts_view == 'mosaic')
+            $this->set_var('max_cols', $this->wpn_cols_mosaic);
+        
         $this->wpanel->set_meta_title($view_title);
-        $this->render('posts_' . $this->wpn_posts_view);
+        $this->view('main/posts_' . $this->wpn_posts_view)->render();
+        
     }
 
     /**
-     * The method post() shows a post by link or by ID if $use_id = True.
+     * Este método exibe uma postagem usando um link ou Id como referência.
      *
-     * @param $link mixed Link or ID field of the post.
-     * @param $use_id boolean Indicates if $link is a ID.
-     * @return void
+     * @param $var mixed Link ou ID da postagem.
+     * @param $use_id boolean Indica que $var é um Id.
      */
-    public function post($link = '', $use_id = false) 
+    public function post($var = null, $use_id = false)
     {
-        if ($link == '')
+        if ($var === null)
             show_404();
+        
         $this->load->model('post');
-        if($use_id)
-            $query = $this->post->get_by_id(
-                $link, 
-                null, 
-                null, 
-                'id, title, description, content, link, image, tags, created, page, status'
-            )->row();
-        else 
-            $query = $this->post->get_by_field(
-                'link', 
-                $link, 
-                null, 
-                null, 
-                'id, title, description, content, link, image, tags, created, page, status'
-            )->row();
-        $this->data_content['post'] = $query;
+        
+        if ($use_id) {
+            $query = $this->post
+                ->select('id, title, content, link, tags, image, page, description, status, created_on')
+                ->find($var);
+        } else {
+            $query = $this->post
+                ->select('id, title, content, link, tags, image, page, description, status, created_on')
+                ->find_by('link', $var);
+        }
+        
+        $this->set_var('post', $query);
+        
         if (count($query) <= 0)
             show_404();
+        
         if ($query->status == 0)
             show_error('Esta página foi suspensa temporariamente', 404);
+        
         $this->wpanel->set_meta_description($query->description);
         $this->wpanel->set_meta_keywords($query->tags);
         $this->wpanel->set_meta_title($query->title);
-        if(file_exists('./media/capas/'.$query->image))
-            $this->wpanel->set_meta_image(base_url('media/capas/'.$query->image));
-        // Select the spacific type of view according to type of post.
-        switch ($query->page) {
+        
+        if (file_exists('./media/capas/' . $query->image))
+            $this->wpanel->set_meta_image(base_url('media/capas/' . $query->image));
+
+        switch ($query->page)
+        {
             case '1':
-                $this->render('page');
+                $this->view('main/page')->render();
                 break;
             case '2':
-                $this->render('event');
+                $this->view('main/event')->render();
                 break;
             default:
-                $this->render('post');
+                $this->view('main/post')->render();
                 break;
         }
     }
 
     /**
-     * The method events() shows a list of posts typed as 'event'.
-     *
-     * @return void
+     * Este método exibe uma lista de postagens em formato de lista de eventos.
      */
-    public function events() 
+    public function events()
     {
-        $view_title = 'Eventos';
         $this->load->model('post');
-        $query = $this->post->get_by_field(
-                array('page' => '2', 'status' => '1'), 
-                null, 
-                array('field' => 'created', 'order' => 'desc')
-        )->result();
-        $this->wpanel->set_meta_title($view_title);
+        $query = $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '2', 'status' => '1'));
+        $this->wpanel->set_meta_title('Eventos');
         $this->wpanel->set_meta_description('Lista de eventos');
         $this->wpanel->set_meta_keywords(' eventos, agenda');
-        $this->data_content['events'] = $query;
-        $this->render('events');
+        $this->set_var('events', $query);
+        $this->render();
     }
 
     /**
-     * The method search() make a simple search function into the Posts.
-     * 
-     * @todo Melhorar a view de resultados usando um estilo de tabela.
-     * @return void
+     * Busca simples no cadastro de postagens.
      */
-    public function search() 
+    public function search()
     {
-        $search_terms = $this->input->post('search');
+        $search_terms = $this->input->post('search', TRUE);
         $this->load->model('post');
-        $this->data_content['search_terms'] = $search_terms;
-        $this->data_content['results'] = $this->post->busca_posts($search_terms)->result();
+        $this->set_var('search_terms', $search_terms);
+        $this->set_var('results', $this->post->busca_posts($search_terms)->result());
         $this->wpanel->set_meta_title('Resultados da busca por ' . $search_terms);
-        $this->render('search');
+        $this->render();
     }
 
     /**
-     * The method albuns() list all the available galeries of the site.
-     *
-     * @return void
+     * Lista as galerias de fotos.
      */
-    public function albuns() 
+    public function galleries()
     {
-        $this->load->model('album');
-        $query = $this->album->get_by_field(
-            'status', 1, 
-            array('field'=>'created', 'order'=>'desc'), 
-            null,
-            'id, titulo, capa, created'
-        )->result();
+        $this->load->model('gallery');
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 3;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->gallery->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('galleries/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->gallery
+                ->limit($limit, $offset)
+                ->select('id, titulo, capa, created_on')
+                ->order_by('created_on', 'desc')
+                ->find_many_by('status', 1);
+        
         $this->wpanel->set_meta_description('Álbuns de fotos');
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title('Álbuns de fotos');
-        $this->data_content['albuns'] = $query;
-        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-        $this->render('albuns');
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('albuns', $query);
+        $this->set_var('max_cols', $this->wpn_cols_mosaic);
+        $this->render();
     }
 
     /**
-     * The method album() shows a list of pictures of a galery selected by $album_id.
+     * Lista as fotos de uma galeria indicada pelo  Id.
      *
-     * @param $album_id Int ID of the galery.
-     * @return void
+     * @param $album_id Int Id da galeria.
      */
-    public function album($album_id = null) 
+    public function gallery($album_id = null, $fake_link = '')
     {
-        if ($album_id == null)
+        if ($album_id === null)
             show_404();
-        $this->load->model('album');
-        $this->load->model('foto');
-        $query_album = $this->album->get_by_id(
-            $album_id, 
-            null, 
-            null, 
-            'id, titulo, descricao, capa, created, status'
-        )->row();
+        
+        $this->load->model('gallery');
+        $this->load->model('picture');
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 12;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->picture->count_by(array('album_id' => $album_id, 'status' => 1, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('gallery/'.$album_id.'/'.$fake_link.'/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query_album = $this->gallery
+                ->select('id, titulo, capa, descricao, tags, status, created_on')
+                ->find($album_id);
+        
         if (count($query_album) <= 0)
             show_404();
+        
         if ($query_album->status == 0)
             show_error('Este álbum foi suspenso temporariamente', 404);
-        $query_pictures = $this->foto->get_by_field(
-            array('album_id'=>$album_id, 'status'=>1), 
-            null, 
-            array('field' => 'created', 'order' => 'desc'),
-            null,
-            'id, filename, descricao'
-        )->result();
+        
+        $query_pictures = $this->picture
+                ->select('id, filename, descricao')
+                ->limit($limit, $offset)
+                ->find_many_by(array('album_id' => $album_id, 'status' => 1));
+        
         $this->wpanel->set_meta_description($query_album->descricao);
         $this->wpanel->set_meta_keywords(' album, fotos');
         $this->wpanel->set_meta_title($query_album->titulo);
-        if(file_exists('./media/capas/'.$query_album->capa))
-            $this->wpanel->set_meta_image(base_url('media/capas'.'/'.$query_album->capa));
-        $this->data_content['album']    = $query_album;
-        $this->data_content['pictures'] = $query_pictures;
-        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-        $this->render('album');
+        
+        if (file_exists('./media/capas/' . $query_album->capa))
+            $this->wpanel->set_meta_image(base_url('media/capas' . '/' . $query_album->capa));
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('album', $query_album);
+        $this->set_var('pictures', $query_pictures);
+        $this->set_var('max_cols', $this->wpn_cols_mosaic);
+        $this->render();
     }
 
     /**
-     * The method foto() shows the picture selected by $picture_id, it only works
-     * if you are not using the lightbox plugin.
+     * Exibe a foto indicada pelo Id. Este método é indicado quando você
+     * não quer usar o plugin lightbox.
      *
-     * @param $picture_id Int Id of the picture.
-     * @return void
+     * @param $picture_id Int Id da imagem.
      */
-    public function foto($picture_id = null)
+    public function picture($picture_id = null)
     {
-        if ($picture_id == null)
+        
+        if ($picture_id === null)
             show_404();
-        $this->load->model('album');
-        $this->load->model('foto');
-        $query_picture = $this->foto->get_by_id(
-            $picture_id, null, null, 
-            'id, album_id, filename, descricao, status'
-        )->row();
-        $query_album = $this->album->get_by_id(
-            $query_picture->album_id, 
-            null, 
-            null, 
-            'id, titulo, descricao, capa, created, status'
-        )->row();
+        
+        $this->load->model('gallery');
+        $this->load->model('picture');
+        
+        $query_picture = $this->picture
+                ->select('id, album_id, filename, descricao, status')
+                ->find($picture_id);
+        $query_album = $this->gallery
+                ->select('id, titulo, descricao, created_on')
+                ->find($query_picture->album_id);
+        
         if (count($query_picture) <= 0)
             show_404();
+        
         if ($query_picture->status == 0)
             show_error('Esta foto foi suspensa temporariamente', 404);
+        
         $this->wpanel->set_meta_description($query_picture->descricao);
         $this->wpanel->set_meta_keywords('album, fotos');
         $this->wpanel->set_meta_title($query_picture->descricao);
-        if(file_exists('./media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename))
-            $this->wpanel->set_meta_image(base_url('media/albuns/'.$query_picture->album_id.'/'.$query_picture->filename));
-        $this->data_content['album']    = $query_album;
-        $this->data_content['picture']  = $query_picture;
-        $this->render('foto');
+        
+        if (file_exists('./media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename))
+            $this->wpanel->set_meta_image(base_url('media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename));
+        
+        $this->set_var('album', $query_album);
+        $this->set_var('picture', $query_picture);
+        $this->render();
     }
 
     /**
-     * The method videos() shows a list of videos from youtube. The videos is not
-     * loaded automaticaly from the channel, it must be inserted into the control
-     * panel by the manager.
-     *
-     * @return void
+     * Lista os vídeos do Youtube que foram cadastrados no painel de controle.
      */
-    public function videos() 
+    public function videos()
     {
         $this->load->model('video');
-        $query_videos = $this->video->get_by_field(
-            'status', 
-            1, 
-            array('field' => 'created', 'order' => 'desc'),
-            null,
-            'link, titulo'
-        )->result();
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 3;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->video->count_by(array('status' => 1, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('videos/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query_videos = $this->video
+                ->limit($limit, $offset)
+                ->select('id, titulo, link')
+                ->order_by('created_on', 'desc')
+                ->find_many_by('status', 1);
         $this->wpanel->set_meta_description('Lista de vídeos');
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title('Vídeos');
-        $this->data_content['videos']   = $query_videos;
-        $this->data_content['max_cols'] = $this->wpn_cols_mosaic;
-        $this->render('videos');
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('videos', $query_videos);
+        $this->set_var('max_cols', $this->wpn_cols_mosaic);
+        $this->render();
     }
 
     /**
-     * The method video() shows a video selected by $code.
+     * Exibe um vídeo indicado pelo Código do vídeo.
      *
-     * @param $code string Youtube code for the video.
-     * @return void
+     * @param $code string Código do vídeo no youtube.
      */
-    public function video($code = null) 
+    public function video($code = null)
     {
-        if ($code == null)
+        if ($code === null)
             show_404();
+        
         $this->load->model('video');
-        $query_video = $this->video->get_by_field(
-            array('link'=>$code,'status'=>1), 
-            null,
-            null,
-            null,
-            'titulo, descricao, link, status'
-        )->row();
+        $query_video = $this->video
+                ->select('titulo, descricao, link, tags, status')
+                ->find_by(array('link' => $code, 'status' => 1));
+        
         if (count($query_video) <= 0)
             show_404();
+        
         if ($query_video->status == 0)
             show_error('Este vídeo foi suspenso temporariamente', 404);
-        $this->data_content['video'] = $query_video;
+        
+        $this->set_var('video', $query_video);
         $this->wpanel->set_meta_description($query_video->titulo);
         $this->wpanel->set_meta_keywords('videos, filmes');
         $this->wpanel->set_meta_title($query_video->titulo);
-        $this->wpanel->set_meta_image('http://img.youtube.com/vi/'.$code.'/0.jpg');
-        $this->render('video');
+        $this->wpanel->set_meta_image('http://img.youtube.com/vi/' . $code . '/0.jpg');
+        $this->render();
     }
 
     /**
-     * The method contact() creates a full functional 'Contact Page' for the site.
-     *
-     * @todo Criar a opção de inserir a mensagem no banco de dados e no painel de contorle.
-     * @return void
+     * Formulário de contato com captcha.
      */
-    public function contact() 
+    public function contact()
     {
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('captcha', 'Confirmação', 'required|captcha');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE)
+        {
             $this->wpanel->set_meta_description('Formulário de contato');
             $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
             $this->wpanel->set_meta_title('Contato');
-            $this->data_content['contact_content'] = wpn_config('texto_contato');
-            $this->data_content['captcha'] = $this->form_validation->get_captcha();
-            $this->render('contact');
-        } else {
-            // Receive the values of the form.
+            $this->set_var('contact_content', wpn_config('texto_contato'));
+            $this->set_var('captcha', $this->form_validation->get_captcha());
+            $this->render();
+        } else
+        {
+            // Recebe o formulário.
             $nome = $this->input->post('nome');
             $email = $this->input->post('email');
             $telefone = $this->input->post('telefone');
             $mensagem = $this->input->post('mensagem');
-            // Make a message string.
+            // Monta a mensagem.
             $msg = "";
             $msg .= "Mensagem enviada pelo site.\n\n";
             $msg .= "Nome: $nome\n";
             $msg .= "Email: $email\n";
-            $msg .= "Telefone: $telefone\n\n";
+            $msg .= "Telefone: $telefone\n";
+            $msg .= "IP: " . $this->input->server('REMOTE_ADDR', true) . "\n\n";
             $msg .= "Mensagem\n";
             $msg .= "------------------------------------------------------\n\n";
             $msg .= "$mensagem";
             $msg .= "\n\n";
             $msg .= "Enviado pelo WPanel CMS\n";
-
             $mail_data = array(
                 'html' => FALSE,
                 'from_name' => $nome,
@@ -448,27 +442,20 @@ class Main extends MY_Controller
                 'subject' => 'Formulário de contato - ' . wpn_config('site_titulo'),
                 'message' => $msg,
             );
-
-            if($this->wpanel->send_email($mail_data)){
-                $this->notice('Sua mensagem foi enviada com sucesso.', 'Sucesso!', 'success');
-                redirect('contact');
-            } else {
-                $this->notice('Sua mensagem não pode ser enviada.', 'Erro!', 'danger');
-                redirect('contact');
-            }
+            if ($this->wpanel->send_email($mail_data))
+                $this->set_message('Sua mensagem foi enviada com sucesso!', 'success', 'contact');
+            else
+                $this->set_message('Sua mensagem não pode ser enviada.', 'danger', 'contact');
         }
     }
 
     /**
-     * The method rss() creates a XML page to Feed Readers with a list of posts.
-     * 
-     * @todo Criar o metodo de categorizar esta lista de feed.
-     * @return void
+     * Gera um RSS com a lista de postagens para os "Feed Readers".
      */
     public function rss()
     {
         $this->load->model('post');
-        $query = $this->post->get_list(array('field'=>'created', 'order'=>'desc'), null, '')->result();
+        $query = $this->post->order_by('created_on', 'desc')->find_all();
         $available_languages = config_item('available_languages');
         $locale = $available_languages[wpn_config('language')]['locale'];
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
@@ -477,12 +464,13 @@ class Main extends MY_Controller
         $rss .= "\t\t<title>" . wpn_config('site_titulo') . "</title>\n";
         $rss .= "\t\t<description>" . wpn_config('site_desc') . "</description>\n";
         $rss .= "\t\t<link>" . site_url() . "</link>\n";
-        $rss .= "\t\t<language>".$locale."</language>\n";
-        foreach ($query as $row) {
+        $rss .= "\t\t<language>" . $locale . "</language>\n";
+        foreach ($query as $row)
+        {
             $rss .= "\t\t<item>\n";
-            $rss .= "\t\t\t<title>".$row->title."</title>\n";
-            $rss .= "\t\t\t<description>".$row->description."</description>\n";
-            $rss .= "\t\t\t<lastBuildDate>".$row->created."</lastBuildDate>\n";
+            $rss .= "\t\t\t<title>" . $row->title . "</title>\n";
+            $rss .= "\t\t\t<description>" . $row->description . "</description>\n";
+            $rss .= "\t\t\t<lastBuildDate>" . $row->created_on . "</lastBuildDate>\n";
             $rss .= "\t\t\t<link>" . site_url('post/' . $row->link) . "</link>\n";
             $rss .= "\t\t</item>\n";
         }
@@ -491,36 +479,32 @@ class Main extends MY_Controller
     }
 
     /**
-     * The method newsletter() show a form to insert contact for newsletter.
-     *
-     * @todo Enviar uma mensagem de confirmação do cadastro para o email.
-     * @return void
+     * Formulário de captação de leads (emails newsletters).
      */
     public function newsletter()
     {
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE)
+        {
             $this->wpanel->set_meta_description('Newsletter');
             $this->wpanel->set_meta_keywords('Cadastro, Newsletter');
             $this->wpanel->set_meta_title('Newsletter');
-            $this->render('newsletter');
-        } else {
+            $this->render();
+        } else
+        {
             $this->load->model('newsletter');
-            $dados_save = array(
+            $data = array(
                 'nome' => $this->input->post('nome', true),
                 'email' => $this->input->post('email', true),
-                'created' => date('Y-m-d H:i:s'),
                 'ipaddress' => $this->input->server('REMOTE_ADDR', true)
             );
-            if ($this->newsletter->save($dados_save)) {
-                $this->notice('Seus dados foram salvos com sucesso.', 'Sucesso!', 'success');
-                redirect('newsletter');
-            } else {
-                $this->notice('Não foi possível salvar seus dados, verifique e tente novamente.', 'Erro!', 'danger');
-                redirect('newsletter');
-            }
+            if ($this->newsletter->insert($data))
+                $this->set_message('Seus dados foram salvos com sucesso!', 'success', 'newsletter');
+            else
+                $this->set_message('Não foi possível salvar os seus dados, verifique e tente novamente.', 'danger', 'newsletter');
         }
     }
+
 }

@@ -1,61 +1,54 @@
 <section class="content-header">
     <h1>
-        Contas de usuário
-        <small>Gerencie as contas de usuário aqui.</small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/accounts'); ?>"><i class="fa fa-users"></i> Contas de usuário</a></li>
-        <li>Alteração de conta de usuário</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/accounts'); ?>"><i class="fa fa-users"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('module_edit'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Alteração de conta de usuário</h3>
+            <h3 class="box-title"><?= wpn_lang('module_edit'); ?></h3>
         </div>
         <div class="box-body">
             <?= form_open_multipart('admin/accounts/edit/'.$row->id, array('role'=>'form')); ?>
                 <ul class="nav nav-pills" role="tablist" style="margin-bottom:20px;">
-                    <li class="active"><a href="#userdata" role="tab" data-toggle="tab">Dados do usuário</a></li>
-                    <li><a href="#permissions" role="tab" data-toggle="tab">Permissões</a></li>
+                    <li class="active"><a href="#userdata" role="tab" data-toggle="tab"><?= wpn_lang('tab_userdata'); ?></a></li>
+                    <li><a href="#permissions" role="tab" data-toggle="tab"><?= wpn_lang('tab_permissions'); ?></a></li>
                 </ul>
                 <div class="tab-content">
                     <!--Painel de configuração geral-->
                     <div class="tab-pane active panel panel-default" id="userdata">
                         <div class="panel-heading">
-                            Dados do usuário
+                            <?= wpn_lang('tab_userdata'); ?>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Nome completo</label>
-                                        <input type="text" name="name" value="<?= auth_extra_data('name', $row->extra_data); ?>" class="form-control" />
+                                        <label for="name"><?= wpn_lang('field_name'); ?></label>
+                                        <input type="text" name="name" value="<?= $extra->name; ?>" class="form-control" />
                                         <?= form_error('name'); ?>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email válido</label>
+                                        <label for="email"><?= wpn_lang('field_email'); ?></label>
                                         <input type="email" name="email" value="<?= $row->email; ?>" class="form-control" />
                                         <?= form_error('email'); ?>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="password">Senha</label>
-                                        <input type="password" name="password" class="form-control" />
-                                        <?= form_error('password'); ?>
-                                    </div>
-                                </div> -->
                             </div> <!-- end row -->
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="thumbnail">
-                                        <?php if(auth_extra_data('avatar', $row->extra_data)){ ?>
-                                            <img src="<?= base_url('media/avatar') . '/'.auth_extra_data('avatar', $row->extra_data); ?>" class="img-responsive" />
+                                        <?php if($extra->avatar){ ?>
+                                            <img src="<?= base_url('media/avatar') . '/'.$extra->avatar; ?>" class="img-responsive" />
                                         <?php } else { ?>
                                             <img src="<?= base_url('lib/img'); ?>/no-user.jpg" class="img-responsive" />
                                         <?php } ?>
@@ -63,13 +56,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="userfile">Foto do usuário</label>
+                                        <label for="userfile"><?= wpn_lang('field_avatar'); ?></label>
                                         <input type="file" name="userfile" class="form-control" />
-                                        <input type="hidden" name="avatar" value="<?= auth_extra_data('avatar', $row->extra_data); ?>"/>
+                                        <input type="hidden" name="avatar" value="<?= $extra->avatar; ?>"/>
                                         <div class="checkbox">
                                             <label>
                                                 <?= form_checkbox('change_avatar', '1', false); ?>
-                                                Alterar o avatar
+                                                <?= wpn_lang('field_change_avatar'); ?>
                                             </label>
                                         </div>
                                         <?= form_error('image'); ?>
@@ -94,15 +87,15 @@
                                           'yellow-light'  => 'Yellow-Light'
                                         );
                                         ?>
-                                        <label for="skin">Estilo de cor</label>
-                                        <?= form_dropdown('skin', $options, array(auth_extra_data('skin', $row->extra_data)), array('class'=>'form-control')); ?>
+                                        <label for="skin"><?= wpn_lang('field_skin'); ?></label>
+                                        <?= form_dropdown('skin', $options, array($extra->skin), array('class'=>'form-control')); ?>
                                         <?= form_error('skin'); ?>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="role">Tipo do usuário</label>
-                                        <?= form_dropdown('role', config_item('auth_account_role'), array($row->role), array('class'=>'form-control')); ?>
+                                        <label for="role"><?= wpn_lang('field_role'); ?></label>
+                                        <?= form_dropdown('role', $roles, array($row->role), array('class'=>'form-control')); ?>
                                         <?= form_error('role'); ?>
                                     </div>
                                 </div>
@@ -111,7 +104,7 @@
                     </div>
                     <div class="tab-pane panel panel-default" id="permissions">
                         <div class="panel-heading">
-                            Permissões
+                            <?= wpn_lang('tab_permissions'); ?>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -121,13 +114,13 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="headingOne">
                                                     <h4 class="panel-title">
-                                                        <a 
-                                                            role="button" 
+                                                        <a
+                                                            role="button"
                                                             class="collapsed"
-                                                            data-toggle="collapse" 
-                                                            data-parent="#accordion" 
-                                                            href="#collapse-<?= $mod['id']; ?>" 
-                                                            aria-expanded="true" 
+                                                            data-toggle="collapse"
+                                                            data-parent="#accordion"
+                                                            href="#collapse-<?= $mod['id']; ?>"
+                                                            aria-expanded="true"
                                                             aria-controls="collapse-<?= $mod['id']; ?>">
                                                             <span class="glyphicon glyphicon-triangle-bottom"></span> <?= $mod['name']; ?>
                                                         </a>
@@ -139,20 +132,20 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th><input type="checkbox" onchange="marcardesmarcar(<?= $mod['id']; ?>)" /></th>
-                                                                    <th>Descrição</th>
-                                                                    <th>Link</th>
+                                                                    <th><?= wpn_lang('field_description'); ?></th>
+                                                                    <th><?= wpn_lang('field_link'); ?></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php foreach($mod['actions'] as $act){ ?>
                                                                     <tr>
                                                                         <td>
-                                                                            <input 
-                                                                            type="checkbox" 
-                                                                            name="permission[]" 
-                                                                            value="<?= $act['id']; ?>" 
-                                                                            class="marcar-<?= $mod['id']; ?>" 
-                                                                            <?php if(has_permission($act['link'], $row->id, true))echo "checked"; ?>
+                                                                            <input
+                                                                            type="checkbox"
+                                                                            name="permission[]"
+                                                                            value="<?= $act['id']; ?>"
+                                                                            class="marcar-<?= $mod['id']; ?>"
+                                                                            <?php if(auth_link_permission($act['link'], $row->id, true))echo "checked"; ?>
                                                                             />
                                                                         </td>
                                                                         <td><?= $act['description']; ?></td>
@@ -174,17 +167,17 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
-                        <?= anchor('admin/accounts', 'Cancelar', array('class'=>'btn btn-danger')); ?>
+                        <button type="submit" name="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
+                        <?= anchor('admin/accounts', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
                     </div>
                     <div class="col-md-6 text-right">
                         <?php
                         if($row->status == 1)
-                            echo anchor('admin/accounts/deactivate/'.$row->id, 'Desativar usuário', array('class'=>'btn btn-danger')); 
+                            echo anchor('admin/accounts/deactivate/'.$row->id, wpn_lang('bot_deactivate'), array('class'=>'btn btn-danger'));
                         else
-                            echo anchor('admin/accounts/activate/'.$row->id, 'Ativar usuário', array('class'=>'btn btn-success')); 
+                            echo anchor('admin/accounts/activate/'.$row->id, wpn_lang('bot_activate'), array('class'=>'btn btn-success'));
                         ?>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".change-password-modal">Alterar senha</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".change-password-modal"><?= wpn_lang('bot_change_password'); ?></button>
                     </div>
                 </div>
             <?= form_close(); ?>
@@ -197,21 +190,21 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                Alteração de senha
+                <?= wpn_lang('modal_change_password'); ?>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="password">Senha</label>
+                            <label for="password"><?= wpn_lang('field_password'); ?></label>
                             <input type="password" name="password" class="form-control" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Salvar</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-success"><?= wpn_lang('wpn_bot_save'); ?></button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><?= wpn_lang('wpn_bot_cancel'); ?></button>
             </div>
         </div>
     </div>
@@ -222,9 +215,9 @@
     function marcardesmarcar(id){
       $('.marcar-'+id).each(
              function(){
-               if ($(this).prop( "checked")) 
+               if ($(this).prop( "checked"))
                $(this).prop("checked", false);
-               else $(this).prop("checked", true);               
+               else $(this).prop("checked", true);
              }
         );
     }

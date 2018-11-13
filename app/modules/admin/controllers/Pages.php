@@ -1,225 +1,170 @@
-<?php 
+<?php
+
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pages extends MX_Controller {
+/**
+ * Page class.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ */
+class Pages extends Authenticated_admin_controller
+{
 
-	function __construct()
-	{
-		$this->auth->check_permission();
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-	}
+    /**
+     * Class constructor.
+     */
+    function __construct()
+    {
+        $this->model_file = 'post';
+        $this->language_file = 'wpn_page_lang';
+        parent::__construct();
+    }
 
-	public function index()
-	{
-		$this->load->model('post');
-		$this->load->library('table');
+    /**
+     * List pages.
+     */
+    public function index()
+    {
+        $this->load->library('table');
+        // Template da tabela
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(
+            '#', wpn_lang('field_title'), wpn_lang('field_created_on'), wpn_lang('field_status'), wpn_lang('wpn_actions')
+        );
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->post->count_by(array('page' => 1, 'deleted' => '0'));
+        $config = array();
+        $config['base_url'] = site_url('admin/pages/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->post->limit($limit, $offset)
+                            ->order_by('created_on', 'desc')
+                            ->where('page', 1)
+                            ->select('id, title, created_on, status')
+                            ->find_all();
+        
+        foreach ($query as $row)
+        {
+            $this->table->add_row(
+                    $row->id, $row->title, mdate(config_item('user_date_format'), strtotime($row->created_on)), status_post($row->status),
+                    // Ícones de ações
+                    div(array('class' => 'btn-group btn-group-xs')) .
+                    anchor('admin/pages/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                    anchor('admin/pages/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))).
+                    div(null, true)
+            );
+        }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
+    }
 
-		$layout_vars = array();
-		$content_vars = array();
+    /**
+     * Insert page.
+     */
+    public function add()
+    {
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->render();
+        } else
+        {
+            $data = array();
+            $data['title'] = $this->input->post('title');
+            $data['description'] = $this->input->post('description');
+            $data['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title')))) . '-' . time();
+            $data['content'] = $this->input->post('content');
+            $data['tags'] = $this->input->post('tags');
+            $data['status'] = $this->input->post('status');
+            $data['image'] = $this->wpanel->upload_media('capas');
+            // Identifica se é uma página ou uma postagem
+            // 0=post, 1=Página
+            $data['page'] = '1';
+            if ($this->post->insert($data))
+            {
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/pages');
+            } else
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/pages');
+        }
+    }
 
-		// Template da tabela
-		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">')); 
-		$this->table->set_heading('#', 'Título', 'Data', 'Status', 'Ações');
-		$query = $this->post->get_by_field('page','1');
+    /**
+     * Edit an page.
+     * 
+     * @param int $id
+     */
+    public function edit($id = null)
+    {
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            if ($id == null)
+                $this->set_message('Página inexistente.', 'info', 'admin/pages');
+            $query = $this->post->find_by(array('id' => $id, 'page' => 1));
+            if(count($query) == 0)
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/pages');
+            $this->set_var('id', $id);
+            $this->set_var('row', $query);
+            $this->render();
+        } else
+        {
+            $data = array();
+            $data['title'] = $this->input->post('title');
+            $data['description'] = $this->input->post('description');
+            $data['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));
+            $data['content'] = $this->input->post('content');
+            $data['tags'] = $this->input->post('tags');
+            $data['status'] = $this->input->post('status');
+            // Identifica se é uma página ou uma postagem
+            // 0=post, 1=Página
+            $data['page'] = '1';
+            if ($this->input->post('alterar_imagem') == '1')
+            {
+                $postagem = $this->post->find($id);
+                $this->wpanel->remove_media('capas/' . $postagem->image);
+                $data['image'] = $this->wpanel->upload_media('capas');
+            }
+            if ($this->post->update($id, $data))
+            {
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/pages');
+            } else
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/pages');
+        }
+    }
 
-		foreach($query->result() as $row)
-		{
-			$this->table->add_row(
-				$row->id, 
-				$row->title,
-				mdate('%d/%m/%Y', strtotime($row->created)), 
-				status_post($row->status),
-				// Ícones de ações
-				div(array('class'=>'btn-group btn-group-xs')).
-				anchor('admin/pages/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/pages/delete/' . $row->id).'\');">'.glyphicon('trash').'</button>' .
-				div(null,true)
-			);
-		}
-
-		$content_vars['listagem'] = $this->table->generate();
-		$this->wpanel->load_view('pages/index', $content_vars);
-	}
-
-	public function add()
-	{
-		
-		$layout_vars = array();
-		$content_vars = array();
-
-		$this->form_validation->set_rules('title', 'Título', 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-
-			$this->wpanel->load_view('pages/add', $content_vars);
-
-		} else {
-
-			$this->load->model('post');
-
-			$dados_save = array();
-			$dados_save['user_id'] = $this->auth->get_userid();
-			$dados_save['title'] = $this->input->post('title');
-			$dados_save['description'] = $this->input->post('description');
-			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title')))).'-'.time();
-			$dados_save['content'] = $this->input->post('content');
-			$dados_save['tags'] = $this->input->post('tags');
-			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s');
-			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['image'] = $this->post->upload_media('capas');
-			// Identifica se é uma página ou uma postagem
-			// 0=post, 1=Página
-			$dados_save['page'] = '1';
-
-			$new_post = $this->post->save($dados_save);
-
-			if($new_post)
-			{
-				// Salva o relacionamento das categorias
-				$this->load->model('post_categoria');
-
-				foreach($this->input->post('category_id') as $cat_id){
-					$cat_save = array();
-					$cat_save['post_id'] = $new_post;
-					$cat_save['category_id'] = $cat_id;
-					$this->post_categoria->save($cat_save);
-				}
-
-				$this->session->set_flashdata('msg_sistema', 'Página salva com sucesso.');
-				redirect('admin/pages');
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a página.');
-				redirect('admin/pages');
-			}
-
-		}
-	}
-
-	public function edit($id = null)
-	{
-		$layout_vars = array();
-		$content_vars = array();
-
-		$this->form_validation->set_rules('title', 'Título', 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-
-			if($id == null){
-				$this->session->set_flashdata('msg_sistema', 'Página inexistente.');
-				redirect('admin/pages');
-			}
-
-			$this->load->model('post');
-
-			$content_vars['id'] = $id;
-			$content_vars['row'] = $this->post->get_by_id($id)->row();
-			$this->wpanel->load_view('pages/edit', $content_vars);
-
-		} else {
-
-			$this->load->model('post');
-
-			$dados_save = array();
-			$dados_save['title'] = $this->input->post('title');
-			$dados_save['description'] = $this->input->post('description');
-			$dados_save['link'] = strtolower(url_title(convert_accented_characters($this->input->post('title'))));
-			$dados_save['content'] = $this->input->post('content');
-			$dados_save['tags'] = $this->input->post('tags');
-			$dados_save['status'] = $this->input->post('status');
-			$dados_save['updated'] = date('Y-m-d H:i:s');
-			// Identifica se é uma página ou uma postagem
-			// 0=post, 1=Página
-			$dados_save['page'] = '1';
-			
-			if($this->input->post('alterar_imagem')=='1')
-			{
-				$postagem = $this->post->get_by_id($id)->row();
-				$this->post->remove_media('capas/' . $postagem->image);
-				$dados_save['image'] = $this->post->upload_media('capas');
-			}
-
-			$upd_post = $this->post->update($id, $dados_save);
-
-			if($upd_post)
-			{
-				// Salva o relacionamento das categorias.
-				$this->load->model('post_categoria');
-				// Apaga os relacionamentos anteriores.
-				$this->post_categoria->delete_by_post($id);
-				// Cadastra as alterações.
-				foreach($this->input->post('category_id') as $cat_id){
-					$cat_save = array();
-					$cat_save['post_id'] = $id;
-					$cat_save['category_id'] = $cat_id;
-					$this->post_categoria->save($cat_save);
-				}
-
-				$this->session->set_flashdata('msg_sistema', 'Página salva com sucesso.');
-				redirect('admin/pages');
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar a página.');
-				redirect('admin/pages');
-			}
-
-		}
-	}
-
-	public function delete($id = null)
-	{
-
-		if($id == null){
-			$this->session->set_flashdata('msg_sistema', 'Página inexistente.');
-			redirect('admin/pages');
-		}
-
-		$this->load->model('post');
-
-		$postagem = $this->post->get_by_id($id)->row();
-		$this->post->remove_media('capas/' . $postagem->image);
-
-		if($this->post->delete($id)){
-			$this->session->set_flashdata('msg_sistema', 'Página excluída com sucesso.');
-			redirect('admin/pages');
-		} else {
-			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir a página.');
-			redirect('admin/pages');
-		}
-	}
+    /**
+     * Delete an page.
+     * 
+     * @param int $id
+     */
+    public function delete($id = null)
+    {
+        if ($id == null)
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/pages');
+        $postagem = $this->post->find($id);
+        $this->wpanel->remove_media('capas/' . $postagem->image);
+        if ($this->post->delete($id))
+        {
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/pages');
+        } else
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/pages');
+    }
 
 }
