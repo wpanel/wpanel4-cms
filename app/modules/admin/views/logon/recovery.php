@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="form-group has-feedback">
-            <input class="form-control" id="email" name="email" placeholder="<?= wpn_lang('logon_email'); ?>" type="email"/>
+            <input class="form-control" id="email" name="email" autofocus="autofocus" placeholder="<?= wpn_lang('logon_email'); ?>" type="email"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <?= form_error('email'); ?>
         </div>
