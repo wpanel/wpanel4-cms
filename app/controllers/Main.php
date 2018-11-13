@@ -148,7 +148,7 @@ class Main extends MY_Controller
         
         $this->set_var('post', $query);
         
-        if (count($query) <= 0)
+        if (@count($query) <= 0)
             show_404();
         
         if ($query->status == 0)

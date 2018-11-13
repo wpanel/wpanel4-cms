@@ -25,7 +25,7 @@ class Wpnlikebox extends Widget
 
     function __construct($config = array())
     {
-        if (count($config) > 0)
+        if (@count($config) > 0)
             $this->initialize($config);
     }
 

@@ -964,7 +964,7 @@ class MY_Model extends CI_Model {
      */
     function format_dropdown()
     {
-        $args = & func_get_args();
+        $args = func_get_args();
 
         if (count($args) == 2)
         {
