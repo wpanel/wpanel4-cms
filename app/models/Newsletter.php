@@ -23,6 +23,20 @@ class Newsletter extends MY_Model
     protected $set_created = TRUE;
     protected $set_modified = false;
 
+    /**
+     * Create a new lead.
+     * 
+     * @param array $data Array com os dados do lead.
+     */
+    public function create_lead($data = array())
+    {
+    	$total = $this->count_by('email', $data['email']);
+    	if ($total == 0){
+    		$data['ipaddress'] = $this->input->server('REMOTE_ADDR', true);
+    		return $this->insert($data);
+    	}
+    }
+
 }
 
 // END class

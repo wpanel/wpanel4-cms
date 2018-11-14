@@ -442,6 +442,17 @@ class Main extends MY_Controller
                 'subject' => 'Formulário de contato - ' . wpn_config('site_titulo'),
                 'message' => $msg,
             );
+
+            // Salva os leads.
+            //----------------------
+            $this->load->model('newsletter');
+            $data = array(
+                'nome' => $this->input->post('nome', true),
+                'email' => $this->input->post('email', true)
+            );
+            $this->newsletter->create_lead($data);
+            //----------------------
+
             if ($this->wpanel->send_email($mail_data))
                 $this->set_message('Sua mensagem foi enviada com sucesso!', 'success', 'contact');
             else
