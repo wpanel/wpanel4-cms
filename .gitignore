@@ -27,6 +27,7 @@ Icon?
 ._*
 .Spotlight-V100
 .Trashes
+app/modules/gerador/*
 
 # Windows
 Thumbs.db
