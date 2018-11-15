@@ -597,7 +597,7 @@ class Authenticated_admin_controller extends MY_Controller {
         
         if ($this->auth->is_logged() == TRUE) {
             if (!$this->auth->is_root()) {
-                if ($this->auth->is_user() or $this->auth->is_company())
+                if ($this->auth->is_user())
                     $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', '');
 
                 $this->auth->check_permission();

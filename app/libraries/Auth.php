@@ -569,7 +569,7 @@ class Auth
     private function _is_paginate($url)
     {
         $x = explode('/', $url);
-        if ($x[3] == 'pag')
+        if (@$x[3] == 'pag')
             return TRUE;
         else
             return FALSE;
