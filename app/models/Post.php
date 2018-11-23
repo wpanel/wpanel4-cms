@@ -39,6 +39,7 @@ class Post extends MY_Model
         $this->db->join('posts_categories', 'posts_categories.post_id = posts.id');
         $this->db->where('posts_categories.category_id', $category_id);
         $this->db->where('posts.status', '1');
+        $this->db->where('posts.deleted', 0);
         $this->db->order_by('created_on', $order);
         if ((is_array($limit)) and ( count($limit) != 0)) {
             $this->db->limit($limit['limit'], $limit['offset']);
