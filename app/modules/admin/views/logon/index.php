@@ -11,7 +11,7 @@
         echo form_open('admin/login', array('role' => 'form'));
         ?>
         <div class="form-group has-feedback">
-            <input type="text" name="email" class="form-control" placeholder="<?= wpn_lang('logon_email'); ?>"/>
+            <input type="text" name="email" class="form-control" autofocus="autofocus" placeholder="<?= wpn_lang('logon_email'); ?>"/>
             <?= form_error('email'); ?>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>

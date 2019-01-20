@@ -175,6 +175,16 @@ class Migration_Initialdb extends CI_Migration
             'constraint' => 20,
             'null' => TRUE
         ),
+        'href' => array(
+            'type' => 'varchar',
+            'constraint' => 200,
+            'null' => TRUE
+        ),
+        'target' => array(
+            'type' => 'varchar',
+            'constraint' => 20,
+            'null' => TRUE
+        ),
         'content' => array(
             'type' => 'text',
             'null' => TRUE
@@ -896,16 +906,655 @@ class Migration_Initialdb extends CI_Migration
         $this->dbforge->create_table('ip_alloweds', true);
 
         /**
-         * Seed the initial data into the database.
+         * Loden Ipsum, classic demo text.
          */
-        $this->db->query("INSERT INTO `modules` VALUES ('1', 'Postagens', '', '1', '0', '2016-10-08 18:25:03', '2016-10-08 18:25:03', '0', '0', '0', '0'), ('2', 'Páginas', '', '1', '0', '2016-10-08 18:28:50', '2016-10-08 18:28:50', '0', '0', '0', '0'), ('3', 'Eventos', '', '1', '0', '2016-10-08 18:30:04', '2016-10-08 18:30:09', '0', '0', '0', '0'), ('4', 'Banners', '', '1', '0', '2016-10-08 18:31:11', '2016-10-08 18:31:11', '0', '0', '0', '0'), ('5', 'Galerias', '', '1', '0', '2016-10-08 18:32:32', '2016-10-08 18:44:17', '0', '0', '0', '0'), ('6', 'Vídeos', '', '1', '0', '2016-10-08 18:43:05', '2016-10-08 18:43:05', '0', '0', '0', '0'), ('7', 'Gerenciador de Menu', '', '1', '0', '2016-10-08 18:44:32', '2016-10-08 18:44:32', '0', '0', '0', '0'), ('8', 'Newsletters', '', '1', '0', '2016-10-08 18:47:42', '2016-10-08 18:47:42', '0', '0', '0', '0'), ('9', 'Contas de usuário', '', '1', '0', '2016-10-08 18:48:13', '2016-10-08 18:48:13', '0', '0', '0', '0'), ('10', 'Configurações', '', '1', '0', '2016-10-08 18:51:28', '2016-10-08 18:51:28', '0', '0', '0', '0'), (11,	'Notificações',	'',	1,	0,	'2017-10-09 16:56:45',	NULL,	1,	0,	0,	0);");
-        $this->db->query("INSERT INTO `modules_actions` VALUES ('1', '1', 'Listar postagens', 'admin/posts', '0', '2016-10-08 18:25:23', '2016-10-08 18:25:23', '0', '0', '0', '0'), ('2', '1', 'Adicionar postaagem', 'admin/posts/add', '0', '2016-10-08 18:25:40', '2016-10-08 18:25:40', '0', '0', '0', '0'), ('3', '1', 'Alterar postagem', 'admin/posts/edit/*', '0', '2016-10-08 18:25:57', '2016-10-08 18:25:57', '0', '0', '0', '0'), ('4', '1', 'Excluir postagem', 'admin/posts/delete/*', '0', '2016-10-08 18:26:14', '2016-10-08 18:26:14', '0', '0', '0', '0'), ('5', '1', 'Listar categorias de postagens', 'admin/categories', '0', '2016-10-08 18:26:45', '2016-10-08 18:26:45', '0', '0', '0', '0'), ('6', '1', 'Adicionar categoria de postagens', 'admin/categories/add', '0', '2016-10-08 18:27:03', '2016-10-08 18:27:03', '0', '0', '0', '0'), ('7', '1', 'Alterar categorias de postagens', 'admin/categories/edit/*', '0', '2016-10-08 18:27:17', '2016-10-08 18:27:17', '0', '0', '0', '0'), ('8', '1', 'Excluir categorias de postagens', 'admin/categories/delete/*', '0', '2016-10-08 18:27:31', '2016-10-08 18:27:31', '0', '0', '0', '0'), ('9', '2', 'Listar páginas', 'admin/pages', '0', '2016-10-08 18:28:59', '2016-10-08 18:28:59', '0', '0', '0', '0'), ('10', '2', 'Adicionar páginas', 'admin/pages/add', '0', '2016-10-08 18:29:12', '2016-10-08 18:29:12', '0', '0', '0', '0'), ('11', '2', 'Alterar páginas', 'admin/pages/edit/*', '0', '2016-10-08 18:29:23', '2016-10-08 18:29:23', '0', '0', '0', '0'), ('12', '2', 'Excluir páginas', 'admin/pages//delete/*', '0', '2016-10-08 18:29:35', '2016-10-08 18:29:35', '0', '0', '0', '0'), ('13', '3', 'Listar eventos', 'admin/agendas', '0', '2016-10-08 18:30:20', '2016-10-08 18:30:20', '0', '0', '0', '0'), ('14', '3', 'Adicionar eventos', 'admin/agendas/add', '0', '2016-10-08 18:30:28', '2016-10-08 18:30:28', '0', '0', '0', '0'), ('15', '3', 'Alterar eventos', 'admin/agendas/edit/*', '0', '2016-10-08 18:30:39', '2016-10-08 18:30:39', '0', '0', '0', '0'), ('16', '3', 'Excluir eventos', 'admin/agendas/delete/*', '0', '2016-10-08 18:30:49', '2016-10-08 18:30:49', '0', '0', '0', '0'), ('17', '4', 'Listar banners', 'admin/banners', '0', '2016-10-08 18:31:23', '2016-10-08 18:31:23', '0', '0', '0', '0'), ('18', '4', 'Adicionar banners', 'admin/banners/add', '0', '2016-10-08 18:31:39', '2016-10-08 18:31:39', '0', '0', '0', '0'), ('19', '4', 'Alterar banners', 'admin/banners/edit/*', '0', '2016-10-08 18:31:49', '2016-10-08 18:31:49', '0', '0', '0', '0'), ('20', '4', 'Excluir banners', 'admin/banners/delete/*', '0', '2016-10-08 18:31:58', '2016-10-08 18:31:58', '0', '0', '0', '0'), ('21', '5', 'Listar galerias', 'admin/galleries', '0', '2016-10-08 18:32:43', '2016-10-08 18:32:43', '0', '0', '0', '0'), ('22', '5', 'Adicionar galerias', 'admin/galleries/add', '0', '2016-10-08 18:32:58', '2016-10-08 18:32:58', '0', '0', '0', '0'), ('23', '5', 'Alterar galerias', 'admin/galleries/edit/*', '0', '2016-10-08 18:37:15', '2016-10-08 18:37:15', '0', '0', '0', '0'), ('24', '5', 'Excluir galerias', 'admin/galleries/delete/*', '0', '2016-10-08 18:37:34', '2016-10-08 18:37:34', '0', '0', '0', '0'), ('25', '5', 'Listar fotos da galeria', 'admin/galleries/pictures/*', '0', '2016-10-08 18:40:11', '2016-10-08 18:40:11', '0', '0', '0', '0'), ('26', '5', 'Adiciona foto na galeria individualmente', 'admin/galleries/addpicture/*', '0', '2016-10-08 18:40:53', '2016-10-08 18:40:53', '0', '0', '0', '0'), ('27', '5', 'Adiciona foto na galeria em massa', 'admin/galleries/addmass/*', '0', '2016-10-08 18:41:17', '2016-10-08 18:41:17', '0', '0', '0', '0'), ('28', '5', 'Alterar fotos da galeria', 'admin/galleries/editpicture/*', '0', '2016-10-08 18:42:00', '2016-10-08 18:42:00', '0', '0', '0', '0'), ('29', '5', 'Apagar foto da galeria', 'admin/galleries/delpicture/*', '0', '2016-10-08 18:42:25', '2016-10-08 18:42:25', '0', '0', '0', '0'), ('30', '6', 'Listar vídeos', 'admin/videos', '0', '2016-10-08 18:43:13', '2016-10-08 18:43:13', '0', '0', '0', '0'), ('31', '6', 'Adicionar vídeo', 'admin/videos/add', '0', '2016-10-08 18:43:21', '2016-10-08 18:43:21', '0', '0', '0', '0'), ('32', '6', 'Alterar vídeo', 'admin/videos/edit/*', '0', '2016-10-08 18:43:35', '2016-10-08 18:43:35', '0', '0', '0', '0'), ('33', '6', 'Apagar vídeo', 'admin/videos/delete/*', '0', '2016-10-08 18:43:47', '2016-10-08 18:43:47', '0', '0', '0', '0'), ('34', '7', 'Listar menus', 'admin/menus', '0', '2016-10-08 18:44:50', '2016-10-08 18:45:16', '0', '0', '0', '0'), ('35', '7', 'Adicionar menus', 'admin/menus/add', '0', '2016-10-08 18:45:26', '2016-10-08 18:45:26', '0', '0', '0', '0'), ('36', '7', 'Alterar menu', 'admin/menus/edit/*', '0', '2016-10-08 18:45:41', '2016-10-08 18:45:41', '0', '0', '0', '0'), ('37', '7', 'Apagar menu', 'admin/menus/delete/*', '0', '2016-10-08 18:45:53', '2016-10-08 18:45:53', '0', '0', '0', '0'), ('38', '7', 'Adicionar item de menu', 'admin/menus/additem/*', '0', '2016-10-08 18:46:26', '2016-10-08 18:46:26', '0', '0', '0', '0'), ('39', '7', 'Alterar item de menu', 'admin/menus/edititem/*', '0', '2016-10-08 18:46:45', '2016-10-08 18:46:45', '0', '0', '0', '0'), ('40', '7', 'Apagar item de menu', 'admin/menus/deleteitem/*', '0', '2016-10-08 18:47:01', '2016-10-08 18:47:01', '0', '0', '0', '0'), ('41', '8', 'Listar emails', 'admin/newsletters', '0', '2016-10-08 18:47:50', '2016-10-08 18:47:50', '0', '0', '0', '0'), ('42', '9', 'Listar usuários', 'admin/accounts', '0', '2016-10-08 18:48:21', '2016-10-08 18:48:21', '0', '0', '0', '0'), ('43', '9', 'Adicionar usuário', 'admin/accounts/add', '0', '2016-10-08 18:48:35', '2016-10-08 18:48:35', '0', '0', '0', '0'), ('44', '9', 'Alterar usuários', 'admin/accounts/edit/*', '0', '2016-10-08 18:48:49', '2016-10-08 18:48:49', '0', '0', '0', '0'), ('45', '9', 'Apagar usuário', 'admin/accounts/delete/*', '0', '2016-10-08 18:49:10', '2016-10-08 18:49:10', '0', '0', '0', '0'), ('46', '9', 'Alterar senha de usuários', 'admin/accounts/changepassword/*', '0', '2016-10-08 18:49:57', '2016-10-08 18:49:57', '0', '0', '0', '0'), ('47', '9', 'Listar IP´s manidos', 'admin/ipbanneds', '0', '2016-10-08 18:50:19', '2016-10-08 18:50:19', '0', '0', '0', '0'), ('48', '9', 'Banir um IP', 'admin/ipbanneds/add', '0', '2016-10-08 18:50:32', '2016-10-08 18:50:32', '0', '0', '0', '0'), ('49', '9', 'Apagar um IP banido', 'admin/ipbanneds/delete/*', '0', '2016-10-08 18:51:04', '2016-10-08 18:51:04', '0', '0', '0', '0'), ('50', '10', 'Visualizar configurações', 'admin/configuracoes', '0', '2016-10-08 18:52:09', '2016-10-08 18:52:09', '0', '0', '0', '0'), ('51', '10', 'Salvar configurações', 'admin/configuracoes/index', '0', '2016-10-08 18:52:18', '2016-10-08 18:52:18', '0', '0', '0', '0'), ('52','9','Lista de IP´s permitidos','admin/ipalloweds','0','2017-10-04 02:02:34',null,'1','0','0','0'), ('53','9','Permitir um IP','admin/ipalloweds/add','0','2017-10-04 02:03:14',null,'1','0','0','0'), ('54','9','Apagar um IP permitido','admin/ipalloweds/delete/*','0','2017-10-04 02:03:52',null,'1','0','0','0'), ('56',	'11',	'Listar todas as notificações',	'admin/notifications',	'1',	'2017-10-09 16:57:02',	NULL,	'1',	'0',	'0',	'0'), ('57',	'11',	'Excluir notificações',	'admin/notifications/delete/*',	'0',	'2017-10-09 17:00:39',	NULL,	'1',	'0',	'0',	'0'), ('58',	'11',	'Acessar notificação',	'admin/notifications/markasread/*',	'1',	'2017-10-09 17:01:08',	NULL,	'1',	'0',	'0',	'0'), ('59', '10', 'Alterar logomarca', 'admin/configuracoes/altlogo', '0', '2018-02-03 11:10:30', NULL, '1', '0', '0', '0'), ('60', '10', 'Alterar background', 'admin/configuracoes/altback', '0', '2018-02-03 11:11:38', NULL, '1', '0', '0', '0'), ('61', '10', 'Alterar favicon', 'admin/configuracoes/altfavicon', '0', '2018-02-03 11:12:24', NULL, '1', '0', '0', '0');");
-        $this->db->query("INSERT INTO `categories` VALUES ('1', 'Categoria de exemplo', 'Categoria-de-exemplo', '', '0', 'list', null, null, '1', '0', '0', '0'), ('2', 'Sub-categoria de exemplo', 'Sub-categoria-de-exemplo', '', '1', 'list', null, null, '1', '0', '0', '0');");
-        $this->db->query("INSERT INTO `menus` VALUES ('1', 'Menu principal', 'menu-principal', 'topo', 'lista', '2015-06-01 11:30:39', '2015-06-01 11:37:01', '0', '0', '0', '0');");
-        $this->db->query("INSERT INTO `menu_itens` VALUES ('1', '1', 'Início', 'funcional', 'home', '', '1', '2015-06-01 13:08:00', '2015-06-02 16:02:10', '1', '0', '0', '0'), ('2', '1', 'Fotos', 'funcional', 'galleries', '', '3', '2015-06-01 18:03:37', '2017-04-27 00:46:23', '1', '0', '0', '0'), ('3', '1', 'Sobre', 'post', 'sobre', '', '5', '2015-06-01 22:40:27', '2015-06-02 17:14:47', '1', '0', '0', '0'), ('4', '1', 'Postagens', 'posts', '1', '', '2', '2015-06-02 14:08:34', '2015-06-02 17:14:13', '1', '0', '0', '0'), ('5', '1', 'Fale conosco', 'funcional', 'contact', '', '6', '2015-06-02 17:15:01', '2015-06-02 17:15:01', '1', '0', '0', '0'), ('6', '1', 'Vídeos', 'funcional', 'videos', '', '4', '2015-06-02 17:14:36', '2015-06-02 17:14:36', '1', '0', '0', '0'), ('7', '1', 'Usuários', 'funcional', 'users', '', '7', '2017-01-18 01:42:23', null, '1', '0', '0', '0');");
-        $this->db->query("INSERT INTO `posts` VALUES ('1', 'Página inicial', 'Página inicial de exemplo do WPanel', 'pagina-inicial', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n', '0', 'wpanel, bem vindo, exemplo', '1', '1', '2014-11-09 23:17:53', '2014-12-18 20:09:59', '0', '0', '0', '0'), ('2', 'Sobre', 'Um exemplo de página específica para o menu.', 'sobre', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', '0', 'exemplo, pagina, sobre', '1', '1', '2014-11-09 23:29:16', '2014-11-09 23:29:16', '0', '0', '0', '0'), ('3', 'Postagem de exemplo', 'Exemplo de postagem', 'postagem-de-exemplo', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', 'null', 'demo, post, wpanel', '0', '1', '2014-11-08 23:46:38', '2014-11-10 00:04:22', '0', '0', '0', '0'), ('4', 'Segunda postagem de exemplo', 'Postagem de exemplo do Wpanel', 'segunda-postagem-de-exemplo', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>\n\n<p>&nbsp;</p>\n', 'null', 'demo, post, exemplo, wpanel', '0', '1', '2014-11-09 23:47:15', '2014-11-10 01:12:01', '0', '0', '0', '0');");
-        $this->db->query("INSERT INTO `posts_categories` VALUES ('1', '3', '1'), ('2', '4', '2');");
-        $this->db->query("INSERT INTO `banners` VALUES ('1', 'Banner de exemplo #1', 'slide', '1', null, '4742fdb5443d36068de2ccd7181524e4.jpg', '1', '2014-11-10 12:00:00', '2014-11-10 12:00:00', '1', '0', '0', '0'), ('2', 'Banner de exemplo #2', 'slide', '2', null, 'baf049832810506469b65f68bffb8910.jpg', '1', '2014-11-10 12:00:00', '2014-11-10 12:00:00', '1', '0', '0', '0'), ('3', 'Banner de exemplo #2', 'slide', '2', null, 'f319e687ef3043e75bea52acf6032d8c.jpg', '1', '2014-11-10 12:00:00', '2014-11-10 12:00:00', '1', '0', '0', '0');");
+        $loren_ipsum = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>';
+
+        /**
+         * Modules data.
+         */
+        $modules_data = array(
+            array(
+                'name' => 'Postagens',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Páginas',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Eventos',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Banners',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Galerias',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Vídeos',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Gerenciador de menus',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Gerenciador de Leads',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Contas de usuários',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Configurações',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0',
+            ),
+            array(
+                'name' => 'Notificações',
+                'icon' => '',
+                'show_in_menu' => '1',
+                'order' => '0'
+            )
+        );        
+
+        /**
+         * Module itens data.
+         */
+        $moduleactions_data = array(
+            array(
+                'module_id' => '1',
+                'description' => 'Listar postagens', 
+                'link' => 'admin/posts', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Adicionar postagem', 
+                'link' => 'admin/posts/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Alterar postagem', 
+                'link' => 'admin/posts/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Excluir postagem', 
+                'link' => 'admin/posts/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Listar categorias de postagens', 
+                'link' => 'admin/categories', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Adicionar categoria de postagens', 
+                'link' => 'admin/categories/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Alterar categorias de postagens', 
+                'link' => 'admin/categories/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '1',
+                'description' => 'Excluir categorias de postagens', 
+                'link' => 'admin/categories/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '2',
+                'description' => 'Listar páginas', 
+                'link' => 'admin/pages', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '2',
+                'description' => 'Adicionar páginas', 
+                'link' => 'admin/pages/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '2',
+                'description' => 'Alterar páginas', 
+                'link' => 'admin/pages/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '2',
+                'description' => 'Excluir páginas', 
+                'link' => 'admin/pages/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '3',
+                'description' => 'Listar eventos', 
+                'link' => 'admin/agendas', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '3',
+                'description' => 'Adicionar eventos', 
+                'link' => 'admin/agendas/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '3',
+                'description' => 'Alterar eventos', 
+                'link' => 'admin/agendas/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '3',
+                'description' => 'Excluir eventos', 
+                'link' => 'admin/agendas/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '4',
+                'description' => 'Listar banners', 
+                'link' => 'admin/banners', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '4',
+                'description' => 'Adicionar banners', 
+                'link' => 'admin/banners/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '4',
+                'description' => 'Alterar banners', 
+                'link' => 'admin/banners/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '4',
+                'description' => 'Excluir banners', 
+                'link' => 'admin/banners/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Listar galerias', 
+                'link' => 'admin/galleries', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Adicionar galerias', 
+                'link' => 'admin/galleries/add', 
+                'whitelist' => '0'
+            ),
+            array(
+                'module_id' => '5',
+                'description' => 'Alterar galerias', 
+                'link' => 'admin/galleries/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Excluir galerias', 
+                'link' => 'admin/galleries/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Listar fotos da galeria', 
+                'link' => 'admin/galleries/pictures/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Adiciona foto na galeria individualmente', 
+                'link' => 'admin/galleries/addpicture/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Adiciona foto na galeria em massa', 
+                'link' => 'admin/galleries/addmass/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Alterar fotos da galeria', 
+                'link' => 'admin/galleries/editpicture/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '5',
+                'description' => 'Apagar foto da galeria', 
+                'link' => 'admin/galleries/delpicture/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '6',
+                'description' => 'Listar vídeos',
+                'link' => 'admin/videos', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '6',
+                'description' => 'Adicionar vídeo', 
+                'link' => 'admin/videos/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '6',
+                'description' => 'Alterar vídeo', 
+                'link' => 'admin/videos/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '6',
+                'description' => 'Apagar vídeo', 
+                'link' => 'admin/videos/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Listar menus',
+                'link' => 'admin/menus', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Adicionar menus', 
+                'link' => 'admin/menus/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Alterar menu', 
+                'link' => 'admin/menus/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Apagar menu', 
+                'link' => 'admin/menus/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Adicionar item de menu', 
+                'link' => 'admin/menus/additem/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Alterar item de menu', 
+                'link' => 'admin/menus/edititem/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '7',
+                'description' => 'Apagar item de menu', 
+                'link' => 'admin/menus/deleteitem/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '8',
+                'description' => 'Listar emails',
+                'link' => 'admin/newsletters', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '8',
+                'description' => 'Exportar emails',
+                'link' => 'admin/newsletters/export', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '8',
+                'description' => 'Limpar emails',
+                'link' => 'admin/newsletters/clear', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Listar usuários',
+                'link' => 'admin/accounts', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Adicionar usuário', 
+                'link' => 'admin/accounts/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Alterar usuários', 
+                'link' => 'admin/accounts/edit/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Apagar usuário', 
+                'link' => 'admin/accounts/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Alterar senha de usuários', 
+                'link' => 'admin/accounts/changepassword/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Listar IP´s manidos', 
+                'link' => 'admin/ipbanneds', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Banir um IP', 
+                'link' => 'admin/ipbanneds/add', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Apagar um IP banido', 
+                'link' => 'admin/ipbanneds/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Lista de IP´s permitidos',
+                'link' => 'admin/ipalloweds',
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Permitir um IP',
+                'link' => 'admin/ipalloweds/add',
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '9',
+                'description' => 'Apagar um IP permitido',
+                'link' => 'admin/ipalloweds/delete/*',
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '10',
+                'description' => 'Visualizar configurações', 
+                'link' => 'admin/configuracoes', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '10',
+                'description' => 'Salvar configurações', 
+                'link' => 'admin/configuracoes/index', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '10',
+                'description' => 'Alterar logomarca', 
+                'link' => 'admin/configuracoes/altlogo', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '10',
+                'description' => 'Alterar background', 
+                'link' => 'admin/configuracoes/altback', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '10',
+                'description' => 'Alterar favicon', 
+                'link' => 'admin/configuracoes/altfavicon', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '11',
+                'description' => 'Listar todas as notificações',
+                 'link' => 'admin/notifications',  
+                'whitelist' => '1'
+            ), 
+            array(
+                'module_id' => '11',
+                'description' => 'Excluir notificações', 
+                'link' => 'admin/notifications/delete/*', 
+                'whitelist' => '0'
+            ), 
+            array(
+                'module_id' => '11',
+                'description' => 'Acessar notificação',  
+                'link' => 'admin/notifications/markasread/*', 
+                'whitelist' => '1'
+            ),
+        );
+
+        $post_data = array(
+            array(
+                'title' => 'Página inicial', 
+                'description' => 'Página inicial de exemplo do WPanel', 
+                'link' => 'pagina-inicial', 
+                'content' => $loren_ipsum, 
+                'image' => null, 
+                'tags' => 'wpanel, bem vindo, exemplo', 
+                'page' => '1', 
+                'status' => '1'
+            ),
+            array(
+                'title' => 'Sobre', 
+                'description' => 'Um exemplo de página específica para o menu.', 
+                'link' => 'sobre', 
+                'content' => $loren_ipsum, 
+                'image' => null, 
+                'tags' => 'exemplo, pagina, sobre', 
+                'page' => '1', 
+                'status' => '1'
+            ),
+            array(
+                'title' => 'Postagem de exemplo', 
+                'description' => 'Exemplo de postagem', 
+                'link' => 'postagem-de-exemplo', 
+                'content' => $loren_ipsum, 
+                'image' => null, 
+                'tags' => 'demo, post, wpanel', 
+                'page' => '0', 
+                'status' => '1'
+            ),
+            array(
+                'title' => 'Segunda postagem de exemplo', 
+                'description' => 'Postagem de exemplo do Wpanel', 
+                'link' => 'segunda-postagem-de-exemplo', 
+                'content' => $loren_ipsum, 
+                'image' => null, 
+                'tags' => 'demo, post, exemplo, wpanel', 
+                'page' => '0', 
+                'status' => '1'
+            )
+        );
+
+        /**
+         * Category data.
+         */
+        $category_data = array(
+            array(
+                'title' => 'Categoria de exemplo',
+                'link' => 'categoria-de-exemplo',
+                'description' => 'Uma categoria de postagens de exemplo. Esta categoria tem como visualização o padrão MOSAICO para as postagens.',
+                'category_id' => 0,
+                'view' => 'mosaic'
+            ),
+            array(
+                'title' => 'Sub-categoria de exemplo',
+                'link' => 'sub-categoria-de-exemplo',
+                'description' => 'Uma sub-categoria de postagens de exemplo. Ela é relacionada a Categoria de Exemplo e tem como visualização o padrão LISTA para as postagens.',
+                'category_id' => 1,
+                'view' => 'list'
+            )
+        );
+
+        /**
+         * Banners data.
+         */
+        $banners_data = array(
+            array(
+                'title' => 'Banner de exemplo #1',
+                'position' => 'slide',
+                'sequence' => '1',
+                'type' => NULL,
+                'content' => '4742fdb5443d36068de2ccd7181524e4.jpg',
+                'href' => NULL,
+                'target' => NULL,
+                'status' => '1',
+            ),
+            array(
+                'title' => 'Banner de exemplo #2',
+                'position' => 'slide',
+                'sequence' => '2',
+                'type' => NULL,
+                'content' => 'baf049832810506469b65f68bffb8910.jpg',
+                'href' => NULL,
+                'target' => NULL,
+                'status' => '1',
+            ),
+            array(
+                'title' => 'Banner de exemplo #3',
+                'position' => 'slide',
+                'sequence' => '3',
+                'type' => NULL,
+                'content' => 'f319e687ef3043e75bea52acf6032d8c.jpg',
+                'href' => NULL,
+                'target' => NULL,
+                'status' => '1'
+            )
+        );
+
+        /**
+         * Menu data.
+         */
+        $menu_data = array(
+            'nome' => 'Menu principal', 
+            'slug' => 'menu-principal', 
+            'posicao' => 'topo', 
+            'estilo' => 'lista'
+        );
+
+        /**
+         * Menu itens data.
+         */
+        $menuitem_data = array(
+            array(
+                'menu_id' => 1,
+                'label' => 'Início',
+                'tipo' => 'funcional',
+                'href' => 'home',
+                'slug' => '',
+                'ordem' => '1',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Sobre',
+                'tipo' => 'post',
+                'href' => 'sobre',
+                'slug' => '',
+                'ordem' => '2',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Postagens',
+                'tipo' => 'posts',
+                'href' => '1',
+                'slug' => '',
+                'ordem' => '3',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Fotos',
+                'tipo' => 'funcional',
+                'href' => 'galleries',
+                'slug' => '',
+                'ordem' => '4',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Vídeos',
+                'tipo' => 'funcional',
+                'href' => 'videos',
+                'slug' => '',
+                'ordem' => '5',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Contato',
+                'tipo' => 'funcional',
+                'href' => 'contact',
+                'slug' => '',
+                'ordem' => '6',
+            ),
+            array(
+                'menu_id' => 1,
+                'label' => 'Usuários',
+                'tipo' => 'funcional',
+                'href' => 'users',
+                'slug' => '',
+                'ordem' => '7'
+            )
+        );
+
+        /**
+         * Post x Categories data.
+         */
+        $postcategory_data = array(
+            array(
+                'post_id' => 3,
+                'category_id' => 1
+            ),
+            array(
+                'post_id' => 4,
+                'category_id' => 2
+            ),
+
+        );        
+
+        $this->db->insert_batch('modules', $modules_data);
+        $this->db->insert_batch('modules_actions', $moduleactions_data);
+        $this->db->insert_batch('categories', $category_data);
+        $this->db->insert_batch('banners', $banners_data);
+        $this->db->insert('menus', $menu_data);
+        $this->db->insert_batch('menu_itens', $menuitem_data);
+        $this->db->insert_batch('posts', $post_data);
+        $this->db->insert_batch('posts_categories', $postcategory_data);
+
     }
 
     /**

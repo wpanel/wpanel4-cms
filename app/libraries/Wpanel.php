@@ -464,26 +464,29 @@ class Wpanel
             'ip_address' => $this->input->server('REMOTE_ADDR'),
             'url' => base_url()
         );
-        $this->curl->create($url);
-        $this->curl->post($data);
-        $result = $this->curl->execute();
-        $httpcode = $this->curl->info;
-        if($httpcode['http_code'] === 200) {
-            $query = json_decode($result);
-            foreach($query->output as $row) {
-                if(@$row->link) {
-                    $data_save = array(
-                        'title' => $row->title,
-                        'description' => $row->description,
-                        'url' => $row->link,
-                        'status' => 0
-                    );
-                    $this->notification->new_notification($data_save);
+        $local = ['0', 'http://localhost:8000/', 'http://localhost:8080/', 'http://localhost/'];
+        if (!array_search(base_url(), $local)) {
+            $this->curl->create($url);
+            $this->curl->post($data);
+            $result = $this->curl->execute();
+            $httpcode = $this->curl->info;
+            if($httpcode['http_code'] === 200) {
+                $query = json_decode($result);
+                foreach($query->output as $row) {
+                    if(@$row->link) {
+                        $data_save = array(
+                            'title' => $row->title,
+                            'description' => $row->description,
+                            'url' => $row->link,
+                            'status' => 0
+                        );
+                        $this->notification->new_notification($data_save);
+                    }
                 }
-            }
-            return TRUE;
-        } else
-            return FALSE;
+                return TRUE;
+            } else
+                return FALSE;
+        }
     }
 
 }

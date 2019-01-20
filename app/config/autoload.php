@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'third_party/codeigniter-forensics');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('form_validation', 'session', 'auth', 'encrypt', 'wpanel', 'widget', 'pagination', 'migration');
+$autoload['libraries'] = array('form_validation', 'session', 'auth', 'wpanel', 'widget', 'pagination', 'migration');
 
 
 /*

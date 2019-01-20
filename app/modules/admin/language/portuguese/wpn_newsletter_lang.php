@@ -14,8 +14,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 
-$lang['module_title'] = "Newsletters";
-$lang['module_description'] = "Exporte os emails para newsletter.";
+$lang['module_title'] = "Leads";
+$lang['module_description'] = "Exporte os leads.";
 $lang['news_note'] = "Atenção! O wPanel não faz envio de mensagens em massa, utilize um serviço separado para isso.";
 $lang['module_index'] = "Lista de contatos";
 $lang['field_id'] = "Código";

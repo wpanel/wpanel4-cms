@@ -964,7 +964,7 @@ class MY_Model extends CI_Model {
      */
     function format_dropdown()
     {
-        $args = & func_get_args();
+        $args = func_get_args();
 
         if (count($args) == 2)
         {
@@ -1026,7 +1026,7 @@ class MY_Model extends CI_Model {
     public function is_unique($field, $value)
     {
         $this->dbr->where($field, $value);
-        $query = $this->dbr->get($this->table);
+        $query = $this->dbr->get($this->table_name);
 
         if ($query && $query->num_rows() == 0)
         {

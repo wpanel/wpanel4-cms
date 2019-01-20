@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 $lang['module_title'] = "Newsletters";
-$lang['module_description'] = "Export the emails for newsletter.";
+$lang['module_description'] = "Export the leads.";
 $lang['news_note'] = "Attention! WPanel does not send bulk messages, use a separate service for this.";
 $lang['module_index'] = "Contact list";
 $lang['field_id'] = "Code";
