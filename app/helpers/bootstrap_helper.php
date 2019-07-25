@@ -293,19 +293,18 @@ if (!function_exists('badge'))
 if (!function_exists('page_header'))
 {
 
-    /**
-     * Gera um page-header.
-     * */
-    function page_header($title, $size = 'h1', $subtitle = '')
-    {
-        $str = "";
-        $str .= "<div class=\"page-header\">\n";
-        $str .= "    <h" . $size . ">" . $title . " <small>" . $subtitle . "</small></h" . $size . ">\n";
-        $str .= "</div>\n";
+	/**
+	 * Gera um page-header.
+	 **/
+	function page_header($title, $size = '1', $subtitle = '')
+	{
+		$str = "";
+		$str .= "<div class=\"page-header\">\n";
+		$str .= "    <h".$size.">".$title." <small>".$subtitle."</small></h".$size.">\n";
+		$str .= "</div>\n";
 
-        return $str;
-    }
-
+		return $str;
+	}
 }
 
 if (!function_exists('alerts'))
