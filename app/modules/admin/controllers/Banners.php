@@ -1,185 +1,161 @@
-<?php 
+<?php
+
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Banners extends MX_Controller
+/**
+ * Class banners.
+ *
+ * @todo Traduzir os status e posições dos banners.
+ * 
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ */
+class Banners extends Authenticated_admin_controller
 {
 
-	function __construct()
-	{
-		$this->auth->check_permission();
-		$this->load->model('banner');
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-	}
+    /**
+     * Class constructor.
+     */
+    function __construct()
+    {
+        $this->model_file = 'banner';
+        $this->language_file = 'wpn_banner_lang';
+        parent::__construct();
+    }
 
-	public function index()
-	{
-		$this->load->library('table');
-
-		$layout_vars = array();
-		$content_vars = array();
+    /**
+     * List of banners.
+     */
+    public function index()
+    {
         $options = config_item('banner_positions');
+        $this->load->library('table');
+        // Template da tabela
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_title'), wpn_lang('field_position'), wpn_lang('field_status'), wpn_lang('wpn_actions'));
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->banner->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/banners/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->banner->limit($limit, $offset)
+                            ->order_by('sequence', 'asc')
+                            ->select('id, title, position, created_on, status')
+                            ->find_all();
+        
+        foreach ($query as $row)
+        {
+            $this->table->add_row(
+                $row->id,
+                $row->title,
+                $options[$row->position],
+                status_post($row->status),
+                // Ícones de ações
+                div(array('class' => 'btn-group btn-group-xs')) .
+                anchor('admin/banners/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                anchor('admin/banners/delete/' . $row->id, glyphicon('trash') ,array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
+                div(null, true)
+            );
+        }
 
-		$query = $this->banner->get_list(array('field'=>'sequence', 'order'=>'asc'))->result(); // ordenar pela sequencia dos banners. 
-		
-		$content_vars['query'] = $query;
-		$content_vars['options'] = $options;
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
+    }
 
-		$this->wpanel->load_view('banners/index', $content_vars);
-	}
-	
-	public function update_sequence()
-	{
-	    $i = 0;
-	    $itens = $_POST['item']; //$this->input->post('item');
-		foreach ($itens as $value) {
-			// Execute statement:
-			$this->banner->update($value,  array('sequence' => $i));
-			$i++;
-		}
-	}
+    /**
+     * Create a new banner.
+     */
+    public function add()
+    {
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
+        $this->form_validation->set_rules('sequence', wpn_lang('field_sequence'), 'required');
+        $this->form_validation->set_rules('position', wpn_lang('field_position'), 'required');
+        if ($this->form_validation->run() == FALSE)
+            $this->render();
+        else
+        {
+            $data = array();
+            $data['title'] = $this->input->post('title');
+            $data['sequence'] = $this->input->post('sequence');
+            $data['position'] = $this->input->post('position');
+            $data['status'] = $this->input->post('status');
+            $data['content'] = $this->wpanel->upload_media('banners');
+            if ($this->banner->insert($data))
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/banners');
+            else
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/banners');
+        }
+    }
 
-	public function add()
-	{
-		$layout_vars = array();
-		$content_vars = array();
+    /**
+     * Edit a banner.
+     * 
+     * @param int $id
+     */
+    public function edit($id = null)
+    {
+        $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
+        $this->form_validation->set_rules('sequence', wpn_lang('field_sequence'), 'required');
+        $this->form_validation->set_rules('position', wpn_lang('field_position'), 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            if ($id == null)
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/banners');
+            $this->set_var('id', $id);
+            $this->set_var('row', $this->banner->find($id));
+            $this->render();
+        } else
+        {
+            $data = array();
+            $data['title'] = $this->input->post('title');
+            $data['sequence'] = $this->input->post('sequence');
+            $data['position'] = $this->input->post('position');
+            $data['status'] = $this->input->post('status');
+            if ($this->input->post('alterar_imagem') == '1')
+            {
+                $banner = $this->banner->find($id);
+                $this->wpanel->remove_media('banners/' . $banner->content);
+                $data['content'] = $this->wpanel->upload_media('banners');
+            }
+            if ($this->banner->update($id, $data))
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/banners');
+            else
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/banners');
+        }
+    }
 
-		$this->form_validation->set_rules('title', 'Título', 'required');
-		$this->form_validation->set_rules('sequence', 'Ordem', 'required');
-		$this->form_validation->set_rules('position', 'Posição', 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-			$this->wpanel->load_view('banners/add', $content_vars);
-		} else {
-
-			$dados_save = array();
-			$dados_save['user_id'] = $this->auth->get_userid();
-			$dados_save['title'] = $this->input->post('title');
-			$dados_save['sequence'] = $this->input->post('sequence');
-			$dados_save['position'] = $this->input->post('position');
-			$dados_save['status'] = $this->input->post('status');
-			$dados_save['created'] = date('Y-m-d H:i:s');
-			$dados_save['updated'] = date('Y-m-d H:i:s');
-			$dados_save['content'] = $this->banner->upload_media('banners');
-
-			$new_post = $this->banner->save($dados_save);
-
-			if($new_post)
-			{
-				$this->session->set_flashdata('msg_sistema', 'Banner salvo com sucesso.');
-				redirect('admin/banners');
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o banner.');
-				redirect('admin/banners');
-			}
-
-		}
-	}	
-
-	public function edit($id = null)
-	{
-		$layout_vars = array();
-		$content_vars = array();
-
-		$this->form_validation->set_rules('title', 'Título', 'required');
-		$this->form_validation->set_rules('sequence', 'Ordem', 'required');
-		$this->form_validation->set_rules('position', 'Posição', 'required');
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-
-			if($id == null){
-				$this->session->set_flashdata('msg_sistema', 'Banner inexistente.');
-				redirect('admin/banners');
-			}
-
-			$content_vars['id'] = $id;
-			$content_vars['row'] = $this->banner->get_by_id($id)->row();
-			$this->wpanel->load_view('banners/edit', $content_vars);
-
-		} else {
-
-			$dados_save = array();
-			$dados_save['title'] = $this->input->post('title');
-			$dados_save['sequence'] = $this->input->post('sequence');
-			$dados_save['position'] = $this->input->post('position');
-			$dados_save['status'] = $this->input->post('status');
-			$dados_save['updated'] = date('Y-m-d H:i:s');
-			
-			if($this->input->post('alterar_imagem')=='1')
-			{
-				$banner = $this->banner->get_by_id($id)->row();
-				$this->banner->remove_media('banners/' . $banner->content);
-
-				$dados_save['content'] = $this->banner->upload_media('banners');
-			}
-
-			$new_post = $this->banner->update($id, $dados_save);
-
-			if($new_post)
-			{
-				$this->session->set_flashdata('msg_sistema', 'Banner salvo com sucesso.');
-				redirect('admin/banners');
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o banner.');
-				redirect('admin/banners');
-			}
-
-		}
-	}	
-
-	public function delete($id = null)
-	{
-
-		if($id == null){
-			$this->session->set_flashdata('msg_sistema', 'Banner inexistente.');
-			redirect('admin/banners');
-		}
-
-		// Remove o arquivo do banner.
-		$banner = $this->banner->get_by_id($id)->row();
-		$this->banner->remove_media('banners/' . $banner->content);
-
-		if($this->banner->delete($id)){
-			$this->session->set_flashdata('msg_sistema', 'Banner excluído com sucesso.');
-			redirect('admin/banners');
-		} else {
-			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir o banner.');
-			redirect('admin/banners');
-		}
-	}
+    /**
+     * Delete a banner.
+     * 
+     * @param int $id
+     */
+    public function delete($id = null)
+    {
+        if ($id == null)
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/banners');
+        // Remove o arquivo do banner.
+        $banner = $this->banner->find($id);
+        $this->wpanel->remove_media('banners/' . $banner->content);
+        if ($this->banner->delete($id))
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/banners');
+        else
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/banners');
+    }
 
 }

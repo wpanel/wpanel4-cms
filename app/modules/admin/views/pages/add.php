@@ -4,85 +4,70 @@ echo $this->wpanel->load_editor();
 
 <section class="content-header">
     <h1>
-        Páginas
-        <small>Gerencie as páginas fixas do site aqui.</small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="<?= site_url('admin/pages'); ?>"><i class="fa fa-files-o"></i> Páginas</a></li>
-        <li>Cadastro de página</li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/pages'); ?>"><i class="fa fa-files-o"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('module_add'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Cadastro de página</h3>
+            <h3 class="box-title"><?= wpn_lang('module_add'); ?></h3>
         </div>
         <div class="box-body">
-            <?php
-            echo form_open_multipart('admin/pages/add', array('role'=>'form'));
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Título da página', 'title');
-            echo form_input(array('name'=>'title', 'value'=> set_value('title'), 'class'=>'form-control'));
-            echo form_error('title');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Descrição para os mecanismos de busca (No máximo 160 caracteres.)', 'description');
-            echo form_textarea(array('name'=>'description', 'value'=> set_value('description'), 'class'=>'form-control', 'rows'=>'3'));
-            echo form_error('description');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Conteúdo', 'content');
-            echo form_textarea(array('name'=>'content', 'value'=> set_value('content'), 'class'=>'form-control ckeditor', 'id'=>'editor'));
-            echo form_error('content');
-            echo close_div();
-
-            echo row();
-            echo col(5);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Imagem de capa', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
-            echo close_div(2);
-
-            echo col(4);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Palavras-chave (Separe com vírgula)', 'tags');
-            echo form_textarea(array('name'=>'tags', 'value'=> set_value('tags'), 'class'=>'form-control', 'rows'=>'5'));
-            echo close_div(2);
-
-            // Opções de status
-            $options = array(
-                              '0'  => 'Rascunho',
-                              '1'  => 'Publicado'
+            <?= form_open_multipart('admin/pages/add', array('role'=>'form')); ?>
+                <div class="form-group" >
+                    <label for="title"><?= wpn_lang('field_title'); ?></label>
+                    <input type="text" name="title" class="form-control"  />
+                    <?= form_error('title'); ?>
+                </div>
+                <div class="form-group" >
+                    <label for="description"><?= wpn_lang('field_description'); ?></label>
+                    <textarea name="description" cols="40" rows="3" class="form-control" ></textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="content"><?= wpn_lang('field_content'); ?></label>
+                    <textarea name="content" cols="40" rows="10" class="form-control ckeditor" id="editor" ></textarea>
+                </div>
+                <div class="row ">
+                    <div class="col-md-5 ">
+                        <div class="form-group" >
+                            <label for="userfile"><?= wpn_lang('field_folder'); ?></label>
+                            <input type="file" name="userfile" class="form-control"  />
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group" >
+                            <label for="tags"><?= wpn_lang('field_tags'); ?></label>
+                            <textarea name="tags" cols="40" rows="5" class="form-control" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="status"><?= wpn_lang('field_status'); ?></label>
+                            <?php
+                            $options = array(
+                                '0'  => 'Rascunho',
+                                '1'  => 'Publicado'
                             );
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, null, array('class'=>'form-control'));
-            echo close_div(3);
-
-            echo hr();
-
-            echo row();
-            echo col();
-            echo form_button(
-                    array(
-                      'type'=>'submit', 
-                      'name'=>'submit', 
-                      'content'=>'Cadastrar', 
-                      'class'=>'btn btn-primary'
-                      )
-                    );
-            echo nbs(); // &nbsp;
-            echo anchor('admin/pages', 'Cancelar', array('class'=>'btn btn-danger'));
-            echo close_div(2);
-
-            echo form_close();
-            ?>
+                            echo form_dropdown('status', $options, null, array('class'=>'form-control'));
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row ">
+                    <div class="col-md-12 ">
+                        <button name="submit" type="submit" class="btn btn-primary" ><?= wpn_lang('wpn_bot_save'); ?></button>
+                        <?= anchor('admin/pages', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
+                    </div>
+                </div>
+            <?= form_close(); ?>
         </div>
     </div>
 </section>

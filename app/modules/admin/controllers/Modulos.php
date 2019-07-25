@@ -1,216 +1,282 @@
 <?php
+
 /**
- * WPanel CMS
- *
- * An open source Content Manager System for blogs and websites using CodeIgniter and PHP.
- *
- * This content is released under the MIT License (MIT)
- *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package     WpanelCms
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @copyright   Copyright (c) 2008 - 2016, Eliel de Paula. (https://elieldepaula.com.br/)
- * @license     http://opensource.org/licenses/MIT  MIT License
- * @link        https://wpanelcms.com.br
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Esta é a classe do módulo de administração Modulos, ela foi
- * gerada automaticamente pela ferramenta Wpanel-GEN para a criação
- * de códigos padrão para o Wpanel CMS.
+ * Modules itens class.
  *
  * @author      Eliel de Paula <dev@elieldepaula.com.br>
- * @version		0.0.1
  */
-class Modulos extends MX_Controller {
-	
-	/**
-	* Método construtor.
-	*/
-	function __construct()
-	{
-		$this->auth->check_permission();
-		$account = $this->auth->account();
-		if ($account->role != 'ROOT') {
-			$this->session->flashdata('msg_sistema', 'Você não pode acessar este módulo.');
-			redirect('admin/dashboard');
-		}
-		$this->load->model(array('module', 'module_action'));
-		$this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
-	}
-	
-	/**
-	* Mostra a lista de registros.
-	* 
-	* @return mixed
-	*/
-	public function index()
-	{
-		$this->load->library('table');
-		$layout_vars = array();
-		$content_vars = array();
-		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">'));
-		//TODO Revise as colunas da tabela.
-		$this->table->set_heading('#', 'Nome', 'Ícone', 'No menu', 'Ações');
-		$query = $this->module->get_list()->result();
-		foreach($query as $row)
-		{
-			//TODO Revise as colunas da lista.
-			$this->table->add_row(
-				$row->id, $row->name, $row->icon, sim_nao($row->show_in_menu), 
-				// Ícones de ações
-				div(array('class'=>'btn-group btn-group-xs')).
-				anchor('admin/modulos/edit/'.$row->id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				'<button class="btn btn-default" onClick="return confirmar(\''.site_url('admin/modulos/delete/'.$row->id).'\');">'.glyphicon('trash').'</button>' .
-				div(null,true)
-			);
-		}
-		$content_vars['listagem'] = $this->table->generate();
-		$this->wpanel->load_view('modulos/index', $content_vars);
-	}
-	
-	/**
-	* Mostra o formulário e cadastra um novo registro.
-	* 
-	* @return mixed
-	*/
-	public function add()
-	{
-		$layout_vars = array();
-		$content_vars = array();
-		$this->form_validation->set_rules('name', 'Nome', 'required');
-		if ($this->form_validation->run() == FALSE)
-		{
-			$this->wpanel->load_view('modulos/add', $content_vars);
-		} else {
-			$data = array();
-			$data['name'] = $this->input->post('name');
-			$data['icon'] = $this->input->post('icon');
-			if($this->input->post('show_in_menu') == '1')
-				$data['show_in_menu'] = '1';
-			else
-				$data['show_in_menu'] = '0';
-			$data['order'] = 0;
-			$data['created'] = date('Y-m-d H:i:s');
-			$data['updated'] = date('Y-m-d H:i:s');
-			$new_module = $this->module->save($data);
-			if($new_module)
-			{
-				$this->session->set_flashdata('msg_sistema', 'Registro salvo com sucesso.');
-				redirect('admin/modulos/edit/'.$new_module);
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o registro.');
-				redirect('admin/modulos');
-			}
-		}
-	}
-	
-	/**
-	* Mostra o formulário e altera um registro.
-	* 
-	* @param $id int Id do registro a ser editado.
-	* @return mixed
-	*/
-	public function edit($id = NULL)
-	{
-		$layout_vars = array();
-		$content_vars = array();
-		$this->form_validation->set_rules('name', 'Nome', 'required');
-		if ($this->form_validation->run() == FALSE)
-		{
-			if($id == NULL){
-				$this->session->set_flashdata('msg_sistema', 'Registro inexistente.');
-				redirect('admin/modulos');
-			}
-			$query = $this->module->get_by_id($id)->row();
-			$content_vars['actions_list'] = $this->actions_list($query->id);
-			$content_vars['row'] = $query;
-			$this->wpanel->load_view('modulos/edit', $content_vars);
-		} else {
-			$data = array();
-			$data['name'] = $this->input->post('name');
-			$data['icon'] = $this->input->post('icon');
-			if($this->input->post('show_in_menu') == '1')
-				$data['show_in_menu'] = '1';
-			else
-				$data['show_in_menu'] = '0';
-			$data['order'] = 0;
-			$data['updated'] = date('Y-m-d H:i:s');
-			
-			if($this->module->update($id, $data))
-			{
-				$this->session->set_flashdata('msg_sistema', 'Registro salvo com sucesso.');
-				redirect('admin/modulos');
-			} else {
-				$this->session->set_flashdata('msg_sistema', 'Erro ao salvar o registro.');
-				redirect('admin/modulos');
-			}
-		}
-	}
-	
-	/**
-	* Exclui um registro.
-	* 
-	* @param $id int Id do registro a ser excluído.
-	* @return mixed
-	*/
-	public function delete($id = null)
-	{
-		if($id == null){
-			$this->session->set_flashdata('msg_sistema', 'Registro inexistente.');
-			redirect('admin/modulos');
-		}
-		$this->module->delete_actions($id);
-		if($this->module->delete($id)){
-			$this->session->set_flashdata('msg_sistema', 'Registro excluído com sucesso.');
-			redirect('admin/modulos');
-		} else {
-			$this->session->set_flashdata('msg_sistema', 'Erro ao excluir o registro.');
-			redirect('admin/modulos');
-		}
-	}
+class Modulos extends Authenticated_admin_controller
+{
 
-	private function actions_list($module_id = NULL)
-	{
-		$this->load->library('table');
-		$layout_vars = array();
-		$content_vars = array();
-		$this->table->set_template(array('table_open'  => '<table id="grid" class="table table-striped">'));
-		$this->table->set_heading('#', 'Descrição', 'Link', 'Lista branca', 'Ações');
-		$query = $this->module_action->get_by_field('module_id', $module_id)->result();
-		foreach($query as $row)
-		{
-			$this->table->add_row(
-				$row->id, $row->description, $row->link, sim_nao($row->whitelist),
-				// Ícones de ações
-				div(array('class'=>'btn-group btn-group-xs')).
-				anchor('admin/moduloitens/edit/'.$row->id.'/'.$row->module_id, glyphicon('edit'), array('class' => 'btn btn-default')).
-				'<button type="button" class="btn btn-default" onClick="return confirmar(\''.site_url('admin/moduloitens/delete/'.$row->id.'/'.$row->module_id).'\');">'.glyphicon('trash').'</button>' .
-				div(null,true)
-			);
-		}
-		return $this->table->generate();
-	}
+    /**
+     * Class constructor.
+     */
+    function __construct()
+    {
+        $this->model_file = array('module', 'module_action');
+        $this->language_file = 'wpn_module_lang';
+        parent::__construct();
+        // Somente root pode acessar este módulo especial.
+        if (!$this->auth->is_root())
+            $this->set_message(wpn_lang('wpn_message_no_module_permission'), 'danger', 'admin');
+    }
+
+    /**
+     * List of modules.
+     *
+     * @return mixed
+     */
+    public function index()
+    {
+        $this->load->library('table');
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_name'), wpn_lang('wpn_actions'));
+        
+        // Paginação
+        // -------------------------------------------------------------------
+        $limit = 10;
+        $uri_segment = 5;
+        $offset = $this->uri->segment($uri_segment);
+        $total_rows = $this->module->count_by('deleted', '0');
+        $config = array();
+        $config['base_url'] = site_url('admin/modulos/index/pag');
+        $config['total_rows'] = $total_rows;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        // -------------------------------------------------------------------
+        // Fim - Paginação
+        
+        $query = $this->module->limit($limit, $offset)
+                            ->select('id, name')
+                            ->find_all();
+        
+        //$query = $this->module->find_all();
+        foreach ($query as $row)
+        {
+            $this->table->add_row(
+                    $row->id, $row->name,
+                    // Ícones de ações
+                    div(array('class' => 'btn-group btn-group-xs')) .
+                    anchor('admin/modulos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                    anchor('admin/modulos/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
+                    div(null, true)
+            );
+        }
+        
+        $this->set_var('pagination_links', $this->pagination->create_links());
+        $this->set_var('total_rows', $total_rows);
+        $this->set_var('listagem', $this->table->generate());
+        $this->render();
+    }
+
+    /**
+     * New module.
+     */
+    public function add()
+    {
+        $this->form_validation->set_rules('name', 'Nome', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->render();
+        } else
+        {
+            $data = array();
+            $data['name'] = $this->input->post('name');
+            // As linhas comentadas abaixo são referentes à
+            // evolução planejada para este módulo.
+            $data['icon'] = ''; // $this->input->post('icon');
+            //if ($this->input->post('show_in_menu') == '1')
+                $data['show_in_menu'] = '1';
+            //else
+            //    $data['show_in_menu'] = '0';
+            $data['order'] = 0;
+
+            $new_module = $this->module->insert($data);
+            if ($new_module)
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/modulos/edit/' . $new_module);
+            else
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/modulos');
+        }
+    }
+
+    /**
+     * Edit an module.
+     * 
+     * @param int $id
+     */
+    public function edit($id = NULL)
+    {
+        $this->form_validation->set_rules('name', 'Nome', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+
+            if ($id == NULL)
+                $this->set_message(wpn_lang('wpn_message_inexistent'), 'danger', 'admin/modulos');
+
+            $query = $this->module->find($id);
+            $this->set_var('actions_list', $this->actions_list($query->id));
+            $this->set_var('row', $query);
+
+            $this->render();
+        } else
+        {
+
+            $data = array();
+            $data['name'] = $this->input->post('name');
+            // As linhas comentadas a baixo se referem à
+            // evolução planejada para este módulo.
+            //$data['icon'] = $this->input->post('icon');
+
+            //if ($this->input->post('show_in_menu') == '1')
+            //    $data['show_in_menu'] = '1';
+            //else
+            //    $data['show_in_menu'] = '0';
+            $data['order'] = 0;
+
+            if ($this->module->update($id, $data))
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/modulos');
+            else
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/modulos');
+        }
+    }
+
+    /**
+     * Delete an module.
+     * 
+     * @param int $id
+     */
+    public function delete($id = null)
+    {
+        if ($id == null)
+            $this->set_message(wpn_lang('wpn_message_inexistent'), 'danger', 'admin/modulos');
+
+        if ($this->module->delete($id))
+        {
+            $this->module_action->delete_by('module_id', $id);
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/modulos');
+        } else
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/modulos');
+    }
+
+    /**
+     * Add module actions.
+     *
+     * @param int $module_id
+     */
+    public function addaction($module_id = NULL)
+    {
+        $this->form_validation->set_rules('description', 'Descrição', 'required');
+        $this->form_validation->set_rules('link', 'Link', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->set_var('module_id', $module_id);
+            $this->render();
+        } else
+        {
+            $data = array();
+            $data['module_id'] = $module_id;
+            $data['description'] = $this->input->post('description');
+            $data['link'] = $this->input->post('link');
+            if ($this->input->post('whitelist') == '1')
+                $data['whitelist'] = '1';
+            else
+                $data['whitelist'] = '0';
+
+            if ($this->module_action->insert($data))
+                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/modulos/edit/' . $module_id);
+            else
+                $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/modulos/edit/' . $module_id);
+        }
+    }
+
+    /**
+     * Edit a module action.
+     *
+     * @param int $id
+     * @param int $module_id
+     */
+    public function altaction($id = NULL, $module_id = NULL)
+    {
+        $this->form_validation->set_rules('description', 'Descrição', 'required');
+        $this->form_validation->set_rules('link', 'Link', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+
+            if ($id == NULL)
+                $this->set_message('Registro inexistente.', 'danger', 'admin/modulos');
+
+            $this->set_var('module_id', $module_id);
+            $this->set_var('row', $this->module_action->find($id));
+
+            $this->render();
+        } else
+        {
+
+            $data = array();
+            $data['module_id'] = $module_id;
+            $data['description'] = $this->input->post('description');
+            $data['link'] = $this->input->post('link');
+            if ($this->input->post('whitelist') == '1')
+                $data['whitelist'] = '1';
+            else
+                $data['whitelist'] = '0';
+
+            if ($this->module_action->update($id, $data))
+                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/modulos/edit/' . $module_id);
+            else
+                $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/modulos/edit/' . $module_id);
+        }
+    }
+
+    /**
+     * Delete a module action.
+     *
+     * @param int $id
+     * @param int $module_id
+     */
+    public function deleteaction($id = NULL, $module_id = NULL)
+    {
+        if ($id == null)
+            $this->set_message('Registro inexistente.', 'danger', 'admin/modulos');
+
+        if ($this->module_action->delete($id))
+            $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/modulos/edit/' . $module_id);
+        else
+            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/modulos/edit/' . $module_id);
+    }
+
+    /**
+     * List the actions (itens) from an module.
+     *
+     * @param int $module_id
+     */
+    private function actions_list($module_id = NULL)
+    {
+        $this->load->library('table');
+        $this->table->set_template(array('table_open' => '<table id="grid" class="table table-striped">'));
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_description'), wpn_lang('field_link'), wpn_lang('field_whitelist'), wpn_lang('wpn_actions'));
+        $query = $this->module_action->find_many_by('module_id', $module_id);
+        foreach ($query as $row)
+        {
+            $this->table->add_row(
+                    $row->id, $row->description, $row->link, sim_nao($row->whitelist),
+                    // Ícones de ações
+                    div(array('class' => 'btn-group btn-group-xs')) .
+                    anchor('admin/modulos/altaction/' . $row->id . '/' . $row->module_id, glyphicon('edit'), array('class' => 'btn btn-default')) .
+                    anchor('admin/modulos/deleteaction/' . $row->id . '/' . $row->module_id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
+                    div(null, true)
+            );
+        }
+        return $this->table->generate();
+    }
+
 }
 
 // End of file modules/admin/controllers/Modulos.php

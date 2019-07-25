@@ -1,6 +1,14 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
 
-/* load the MX_Loader class */
-require APPPATH."third_party/MX/Loader.php";
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
 
-class MY_Loader extends MX_Loader {}
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+require APPPATH . 'third_party/HMVC/Loader.php';
+
+class MY_Loader extends HMVC_Loader {
+    
+}

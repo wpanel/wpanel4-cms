@@ -1,3 +1,7 @@
+[05/02/2018]
+- Desenvolvimento regular.
+
+[29/06/2017]
 
 - User option link included in the default main menu;
 - Fix Auth library;

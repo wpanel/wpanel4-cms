@@ -1,6 +1,6 @@
 {
-	"name": "elieldepaula/wpanelcms",
-	"homepage": "http://wpanelcms.org",
+    "name": "dotsistemas/wpanel",
+    "homepage": "http://wpanelcms.org",
     "license": "MIT",
     "type": "project",
     "keywords": ["wpanel", "blog", "manager", "cms", "codeigniter", "wpanelcms"],
@@ -11,9 +11,9 @@
             "email": "dev@elieldepaula.com.br"
         }
     ],
-	"require": {
-		"php": ">=5.4.0"
-	},
+    "require": {
+        "php": ">=5.4.0"
+    },
     "config": {
         "vendor-dir": "./app/libraries"
     }

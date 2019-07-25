@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @copyright Eliel de Paula <dev@elieldepaula.com.br>
+ * @license http://wpanel.org/license
+ */
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Arquivo de idioma do módulo admin Banners.
+ *
+ * @language Portuguese
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
+ */
+
+$lang['module_title'] = "Banners";
+$lang['module_description'] = "Gerencie os banners do site.";
+$lang['module_index'] = "Lista de banners";
+$lang['module_add'] = "Cadastro de banners";
+$lang['module_edit'] = "Alteração de banners";
+$lang['field_id'] = "Código";
+$lang['field_title'] = "Título do banner";
+$lang['field_sequence'] = "Ordem de exibição";
+$lang['field_content'] = "Imagem do banner";
+$lang['field_position'] = "Posição de exibição";
+$lang['change_image'] = "Alterar a imagem";
+$lang['field_status'] = "Status";

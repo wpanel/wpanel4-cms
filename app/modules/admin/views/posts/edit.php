@@ -3,105 +3,91 @@ echo $this->wpanel->load_editor();
 ?>
 <section class="content-header">
     <h1>
-        <?= wpn_lang('mod_post', 'Posts'); ?>
-        <small><?= wpn_lang('desc_post', 'Manage articles and post of the site.'); ?></small>
+        <?= wpn_lang('module_title'); ?>
+        <small><?= wpn_lang('module_description'); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('mod_dashboard', 'Dashboard'); ?></a></li>
-        <li><a href="<?= site_url('admin/posts'); ?>"><i class="fa fa-files-o"></i> <?= wpn_lang('mod_post', 'Posts'); ?></a></li>
-        <li><?= wpn_lang('wpn_update_record', 'Update record'); ?></li>
+        <li><a href="<?= site_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> <?= wpn_lang('wpn_menu_dashboard'); ?></a></li>
+        <li><a href="<?= site_url('admin/posts'); ?>"><i class="fa fa-files-o"></i> <?= wpn_lang('module_title'); ?></a></li>
+        <li><?= wpn_lang('module_edit'); ?></li>
     </ol>
 </section>
 
 <section class="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Alteração de postagem</h3>
+            <h3 class="box-title"><?= wpn_lang('module_edit'); ?></h3>
         </div>
         <div class="box-body">
-            <?php
-            echo form_open_multipart('admin/posts/edit/'.$id, array('role'=>'form'));
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Título da postagem', 'title');
-            echo form_input(array('name'=>'title', 'value'=> $row->title, 'class'=>'form-control'));
-            echo form_error('title');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Descrição para os mecanismos de busca (No máximo 160 caracteres.)', 'description');
-            echo form_textarea(array('name'=>'description', 'value'=> $row->description, 'class'=>'form-control', 'rows'=>'3'));
-            echo form_error('description');
-            echo close_div();
-
-            echo div(array('class'=>'form-group'));
-            echo form_label('Conteúdo', 'content');
-            echo form_textarea(array('name'=>'content', 'value'=> $row->content, 'class'=>'form-control ckeditor', 'id'=>'editor'));
-            echo form_error('content');
-            echo close_div();
-
-            echo row();
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Imagem de capa', 'userfile');
-            echo form_input(array('name'=>'userfile', 'type'=>'file', 'class'=>'form-control'));
-            if(file_exists('./media/capas/'.$row->image)){
-                echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
-            } else {
-                echo '<p>Arquivo inexistente</p>';
-            }
-            echo div(array('class'=>'checkbox'));
-            echo '<label>';
-            echo form_checkbox(array('name'=>'alterar_imagem', 'value'=>'1', 'class'=>'checkbox'));
-            echo ' Alterar a foto.</label>';
-            echo close_div(3);
-
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Categorias', 'category_id');
-            echo form_multiselect('category_id[]', $categorias, $cat_select, array('class'=>'form-control'));
-            echo anchor('admin/categorias',glyphicon('share').' Cadastro de categorias');
-            echo close_div(2);
-
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Palavras-chave (Separe com vírgula)', 'tags');
-            echo form_textarea(array('name'=>'tags', 'value'=> $row->tags, 'class'=>'form-control', 'rows'=>'5'));
-            echo close_div(2);
-
-            // Opções de status
-            $options = array(
-                              '0'  => 'Rascunho',
-                              '1'  => 'Publicado'
+            <?= form_open_multipart('admin/posts/edit/'.$id, array('role'=>'form')); ?>
+                <div class="form-group" >
+                    <label for="title"><?= wpn_lang('field_title'); ?></label>
+                    <input type="text" name="title" value="<?= $row->title; ?>" class="form-control"  />
+                    <?= form_error('title'); ?>
+                </div>
+                <div class="form-group" >
+                    <label for="description"><?= wpn_lang('field_description'); ?></label>
+                    <textarea name="description" cols="40" rows="3" class="form-control" ><?= $row->description; ?></textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="content"><?= wpn_lang('field_content'); ?></label>
+                    <textarea name="content" cols="40" rows="10" class="form-control ckeditor" id="editor" ><?= $row->content; ?></textarea>
+                </div>
+                <div class="row " id="">
+                    <div class="col-md-3 " id="">
+                        <div class="form-group" >
+                            <label for="userfile"><?= wpn_lang('field_folder'); ?></label>
+                            <input type="file" name="userfile" value="" class="form-control"  />
+                            <?php
+                            if(file_exists('./media/capas/'.$row->image)){
+                                echo img(array('src'=>'media/capas/'.$row->image, 'class'=>'img-responsive img-thumbnail', 'style'=>'margin-top:5px;'));
+                            } else {
+                                echo '<p>'.wpn_lang('no_folder_image').'</p>';
+                            }
+                            ?>
+                            <div class="checkbox" >
+                                <label>
+                                    <input type="checkbox" name="alterar_imagem" value="1" class="checkbox"  />
+                                    <?= wpn_lang('change_folder'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 " id="">
+                        <div class="form-group" >
+                            <label for="category_id"><?= wpn_lang('field_category'); ?></label>
+                            <?= form_multiselect('category_id[]', $categorias, $cat_select, array('class'=>'form-control')); ?>
+                            <?= anchor('admin/categorias', glyphicon('share') . ' ' . wpn_lang('post_bot_new_category'), array('class' => 'btn btn-xs btn-primary')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-3 " id="">
+                        <div class="form-group" >
+                            <label for="tags"><?= wpn_lang('field_tags'); ?></label>
+                            <textarea name="tags" cols="40" rows="4" class="form-control" ><?= $row->tags; ?></textarea>
+                            <span class="text-sm"><?= wpn_lang('use_comma'); ?></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 " id="">
+                        <div class="form-group" >
+                            <label for="status"><?= wpn_lang('field_status'); ?></label>
+                            <?php
+                            // Opções de status
+                            $options = array(
+                            '0'  => 'Rascunho',
+                            '1'  => 'Publicado'
                             );
-            echo col(3);
-            echo div(array('class'=>'form-group'));
-            echo form_label('Status', 'status');
-            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
-
-            echo form_label('Data', 'created');
-            echo form_input(array('name'=>'created', 'type'=>'text', 'value'=>datetime_for_user($row->created, false), 'class'=>'form-control'));
-            
-            echo close_div(3);
-
-            echo hr();
-
-            echo row();
-            echo col();
-            echo form_button(
-                    array(
-                      'type'=>'submit', 
-                      'name'=>'submit', 
-                      'content'=>'Salvar as alterações', 
-                      'class'=>'btn btn-primary'
-                      )
-                    );
-            echo nbs(); // &nbsp;
-            echo anchor('admin/posts', 'Cancelar', array('class'=>'btn btn-danger'));
-            echo close_div(2);
-
-            echo form_close();
-            ?>
+                            echo form_dropdown('status', $options, $row->status, array('class'=>'form-control'));
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row " id="">
+                    <div class="col-md-12 " id="">
+                        <?= form_button(array('type'=>'submit', 'name'=>'submit', 'content'=>wpn_lang('wpn_bot_save'), 'class'=>'btn btn-primary' ) ); ?>
+                        <?= anchor('admin/posts', wpn_lang('wpn_bot_cancel'), array('class'=>'btn btn-danger')); ?>
+                </div>
+            <?= form_close(); ?>
         </div>
     </div>
 </section>
