@@ -26,13 +26,16 @@ if (!function_exists('wpn_asset'))
      */
     function wpn_asset($type, $filename)
     {
+        $CI = & get_instance();
+        $theme = $CI->config->item('template');
+
         switch ($type)
         {
             case 'css':
-                return "<link href=\"" . base_url('assets/css/' . $filename) . "\" rel=\"stylesheet\">\n";
+                return "<link href=\"" . base_url( 'themes/' . $theme . '/css/' . $filename) . "\" rel=\"stylesheet\">\n";
                 break;
             case 'js':
-                return "<script src=\"" . base_url('assets/js/' . $filename) . "\" type=\"text/javascript\"></script>\n";
+                return "<script src=\"" . base_url('themes/' . $theme . '/js/' . $filename) . "\" type=\"text/javascript\"></script>\n";
                 break;
             case 'custom':
                 return $filename;

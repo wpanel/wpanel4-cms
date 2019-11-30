@@ -22,7 +22,7 @@ class Wpnformnewsletter extends Widget
      */
     public function main()
     {
-        $this->load->view('widgets/formnewsletter');
+        $this->view('formnewsletter');
     }
 
 }

@@ -8,6 +8,19 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
+ * Define o template do site.
+ */
+$config['template'] = 'default';
+
+/**
+ * Define os delimitadores das mensagens de erro da biblioteca Validator.
+ */
+$config['validator_error_delimiters'] = array(
+    'open' => '<p><span class="label label-danger">',
+    'close' => '</span></p>'
+);
+
+/**
  * Define os idiomas disponíveis. 
  */
 $config['available_languages'] = array(
