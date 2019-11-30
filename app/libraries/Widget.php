@@ -11,7 +11,7 @@ define('EXT', '.php');
 /**
  * Esta classe provê os métodos para o funcionamento do mecanismo de Widget usado
  * no WpanelCMS.
- * 
+ *
  * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 class Widget
@@ -25,7 +25,7 @@ class Widget
 
     /**
      * Initialize the params to the widget.
-     * 
+     *
      * @param array $params
      * @return $this
      */
@@ -47,7 +47,7 @@ class Widget
 
     /**
      * Load an widget file.
-     * 
+     *
      * @param string $file
      * @param array $param
      * @return mixed
@@ -75,9 +75,15 @@ class Widget
         return $widget->main();
     }
 
+    public function view($view, $data = array(), $string = false)
+    {
+        $template = ($this->config->item('template') ? $this->config->item('template') : 'default');
+        $this->load->view($template . '/widgets/' . $view, $data, $string);
+    }
+
     /**
      * Find some file into the folders.
-     * 
+     *
      * @param String $file
      * @param String $module
      * @param String $base
@@ -109,9 +115,9 @@ class Widget
                         return array($fullpath, ucfirst($file));
                 }
                 else
-                /* load non-class files */
-                if (is_file($fullpath . $file_ext))
-                    return array($fullpath, $file);
+                    /* load non-class files */
+                    if (is_file($fullpath . $file_ext))
+                        return array($fullpath, $file);
             }
         }
         return array(FALSE, $file);
@@ -119,7 +125,7 @@ class Widget
 
     /**
      * Load some file.
-     * 
+     *
      * @param string $file
      * @param string $path
      * @param string $type

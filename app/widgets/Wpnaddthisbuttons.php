@@ -22,7 +22,7 @@ class Wpnaddthisbuttons extends Widget
      */
     public function main()
     {
-        $this->load->view('widgets/addthisbuttons');
+        $this->view('addthisbuttons');
     }
 
 }

@@ -45,7 +45,7 @@ class Wpnslidebanner extends Widget
                 'banners' => $query,
                 'class_name' => $this->class_name
             );
-            $this->load->view('widgets/slidebanner', $data);
+            $this->view('slidebanner', $data);
         }
     }
 
