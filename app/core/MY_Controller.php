@@ -48,7 +48,7 @@ class MY_Controller extends CI_Controller {
     // If set, this model file will automatically be loaded.
     protected $model_file = NULL;
 
-    protected $show_profiler = (ENVIRONMENT !== 'development');
+    private $show_profiler = (ENVIRONMENT === 'development');
 
     protected $template   = null;
     private $use_view     = '';
@@ -129,7 +129,7 @@ class MY_Controller extends CI_Controller {
         // The profiler is dealt with twice so that we can set
         // things up to work correctly in AJAX methods using $this->render_json
         // and it's cousins.
-        if ($this->config->item('show_profiler') == true OR $this->show_profiler == true)
+        if (($this->config->item('show_profiler') == true) || $this->show_profiler == true)
         {
             $this->output->enable_profiler(true);
         }
@@ -150,11 +150,6 @@ class MY_Controller extends CI_Controller {
         //--------------------------------------------------------------------
         $error_delimiters = $this->config->item('validator_error_delimiters');
         $this->form_validation->set_error_delimiters($error_delimiters['open'], $error_delimiters['close']);
-
-        //--------------------------------------------------------------------
-        // Template.
-        //--------------------------------------------------------------------
-        $this->template = $this->config->item('template');
 
     }
 

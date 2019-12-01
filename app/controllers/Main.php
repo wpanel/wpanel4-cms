@@ -33,11 +33,6 @@ class Main extends MY_Controller
          */
         
         /**
-         * Ativa o profiler (Forensics).
-         */
-        $this->show_profiler = FALSE;
-
-        /**
          * Informa o número de colunas do layout 'Mosaico'.
          */
         $this->wpn_cols_mosaic = 3;
@@ -48,7 +43,12 @@ class Main extends MY_Controller
         $this->wpn_posts_view = 'mosaic';
 
         parent::__construct();
-        
+
+        /**
+         * Define o template.
+         */
+        $this->template('default');
+
     }
     
     /**
@@ -462,6 +462,8 @@ class Main extends MY_Controller
 
     /**
      * Gera um RSS com a lista de postagens para os "Feed Readers".
+     *
+     * @deprecated Este método será removido na proxima release.
      */
     public function rss()
     {
