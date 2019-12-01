@@ -12,10 +12,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Licensed originaly under MIT license by Lonnie Ezell
  * https://github.com/lonnieezell/my_controller
  * -----------------------------------------------------------------------------
- * 
- * A Controller base that provides lots of flexible basics for CodeIgniter 
+ *
+ * A Controller base that provides lots of flexible basics for CodeIgniter
  * applications, including:
- * 
+ *
  *     - A basic template engine
  *     - More readily available 'flash messages'
  *     - autoloading of language and model files
@@ -48,8 +48,9 @@ class MY_Controller extends CI_Controller {
     // If set, this model file will automatically be loaded.
     protected $model_file = NULL;
 
-    protected $show_profiler = false;
+    private $show_profiler = (ENVIRONMENT === 'development');
 
+    protected $template   = null;
     private $use_view     = '';
     private $use_layout   = '';
 
@@ -128,7 +129,7 @@ class MY_Controller extends CI_Controller {
         // The profiler is dealt with twice so that we can set
         // things up to work correctly in AJAX methods using $this->render_json
         // and it's cousins.
-        if ($this->config->item('show_profiler') == true OR $this->show_profiler == true)
+        if (($this->config->item('show_profiler') == true) || $this->show_profiler == true)
         {
             $this->output->enable_profiler(true);
         }
@@ -143,9 +144,12 @@ class MY_Controller extends CI_Controller {
         }
 
         //--------------------------------------------------------------------
-        // Form Validatod delimeters.
+        // Form Validator delimeters.
+        //
+        // - Gset the error delimiters from config/wpanel.php
         //--------------------------------------------------------------------
-        $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
+        $error_delimiters = $this->config->item('validator_error_delimiters');
+        $this->form_validation->set_error_delimiters($error_delimiters['open'], $error_delimiters['close']);
 
     }
 
@@ -193,17 +197,21 @@ class MY_Controller extends CI_Controller {
         $data['stylesheets'] = $this->stylesheets;
 
         // We'll make the view content available to the template.
-        $data['view_content'] =  $this->load->view($view, $data, true);
+        log_message('debug', "1-> " . $this->template . '/' . $view);
+        $data['view_content'] =  $this->load->view(($this->template != null ? $this->template . '/' : '') . $view, $data, true);
 
         // Build our notices from the theme's view file.
-        $data['notice'] = $this->load->view('theme/notice', array('notice' => $this->message()), true);
+        log_message('debug', "2-> " . $this->template . '/theme/notice');
+        $data['notice'] = $this->load->view(($this->template != null ? $this->template . '/' : '') . 'theme/notice', array('notice' => $this->message()), true);
 
         // Render our layout and we're done!
         $layout = !empty($this->use_layout) ? $this->use_layout : 'index';
 
-        $this->load->view('theme/'. $layout, $data, false, true);
+        log_message('debug', "3-> " . $this->template . '/theme/'. $layout);
+        $this->load->view(($this->template != null ? $this->template . '/' : '') . 'theme/'. $layout, $data, false, true);
 
         // Reset our custom view attributes.
+        log_message('debug', "4-> " . $this->use_view);
         $this->use_view = $this->use_layout = '';
     }
 
@@ -253,6 +261,19 @@ class MY_Controller extends CI_Controller {
     }
 
     //--------------------------------------------------------------------
+
+    /**
+     * Specifies a custom theme for templates.
+     *
+     * @param string $template Template folder
+     * @return $this
+     */
+    public function template($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
 
     /**
      * Specifies a custom layout file to be used during the render() method.
@@ -383,8 +404,8 @@ class MY_Controller extends CI_Controller {
         }
 
         $this->output->enable_profiler(false)
-                     ->set_content_type('text/plain')
-                     ->set_output($text);
+            ->set_content_type('text/plain')
+            ->set_output($text);
     }
 
     //--------------------------------------------------------------------
@@ -430,8 +451,8 @@ class MY_Controller extends CI_Controller {
         }
 
         $this->output->enable_profiler(false)
-                     ->set_content_type('application/json')
-                     ->set_output(json_encode($json));
+            ->set_content_type('application/json')
+            ->set_output(json_encode($json));
     }
 
     //--------------------------------------------------------------------
@@ -453,8 +474,8 @@ class MY_Controller extends CI_Controller {
         }
 
         $this->output->enable_profiler(false)
-                     ->set_content_type('application/x-javascript')
-                     ->set_output($js);
+            ->set_content_type('application/x-javascript')
+            ->set_output($js);
     }
 
     //--------------------------------------------------------------------
@@ -590,14 +611,14 @@ class Authenticated_Controller extends MY_Controller {
     Simply makes sure that someone is logged in and ready to roll.
  */
 class Authenticated_admin_controller extends MY_Controller {
-    
+
     function __construct()
     {
         parent::__construct();
-        
+
         if ($this->auth->is_logged() == TRUE) {
             if (!$this->auth->is_root()) {
-                if ($this->auth->is_user())
+                if ($this->auth->is_user() or $this->auth->is_company())
                     $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', '');
 
                 $this->auth->check_permission();
@@ -606,5 +627,5 @@ class Authenticated_admin_controller extends MY_Controller {
         } else
             $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', 'admin/login');
     }
-    
+
 }

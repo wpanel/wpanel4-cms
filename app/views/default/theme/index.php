@@ -7,7 +7,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$this->load->view('theme/header');
+$this->load->view('default/theme/header');
 
 if (isset($notice)) {
     echo $notice;
@@ -15,6 +15,6 @@ if (isset($notice)) {
 
 echo $view_content;
 
-$this->load->view('theme/footer'); 
+$this->load->view('default/theme/footer');
 
 ?>

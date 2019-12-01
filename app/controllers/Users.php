@@ -30,13 +30,13 @@ class Users extends MY_Controller
          * MY_Controller que você pode ajustar de acordo com seu projeto.
          * ---------------------------------------------------------------------
          */
-        
-        /**
-         * Ativa o profiler (Forensics).
-         */
-        $this->show_profiler = FALSE;
 
         parent::__construct();
+
+        /**
+         * Define o template.
+         */
+        $this->template('default');
 
         if ($this->auth->is_logged() and $this->auth->is_admin())
         {
