@@ -42,7 +42,7 @@ class Auth
 
     public function __construct($config = array())
     {
-        if (count($config) > 0)
+        if (@count($config) > 0)
             $this->initialize($config);
 
         $this->load->model(array('account', 'permission', 'ipban', 'ipallowed', 'logaccess', 'ipattempt', 'module_action'));
@@ -113,7 +113,7 @@ class Auth
         $data['status'] = 0;
         $result = $this->account->insert($data);
 
-        if (count($permissions) > 0 and $result > 0)
+        if (@count($permissions) > 0 and $result > 0)
         {
             foreach ($permissions as $key => $value)
             {
@@ -163,7 +163,7 @@ class Auth
 
         $result = $this->account->update($account_id, $data);
 
-        if (count($permissions) > 0)
+        if (@count($permissions) > 0)
         {
             $this->_remove_permission($account_id);
             foreach ($permissions as $key => $value)
@@ -296,7 +296,7 @@ class Auth
         if ($token == NULL)
             return FALSE;
         $account = $this->get_account_by_token($token);
-        if (count($account))
+        if (@count($account))
         {
             $new_password = $this->_generate_pass();
             $data_update = array(
@@ -492,7 +492,7 @@ class Auth
     public function email_exists($email)
     {
         $query = $this->account->find_by('email', $email);
-        if (count($query) == 0)
+        if (@count($query) == 0)
             return FALSE;
         else
             return TRUE;
@@ -616,7 +616,7 @@ class Auth
     {
         $token = rtrim(strtr(base64_encode($this->getRandomNumber()), '+/', '-_'), '=');
         $account = $this->get_account_by_token($token);
-        if (count($account) > 0)
+        if (@count($account) > 0)
             return $this->_generate_token();
         else
             return $token;
