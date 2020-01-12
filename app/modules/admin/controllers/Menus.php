@@ -326,7 +326,7 @@ class Menus extends Authenticated_admin_controller
     private function get_titulo_menu($menu_id)
     {
         $query = $this->menu->find($menu_id);
-        if(count($query))
+        if(!empty($query))
             return $query->nome;
         else
             return '<span class="label label-danger">Error</span>';

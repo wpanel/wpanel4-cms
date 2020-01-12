@@ -119,7 +119,7 @@ class Events extends Authenticated_admin_controller
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/events');
             $query = $this->post->find_by(array('id' => $id, 'page' => 2));
-            if(count($query) == 0)
+            if(empty($query))
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/events');
             $this->set_var('id', $id);
             $this->set_var('row', $query);
