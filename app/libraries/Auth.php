@@ -492,7 +492,7 @@ class Auth
     public function email_exists($email)
     {
         $query = $this->account->find_by('email', $email);
-        if (@count($query) == 0)
+        if (empty($query))
             return FALSE;
         else
             return TRUE;

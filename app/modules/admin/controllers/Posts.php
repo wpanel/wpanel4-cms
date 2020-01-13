@@ -135,7 +135,7 @@ class Posts extends Authenticated_admin_controller
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             $query = $this->post->find_by(array('id' => $id, 'page' => 0));
-            if(count($query) == 0)
+            if(empty($query))
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/posts');
             // Prepara a lista de categorias.
             $query_cat = $this->category->select('id, title')->find_all();
