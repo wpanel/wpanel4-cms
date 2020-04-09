@@ -5,7 +5,7 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * -----------------------------------------------------------------------------
@@ -597,8 +597,9 @@ class Authenticated_Controller extends MY_Controller {
     {
         parent::__construct();
 
-        if (!$this->auth->is_logged() == TRUE)
+        if (!$this->auth->is_logged() == TRUE) {
             $this->set_message('Esta área é destinada somente a usuários logados.', 'danger', '');
+        }
     }
 
     //--------------------------------------------------------------------
@@ -610,7 +611,17 @@ class Authenticated_Controller extends MY_Controller {
 
     Simply makes sure that someone is logged in and ready to roll.
  */
-class Authenticated_admin_controller extends MY_Controller {
+class Authenticated_admin_controller extends MY_Controller
+{
+
+    /**
+     * Module name
+     * @var string
+     */
+    public $module_name = '';
+
+    /** @var Module */
+    public $module;
 
     function __construct()
     {
@@ -618,14 +629,19 @@ class Authenticated_admin_controller extends MY_Controller {
 
         if ($this->auth->is_logged() == TRUE) {
             if (!$this->auth->is_root()) {
-                if ($this->auth->is_user() or $this->auth->is_company())
+                if ($this->auth->is_user() or $this->auth->is_company()) {
                     $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', '');
-
+                }
                 $this->auth->check_permission();
-
             }
-        } else
+        } else {
             $this->set_message('Esta área é destinada somente a usuários administradores.', 'danger', 'admin/login');
+        }
+
+        if (!$this->module->is_active($this->module_name)) {
+            $this->set_message('Este módulo está indisponível no momento.', 'danger', 'admin');
+        }
+
     }
 
 }

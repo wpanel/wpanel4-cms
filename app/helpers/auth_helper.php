@@ -53,7 +53,7 @@ if (!function_exists('is_root')) {
     function is_root()
     {
         $CI = & get_instance();
-        $CI->auth->is_root();
+        return $CI->auth->is_root();
     }
 }
 
