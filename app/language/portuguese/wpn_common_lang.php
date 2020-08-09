@@ -65,3 +65,5 @@ $lang['wpn_bot_cancel'] = "Cancelar";
 $lang['wpn_bot_back'] = "Voltar";
 $lang['pag_total_of'] = 'Total de';
 $lang['pag_records'] = 'registros';
+$lang['wpn_active'] = 'Ativo';
+$lang['wpn_inactive'] = 'Inativo';

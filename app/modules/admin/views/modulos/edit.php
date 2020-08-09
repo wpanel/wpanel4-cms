@@ -15,15 +15,54 @@
             <h3 class="box-title"><?= wpn_lang('module_edit'); ?></h3>
         </div>
         <div class="box-body">
-            <form action="<?= site_url('admin/modulos/edit/' . $row->id); ?>" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
-
+            <?= form_open('admin/modulos/edit/' . $row->id, ['role' => 'form', 'class' => 'form-horizontal']); ?>
                 <div class="form-group">
-                    <label for="id" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_name'); ?></label>
+                    <label for="name" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_name'); ?></label>
                     <div class="col-sm-10 col-md-10">
                         <input type="text" name="name" id="name" value="<?= $row->name; ?>" class="form-control" />
                         <?= form_error('name'); ?>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_description'); ?></label>
+                    <div class="col-sm-10 col-md-10">
+                        <textarea name="description" class="form-control"><?= $row->description; ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author_name" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_name'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_name" id="name" value="<?= $row->author_name; ?>" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author_email" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_email'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_email" id="author_email" value="<?= $row->author_email; ?>" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author_website" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_website'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_website" id="author_website" value="<?= $row->author_website; ?>" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="version" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_version'); ?></label>
+                    <div class="col-sm-2 col-md-2">
+                        <input type="text" name="version" id="version" value="<?= $row->version; ?>" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_status'); ?></label>
+                    <div class="col-sm-2 col-md-2">
+                        <select name="status" d="status" class="form-control">
+                            <option value="1" <?= $row->status  == 1 ? 'selected="selected"' : ''; ?>><?= wpn_lang('wpn_active'); ?></option>
+                            <option value="0" <?= $row->status  == 0 ? 'selected="selected"' : ''; ?>><?= wpn_lang('wpn_inactive'); ?></option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10">
                         <button type="submit" class="btn btn-primary" ><?= wpn_lang('wpn_bot_save'); ?></button>
@@ -43,7 +82,7 @@
                     </div>
                 </div>
 
-            </form>
+            <?= form_close(); ?>
         </div>
     </div>
 </section>
