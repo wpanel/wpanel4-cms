@@ -5,15 +5,21 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * Modules itens class.
  *
- * @author      Eliel de Paula <dev@elieldepaula.com.br>
+ * @author Eliel de Paula <dev@elieldepaula.com.br>
  */
 class Modulos extends Authenticated_admin_controller
 {
+
+    /** @var Module */
+    public $module;
+
+    /** @var Module_action */
+    public $module_action;
 
     /**
      * Class constructor.
@@ -24,8 +30,9 @@ class Modulos extends Authenticated_admin_controller
         $this->language_file = 'wpn_module_lang';
         parent::__construct();
         // Somente root pode acessar este módulo especial.
-        if (!$this->auth->is_root())
+        if (!$this->auth->is_root()) {
             $this->set_message(wpn_lang('wpn_message_no_module_permission'), 'danger', 'admin');
+        }
     }
 
     /**
@@ -37,7 +44,7 @@ class Modulos extends Authenticated_admin_controller
     {
         $this->load->library('table');
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
-        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_name'), wpn_lang('wpn_actions'));
+        $this->table->set_heading(wpn_lang('field_id'), wpn_lang('field_name'), wpn_lang('field_status'), wpn_lang('field_version'), wpn_lang('wpn_actions'));
         
         // Paginação
         // -------------------------------------------------------------------
@@ -54,19 +61,17 @@ class Modulos extends Authenticated_admin_controller
         // Fim - Paginação
         
         $query = $this->module->limit($limit, $offset)
-                            ->select('id, name')
+                            ->select('id, name, status, system, version')
                             ->find_all();
         
-        //$query = $this->module->find_all();
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $this->table->add_row(
-                    $row->id, $row->name,
+                    $row->id, $row->name, status_label($row->status), $row->version,
                     // Ícones de ações
-                    div(array('class' => 'btn-group btn-group-xs')) .
+                    !$row->system || is_root() ? div(array('class' => 'btn-group btn-group-xs')) .
                     anchor('admin/modulos/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
                     anchor('admin/modulos/delete/' . $row->id, glyphicon('trash'), array('class' => 'btn btn-default', 'data-confirm' => wpn_lang('wpn_message_confirm'))) .
-                    div(null, true)
+                    div(null, true) : glyphicon('lock')
             );
         }
         
@@ -82,27 +87,29 @@ class Modulos extends Authenticated_admin_controller
     public function add()
     {
         $this->form_validation->set_rules('name', 'Nome', 'required');
-        if ($this->form_validation->run() == FALSE)
-        {
+        if ($this->form_validation->run() == FALSE) {
             $this->render();
-        } else
-        {
+        } else {
+
             $data = array();
             $data['name'] = $this->input->post('name');
-            // As linhas comentadas abaixo são referentes à
-            // evolução planejada para este módulo.
-            $data['icon'] = ''; // $this->input->post('icon');
-            //if ($this->input->post('show_in_menu') == '1')
-                $data['show_in_menu'] = '1';
-            //else
-            //    $data['show_in_menu'] = '0';
+            $data['description'] = $this->input->post('description');
+            $data['author_name'] = $this->input->post('author_name');
+            $data['author_email'] = $this->input->post('author_email');
+            $data['author_website'] = $this->input->post('author_website');
+            $data['status'] = $this->input->post('status');
+            $data['version'] = $this->input->post('version');
+            $data['icon'] = ''; //TODO: Coming soon.
+            $data['show_in_menu'] = '1'; //TODO: Coming soon.
             $data['order'] = 0;
 
             $new_module = $this->module->insert($data);
-            if ($new_module)
-                $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/modulos/edit/' . $new_module);
-            else
+            if (!$new_module) {
                 $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/modulos');
+            }
+
+            $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/modulos/edit/' . $new_module);
+
         }
     }
 
@@ -117,33 +124,36 @@ class Modulos extends Authenticated_admin_controller
         if ($this->form_validation->run() == FALSE)
         {
 
-            if ($id == NULL)
+            if ($id == NULL) {
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'danger', 'admin/modulos');
+            }
 
             $query = $this->module->find($id);
             $this->set_var('actions_list', $this->actions_list($query->id));
             $this->set_var('row', $query);
 
             $this->render();
-        } else
-        {
+
+        } else {
 
             $data = array();
             $data['name'] = $this->input->post('name');
-            // As linhas comentadas a baixo se referem à
-            // evolução planejada para este módulo.
-            //$data['icon'] = $this->input->post('icon');
-
-            //if ($this->input->post('show_in_menu') == '1')
-            //    $data['show_in_menu'] = '1';
-            //else
-            //    $data['show_in_menu'] = '0';
+            $data['description'] = $this->input->post('description');
+            $data['author_name'] = $this->input->post('author_name');
+            $data['author_email'] = $this->input->post('author_email');
+            $data['author_website'] = $this->input->post('author_website');
+            $data['status'] = $this->input->post('status');
+            $data['version'] = $this->input->post('version');
+            $data['icon'] = ''; //TODO: Coming soon.
+            $data['show_in_menu'] = '1'; //TODO: Coming soon.
             $data['order'] = 0;
 
-            if ($this->module->update($id, $data))
-                $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/modulos');
-            else
+            if (!$this->module->update($id, $data)) {
                 $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/modulos');
+            }
+
+            $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/modulos');
+
         }
     }
 
@@ -154,15 +164,17 @@ class Modulos extends Authenticated_admin_controller
      */
     public function delete($id = null)
     {
-        if ($id == null)
+        if ($id == null) {
             $this->set_message(wpn_lang('wpn_message_inexistent'), 'danger', 'admin/modulos');
+        }
 
-        if ($this->module->delete($id))
-        {
+        if ($this->module->delete($id)) {
             $this->module_action->delete_by('module_id', $id);
             $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/modulos');
-        } else
-            $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/modulos');
+        }
+
+        $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/modulos');
+
     }
 
     /**
