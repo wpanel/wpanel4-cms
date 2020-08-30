@@ -1,5 +1,5 @@
 {
-    "name": "dotsistemas/wpanel",
+    "name": "wpanel/wpanel4-cms",
     "homepage": "http://wpanel.org",
     "license": "MIT",
     "type": "project",
@@ -16,5 +16,8 @@
     },
     "config": {
         "vendor-dir": "./app/libraries"
+    },
+    "scripts": { 
+      "dev": ["@php -S localhost:8080 -t public"]
     }
 }

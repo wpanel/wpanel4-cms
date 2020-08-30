@@ -43,7 +43,7 @@
 </section>
 
 <!-- Modal Novo Modulo -->
-<?= form_open('admin/modulos/add'); ?>
+<?= form_open('admin/modulos/add', ['class' => 'form-horizontal']); ?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -52,11 +52,57 @@
                 <h4 class="modal-title" id="myModalLabel"><?= wpn_lang('module_add'); ?></h4>
             </div>
             <div class="modal-body">
+
                 <div class="form-group">
-                    <label for="id" class="col-sm-3 col-md-3 control-label"><?= wpn_lang('field_name'); ?></label>
+                    <label for="id" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_short_name'); ?></label>
                     <div class="col-sm-9 col-md-9">
                         <input type="text" name="name" id="name" class="form-control" />
                         <?= form_error('name'); ?>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_description'); ?></label>
+                            <div class="col-sm-9 col-md-9">
+                                <textarea name="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="author_name" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_name'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_name" id="name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author_email" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_email'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_email" id="author_email" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author_website" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_author_website'); ?></label>
+                    <div class="col-sm-6 col-md-6">
+                        <input type="text" name="author_website" id="author_website" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="version" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_version'); ?></label>
+                    <div class="col-sm-3 col-md-3">
+                        <input type="text" name="version" id="version" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="status" class="col-sm-2 col-md-2 control-label"><?= wpn_lang('field_status'); ?></label>
+                    <div class="col-sm-3 col-md-3">
+                        <select name="status" d="status" class="form-control">
+                            <option value="1"><?= wpn_lang('wpn_active'); ?></option>
+                            <option value="0"><?= wpn_lang('wpn_inactive'); ?></option>
+                        </select>
                     </div>
                 </div>
             </div>

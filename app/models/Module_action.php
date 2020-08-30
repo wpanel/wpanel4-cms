@@ -15,12 +15,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Module_action extends MY_Model
 {
 
+    /**
+     * Table name.
+     * @var string
+     */
     public $table_name = 'modules_actions';
+
+    /**
+     * Primary key
+     * @var string
+     */
     public $primary_key = 'id';
+
+    /**
+     * Date time format.
+     * @var string
+     */
     public $date_format = 'datetime';
+
+    /**
+     * Enable soft-delete.
+     * @var bool
+     */
     protected $soft_deletes = FALSE;
+
+    /**
+     * Log user.
+     * @var bool
+     */
     protected $log_user = TRUE;
+
+    /**
+     * Set created datetime values automatically.
+     * @var bool
+     */
     protected $set_created = TRUE;
+
+    /**
+     * Set modified datetime values automatically.
+     * @var bool
+     */
     protected $set_modified = TRUE;
 
 }

@@ -200,6 +200,26 @@ if (!function_exists('status_user'))
 
 }
 
+if (!function_exists('status_label'))
+{
+
+    /**
+     * Return a bootstrap label tag according to the user status.
+     *
+     * @author Eliel de Paula <dev@elieldepaula.com.br>
+     * @param $status int - User status
+     * @return string
+     * */
+    function status_label($status)
+    {
+        if ($status == '1') {
+            return '<span class="label label-success">' . wpn_lang('wpn_active') . '</span>';
+        }
+        return '<span class="label label-danger">' . wpn_lang('wpn_inactive') . '</span>';
+    }
+
+}
+
 if (!function_exists('wpn_lang'))
 {
 
