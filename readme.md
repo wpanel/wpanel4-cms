@@ -2,33 +2,53 @@
 
 *Build Blogs, Websites and Web Apps with an CMS made in top of CodeIgniter 3.x*
 
-This project was born with the necessity to create an easy and cheap website without the comon sense that is using solutions like Wordpress or Joomla that are full of features but also it's full of complex codes and infinite plugins.What in the end, make the proccess pretty confuse.
+This project was born from the need to create a fast and easy website without using solutions like Wordpress or Joomla, which due to the amount of code and third party plugins increases the complexity of any changes.
+
+The objective of this project is to assist developers who want to have code control in a simple and practical way.
+
+Wpanel was developed on the Codeigniter 3 framework, so it is important to have some basic knowledge of its operation. See the Codeigniter 3 [documentation here](https://codeigniter.com/userguide3/index.html).
 
 # Features
 
-1. Responsive admin thanks to AdminLTE.
+1. Responsive administrator thanks to AdminLTE.
 2. Account management with ACL granting access by URI.
-3. Posts - It could be a blog or news on your site.
-4. Pages - Manage fis pages on yout site, like 'About' page.
-5. Events - The same structure of Posts/Pages but changed to show events, like parties and shows.
-6. Banners - Manage the slide banner of the home page.
-7. Galleries - Manage the pictures galleries of the site. Each gallery has his onw pictures.
-8. Videos from Youtube.
-9. Menu management.
-10. Newsletters - Collect leads on your site.
-11. Accounts management.
-12. Configurations.
+3. Posts - can be News or just a Blog on your website.
+4. Pages - manage your site's fixed pages, such as the 'About' page.
+5. Banners - Manage the slide banner of the home page.
+6. Galleries - Manage the photo galleries on the site.
+7. Youtube videos.
+8. Menu management.
+9. Newsletters - Collect leads on your website.
+10. Account management.
+11. Dynamic settings.
 
 # Wpanel require
 
-1. Webserver Apache (recomended)
-2. PHP 5.4+
-3. Mcrypt enabled
+1. Functional webserver
+2. PHP 7.x
 4. MySQL or SQLite3
 
-# Installation
+# Quick start
 
-The steps for installation are covered in the [Wiki of the project.](https://github.com/elieldepaula/wpanel/wiki/Installation)
+The easiest way to have Wpanel CMS ready to start developing your project is through [Composer] (https://getcomposer.org), with the SQLite database and using the built-in PHP server. To do this, follow the steps below.
+
+- Run the composer command to create your project:
+```
+composer create-project "wpanel/wpanel4-cms" Blog
+```
+
+- Access the Blog folder created in the previous step and run the start script:
+```
+cd Blog
+composer run dev
+```
+
+- Run the installation of Wpanel with accessing http://localhost:8080/index.php/setup
+- Fill the form with the ROOT administrator data
+- Access the admin area using the data provided in the previous step
+- Done! Wpanel is already running at http://localhost:8080
+
+For more installation details and advanced configurations topics, acces the [Wiki of the project.](https://github.com/wpanel/wpanel4-cms/wiki)
 
 # Contributing
 
