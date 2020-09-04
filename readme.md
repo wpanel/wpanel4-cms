@@ -30,7 +30,7 @@ Wpanel was developed on the Codeigniter 3 framework, so it is important to have 
 
 # Quick start
 
-The easiest way to have Wpanel CMS ready to start developing your project is through [Composer] (https://getcomposer.org), with the SQLite database and using the built-in PHP server. To do this, follow the steps below.
+The easiest way to have Wpanel CMS ready to start developing your project is through [Composer](https://getcomposer.org), with the SQLite database and using the built-in PHP server. To do this, follow the steps below.
 
 - Run the composer command to create your project:
 ```
