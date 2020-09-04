@@ -16,6 +16,34 @@ defined('BASEPATH') || exit('No direct script access allowed');
  */
 class Main extends MY_Controller
 {
+    /**
+     * @var Wpanel
+     */
+    public $wpanel;
+    /**
+     * @var Post
+     */
+    public $post;
+    /**
+     * @var Categorytegory
+     */
+    public $category;
+    /**
+     * @var Gallery
+     */
+    public $gallery;
+    /**
+     * @var Picture
+     */
+    public $picture;
+    /**
+     * @var Video
+     */
+    public $video;
+    /**
+     * @var Newsletter
+     */
+    public $newsletter;
 
     /**
      * Construtor da classe.
@@ -34,6 +62,11 @@ class Main extends MY_Controller
          * Informa a view padrão para as postagens: 'list' ou 'mosaic'.
          */
         $this->wpn_posts_view = 'mosaic';
+
+        /**
+         * Informa os models.
+         */
+        $this->model_file = ['post', 'category', 'gallery', 'picture', 'video', 'newsletter'];
 
         parent::__construct();
 
@@ -81,8 +114,6 @@ class Main extends MY_Controller
      */
     public function posts($category_id = null)
     {
-        $this->load->model('post');
-        $this->load->model('category');
         if ($category_id == null) {
             $this->set_var('posts', $this->post
                 ->order_by('created_on', 'desc')
@@ -117,7 +148,6 @@ class Main extends MY_Controller
         if ($var === null) {
             show_404();
         }
-        $this->load->model('post');
         if ($use_id) {
             $query = $this->post
                 ->select('id, title, content, link, tags, image, page, description, status, created_on')
@@ -158,7 +188,6 @@ class Main extends MY_Controller
      */
     public function events()
     {
-        $this->load->model('post');
         $query = $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '2', 'status' => '1'));
         $this->wpanel->set_meta_title('Eventos');
         $this->wpanel->set_meta_description('Lista de eventos');
@@ -173,7 +202,6 @@ class Main extends MY_Controller
     public function search()
     {
         $search_terms = $this->input->post('search', TRUE);
-        $this->load->model('post');
         $this->set_var('search_terms', $search_terms);
         $this->set_var('results', $this->post->busca_posts($search_terms)->result());
         $this->wpanel->set_meta_title('Resultados da busca por ' . $search_terms);
@@ -185,7 +213,6 @@ class Main extends MY_Controller
      */
     public function galleries()
     {
-        $this->load->model('gallery');
         $limit = 10;
         $uri_segment = 3;
         $offset = $this->uri->segment($uri_segment);
@@ -219,8 +246,6 @@ class Main extends MY_Controller
         if ($album_id === null) {
             show_404();
         }
-        $this->load->model('gallery');
-        $this->load->model('picture');
         $limit = 12;
         $uri_segment = 5;
         $offset = $this->uri->segment($uri_segment);
@@ -233,10 +258,10 @@ class Main extends MY_Controller
         $query_album = $this->gallery
             ->select('id, titulo, capa, descricao, tags, status, created_on')
             ->find($album_id);
-        if (count($query_album) <= 0) {
+        if (!isset($query_album)) {
             show_404();
         }
-        if ($query_album->status == 0) {
+        if (!$query_album->status) {
             show_error('Este álbum foi suspenso temporariamente', 404);
         }
         $query_pictures = $this->picture
@@ -267,18 +292,16 @@ class Main extends MY_Controller
         if ($picture_id === null) {
             show_404();
         }
-        $this->load->model('gallery');
-        $this->load->model('picture');
         $query_picture = $this->picture
             ->select('id, album_id, filename, descricao, status')
             ->find($picture_id);
         $query_album = $this->gallery
             ->select('id, titulo, descricao, created_on')
             ->find($query_picture->album_id);
-        if (count($query_picture) <= 0) {
+        if (!isset($query_picture)) {
             show_404();
         }
-        if ($query_picture->status == 0) {
+        if (!$query_picture->status) {
             show_error('Esta foto foi suspensa temporariamente', 404);
         }
         $this->wpanel->set_meta_description($query_picture->descricao);
@@ -297,7 +320,6 @@ class Main extends MY_Controller
      */
     public function videos()
     {
-        $this->load->model('video');
         $limit = 10;
         $uri_segment = 3;
         $offset = $this->uri->segment($uri_segment);
@@ -331,14 +353,13 @@ class Main extends MY_Controller
         if ($code === null) {
             show_404();
         }
-        $this->load->model('video');
         $query_video = $this->video
             ->select('titulo, descricao, link, tags, status')
             ->find_by(array('link' => $code, 'status' => 1));
-        if (count($query_video) <= 0) {
+        if (!isset($query_video)) {
             show_404();
         }
-        if ($query_video->status == 0) {
+        if (!$query_video->status) {
             show_error('Este vídeo foi suspenso temporariamente', 404);
         }
         $this->set_var('video', $query_video);
@@ -389,7 +410,6 @@ class Main extends MY_Controller
                 'subject' => 'Formulário de contato - ' . wpn_config('site_titulo'),
                 'message' => $msg,
             );
-            $this->load->model('newsletter');
             $data = array(
                 'nome' => $this->input->post('nome', true),
                 'email' => $this->input->post('email', true)
@@ -409,7 +429,6 @@ class Main extends MY_Controller
      */
     public function rss()
     {
-        $this->load->model('post');
         $query = $this->post->order_by('created_on', 'desc')->find_all();
         $available_languages = config_item('available_languages');
         $locale = $available_languages[wpn_config('language')]['locale'];
@@ -446,7 +465,6 @@ class Main extends MY_Controller
             $this->wpanel->set_meta_title('Newsletter');
             $this->render();
         } else {
-            $this->load->model('newsletter');
             $data = array(
                 'nome' => $this->input->post('nome', true),
                 'email' => $this->input->post('email', true),
