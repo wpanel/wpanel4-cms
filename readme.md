@@ -58,7 +58,7 @@ For more installation details and advanced configurations topics, acces the [Wik
 
 If you're a web developer and want to be part of an cool project, you're in the right place! Fork the project and send your Pull-requests. Also you can send me a email to *dev[at]elieldepaula.com.br* so we can change ideas and to plan some features to the project.
 
-I also recommend you to read the CodeIgniter [Style Guide](https://www.codeigniter.com/user_guide/general/styleguide.html) on a try to make the code in the same pattern.
+I also recommend you to read the CodeIgniter [Style Guide](https://codeigniter.com/userguide3/general/styleguide.html) on a try to make the code in the same pattern.
 
 ## 2 - Feedback
 
@@ -78,7 +78,7 @@ This is a personal project I have been working on for several years and I am mak
 
 # The MIT License (MIT)
 
-Copyright (c) 2019 Eliel de Paula
+Copyright (c) 2020 Eliel de Paula
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
