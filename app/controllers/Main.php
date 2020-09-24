@@ -174,26 +174,10 @@ class Main extends MY_Controller
             case '1':
                 $this->view('main/page')->render();
                 break;
-            case '2':
-                $this->view('main/event')->render();
-                break;
             default:
                 $this->view('main/post')->render();
                 break;
         }
-    }
-
-    /**
-     * Este método exibe uma lista de postagens em formato de lista de eventos.
-     */
-    public function events()
-    {
-        $query = $this->post->order_by('created_on', 'desc')->find_many_by(array('page' => '2', 'status' => '1'));
-        $this->wpanel->set_meta_title('Eventos');
-        $this->wpanel->set_meta_description('Lista de eventos');
-        $this->wpanel->set_meta_keywords(' eventos, agenda');
-        $this->set_var('events', $query);
-        $this->render();
     }
 
     /**
