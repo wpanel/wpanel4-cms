@@ -25,7 +25,6 @@ class Dashboard extends Authenticated_admin_controller
         parent::__construct();
         if (auth_login_data('role') == 'user')
             redirect('users');
-        $this->wpanel->check_news();
     }
 
     /**
