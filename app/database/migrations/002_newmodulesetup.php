@@ -84,7 +84,7 @@ class Migration_Newmodulesetup extends CI_Migration
             'constraint' => 10,
             'comment' => 'Versão do módulo.',
             'BEFORE' => 'status',
-            'default' => '0.0.0',
+            'default' => '0.0.1',
             'null' => true
         ],
         'status' => [

@@ -153,11 +153,6 @@
                                         <?= anchor('admin/pages', '<i class="fa fa-files-o"></i> <span>' . wpn_lang('wpn_menu_page') . '</span>'); ?>
                                     </li>
                                 <?php } ?>
-                                <?php if (auth_link_permission('admin/events')) { ?>
-                                    <li <?= wpn_activelink('events'); ?>>
-                                        <?= anchor('admin/events', ' <i class="fa fa-calendar"></i> <span>' . wpn_lang('wpn_menu_event') . '</span>'); ?>
-                                    </li>
-                                <?php } ?>
                                 <?php if (auth_link_permission('admin/banners')) { ?>
                                     <li <?= wpn_activelink('banners'); ?>>
                                         <?= anchor('admin/banners', '<i class="fa fa-shirtsinbulk"></i> <span>' . wpn_lang('wpn_menu_banner') . '</span>'); ?>
