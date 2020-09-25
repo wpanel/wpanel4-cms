@@ -33,12 +33,12 @@ Wpanel was developed on the Codeigniter 3 framework, so it is important to have 
 The easiest way to have Wpanel CMS ready to start developing your project is through [Composer](https://getcomposer.org), with the SQLite database and using the built-in PHP server. To do this, follow the steps below.
 
 - Run the composer command to create your project:
-```
+```sh
 composer create-project "wpanel/wpanel4-cms" Blog
 ```
 
 - Access the Blog folder created in the previous step and run the start script:
-```
+```sh
 cd Blog
 composer run dev
 ```

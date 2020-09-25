@@ -52,7 +52,6 @@ class Main extends MY_Controller
             $configs = $this->configuracao->load_config();
             $configs->app_token = md5($this->input->post('email', TRUE) . time());
             $this->configuracao->save_config($configs);
-            $this->wpanel->check_news();
             // Register the root user.
             $result = $this->auth->register(
                     $this->input->post('email', TRUE), $this->input->post('password', TRUE), 'ROOT', array(
