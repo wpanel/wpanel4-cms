@@ -19,6 +19,7 @@ defined('BASEPATH') || exit('No direct script access allowed');
                         <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> Categorias
                     </h4>
                     <?= $this->widget->load('wpncategorymenu', array('inicial_id' => 0, 'main_attr' => array('class' => 'menu-sidebar'))); ?>
+                    <?= $this->widget->load('wpnsidebarmenu'); ?>
                 </div>
             </div>
             <div class="row">

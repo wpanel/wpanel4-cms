@@ -96,6 +96,12 @@ body {
     margin: 0;
     padding: 0;
 }
+.wpn-sidebar .sidebar-banner {
+    margin-top: 10px;
+}
+.wpn-sidebar .sidebar-banner .sidebar-item {
+    margin-bottom: 5px;
+}
 .wpn-footer {
     padding-bottom: 20px;
 }
