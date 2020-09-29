@@ -22,6 +22,28 @@
                 <input type="text" name="title" value="<?= $row->title; ?>" class="form-control"  />
                 <?= form_error('title'); ?>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" >
+                        <label for="href"><?= wpn_lang('field_href'); ?></label>
+                        <input type="text" name="href" value="<?= $row->href; ?>" class="form-control"  />
+                        <?= form_error('href'); ?>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" >
+                        <label for="target"><?= wpn_lang('field_target'); ?></label>
+                        <?php
+                        $options_target = array(
+                            '_self'  => wpn_lang('placeholder_target_self'),
+                            '_blank'  => wpn_lang('placeholder_target_blank')
+                        );
+                        ?>
+                        <?= form_dropdown('target', $options_target, $row->target, array('class'=>'form-control')); ?>
+                        <?= form_error('target'); ?>
+                    </div>
+                </div>
+            </div>
             <div class="row " id="">
                 <div class="col-md-2 " id="">
                     <div class="form-group" >

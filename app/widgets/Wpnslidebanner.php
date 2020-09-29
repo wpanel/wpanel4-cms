@@ -5,7 +5,7 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * Slide banner class.
@@ -22,8 +22,9 @@ class Wpnslidebanner extends Widget
 
     function __construct($config = array())
     {
-        if (count($config) > 0)
+        if (count($config) > 0) {
             $this->initialize($config);
+        }
     }
 
     /**
@@ -33,13 +34,11 @@ class Wpnslidebanner extends Widget
      */
     public function main()
     {
-
         $this->load->model('banner');
         $query = $this->banner
-                ->select('content')
+                ->select('content, href, target')
                 ->order_by('sequence', 'asc')
                 ->find_many_by(array('position' => $this->position, 'status' => 1));
-        
         if (count($query) > 0) {
             $data = array(
                 'banners' => $query,
@@ -48,5 +47,4 @@ class Wpnslidebanner extends Widget
             $this->view('slidebanner', $data);
         }
     }
-
 }
