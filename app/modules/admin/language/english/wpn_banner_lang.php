@@ -5,7 +5,7 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * Arquivo de idioma do módulo admin Banners.
@@ -21,6 +21,10 @@ $lang['module_add'] = "New banner";
 $lang['module_edit'] = "Banner update";
 $lang['field_id'] = "#";
 $lang['field_title'] = "Title";
+$lang['field_href'] = "Banner link (optional)";
+$lang['field_target'] = "Link opening (optional)";
+$lang['placeholder_target_self'] = "Open link in the same window";
+$lang['placeholder_target_blank'] = "Open link in other window";
 $lang['field_position'] = "Position";
 $lang['field_content'] = "Image";
 $lang['field_sequence'] = "Order";

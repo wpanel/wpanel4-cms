@@ -5,7 +5,7 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * Class banners.
@@ -54,14 +54,14 @@ class Banners extends Authenticated_admin_controller
         
         $query = $this->banner->limit($limit, $offset)
                             ->order_by('sequence', 'asc')
-                            ->select('id, title, position, created_on, status')
+                            ->select('id, title, href, position, created_on, status')
                             ->find_all();
         
         foreach ($query as $row)
         {
             $this->table->add_row(
                 $row->id,
-                $row->title,
+                $row->title . ($row->href ? ' ' . glyphicon('link'):''),
                 $options[$row->position],
                 status_post($row->status),
                 // Ícones de ações
@@ -92,6 +92,8 @@ class Banners extends Authenticated_admin_controller
         {
             $data = array();
             $data['title'] = $this->input->post('title');
+            $data['href'] = $this->input->post('href');
+            $data['target'] = $this->input->post('target');
             $data['sequence'] = $this->input->post('sequence');
             $data['position'] = $this->input->post('position');
             $data['status'] = $this->input->post('status');
@@ -124,6 +126,8 @@ class Banners extends Authenticated_admin_controller
         {
             $data = array();
             $data['title'] = $this->input->post('title');
+            $data['href'] = $this->input->post('href');
+            $data['target'] = $this->input->post('target');
             $data['sequence'] = $this->input->post('sequence');
             $data['position'] = $this->input->post('position');
             $data['status'] = $this->input->post('status');
