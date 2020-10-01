@@ -22,7 +22,7 @@
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <!-- jQuery 2.1.4 -->
-        <script src="<?= base_url('lib/plugins/jQuery/jQuery-2.1.4.min.js') ?>"></script>
+        <script src="<?= base_url('lib/plugins/jQuery/jquery-2.2.4.min.js') ?>"></script>
         <!--JQueryUI-->
         <script src="<?= base_url('lib/plugins/jQueryUI/jquery-ui-1.10.3.min.js') ?>"></script>
         <!-- Bootstrap 3.3.2 JS -->
