@@ -22,7 +22,7 @@ Wpanel was developed on the Codeigniter 3 framework, so it is important to have 
 10. Account management.
 11. Dynamic settings.
 
-# Wpanel require
+# Wpanel requirements
 
 1. Functional webserver
 2. PHP 7.x
