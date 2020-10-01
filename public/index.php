@@ -44,7 +44,7 @@
  * The WpanelCMS Version.
  *
  */
-define('WPN_VERSION', '4.2.2');
+define('WPN_VERSION', '4.3.1');
 
 /*
  *---------------------------------------------------------------
