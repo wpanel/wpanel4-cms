@@ -42,3 +42,6 @@ $lang['opt_page_post'] = "Página ou Postagem";
 $lang['opt_post_list'] = "Lista por categoria";
 $lang['opt_functional'] = "Página funcional";
 $lang['opt_submenu'] = "Sub-menu";
+$lang['field_target'] = "Abertura do link (opcional)";
+$lang['placeholder_target_self'] = "Abrir link na mesma janela";
+$lang['placeholder_target_blank'] = "Abrir link em outra janela";

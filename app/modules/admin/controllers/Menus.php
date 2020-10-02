@@ -145,6 +145,7 @@ class Menus extends Authenticated_admin_controller
             $data['tipo'] = $tipo_link;
             $data['slug'] = '';
             $data['ordem'] = $this->input->post('ordem');
+            $data['target'] = $this->input->post('target');
             // Verifica de onde vem os dados para o campo 'link'
             switch ($tipo_link)
             {
@@ -199,6 +200,7 @@ class Menus extends Authenticated_admin_controller
             $data['tipo'] = $tipo_link;
             $data['slug'] = '';
             $data['ordem'] = $this->input->post('ordem');
+            $data['target'] = $this->input->post('target');
             // Verifica de onde vem os dados para o campo 'link'
             switch ($tipo_link)
             {
