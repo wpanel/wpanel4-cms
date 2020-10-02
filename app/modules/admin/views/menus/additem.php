@@ -100,6 +100,19 @@
                             <?= form_error('ordem'); ?>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="target"><?= wpn_lang('field_target'); ?></label>
+                            <?php
+                            $options_target = array(
+                                '_self'  => wpn_lang('placeholder_target_self'),
+                                '_blank'  => wpn_lang('placeholder_target_blank')
+                            );
+                            ?>
+                            <?= form_dropdown('target', $options_target, null, array('class'=>'form-control')); ?>
+                            <?= form_error('target'); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary"><?= wpn_lang('wpn_bot_save'); ?></button>
