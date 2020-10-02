@@ -5,7 +5,7 @@
  * @license http://wpanel.org/license
  */
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 /**
  * Main menu class.
@@ -14,12 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Wpnmainmenu extends Widget
 {
-
     protected $menu_id = '';
     protected $ul_style = '';
     protected $li_style = '';
-    protected $ul_dropdown = '';
-
     /**
      * Class constructor.
      * 
@@ -27,8 +24,9 @@ class Wpnmainmenu extends Widget
      */
     function __construct($config = array())
     {
-        if (count($config) > 0)
+        if (count($config) > 0) {
             $this->initialize($config);
+        }
     }
 
     /**
@@ -51,41 +49,39 @@ class Wpnmainmenu extends Widget
      */
     private function get_menu($menu_id = null, $ul_style = '', $li_style = '')
     {
-        if ($menu_id == null)
+        if ($menu_id == null) {
             return false;
-
+        }
         $this->load->model('menu_item');
         $query = $this->menu_item
-                ->select('href, label, tipo')
+                ->select('href, target, label, tipo')
                 ->order_by('ordem', 'asc')
                 ->find_many_by('menu_id', $menu_id);
-
         $html = "";
         $html .= "<ul class=\"" . $ul_style . "\">";
         foreach ($query as $row)
         {
-
-            if ($row->tipo == 'submenu')
+            if ($row->tipo == 'submenu') {
                 $html .= "<li class=\"" . $li_style . "\">";
-            else
+            } else {
                 $html .= "<li>";
-
+            }
             switch ($row->tipo)
             {
                 case 'link':
-                    $html .= "<a href=\"" . $row->href . "\">" . $row->label . "</a>";
+                    $html .= "<a href=\"" . $row->href . "\" target=\"".$row->target."\">" . $row->label . "</a>";
                     break;
                 case 'post':
-                    $html .= anchor('post/' . $row->href, $row->label);
+                    $html .= anchor('post/' . $row->href, $row->label, ['target' => $row->target]);
                     break;
                 case 'posts':
-                    $html .= anchor('posts/' . $row->href, $row->label);
+                    $html .= anchor('posts/' . $row->href, $row->label, ['target' => $row->target]);
                     break;
                 case 'funcional':
                     if ($row->href == 'home')
-                        $html .= anchor('', $row->label);
+                        $html .= anchor('', $row->label, ['target' => $row->target]);
                     else
-                        $html .= anchor($row->href, $row->label);
+                        $html .= anchor($row->href, $row->label, ['target' => $row->target]);
                     break;
                 case 'submenu':
                     $html .= "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\"  data-submenu>" . $row->label . " <span class=\"caret\"></span></a>";
@@ -97,5 +93,4 @@ class Wpnmainmenu extends Widget
         $html .= "</ul>";
         return $html;
     }
-
 }
