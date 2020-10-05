@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Estilo do template -->
         <?= wpn_asset('css', 'template.css'); ?>
         <!-- Javascript -->
-        <?= wpn_asset('js', 'jquery-2.1.4.min.js'); ?>
+        <?= wpn_asset('js', 'jquery-2.2.4.min.js'); ?>
         <?= wpn_asset('js', 'bootstrap.min.js'); ?>
         <?= wpn_asset('js', 'bootstrap-submenu.min.js'); ?>
         <?= wpn_asset('js', 'wpanel.js'); ?>

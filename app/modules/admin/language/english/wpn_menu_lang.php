@@ -32,3 +32,6 @@ $lang['opt_page_post'] = "Page or Post";
 $lang['opt_post_list'] = "List of posts";
 $lang['opt_functional'] = "Functional link";
 $lang['opt_submenu'] = "Sub-menu";
+$lang['field_target'] = "Link opening (optional)";
+$lang['placeholder_target_self'] = "Open link in the same window";
+$lang['placeholder_target_blank'] = "Open link in other window";

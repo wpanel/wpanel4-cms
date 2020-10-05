@@ -3,26 +3,25 @@
     <div id="carousel-widget" data-interval="false" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <?php
-            // Laço com o banner slider.
             $laco = 0;
             foreach ($banners as $row) {
-                    
-                if ($laco == 0)
+                if ($laco == 0) {
                     echo "            <div class=\"item active\">\n";
-                else
+                } else {
                     echo "             <div class=\"item\">\n";
-            
+                }
                 $conf_foto = array(
                     'src' => 'media/banners/' . $row->content,
                     'class' => 'img-slide',
                 );
-
-                echo img($conf_foto);
+                if ($row->href) {
+                    echo anchor($row->href, img($conf_foto), ['target' => $row->target]);
+                } else {
+                    echo img($conf_foto);
+                }
                 echo "</div>\n";
-
                 $laco = $laco + 1;
-
-            } // Fim do laço
+            }
             ?>    
         </div>
         <!-- Ícones de navegação do slide. -->
