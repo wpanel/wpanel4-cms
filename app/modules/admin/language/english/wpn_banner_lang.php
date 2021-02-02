@@ -30,3 +30,6 @@ $lang['field_content'] = "Image";
 $lang['field_sequence'] = "Order";
 $lang['field_status'] = "Status";
 $lang['change_image'] = "Change image";
+$lang['position_slide'] = 'Slide';
+$lang['position_sidebar'] = 'Sidebar';
+$lang['position_footer'] = 'Footer';

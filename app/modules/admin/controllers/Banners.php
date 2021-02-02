@@ -32,7 +32,6 @@ class Banners extends Authenticated_admin_controller
      */
     public function index()
     {
-        $options = config_item('banner_positions');
         $this->load->library('table');
         // Template da tabela
         $this->table->set_template(array('table_open' => '<table id="grid" class="table table-condensed table-striped">'));
@@ -57,13 +56,12 @@ class Banners extends Authenticated_admin_controller
                             ->select('id, title, href, position, created_on, status')
                             ->find_all();
         
-        foreach ($query as $row)
-        {
+        foreach ($query as $row) {
             $this->table->add_row(
                 $row->id,
                 $row->title . ($row->href ? ' ' . glyphicon('link'):''),
-                $options[$row->position],
-                status_post($row->status),
+                wpn_lang('position_' . $row->position),
+                status_label($row->status),
                 // Ícones de ações
                 div(array('class' => 'btn-group btn-group-xs')) .
                 anchor('admin/banners/edit/' . $row->id, glyphicon('edit'), array('class' => 'btn btn-default')) .
@@ -86,10 +84,10 @@ class Banners extends Authenticated_admin_controller
         $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         $this->form_validation->set_rules('sequence', wpn_lang('field_sequence'), 'required');
         $this->form_validation->set_rules('position', wpn_lang('field_position'), 'required');
-        if ($this->form_validation->run() == FALSE)
+        if (!$this->form_validation->run()) {
+            $this->set_var('options', $this->get_prepared_options());
             $this->render();
-        else
-        {
+        } else {
             $data = array();
             $data['title'] = $this->input->post('title');
             $data['href'] = $this->input->post('href');
@@ -98,10 +96,11 @@ class Banners extends Authenticated_admin_controller
             $data['position'] = $this->input->post('position');
             $data['status'] = $this->input->post('status');
             $data['content'] = $this->wpanel->upload_media('banners');
-            if ($this->banner->insert($data))
+            if ($this->banner->insert($data)) {
                 $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/banners');
-            else
+            } else {
                 $this->set_message(wpn_lang('wpn_message_save_error'), 'danger', 'admin/banners');
+            }
         }
     }
 
@@ -115,15 +114,15 @@ class Banners extends Authenticated_admin_controller
         $this->form_validation->set_rules('title', wpn_lang('field_title'), 'required');
         $this->form_validation->set_rules('sequence', wpn_lang('field_sequence'), 'required');
         $this->form_validation->set_rules('position', wpn_lang('field_position'), 'required');
-        if ($this->form_validation->run() == FALSE)
-        {
-            if ($id == null)
+        if (!$this->form_validation->run()) {
+            if ($id == null) {
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/banners');
+            }
+            $this->set_var('options', $this->get_prepared_options());
             $this->set_var('id', $id);
             $this->set_var('row', $this->banner->find($id));
             $this->render();
-        } else
-        {
+        } else {
             $data = array();
             $data['title'] = $this->input->post('title');
             $data['href'] = $this->input->post('href');
@@ -131,16 +130,16 @@ class Banners extends Authenticated_admin_controller
             $data['sequence'] = $this->input->post('sequence');
             $data['position'] = $this->input->post('position');
             $data['status'] = $this->input->post('status');
-            if ($this->input->post('alterar_imagem') == '1')
-            {
+            if ($this->input->post('alterar_imagem') == '1') {
                 $banner = $this->banner->find($id);
                 $this->wpanel->remove_media('banners/' . $banner->content);
                 $data['content'] = $this->wpanel->upload_media('banners');
             }
-            if ($this->banner->update($id, $data))
+            if ($this->banner->update($id, $data)) {
                 $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/banners');
-            else
+            } else {
                 $this->set_message(wpn_lang('wpn_message_update_error'), 'danger', 'admin/banners');
+            }
         }
     }
 
@@ -151,15 +150,32 @@ class Banners extends Authenticated_admin_controller
      */
     public function delete($id = null)
     {
-        if ($id == null)
+        if ($id == null) {
             $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/banners');
+        }
         // Remove o arquivo do banner.
         $banner = $this->banner->find($id);
         $this->wpanel->remove_media('banners/' . $banner->content);
-        if ($this->banner->delete($id))
+        if ($this->banner->delete($id)) {
             $this->set_message(wpn_lang('wpn_message_delete_success'), 'success', 'admin/banners');
-        else
+        } else {
             $this->set_message(wpn_lang('wpn_message_delete_error'), 'danger', 'admin/banners');
+        }
+    }
+
+    /**
+     * Return an array of banner positions with translate.
+     *
+     * @return array
+     */
+    private function get_prepared_options()
+    {
+        $config_options = config_item('banner_positions');
+        $options = array();
+        foreach ($config_options as $option) {
+            $options[$option] = wpn_lang('position_' . $option);
+        }
+        return $options;
     }
 
 }
