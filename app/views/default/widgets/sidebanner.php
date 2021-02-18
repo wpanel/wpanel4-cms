@@ -1,18 +1,19 @@
 <div class="sidebar-banner">
-    <?php foreach ($banners as $row) :
+    <?php
+    
+    foreach ($banners as $row) {
+        $output = "";
         $conf_foto = array(
             'src' => 'media/banners/' . $row->content,
             'class' => 'img-responsive',
         );
-        ?>
-        <div class="sidebar-item">
-            <?php
+        $output =  img($conf_foto);
             if ($row->href) {
-                echo anchor($row->href, img($conf_foto), ['target' => $row->target]);
-            } else {
-                echo img($conf_foto);
+                $output =  anchor($row->href, img($conf_foto), ['target' => $row->target]);
             }
-            ?>
-        </div>
-    <?php endforeach; ?>
+        
+        echo '<div class="sidebar-item">' . $output . '</div>';
+    } 
+    
+    ?>
 </div>

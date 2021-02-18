@@ -7,7 +7,7 @@
 
 defined('BASEPATH') || exit('No direct script access allowed');
 
-class Wpnsidebarmenu extends Widget
+class Wpnsidebarbanner extends Widget
 {
 
     const POSITION = 'sidebar';
