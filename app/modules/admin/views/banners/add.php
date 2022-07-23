@@ -55,6 +55,9 @@
                 <div class="col-md-2 " id="">
                     <div class="form-group" >
                         <label for="position"><?= wpn_lang('field_position'); ?></label>
+                        <?php
+                        $options = config_item('banner_positions');
+                        ?>
                         <?= form_dropdown('position', $options, null, array('class'=>'form-control')); ?>
                         <?= form_error('position'); ?>
                     </div>
@@ -64,8 +67,8 @@
                         <label for="status"><?= wpn_lang('field_status'); ?></label>
                         <?php
                         $options = array(
-                            '0'  => wpn_lang('wpn_inactive'),
-                            '1'  => wpn_lang('wpn_active')
+                            '0'  => 'Indisponível',
+                            '1'  => 'Publicado'
                         );
                         ?>
                         <?= form_dropdown('status', $options, null, array('class'=>'form-control')); ?>
