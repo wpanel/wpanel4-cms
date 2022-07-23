@@ -67,7 +67,7 @@ $config['posts_views'] = array('list' => 'Listagem', 'mosaic' => 'Mosaico');
  * Define as posições dos banners no site para serem listados no 
  * painel de contorle.
  */
-$config['banner_positions'] = array('slide', 'sidebar', 'footer');
+$config['banner_positions'] = array('slide' => 'Slide-Show', 'sidebar' => 'Barra lateral');
 
 /**
  * Define os links funcionais para o gerenciador de menu.

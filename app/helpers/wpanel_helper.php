@@ -134,9 +134,9 @@ if (!function_exists('status_post'))
     function status_post($status)
     {
         if ($status == '1')
-            return '<span class="label label-success">' . wpn_lang('wpn_published') . '</span>';
+            return '<span class="label label-success">Publicado</span>';
         else
-            return '<span class="label label-danger">' . wpn_lang('wpn_unpublished') . '</span>';
+            return '<span class="label label-danger">Indisponível</span>';
     }
 
 }

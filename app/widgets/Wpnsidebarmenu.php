@@ -7,10 +7,10 @@
 
 defined('BASEPATH') || exit('No direct script access allowed');
 
-class Wpnfooterbanner extends Widget
+class Wpnsidebarmenu extends Widget
 {
 
-    const POSITION = 'footer';
+    const POSITION = 'sidebar';
 
     function __construct($config = array())
     {
@@ -30,7 +30,7 @@ class Wpnfooterbanner extends Widget
             $data = array(
                 'banners' => $query
             );
-            $this->view('footerbanner', $data);
+            $this->view('sidebanner', $data);
         }
     }
 }
