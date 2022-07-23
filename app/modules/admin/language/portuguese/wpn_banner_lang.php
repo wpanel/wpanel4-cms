@@ -30,3 +30,6 @@ $lang['field_content'] = "Imagem do banner";
 $lang['field_position'] = "Posição de exibição";
 $lang['change_image'] = "Alterar a imagem";
 $lang['field_status'] = "Status";
+$lang['position_slide'] = 'Carrossel';
+$lang['position_sidebar'] = 'Lateral';
+$lang['position_footer'] = 'Rodapé';
