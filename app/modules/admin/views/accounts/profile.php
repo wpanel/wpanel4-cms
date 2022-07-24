@@ -104,24 +104,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="new_password"><?= wpn_lang('field_new_password'); ?></label>
-                            <input type="password" name="new_password" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="confirm_password"><?= wpn_lang('field_confirm_password'); ?></label>
-                            <input type="password" name="confirm_password" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="original_password"><?= wpn_lang('field_original_password'); ?></label>
-                            <input type="password" name="original_password" class="form-control" />
+                            <label for="password"><?= wpn_lang('field_password'); ?></label>
+                            <input type="password" name="password" class="form-control" />
                         </div>
                     </div>
                 </div>
