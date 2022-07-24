@@ -216,21 +216,13 @@ class Accounts extends Authenticated_admin_controller
      */
     public function changeprofilepassword()
     {
-        $this->form_validation->set_rules('new_password', wpn_lang('field_new_password'), 'required');
-        $this->form_validation->set_rules('confirm_password', 'Confirmação de senha', 'required|matches[new_password]');
-        $this->form_validation->set_rules('original_password', wpn_lang('field_original_password'), 'required');
-        if ($this->form_validation->run()) {
-            if ($this->auth->change_password(
-                $this->auth->user_id(),
-                $this->input->post('new_password', TRUE),
-                $this->input->post('original_password', TRUE),
-                true
-            )) {
-                redirect('admin/logout');
-            }
+        $result = $this->auth->change_password(
+            $this->auth->user_id(), $this->input->post('password', TRUE)
+        );
+        if ($result > 0)
+            redirect('admin/logout');
+        else
             $this->set_message(wpn_lang('message_password_change_profile_error'), 'danger', 'admin/accounts/profile');
-        }
-        $this->set_message(wpn_lang('message_password_change_profile_error'), 'danger', 'admin/accounts/profile');
     }
 
     /**

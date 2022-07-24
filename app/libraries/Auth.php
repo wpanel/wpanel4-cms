@@ -183,23 +183,17 @@ class Auth
     /**
      * Change an password from an account.
      *
-     * @param int $account_id User account ID
-     * @param string $new_password New password
-     * @param string $password Current password
-     * @param bool $notify_email Notify user by email
+     * @param int $account_id
+     * @param string $password
+     * @param bool $notify_email
      * @return mixed
-     * @todo Enviar email de notificação (opcional)
      */
-    public function change_password($account_id, $new_password, $password = NULL, $force_confirmation = FALSE, $notify_email = FALSE)
+    public function change_password($account_id, $password, $notify_email = FALSE)
     {
-        $user = $this->account->find($account_id);
-        if ($force_confirmation == true && ($password === null || !$this->_check_hash_password($user->id, $password, $user->password))) {
-            return false;
-        }
-        if ($user) {
-            return $this->account->update($account_id, array('password' => $this->_hash_password($new_password)));
-        }
-        return false;
+
+        //TODO Enviar email de notificação (opcional)
+
+        return $this->account->update($account_id, array('password' => $this->_hash_password($password)));
     }
 
     /**
@@ -833,7 +827,7 @@ class Auth
     private function _num_attempts()
     {
         $result = $this->ipattempt->find_by('ip_address', $_SERVER['REMOTE_ADDR']);
-        return $result ? $result->number_of_attempts : 0;
+        return $result->number_of_attempts;
     }
 
     /**

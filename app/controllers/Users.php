@@ -152,10 +152,14 @@ class Users extends MY_Controller
         $this->form_validation->set_rules('name', 'Nome', 'required');
         $this->form_validation->set_rules('email', 'E-Mail', 'required|valid_email');
         if ($this->input->post('alt_password')) {
-            $this->form_validation->set_rules('new_password', 'Senha', 'required');
-            $this->form_validation->set_rules('confirm_password', 'Confirmação de senha', 'required|matches[new_password]');
+            $this->form_validation->set_rules('password', 'Senha', 'required');
         }
-        if ($this->form_validation->run()) {
+        if (!$this->form_validation->run()) {
+            $this->wpanel->set_meta_title('Área de usuários');
+            $this->set_var('account', $query);
+            $this->set_var('profile', $profile);
+            $this->render();
+        } else {
             $profile->name = $this->input->post('name');
             /*
              * Aqui você pode definir novos campos de dados extra para ser
@@ -164,12 +168,7 @@ class Users extends MY_Controller
             try {
                 if ($this->auth->update($query->id, $this->input->post('email'), 'user', $profile)) {
                     if ($this->input->post('alt_password')) {
-                        $this->auth->change_password(
-                            $query->id,
-                            $this->input->post('new_password', true),
-                            $this->input->post('original_password', true),
-                        true
-                        );
+                        $this->auth->change_password($query->id, $this->input->post('password'));
                     }
                     $this->set_message('Seus dados foram alterados com sucesso.', 'success', 'users/profile');
                 }
@@ -178,10 +177,6 @@ class Users extends MY_Controller
                 $this->set_message('Ocorreu um erro: ' . $ex->getMessage(), 'danger', 'users/profile');
             }
         }
-        $this->wpanel->set_meta_title('Área de usuários');
-        $this->set_var('account', $query);
-        $this->set_var('profile', $profile);
-        $this->render();
     }
 
     /**

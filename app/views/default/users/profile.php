@@ -24,7 +24,7 @@
                     <?= form_error('name'); ?>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="fantasia">
                 <label for="email" class="col-sm-2 control-label">E-mail</label>
                 <div class="col-sm-5">
                     <input type="text" name="email" id="email" value="<?= $account->email; ?>" class="form-control" />
@@ -42,31 +42,15 @@
             <!--Fim : Dados adicionais de exemplo --> 
             
             <div class="form-group">
-                <div class="checkbox col-sm-offset-2 col-sm-5">
+                <label for="senha" class="col-sm-2 control-label">Senha</label>
+                <div class="col-sm-3">
+                    <input type="password" name="password" id="password" class="form-control" />
+                    <?= form_error('password'); ?>
+                </div>
+                <div class="checkbox col-sm-5">
                     <label>
                         <input type="checkbox" name="alt_password" value="1"/> Alterar a senha.
                     </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="new_password" class="col-sm-2 control-label">Nova senha</label>
-                <div class="col-sm-3">
-                    <input type="password" name="new_password" id="new_password" class="form-control" />
-                    <?= form_error('new_password'); ?>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password" class="col-sm-2 control-label">Confirmação</label>
-                <div class="col-sm-3">
-                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" />
-                    <?= form_error('confirm_password'); ?>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="original_password" class="col-sm-2 control-label">Senha atual</label>
-                <div class="col-sm-3">
-                    <input type="password" name="original_password" id="original_password" class="form-control" />
-                    <?= form_error('original_password'); ?>
                 </div>
             </div>
             <hr/>
