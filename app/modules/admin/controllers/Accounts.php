@@ -134,11 +134,14 @@ class Accounts extends Authenticated_admin_controller
             $this->render();
         } else
         {
+            $upload = $this->wpanel->upload_media('avatar', 'jpg|jpeg|png|gif');
+            if (!$upload)
+                $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/accounts');
             $result = $this->auth->register(
                 $this->input->post('email'), $this->input->post('password'), $this->input->post('role'), array(
                     'name' => $this->input->post('name'),
                     'skin' => $this->input->post('skin'),
-                    'avatar' => $this->wpanel->upload_media('avatar')
+                    'avatar' => $upload
                 ), $this->input->post('permission')
             );
             if ($result > 0)
@@ -177,9 +180,12 @@ class Accounts extends Authenticated_admin_controller
         {
             $extra->name = $this->input->post('name');
             $extra->skin = $this->input->post('skin');
-            if ($this->input->post('change_avatar'))
-                $extra->avatar = $this->wpanel->upload_media('avatar');
-            else
+            if ($this->input->post('change_avatar')) {
+                $upload = $this->wpanel->upload_media('avatar', 'jpg|jpeg|png|gif');
+                if (!$upload)
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/accounts');
+                $extra->avatar = $upload;
+            } else
                 $extra->avatar = $this->input->post('avatar');
             $result = $this->auth->update(
                 $id, $this->input->post('email'), $this->input->post('role'), $extra, $this->input->post('permission')
@@ -272,9 +278,12 @@ class Accounts extends Authenticated_admin_controller
         {
             $extra->name = $this->input->post('name');
             $extra->skin = $this->input->post('skin');
-            if ($this->input->post('change_avatar') == '1')
-                $extra->avatar = $this->wpanel->upload_media('avatar');
-            else
+            if ($this->input->post('change_avatar') == '1') {
+                $upload = $this->wpanel->upload_media('avatar', 'jpg|jpeg|png|gif');
+                if (!$upload)
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/accounts/profile');
+                $extra->avatar = $upload;
+            } else
                 $extra->avatar = $this->input->post('avatar');
 
             $result = $this->auth->update(

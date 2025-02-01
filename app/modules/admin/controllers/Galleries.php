@@ -90,12 +90,15 @@ class Galleries extends Authenticated_admin_controller
             $this->render();
         } else
         {
+            $upload = $this->wpanel->upload_media('capas', 'jpg|jpeg|png|gif');
+            if (!$upload)
+                $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/galleries');
             $data = array();
             $data['titulo'] = $this->input->post('titulo');
             $data['descricao'] = $this->input->post('descricao');
             $data['tags'] = $this->input->post('tags');
             $data['status'] = $this->input->post('status');
-            $data['capa'] = $this->wpanel->upload_media('capas');
+            $data['capa'] = $upload;
             $new_post = $this->gallery->insert($data);
             mkdir('./media/albuns/' . $new_post);
             if ($new_post)
@@ -129,9 +132,12 @@ class Galleries extends Authenticated_admin_controller
             $data['status'] = $this->input->post('status');
             if ($this->input->post('alterar_imagem') == '1')
             {
+                $upload = $this->wpanel->upload_media('capas', 'jpg|jpeg|png|gif');
+                if (!$upload)
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/galleries');
                 $query = $this->gallery->find($id);
                 $this->wpanel->remove_media('capas/' . $query->capa);
-                $data['capa'] = $this->wpanel->upload_media('capas');
+                $data['capa'] = $upload;
             }
             $new_post = $this->gallery->update($id, $data);
             if ($new_post)
@@ -232,11 +238,14 @@ class Galleries extends Authenticated_admin_controller
             $this->render();
         } else
         {
+            $upload = $this->wpanel->upload_media('albuns/' . $album_id, 'jpg|jpeg|png|gif');
+            if (!$upload)
+                $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/galleries/pictures/' . $album_id);
             $data = array();
             $data['album_id'] = $album_id;
             $data['descricao'] = $this->input->post('descricao');
             $data['status'] = $this->input->post('status');
-            $data['filename'] = $this->wpanel->upload_media('albuns/' . $album_id);
+            $data['filename'] = $upload;
             $new_post = $this->picture->insert($data);
             if ($new_post)
                 $this->set_message(wpn_lang('wpn_message_save_success'), 'success', 'admin/galleries/pictures/' . $album_id);
@@ -267,6 +276,10 @@ class Galleries extends Authenticated_admin_controller
             $pictures = $_FILES['pictures'];
             for ($i = 0; $i < sizeof($pictures['name']); $i++)
             {
+                $image_size = getimagesize($pictures["tmp_name"][$i]);
+                if ($image_size === false) {
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/galleries/pictures/' . $album_id);
+                }
                 // Desmembra o nome para eliminar os caracteres especiais e recolocar a extensão.
                 $x = explode('.', $pictures["name"][$i]);
                 $nome = $album_id . '_' . time() . '_' . strtolower(url_title(convert_accented_characters($x[0])));
@@ -311,9 +324,12 @@ class Galleries extends Authenticated_admin_controller
             $data['status'] = $this->input->post('status');
             if ($this->input->post('alterar_imagem') == '1')
             {
+                $upload = $this->wpanel->upload_media('albuns/' . $row->album_id, 'jpg|jpeg|png|gif');
+                if (!$upload)
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/galleries/pictures/' . $row->album_id);
                 $query = $this->picture->find($id);
                 $this->wpanel->remove_media('albuns/' . $query->album_id . '/' . $query->filename);
-                $data['filename'] = $this->wpanel->upload_media('albuns/' . $query->album_id . '/');
+                $data['filename'] = $this->wpanel->upload_media('albuns/' . $query->album_id . '/', 'jpg|jpeg|png|gif');
             }
             if ($this->picture->update($id, $data))
                 $this->set_message(wpn_lang('wpn_message_update_success'), 'success', 'admin/galleries/pictures/' . $row->album_id);
