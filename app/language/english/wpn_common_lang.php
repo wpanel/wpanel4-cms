@@ -50,6 +50,7 @@ $lang['wpn_message_no_module_permission'] = "You don't have permission to access
 $lang['wpn_message_inexistent'] = "Inexistent record";
 $lang['wpn_message_save_success'] = "Record successfully saved!";
 $lang['wpn_message_save_error'] = "Error saving the record.";
+$lang['wpn_message_filetype_error'] = "Error trying to upload an unauthorized file.";
 $lang['wpn_message_update_success'] = "Record successfully updated!";
 $lang['wpn_message_update_error'] = "Error updating te record.";
 $lang['wpn_message_delete_success'] = "Record successfully deleted!";

@@ -86,6 +86,9 @@ class Pages extends Authenticated_admin_controller
             $this->render();
         } else
         {
+            $upload = $this->wpanel->upload_media('capas', 'jpg|jpeg|png|gif');
+            if (!$upload)
+                $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/apges');
             $data = array();
             $data['title'] = $this->input->post('title');
             $data['description'] = $this->input->post('description');
@@ -93,7 +96,7 @@ class Pages extends Authenticated_admin_controller
             $data['content'] = $this->input->post('content');
             $data['tags'] = $this->input->post('tags');
             $data['status'] = $this->input->post('status');
-            $data['image'] = $this->wpanel->upload_media('capas');
+            $data['image'] = $upload;
             // Identifica se é uma página ou uma postagem
             // 0=post, 1=Página
             $data['page'] = '1';
@@ -137,9 +140,12 @@ class Pages extends Authenticated_admin_controller
             $data['page'] = '1';
             if ($this->input->post('alterar_imagem') == '1')
             {
+                $upload = $this->wpanel->upload_media('capas', 'jpg|jpeg|png|gif');
+                if (!$upload)
+                    $this->set_message(wpn_lang('wpn_message_filetype_error'), 'danger', 'admin/pages');
                 $postagem = $this->post->find($id);
                 $this->wpanel->remove_media('capas/' . $postagem->image);
-                $data['image'] = $this->wpanel->upload_media('capas');
+                $data['image'] = $upload;
             }
             if ($this->post->update($id, $data))
             {

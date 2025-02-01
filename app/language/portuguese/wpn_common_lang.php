@@ -51,6 +51,7 @@ $lang['wpn_message_no_module_permission'] = "Você não tem permissão para aces
 $lang['wpn_message_inexistent'] = "Registro inexistente";
 $lang['wpn_message_save_success'] = "Registro salvo com sucesso!";
 $lang['wpn_message_save_error'] = "Erro ao salvar o registro.";
+$lang['wpn_message_filetype_error'] = "O tipo de arquivo que voce está tentando enviar é inválido.";
 $lang['wpn_message_update_success'] = "Registro atualizado com sucesso!";
 $lang['wpn_message_update_error'] = "Erro ao atualizar o registro.";
 $lang['wpn_message_delete_success'] = "Registro excluído com sucesso!";
