@@ -7,79 +7,63 @@
 
 defined('BASEPATH') || exit('No direct script access allowed');
 
-/**
- * Classe Main
- *
- * Contém os métodos básicos do site.
- *
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- */
 class Main extends MY_Controller
 {
-    /**
-     * @var Wpanel
-     */
+    /** @var Wpanel */
     public $wpanel;
-    /**
-     * @var Post
-     */
+    /** @var Post */
     public $post;
-    /**
-     * @var Categorytegory
-     */
+    /** @var Categorytegory */
     public $category;
-    /**
-     * @var Gallery
-     */
+    /** @var Gallery */
     public $gallery;
-    /**
-     * @var Picture
-     */
+    /** @var Picture */
     public $picture;
-    /**
-     * @var Video
-     */
+    /** @var Video */
     public $video;
-    /**
-     * @var Newsletter
-     */
+    /** @var Newsletter */
     public $newsletter;
 
     /**
-     * Construtor da classe.
-     *
-     * @return void
+     * Class constructor.
      */
     function __construct()
     {
 
         /**
-         * Informa o número de colunas do layout 'Mosaico'.
+         * Set the number of columns of the layout 'Mosaic'.
          */
         $this->wpn_cols_mosaic = 3;
 
         /**
-         * Informa a view padrão para as postagens: 'list' ou 'mosaic'.
+         * Set a default view for posts: 'list' or 'mosaic'.
          */
         $this->wpn_posts_view = 'mosaic';
 
         /**
-         * Informa os models.
+         * Load the models.
          */
         $this->model_file = ['post', 'category', 'gallery', 'picture', 'video', 'newsletter'];
+
+        /**
+         * Load the language file.
+         */
+        $this->language_file = 'controller_main_lang';
 
         parent::__construct();
 
         /**
-         * Define o template.
+         * Set the template.
          */
         $this->template('default');
 
     }
 
     /**
-     * Você pode usar este método para criar uma página inicial personalizada e
-     * então selecionar como padrão no painel de controle.
+     * You can use this method to create a custom homepage and then select it as
+     * default in the control panel.
+     *
+     * @return void
      */
     public function custom()
     {
@@ -88,7 +72,9 @@ class Main extends MY_Controller
     }
 
     /**
-     * Este método retorna a página inicial configurada no painel de controle.
+     * This method returns the homepage as configured in the control panel.
+     *
+     * @return void
      */
     public function index()
     {
@@ -107,10 +93,11 @@ class Main extends MY_Controller
     }
 
     /**
-     * Retorna uma lista de posts que pode ser por categoria. A exibição pode
-     * ser em mosaico ou em lista.
+     * This method returns a post list, can be by category. The list can be in
+     * mosaic or list view.
      *
-     * @param $category_id Int Id da categoria.
+     * @param $category_id int Category id
+     * @return void
      */
     public function posts($category_id = null)
     {
@@ -119,7 +106,7 @@ class Main extends MY_Controller
                 ->order_by('created_on', 'desc')
                 ->select('id, title, link, image, content, created_on')
                 ->find_many_by(array('page' => '0', 'status' => '1')));
-            $view_title = 'Todas as postagens';
+            $view_title = wpn_lang('all_posts_title');
         } else {
             $qry_category = $this->category
                 ->select('id, title, description, view')
@@ -138,10 +125,11 @@ class Main extends MY_Controller
     }
 
     /**
-     * Este método exibe uma postagem usando um link ou Id como referência.
+     * This method returns a single post using a link or id as reference.
      *
-     * @param $var mixed Link ou ID da postagem.
-     * @param $use_id boolean Indica que $var é um Id.
+     * @param $var mixed Link or ID of the post
+     * @param $use_id boolean Indicates that $var is an ID
+     * @return void
      */
     public function post($var = null, $use_id = false)
     {
@@ -162,7 +150,7 @@ class Main extends MY_Controller
             show_404();
         }
         if ($query->status == 0) {
-            show_error('Esta página foi suspensa temporariamente', 404);
+            show_error(wpn_lang('suspended_page_message'), 404);
         }
         $this->wpanel->set_meta_description($query->description);
         $this->wpanel->set_meta_keywords($query->tags);
@@ -181,19 +169,23 @@ class Main extends MY_Controller
     }
 
     /**
-     * Busca simples no cadastro de postagens.
+     * Simple search on posts.
+     *
+     * @return void
      */
     public function search()
     {
         $search_terms = $this->input->post('search', TRUE);
         $this->set_var('search_terms', $search_terms);
         $this->set_var('results', $this->post->busca_posts($search_terms)->result());
-        $this->wpanel->set_meta_title('Resultados da busca por ' . $search_terms);
+        $this->wpanel->set_meta_title(wpn_lang('search_results_title') . $search_terms);
         $this->render();
     }
 
     /**
-     * Lista as galerias de fotos.
+     * Pictures gallery list.
+     *
+     * @return void
      */
     public function galleries()
     {
@@ -211,9 +203,9 @@ class Main extends MY_Controller
             ->select('id, titulo, capa, created_on')
             ->order_by('created_on', 'desc')
             ->find_many_by('status', 1);
-        $this->wpanel->set_meta_description('Álbuns de fotos');
-        $this->wpanel->set_meta_keywords(' album, fotos');
-        $this->wpanel->set_meta_title('Álbuns de fotos');
+        $this->wpanel->set_meta_description(wpn_lang('picture_gallery_title'));
+        $this->wpanel->set_meta_keywords(wpn_lang('picture_gallery_keywords'));
+        $this->wpanel->set_meta_title(wpn_lang('picture_gallery_title'));
         $this->set_var('pagination_links', $this->pagination->create_links());
         $this->set_var('albuns', $query);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
@@ -221,9 +213,11 @@ class Main extends MY_Controller
     }
 
     /**
-     * Lista as fotos de uma galeria indicada pelo  Id.
+     * List of pictures from an album by id.
      *
-     * @param $album_id Int Id da galeria.
+     * @param $album_id
+     * @param $fake_link
+     * @return void
      */
     public function gallery($album_id = null, $fake_link = '')
     {
@@ -246,14 +240,14 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_album->status) {
-            show_error('Este álbum foi suspenso temporariamente', 404);
+            show_error(wpn_lang('suspended_album_message'), 404);
         }
         $query_pictures = $this->picture
             ->select('id, filename, descricao')
             ->limit($limit, $offset)
             ->find_many_by(array('album_id' => $album_id, 'status' => 1));
         $this->wpanel->set_meta_description($query_album->descricao);
-        $this->wpanel->set_meta_keywords(' album, fotos');
+        $this->wpanel->set_meta_keywords(wpn_lang('picture_gallery_keywords'));
         $this->wpanel->set_meta_title($query_album->titulo);
         if (file_exists('./media/capas/' . $query_album->capa)) {
             $this->wpanel->set_meta_image(base_url('media/capas' . '/' . $query_album->capa));
@@ -266,10 +260,10 @@ class Main extends MY_Controller
     }
 
     /**
-     * Exibe a foto indicada pelo Id. Este método é indicado quando você
-     * não quer usar o plugin lightbox.
+     * Shows a picture by id. This method is intended when you don't want to use the lightbox plugin.
      *
-     * @param $picture_id Int Id da imagem.
+     * @param $picture_id int Id of the picture
+     * @return void
      */
     public function picture($picture_id = null)
     {
@@ -286,10 +280,10 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_picture->status) {
-            show_error('Esta foto foi suspensa temporariamente', 404);
+            show_error(wpn_lang('suspended_picture_message'), 404);
         }
         $this->wpanel->set_meta_description($query_picture->descricao);
-        $this->wpanel->set_meta_keywords('album, fotos');
+        $this->wpanel->set_meta_keywords(wpn_lang('picture_gallery_keywords'));
         $this->wpanel->set_meta_title($query_picture->descricao);
         if (file_exists('./media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename)) {
             $this->wpanel->set_meta_image(base_url('media/albuns/' . $query_picture->album_id . '/' . $query_picture->filename));
@@ -300,7 +294,9 @@ class Main extends MY_Controller
     }
 
     /**
-     * Lista os vídeos do Youtube que foram cadastrados no painel de controle.
+     * List of videos.
+     *
+     * @return void
      */
     public function videos()
     {
@@ -318,9 +314,9 @@ class Main extends MY_Controller
             ->select('id, titulo, link')
             ->order_by('created_on', 'desc')
             ->find_many_by('status', 1);
-        $this->wpanel->set_meta_description('Lista de vídeos');
-        $this->wpanel->set_meta_keywords('videos, filmes');
-        $this->wpanel->set_meta_title('Vídeos');
+        $this->wpanel->set_meta_description(wpn_lang('video_gallery_title'));
+        $this->wpanel->set_meta_keywords(wpn_lang('video_gallery_keywords'));
+        $this->wpanel->set_meta_title(wpn_lang('video_gallery_title'));
         $this->set_var('pagination_links', $this->pagination->create_links());
         $this->set_var('videos', $query_videos);
         $this->set_var('max_cols', $this->wpn_cols_mosaic);
@@ -328,9 +324,10 @@ class Main extends MY_Controller
     }
 
     /**
-     * Exibe um vídeo indicado pelo Código do vídeo.
+     * Shows a video by youtube code.
      *
-     * @param $code string Código do vídeo no youtube.
+     * @param $code
+     * @return void
      */
     public function video($code = null)
     {
@@ -344,29 +341,31 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_video->status) {
-            show_error('Este vídeo foi suspenso temporariamente', 404);
+            show_error(wpn_lang('suspended_video_message'), 404);
         }
         $this->set_var('video', $query_video);
         $this->wpanel->set_meta_description($query_video->titulo);
-        $this->wpanel->set_meta_keywords('videos, filmes');
+        $this->wpanel->set_meta_keywords(wpn_lang('video_gallery_keywords'));
         $this->wpanel->set_meta_title($query_video->titulo);
         $this->wpanel->set_meta_image('http://img.youtube.com/vi/' . $code . '/0.jpg');
         $this->render();
     }
 
     /**
-     * Formulário de contato com captcha.
+     * Contact form with captcha.
+     *
+     * @return void
      */
     public function contact()
     {
-        $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('captcha', 'Confirmação', 'required|captcha');
+        $this->form_validation->set_rules('nome', wpn_lang('input_name'), 'required');
+        $this->form_validation->set_rules('email', wpn_lang('input_email'), 'required|valid_email');
+        $this->form_validation->set_rules('captcha', wpn_lang('input_captcha'), 'required|captcha');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         if (!$this->form_validation->run()) {
-            $this->wpanel->set_meta_description('Formulário de contato');
-            $this->wpanel->set_meta_keywords(' Contato, Fale Conosco');
-            $this->wpanel->set_meta_title('Contato');
+            $this->wpanel->set_meta_description(wpn_lang('contact_page_title'));
+            $this->wpanel->set_meta_keywords(wpn_lang('contact_page_keywords'));
+            $this->wpanel->set_meta_title(wpn_lang('contact_page_title'));
             $this->set_var('contact_content', wpn_config('texto_contato'));
             $this->set_var('captcha', $this->form_validation->get_captcha());
             $this->render();
@@ -375,6 +374,7 @@ class Main extends MY_Controller
             $email = $this->input->post('email');
             $telefone = $this->input->post('telefone');
             $mensagem = $this->input->post('mensagem');
+            //TODO: #31 Create HTML template to sending messages. (https://github.com/wpanel/wpanel4-cms/issues/31)
             $msg = "";
             $msg .= "Mensagem enviada pelo site.\n\n";
             $msg .= "Nome: $nome\n";
@@ -400,16 +400,16 @@ class Main extends MY_Controller
             );
             $this->newsletter->create_lead($data);
             if (!$this->wpanel->send_email($mail_data)) {
-                $this->set_message('Sua mensagem não pode ser enviada.', 'danger', 'contact');
+                $this->set_message(wpn_lang('contact_send_error'), 'danger', 'contact');
             }
-            $this->set_message('Sua mensagem foi enviada com sucesso!', 'success', 'contact');
+            $this->set_message(wpn_lang('contact_send_success'), 'success', 'contact');
         }
     }
 
     /**
-     * Gera um RSS com a lista de postagens para os "Feed Readers".
+     * Generate a RSS feed.
      *
-     * @deprecated Este método será removido na proxima release.
+     * @return void
      */
     public function rss()
     {
@@ -436,17 +436,19 @@ class Main extends MY_Controller
     }
 
     /**
-     * Formulário de captação de leads (emails newsletters).
+     * This form is used to capture leads (emails newsletters).
+     *
+     * @return void
      */
     public function newsletter()
     {
-        $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('nome', wpn_lang('input_name'), 'required');
+        $this->form_validation->set_rules('email', wpn_lang('input_email'), 'required|valid_email');
         $this->form_validation->set_error_delimiters('<p><span class="label label-danger">', '</span></p>');
         if (!$this->form_validation->run()) {
-            $this->wpanel->set_meta_description('Newsletter');
-            $this->wpanel->set_meta_keywords('Cadastro, Newsletter');
-            $this->wpanel->set_meta_title('Newsletter');
+            $this->wpanel->set_meta_description(wpn_lang('newsletter_page_title'));
+            $this->wpanel->set_meta_keywords(wpn_lang('newsletter_page_keywords'));
+            $this->wpanel->set_meta_title(wpn_lang('newsletter_page_title'));
             $this->render();
         } else {
             $data = array(
@@ -455,9 +457,9 @@ class Main extends MY_Controller
                 'ipaddress' => $this->input->server('REMOTE_ADDR', true)
             );
             if (!$this->newsletter->insert($data)) {
-                $this->set_message('Não foi possível salvar os seus dados, verifique e tente novamente.', 'danger', 'newsletter');
+                $this->set_message(wpn_lang('newsletter_send_error'), 'danger', 'newsletter');
             }
-            $this->set_message('Seus dados foram salvos com sucesso!', 'success', 'newsletter');
+            $this->set_message(wpn_lang('newsletter_send_success'), 'success', 'newsletter');
         }
     }
 }
