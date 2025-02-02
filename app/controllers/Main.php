@@ -13,7 +13,7 @@ class Main extends MY_Controller
     public $wpanel;
     /** @var Post */
     public $post;
-    /** @var Categorytegory */
+    /** @var Category */
     public $category;
     /** @var Gallery */
     public $gallery;
