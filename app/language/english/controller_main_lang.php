@@ -7,10 +7,10 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['suspended_page_message'] = 'This page is suspended temporarily.';
-$lang['suspended_album_message'] = 'This album is suspended temporarily.';
-$lang['suspended_picture_message'] = 'This picture is suspended temporarily.';
-$lang['suspended_video_message'] = 'This video is suspended temporarily.';
+$lang['message_suspended_page'] = 'This page is suspended temporarily.';
+$lang['message_suspended_album'] = 'This album is suspended temporarily.';
+$lang['message_suspended_picture'] = 'This picture is suspended temporarily.';
+$lang['message_suspended_video'] = 'This video is suspended temporarily.';
 $lang['all_posts_title'] = 'All Posts';
 $lang['search_results_title'] = 'Search results for: ';
 $lang['picture_gallery_title'] = 'Picture gallery';

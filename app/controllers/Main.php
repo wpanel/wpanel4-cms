@@ -150,7 +150,7 @@ class Main extends MY_Controller
             show_404();
         }
         if ($query->status == 0) {
-            show_error(wpn_lang('suspended_page_message'), 404);
+            show_error(wpn_lang('message_suspended_page'), 404);
         }
         $this->wpanel->set_meta_description($query->description);
         $this->wpanel->set_meta_keywords($query->tags);
@@ -240,7 +240,7 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_album->status) {
-            show_error(wpn_lang('suspended_album_message'), 404);
+            show_error(wpn_lang('message_suspended_album'), 404);
         }
         $query_pictures = $this->picture
             ->select('id, filename, descricao')
@@ -280,7 +280,7 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_picture->status) {
-            show_error(wpn_lang('suspended_picture_message'), 404);
+            show_error(wpn_lang('message_suspended_picture'), 404);
         }
         $this->wpanel->set_meta_description($query_picture->descricao);
         $this->wpanel->set_meta_keywords(wpn_lang('picture_gallery_keywords'));
@@ -341,7 +341,7 @@ class Main extends MY_Controller
             show_404();
         }
         if (!$query_video->status) {
-            show_error(wpn_lang('suspended_video_message'), 404);
+            show_error(wpn_lang('message_suspended_video'), 404);
         }
         $this->set_var('video', $query_video);
         $this->wpanel->set_meta_description($query_video->titulo);
@@ -463,4 +463,3 @@ class Main extends MY_Controller
         }
     }
 }
-

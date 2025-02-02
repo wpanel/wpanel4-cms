@@ -73,4 +73,6 @@ $lang['input_name'] = 'Name';
 $lang['input_email'] = 'Email';
 $lang['input_phone'] = 'Phone';
 $lang['input_message'] = 'Message';
+$lang['input_password'] = 'Password';
+$lang['input_password_confirmation'] = 'Password confirmation';
 $lang['input_captcha'] = 'Captcha';
