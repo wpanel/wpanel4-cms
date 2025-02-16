@@ -48,7 +48,7 @@ class Main extends MY_Controller
         /**
          * Load the language file.
          */
-        $this->language_file = 'controller_main_lang';
+        $this->language_file = ['theme_default_lang', 'controller_main_lang'];
 
         parent::__construct();
 
@@ -324,7 +324,7 @@ class Main extends MY_Controller
     }
 
     /**
-     * Shows a video by youtube code.
+     * Shows a video by YouTube code.
      *
      * @param $code
      * @return void

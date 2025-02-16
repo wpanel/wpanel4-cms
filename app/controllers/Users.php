@@ -23,7 +23,7 @@ class Users extends MY_Controller
         /**
          * Load the language file.
          */
-        $this->language_file = 'controller_users_lang';
+        $this->language_file = ['theme_default_lang', 'controller_users_lang'];
 
         parent::__construct();
 
