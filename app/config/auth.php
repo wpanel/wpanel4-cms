@@ -8,7 +8,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Define os tipos de usuário serão permitidos no site. 
+ * Define os tipos de usuário serão permitidos no site.
+ *
+ * @deprecated
  */
 $config['auth_account_role'] = array('ROOT'=>'Desenvolvedor', 'user' => 'Usuário comum', 'admin' => 'Administrador');
 

@@ -54,12 +54,14 @@ $config['db_datetime_format'] = '%Y-%m-%d %H:%i:%s';
 $config['available_editors'] = array('ckeditor'=>'CKEditor', 'tinymce'=>'TinyMCE');
 
 /**
- * Define os tipos de usuário serão permitidos no site. 
+ * Define os tipos de usuário serão permitidos no site.
+ * @deprecated
  */
 $config['users_role'] = array('user' => 'Usuário comum', 'admin' => 'Administrador');
 
 /**
  * Define as views disponíveis para a exibição das listas de postagens.
+ * @deprecated
  */
 $config['posts_views'] = array('list' => 'Listagem', 'mosaic' => 'Mosaico');
 
