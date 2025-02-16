@@ -908,26 +908,26 @@ class Migration_Initialdb extends CI_Migration
         /**
          * Loden Ipsum, classic demo text.
          */
-        $loren_ipsum = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p>\n\n<p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p>\n\n<p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>';
+        $loren_ipsum = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus justo ex, sit amet malesuada mauris aliquam eu. Duis sed magna neque. Sed vel urna elit. Maecenas lacinia blandit felis, sed scelerisque dolor faucibus non. In consequat elit sed risus hendrerit, at bibendum elit efficitur. Nulla nulla nunc, sagittis at tellus non, hendrerit euismod elit. Morbi lacinia leo eget diam sodales dignissim. Curabitur vel turpis et dolor vehicula rutrum. Quisque magna magna, accumsan et justo a, malesuada convallis metus. Nam pharetra congue metus vitae sodales.</p><p>Mauris varius nunc sit amet tellus semper, rutrum feugiat justo tempor. Curabitur vestibulum sem eleifend ex imperdiet, sit amet porta mi bibendum. Proin eget interdum nunc. Proin ullamcorper mi eget leo tempus mattis eu non ex. Proin porta vitae sem sit amet tempor. Nullam lacus risus, iaculis ut massa in, suscipit elementum ex. Etiam iaculis sit amet nulla at mattis. Fusce eget facilisis nibh, ut scelerisque mauris. Proin elementum erat quis leo accumsan auctor. Phasellus sodales justo ac bibendum ornare. Morbi venenatis, mauris nec ultrices volutpat, nibh felis sagittis leo, nec imperdiet nisl diam id tortor. Proin pulvinar augue dolor, vel pulvinar arcu consequat nec. Fusce faucibus nulla ut nisl efficitur dignissim.</p><p>Proin eget est ornare, tempor elit quis, mattis diam. Mauris lobortis lectus sit amet enim bibendum cursus. Donec porta ultrices consectetur. Proin vehicula fringilla dolor nec viverra. Donec faucibus risus et mauris rhoncus lobortis. Vestibulum ac maximus ipsum. Fusce non diam semper, laoreet ipsum at, sagittis nisl. Mauris a luctus erat, in venenatis tellus.</p>';
 
         /**
          * Modules data.
          */
         $modules_data = array(
             array(
-                'name' => 'Postagens',
+                'name' => 'Posts',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Páginas',
+                'name' => 'Pages',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Eventos',
+                'name' => 'Events',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
@@ -939,7 +939,7 @@ class Migration_Initialdb extends CI_Migration
                 'order' => '0',
             ),
             array(
-                'name' => 'Galerias',
+                'name' => 'Galleries',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
@@ -951,31 +951,31 @@ class Migration_Initialdb extends CI_Migration
                 'order' => '0',
             ),
             array(
-                'name' => 'Gerenciador de menus',
+                'name' => 'Menu manager',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Gerenciador de Leads',
+                'name' => 'Leads manager',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Contas de usuários',
+                'name' => 'User accounts',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Configurações',
+                'name' => 'Settings',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0',
             ),
             array(
-                'name' => 'Notificações',
+                'name' => 'Notifications',
                 'icon' => '',
                 'show_in_menu' => '1',
                 'order' => '0'
@@ -988,373 +988,373 @@ class Migration_Initialdb extends CI_Migration
         $moduleactions_data = array(
             array(
                 'module_id' => '1',
-                'description' => 'Listar postagens', 
+                'description' => 'List posts',
                 'link' => 'admin/posts', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Adicionar postagem', 
+                'description' => 'Create post',
                 'link' => 'admin/posts/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Alterar postagem', 
+                'description' => 'Edit post',
                 'link' => 'admin/posts/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Excluir postagem', 
+                'description' => 'Delete post',
                 'link' => 'admin/posts/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Listar categorias de postagens', 
+                'description' => 'List post categories',
                 'link' => 'admin/categories', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Adicionar categoria de postagens', 
+                'description' => 'Create post categories',
                 'link' => 'admin/categories/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Alterar categorias de postagens', 
+                'description' => 'Edit post categories',
                 'link' => 'admin/categories/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '1',
-                'description' => 'Excluir categorias de postagens', 
+                'description' => 'Delete post categories',
                 'link' => 'admin/categories/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '2',
-                'description' => 'Listar páginas', 
+                'description' => 'List pages',
                 'link' => 'admin/pages', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '2',
-                'description' => 'Adicionar páginas', 
+                'description' => 'Create page',
                 'link' => 'admin/pages/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '2',
-                'description' => 'Alterar páginas', 
+                'description' => 'Edit page',
                 'link' => 'admin/pages/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '2',
-                'description' => 'Excluir páginas', 
+                'description' => 'Delete page',
                 'link' => 'admin/pages/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '3',
-                'description' => 'Listar eventos', 
+                'description' => 'List events',
                 'link' => 'admin/agendas', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '3',
-                'description' => 'Adicionar eventos', 
+                'description' => 'Create event',
                 'link' => 'admin/agendas/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '3',
-                'description' => 'Alterar eventos', 
+                'description' => 'Edit event',
                 'link' => 'admin/agendas/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '3',
-                'description' => 'Excluir eventos', 
+                'description' => 'Delete event',
                 'link' => 'admin/agendas/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '4',
-                'description' => 'Listar banners', 
+                'description' => 'List banners',
                 'link' => 'admin/banners', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '4',
-                'description' => 'Adicionar banners', 
+                'description' => 'Create banner',
                 'link' => 'admin/banners/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '4',
-                'description' => 'Alterar banners', 
+                'description' => 'Edit banner',
                 'link' => 'admin/banners/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '4',
-                'description' => 'Excluir banners', 
+                'description' => 'Delete banner',
                 'link' => 'admin/banners/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Listar galerias', 
+                'description' => 'List gallery',
                 'link' => 'admin/galleries', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Adicionar galerias', 
+                'description' => 'Create gallery',
                 'link' => 'admin/galleries/add', 
                 'whitelist' => '0'
             ),
             array(
                 'module_id' => '5',
-                'description' => 'Alterar galerias', 
+                'description' => 'Edit gallery',
                 'link' => 'admin/galleries/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Excluir galerias', 
+                'description' => 'Delete gallery',
                 'link' => 'admin/galleries/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Listar fotos da galeria', 
+                'description' => 'List pictures from gallery',
                 'link' => 'admin/galleries/pictures/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Adiciona foto na galeria individualmente', 
+                'description' => 'Insert picture in gallery individually',
                 'link' => 'admin/galleries/addpicture/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Adiciona foto na galeria em massa', 
+                'description' => 'Insert picture in gallery in mass',
                 'link' => 'admin/galleries/addmass/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Alterar fotos da galeria', 
+                'description' => 'Edit picture from gallery',
                 'link' => 'admin/galleries/editpicture/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '5',
-                'description' => 'Apagar foto da galeria', 
+                'description' => 'Delete picture from gallery',
                 'link' => 'admin/galleries/delpicture/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '6',
-                'description' => 'Listar vídeos',
+                'description' => 'List vídeos',
                 'link' => 'admin/videos', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '6',
-                'description' => 'Adicionar vídeo', 
+                'description' => 'Create vídeo',
                 'link' => 'admin/videos/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '6',
-                'description' => 'Alterar vídeo', 
+                'description' => 'Edit vídeo',
                 'link' => 'admin/videos/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '6',
-                'description' => 'Apagar vídeo', 
+                'description' => 'Delete vídeo',
                 'link' => 'admin/videos/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Listar menus',
+                'description' => 'List menu',
                 'link' => 'admin/menus', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Adicionar menus', 
+                'description' => 'Create menu',
                 'link' => 'admin/menus/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Alterar menu', 
+                'description' => 'Edit menu',
                 'link' => 'admin/menus/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Apagar menu', 
+                'description' => 'Delete menu',
                 'link' => 'admin/menus/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Adicionar item de menu', 
+                'description' => 'Create menu item',
                 'link' => 'admin/menus/additem/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Alterar item de menu', 
+                'description' => 'Edit menu item',
                 'link' => 'admin/menus/edititem/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '7',
-                'description' => 'Apagar item de menu', 
+                'description' => 'Delete menu item',
                 'link' => 'admin/menus/deleteitem/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '8',
-                'description' => 'Listar emails',
+                'description' => 'List emails',
                 'link' => 'admin/newsletters', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '8',
-                'description' => 'Exportar emails',
+                'description' => 'Export emails',
                 'link' => 'admin/newsletters/export', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '8',
-                'description' => 'Limpar emails',
+                'description' => 'Clean emails',
                 'link' => 'admin/newsletters/clear', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Listar usuários',
+                'description' => 'List users',
                 'link' => 'admin/accounts', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Adicionar usuário', 
+                'description' => 'Create user account',
                 'link' => 'admin/accounts/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Alterar usuários', 
+                'description' => 'Edit user account',
                 'link' => 'admin/accounts/edit/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Apagar usuário', 
+                'description' => 'Delete user account',
                 'link' => 'admin/accounts/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Alterar senha de usuários', 
+                'description' => 'Change user account password',
                 'link' => 'admin/accounts/changepassword/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Listar IP´s manidos', 
+                'description' => 'List banned IP',
                 'link' => 'admin/ipbanneds', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Banir um IP', 
+                'description' => 'Ban an IP',
                 'link' => 'admin/ipbanneds/add', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Apagar um IP banido', 
+                'description' => 'Delete a banned IP',
                 'link' => 'admin/ipbanneds/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Lista de IP´s permitidos',
+                'description' => 'List allowed IP',
                 'link' => 'admin/ipalloweds',
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Permitir um IP',
+                'description' => 'Allow an IP',
                 'link' => 'admin/ipalloweds/add',
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '9',
-                'description' => 'Apagar um IP permitido',
+                'description' => 'Delete an allowed IP',
                 'link' => 'admin/ipalloweds/delete/*',
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '10',
-                'description' => 'Visualizar configurações', 
+                'description' => 'View settings',
                 'link' => 'admin/configuracoes', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '10',
-                'description' => 'Salvar configurações', 
+                'description' => 'Save settings',
                 'link' => 'admin/configuracoes/index', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '10',
-                'description' => 'Alterar logomarca', 
+                'description' => 'Change logo',
                 'link' => 'admin/configuracoes/altlogo', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '10',
-                'description' => 'Alterar background', 
+                'description' => 'Change background',
                 'link' => 'admin/configuracoes/altback', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '10',
-                'description' => 'Alterar favicon', 
+                'description' => 'Change favicon',
                 'link' => 'admin/configuracoes/altfavicon', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '11',
-                'description' => 'Listar todas as notificações',
+                'description' => 'List all notifications',
                  'link' => 'admin/notifications',  
                 'whitelist' => '1'
             ), 
             array(
                 'module_id' => '11',
-                'description' => 'Excluir notificações', 
+                'description' => 'Delete notifications',
                 'link' => 'admin/notifications/delete/*', 
                 'whitelist' => '0'
             ), 
             array(
                 'module_id' => '11',
-                'description' => 'Acessar notificação',  
+                'description' => 'Read notifications',
                 'link' => 'admin/notifications/markasread/*', 
                 'whitelist' => '1'
             ),
@@ -1362,29 +1362,29 @@ class Migration_Initialdb extends CI_Migration
 
         $post_data = array(
             array(
-                'title' => 'Página inicial', 
-                'description' => 'Página inicial de exemplo do WPanel', 
-                'link' => 'pagina-inicial', 
+                'title' => 'Home page',
+                'description' => 'WPanel example home page',
+                'link' => 'homepage',
                 'content' => $loren_ipsum, 
                 'image' => null, 
-                'tags' => 'wpanel, bem vindo, exemplo', 
+                'tags' => 'wpanel, welcome, example',
                 'page' => '1', 
                 'status' => '1'
             ),
             array(
-                'title' => 'Sobre', 
-                'description' => 'Um exemplo de página específica para o menu.', 
-                'link' => 'sobre', 
+                'title' => 'About',
+                'description' => 'An example of a specific page on menu.',
+                'link' => 'about',
                 'content' => $loren_ipsum, 
                 'image' => null, 
-                'tags' => 'exemplo, pagina, sobre', 
+                'tags' => 'example, page, about',
                 'page' => '1', 
                 'status' => '1'
             ),
             array(
-                'title' => 'Postagem de exemplo', 
-                'description' => 'Exemplo de postagem', 
-                'link' => 'postagem-de-exemplo', 
+                'title' => 'Example post',
+                'description' => 'Example post',
+                'link' => 'example-post',
                 'content' => $loren_ipsum, 
                 'image' => null, 
                 'tags' => 'demo, post, wpanel', 
@@ -1392,12 +1392,12 @@ class Migration_Initialdb extends CI_Migration
                 'status' => '1'
             ),
             array(
-                'title' => 'Segunda postagem de exemplo', 
-                'description' => 'Postagem de exemplo do Wpanel', 
-                'link' => 'segunda-postagem-de-exemplo', 
+                'title' => 'Second example post',
+                'description' => 'WPanel example post',
+                'link' => 'second-example-post',
                 'content' => $loren_ipsum, 
                 'image' => null, 
-                'tags' => 'demo, post, exemplo, wpanel', 
+                'tags' => 'demo, post, example, wpanel',
                 'page' => '0', 
                 'status' => '1'
             )
@@ -1408,16 +1408,16 @@ class Migration_Initialdb extends CI_Migration
          */
         $category_data = array(
             array(
-                'title' => 'Categoria de exemplo',
-                'link' => 'categoria-de-exemplo',
-                'description' => 'Uma categoria de postagens de exemplo. Esta categoria tem como visualização o padrão MOSAICO para as postagens.',
+                'title' => 'Example category',
+                'link' => 'example-category',
+                'description' => 'An example category of posts. This category has a MOSAIC pattern for the posts.',
                 'category_id' => 0,
                 'view' => 'mosaic'
             ),
             array(
-                'title' => 'Sub-categoria de exemplo',
-                'link' => 'sub-categoria-de-exemplo',
-                'description' => 'Uma sub-categoria de postagens de exemplo. Ela é relacionada a Categoria de Exemplo e tem como visualização o padrão LISTA para as postagens.',
+                'title' => 'Example sub-category',
+                'link' => 'example-sub-category',
+                'description' => 'A subcategory of example posts. It is related to the Example Category and has a default LIST view for posts.',
                 'category_id' => 1,
                 'view' => 'list'
             )
@@ -1473,8 +1473,8 @@ class Migration_Initialdb extends CI_Migration
          * Menu data.
          */
         $menu_data = array(
-            'nome' => 'Menu principal', 
-            'slug' => 'menu-principal', 
+            'nome' => 'Main menu',
+            'slug' => 'main-menu',
             'posicao' => 'topo', 
             'estilo' => 'lista'
         );
@@ -1485,7 +1485,7 @@ class Migration_Initialdb extends CI_Migration
         $menuitem_data = array(
             array(
                 'menu_id' => 1,
-                'label' => 'Início',
+                'label' => 'Home',
                 'tipo' => 'funcional',
                 'href' => 'home',
                 'slug' => '',
@@ -1493,15 +1493,15 @@ class Migration_Initialdb extends CI_Migration
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Sobre',
+                'label' => 'About',
                 'tipo' => 'post',
-                'href' => 'sobre',
+                'href' => 'about',
                 'slug' => '',
                 'ordem' => '2',
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Postagens',
+                'label' => 'Posts',
                 'tipo' => 'posts',
                 'href' => '1',
                 'slug' => '',
@@ -1509,7 +1509,7 @@ class Migration_Initialdb extends CI_Migration
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Fotos',
+                'label' => 'Pictures',
                 'tipo' => 'funcional',
                 'href' => 'galleries',
                 'slug' => '',
@@ -1517,7 +1517,7 @@ class Migration_Initialdb extends CI_Migration
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Vídeos',
+                'label' => 'Videos',
                 'tipo' => 'funcional',
                 'href' => 'videos',
                 'slug' => '',
@@ -1525,7 +1525,7 @@ class Migration_Initialdb extends CI_Migration
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Contato',
+                'label' => 'Contact',
                 'tipo' => 'funcional',
                 'href' => 'contact',
                 'slug' => '',
@@ -1533,7 +1533,7 @@ class Migration_Initialdb extends CI_Migration
             ),
             array(
                 'menu_id' => 1,
-                'label' => 'Usuários',
+                'label' => 'Users',
                 'tipo' => 'funcional',
                 'href' => 'users',
                 'slug' => '',
