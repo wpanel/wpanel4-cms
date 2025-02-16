@@ -79,11 +79,13 @@ class Categories extends Authenticated_admin_controller
             // Prepara a lista de categorias.
             $query = $this->category->find_all();
             $options = array();
-            $options[0] = 'Sem categoria';
+            $options[0] = wpn_lang('field_no_category');
             foreach ($query as $row)
             {
                 $options[$row->id] = $row->title;
             }
+            $view_options = array('list' => wpn_lang('field_view_list'), 'mosaic' => wpn_lang('field_view_mosaic'));
+            $this->set_var('view_options', $view_options);
             $this->set_var('options', $options);
             $this->render();
         } else
@@ -116,12 +118,14 @@ class Categories extends Authenticated_admin_controller
             // Prepara a lista de categorias.
             $query = $this->category->find_all();
             $options = array();
-            $options[0] = 'Sem categoria';
+            $options[0] = wpn_lang('field_no_category');
             foreach ($query as $row)
             {
                 $options[$row->id] = $row->title;
             }
             $this->set_var('row', $this->category->find($id));
+            $view_options = array('list' => wpn_lang('field_view_list'), 'mosaic' => wpn_lang('field_view_mosaic'));
+            $this->set_var('view_options', $view_options);
             $this->set_var('options', $options);
             $this->render();
         } else
