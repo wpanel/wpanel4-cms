@@ -7,17 +7,12 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Classe Wpntitle.
- * 
- * @author Eliel de Paula <dev@elieldepaula.com.br>
- */
 class Wpntitle extends Widget
 {
 
     /**
-     * Método principal do widget.
-     * 
+     * Main method of the widget.
+     *
      * @return string
      */
     public function main()
