@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-md-12">
         <h1 class="page-header"><?= $post->title; ?></h1>
         <p class="text-muted">
-            <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
+            <span><?= wpn_lang('posted_on'); ?> <?= mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
             <?php if($post->page==0){ ?>
                 <small>
                     <span class="category">
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?= $post->content; ?>
         <!-- Mostra os comentários do Facebook caso não seja uma 'Páina'. -->
         <?php if ($post->page==0) { ?>
-            <h4>Comentarios</h4>
+            <h4><?= wpn_lang('header_comments'); ?></h4>
             <?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('post/'.$post->link))); ?>
         <?php } ?>
         <!-- Mostra as palavras-chave da postagem. -->

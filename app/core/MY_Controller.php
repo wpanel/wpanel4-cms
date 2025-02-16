@@ -88,7 +88,10 @@ class MY_Controller extends CI_Controller {
         $this->config->set_item('language', wpn_config('language'));
         $this->lang->load('wpn_common_lang');
 
-        if (!is_null($this->language_file)) $this->lang->load($this->language_file, wpn_config('language'));
+        if (!empty($this->language_file))
+        {
+            $this->load_language();
+        }
 
         if (!is_null($this->model_file))
         {
@@ -213,6 +216,21 @@ class MY_Controller extends CI_Controller {
         // Reset our custom view attributes.
         log_message('debug', "4-> " . $this->use_view);
         $this->use_view = $this->use_layout = '';
+    }
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Loads the language file and sets the default language.
+     *
+     * @return void
+     */
+    public function load_language()
+    {
+        $files = (array)$this->language_file;
+        foreach ($files as $file) {
+            $this->lang->load($file, wpn_config('language'));
+        }
     }
 
     //--------------------------------------------------------------------

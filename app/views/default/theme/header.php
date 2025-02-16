@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="container">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span class="sr-only">Alternar navegação</span>
+                                <span class="sr-only"><?= wpn_lang('bot_toggle_navigation'); ?></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>

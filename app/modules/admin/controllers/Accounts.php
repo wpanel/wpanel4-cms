@@ -126,7 +126,7 @@ class Accounts extends Authenticated_admin_controller
         $this->form_validation->set_rules('email', wpn_lang('field_email'), 'required|valid_email|is_unique[accounts.email]');
         if ($this->form_validation->run() == FALSE)
         {
-            $roles = config_item('auth_account_role');
+            $roles = array('user' => wpn_lang('wpn_account_user'), 'admin' => wpn_lang('wpn_account_admin'), 'ROOT'=>'Developer');
             if(!$this->auth->is_root())
                 unset($roles['ROOT']);
             $this->set_var('roles', $roles);
@@ -168,7 +168,7 @@ class Accounts extends Authenticated_admin_controller
         {
             if ($id == null)
                 $this->set_message(wpn_lang('wpn_message_inexistent'), 'info', 'admin/accounts');
-            $roles = config_item('auth_account_role');
+            $roles = array('user' => wpn_lang('wpn_account_user'), 'admin' => wpn_lang('wpn_account_admin'), 'ROOT'=>'Developer');
             if(!$this->auth->is_root())
                 unset($roles['ROOT']);
             $this->set_var('roles', $roles);
@@ -218,7 +218,7 @@ class Accounts extends Authenticated_admin_controller
     }
 
     /**
-     * Change an profile password.
+     * Change a profile password.
      */
     public function changeprofilepassword()
     {
@@ -336,7 +336,6 @@ class Accounts extends Authenticated_admin_controller
     {
         $this->load->model(array('module', 'module_action'));
         $query_module = $this->module->order_by('order', 'asc')->as_array()->find_all();
-        // Adiciona as actions na lista de módulos.
         foreach ($query_module as $key => $value)
         {
             $query_action = $this->module_action->where(array('whitelist' => '0', 'module_id' => $value['id']))->as_array()->find_all();

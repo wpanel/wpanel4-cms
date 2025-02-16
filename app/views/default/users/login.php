@@ -1,30 +1,30 @@
 <h1 class="page-header">
-    Login<br/>
-    <small>Efetue seu login ou cadastre-se para ter acesso ao material restrito.</small>
+    <?= wpn_lang('users_login_title'); ?><br/>
+    <small><?= wpn_lang('users_login_message'); ?></small>
 </h1>
 
 <div class="row">
     <div class="col-sm-6">
         <?= form_open('users/login', array('class'=>'col-sm-10', 'role'=>'form')); ?>
             <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Seu e-mail...">
+                <label for="email"><?= wpn_lang('input_email'); ?></label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="<?= wpn_lang('input_email_placeholder'); ?>">
                 <?= form_error('email'); ?>
             </div>
             <div class="form-group">
-                <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Sua senha...">
+                <label for="password"><?= wpn_lang('input_password'); ?></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="<?= wpn_lang('input_password_placeholder'); ?>">
                 <?= form_error('password'); ?>
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">Login</button>            
-                <?= anchor('users/recovery', 'Esqueci minha senha', array('class' => 'btn btn-link')); ?>
+                <button type="submit" class="btn btn-primary"><?= wpn_lang('input_submit'); ?></button>
+                <?= anchor('users/recovery', wpn_lang('users_forgot_password_link'), array('class' => 'btn btn-link')); ?>
             </div>
         <?= form_close(); ?>
     </div>
     <div class="col-sm-6">
-        <h4>Ou Cadastre-se!</h4>
-        <p>Crie seu cadastro clicando no botão abaixo.</p>
-        <p><?= anchor('users/register', 'Cadastro', array('class' => 'btn btn-primary')); ?></p>
+        <h4><?= wpn_lang('users_header_register'); ?></h4>
+        <p><?= wpn_lang('users_header_register_message'); ?></p>
+        <p><?= anchor('users/register', wpn_lang('users_register_link'), array('class' => 'btn btn-primary')); ?></p>
     </div>
 </div>

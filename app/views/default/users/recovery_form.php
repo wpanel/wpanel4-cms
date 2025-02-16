@@ -1,15 +1,15 @@
-<h1 class="page-header">Recuperação de senha</h1>
-<p>Indique seu e-mail abaixo para iniciar o processo de recuperação de senha.</p>
+<h1 class="page-header"><?= wpn_lang('users_password_recovery_title'); ?></h1>
+<p><?= wpn_lang('users_password_recovery_title_message'); ?></p>
 <?= form_open('users/recovery'); ?>
 <div class="row">
     <div class="col-sm-4 col-md-4">
         <div class="form-group">
-            <label>Informe seu email</label>
-            <input type="text" name="email" class="form-control" placeholder="Informe seu email..." />
+            <label><?= wpn_lang('input_email'); ?></label>
+            <input type="text" name="email" class="form-control" placeholder="<?= wpn_lang('input_email_placeholder'); ?>" />
             <?= form_error('email'); ?>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-        <?= anchor('users/login', 'Voltar', array('class' => 'btn btn-danger')); ?>
+        <button type="submit" class="btn btn-primary"><?= wpn_lang('input_submit'); ?></button>
+        <?= anchor('users/login', wpn_lang('input_back'), array('class' => 'btn btn-danger')); ?>
     </div>
 </div>
 <?= form_close(); ?>

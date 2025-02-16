@@ -29,9 +29,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $num_cols = 1;
     foreach ($pictures as $row) {
 
-        /*
-         * Faz um calculo simples para adequar o total
-         * de colunas à class do bootstrap.
+        /**
+         * Performs a simple calculation to adjust the total
+         * number of columns to the bootstrap class.
          */
         $col = 12 / $max_cols;
         ?>
@@ -42,8 +42,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'class' => 'img-responsive',
                 'alt' => $row->descricao
             );
-            
-            // Monta o link de acordo com a definição de exibição das configurações.
+
+            // Mounts the link according to the configuration display definition.
             switch (wpn_config('media_show_photo')) {
                 case 'normal':
                     echo anchor('picture/'.wpn_fakelink($album->titulo).'/'.$row->id, img($conf_foto));
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h4><?= $row->descricao; ?></h4>
         </div>
     <?php
-    // Cria uma nova linha de acordo com a quantidade de ítens por linha.
+    // Creates a new line according to the number of items per line.
     if ($num_cols == $max_cols) {
         $num_cols = 1;
         echo '</div><div class="row">';
@@ -76,14 +76,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <!-- Mostra as palavras-chave do album.. -->
+        <!-- Shows album keywords.. -->
         <?= $this->widget->load('wpntagsfrompost', array('tags'=>$album->tags)); ?>
     </div>
 </div>
 
 <div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
-        <h3 class="page-header">Comentários</h3>
+        <h3 class="page-header"><?= wpn_lang('head_comments'); ?></h3>
         <?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('album/' . $album->id))); ?>
     </div>
 </div>

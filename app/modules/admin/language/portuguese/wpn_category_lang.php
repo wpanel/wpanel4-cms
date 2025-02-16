@@ -24,3 +24,6 @@ $lang['field_title'] = "Título da categoria";
 $lang['field_description'] = "Descrição";
 $lang['field_category'] = "Categoria-pai";
 $lang['field_view'] = "Tipo de visualização";
+$lang['field_view_mosaic'] = "Mosaico";
+$lang['field_view_list'] = "Lista";
+$lang['field_no_category'] = "Sem categoria";

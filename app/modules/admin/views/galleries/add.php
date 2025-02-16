@@ -42,8 +42,8 @@
                     <div class="form-group">
                         <label for="status"><?= wpn_lang('field_status'); ?></label>
                         <select name="status" class="form-control">
-                            <option value="0">Indisponível</option>
-                            <option value="1">Publicado</option>
+                            <option value="0"><?= wpn_lang('wpn_draft'); ?></option>
+                            <option value="1"><?= wpn_lang('wpn_published'); ?></option>
                         </select>
                     </div>
                 </div>

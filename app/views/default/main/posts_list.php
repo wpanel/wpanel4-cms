@@ -21,7 +21,7 @@ foreach($posts as $post){
         <div class="col-md-12 wpn-postagens">
             <h3><?= anchor('post/'.$post->link, $post->title); ?></h3>
             <p class="text-muted">
-                <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
+                <span><?= wpn_lang('posted_on'); ?> <?= mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
                 <small><?= $this->widget->load('wpncategoryfrompost', array('post_id' => $post->id)); ?></small>
             </p>
             <?php
@@ -44,7 +44,7 @@ foreach($posts as $post){
             }
             ?>
             <p><?= word_limiter(strip_tags($post->content), 60); ?></p>
-            <p><?= anchor('post/'.$post->link, 'Continuar lendo...'); ?></p>
+            <p><?= anchor('post/'.$post->link, wpn_lang('keep_reading')); ?></p>
         </div>
     </div>
     <?php

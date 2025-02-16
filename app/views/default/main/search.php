@@ -8,18 +8,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
 ?>
-<h1 class="page-header">Resultados da busca por: <?= $search_terms; ?></h1>
-<!-- Mostra a lista de resultados. -->
+<h1 class="page-header"><?= wpn_lang('header_search_results'); ?> <?= $search_terms; ?></h1>
 <?php foreach ($results as $row) { ?>
     <div class="row wpn-postagens">
         <div class="col-md-12">
             <h3 class="page-header"><?= anchor('post/' . $row->link, $row->title); ?></h3>
             <p class="text-muted">
-                <span>Postado dia <?= mdate('%d/%m/%Y', strtotime($row->created_on)); ?> <br/></span>
+                <span><?= wpn_lang('posted_on'); ?> <?= mdate('%d/%m/%Y', strtotime($row->created_on)); ?> <br/></span>
                 <small><?= $this->widget->load('wpncategoryfrompost', array('post_id' => $row->id)); ?></small>
             </p>
             <?php
-            // Exibe a imagem de capa caso ela exista.
             if (file_exists('./media/capas/' . $row->image)) {
                 ?>
                 <div class="wpn-capa">

@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-header">Álbuns de Fotos</h1>
+        <h1 class="page-header"><?= wpn_lang('picture_gallery_title'); ?></h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">
@@ -18,15 +18,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?= $this->widget->load('wpnaddthisbuttons'); ?>      
     </div>
 </div>
-<!-- Mostra a lista de álbuns em formato de mosaico. -->
 <div class="row">
     <?php
     $num_cols = 1;
     foreach ($albuns as $album) {
-
-        /*
-         * Faz um calculo simples para adequar o total
-         * de colunas à class do bootstrap.
+        /**
+         * Performs a simple calculation to adjust the total
+         * number of columns to the bootstrap class.
          */
         $col = 12 / $max_cols;
         ?>
@@ -54,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </h4>
         </div>
     <?php
-    // Cria uma nova linha de acordo com a quantidade de ítens por linha.
+    // Creates a new line according to the number of items per line.
     if ($num_cols == $max_cols) {
         $num_cols = 1;
         echo '</div><div class="row">';

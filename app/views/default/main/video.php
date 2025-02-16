@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h5>Descrição</h5>
+        <h5><?= wpn_lang('header_description'); ?></h5>
         <p><?= $video->descricao; ?></p>
         <!-- Mostra as palavras-chave da postagem. -->
         <?= $this->widget->load('wpntagsfrompost', array('tags'=>$video->tags)); ?>
@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h3>Comentários</h3>
+        <h3><?= wpn_lang('header_comments'); ?></h3>
         <?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('video/' . $video->link . '/' . wpn_fakelink($video->titulo)))); ?>
     </div>
 </div>

@@ -8,6 +8,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
 ?>
-<h1 class="page-header">Página inicial customizada do Wpanel CMS.</h1>
-<p>Para ativar/desativar esta página vá em: <b>Configurações > Página inicial</b>.</p>
-<p>Para editar esta página altere o arquivo: <b>/app/views/default/custom.php</b></p>
+<h1 class="page-header">Wpanel CMS Custom Home Page.</h1>
+<p>To enable/disable this page go to: <b>Settings > Home page</b>.</p>
+<p>To edit this page change the file: <b>/app/views/default/custom.php</b></p>

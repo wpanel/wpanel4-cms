@@ -1,31 +1,26 @@
-<h1 class="page-header">Área do usuário</h1>
+<h1 class="page-header"><?= wpn_lang('users_account_profile'); ?></h1>
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <ul class="nav nav-pills">
-            <li role="presentation"><?= anchor('users', 'Dashboard'); ?></li>
-            <li role="presentation" class="active"><?= anchor('users/profile', 'Meus dados'); ?></li>
-            <li role="presentation"><?= anchor('users/logout', 'Sair'); ?></li>
+            <li role="presentation"><?= anchor('users', wpn_lang('users_dashboard')); ?></li>
+            <li role="presentation" class="active"><?= anchor('users/profile', wpn_lang('users_account_profile')); ?></li>
+            <li role="presentation"><?= anchor('users/logout', wpn_lang('users_logout')); ?></li>
         </ul>
     </div>
 </div>
 <hr/>
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <p>Use o formulário abaixo para atualiar seus dados.</p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12 col-md-12">
         <?= form_open('users/profile', array('role' => 'form', 'class' => 'form-horizontal',)); ?>
             <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Nome</label>
+                <label for="name" class="col-sm-2 control-label"><?= wpn_lang('input_name') ?></label>
                 <div class="col-sm-5">
                     <input type="text" name="name" id="name" value="<?= $profile->name ?>" class="form-control"  />
                     <?= form_error('name'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">E-mail</label>
+                <label for="email" class="col-sm-2 control-label"><?= wpn_lang('input_email') ?></label>
                 <div class="col-sm-5">
                     <input type="text" name="email" id="email" value="<?= $account->email; ?>" class="form-control" />
                 </div>
@@ -44,26 +39,26 @@
             <div class="form-group">
                 <div class="checkbox col-sm-offset-2 col-sm-5">
                     <label>
-                        <input type="checkbox" name="alt_password" value="1"/> Alterar a senha.
+                        <input type="checkbox" name="alt_password" value="1"/> <?= wpn_lang('input_change_password'); ?>
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label for="new_password" class="col-sm-2 control-label">Nova senha</label>
+                <label for="new_password" class="col-sm-2 control-label"><?= wpn_lang('input_new_password'); ?></label>
                 <div class="col-sm-3">
                     <input type="password" name="new_password" id="new_password" class="form-control" />
                     <?= form_error('new_password'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="confirm_password" class="col-sm-2 control-label">Confirmação</label>
+                <label for="confirm_password" class="col-sm-2 control-label"><?= wpn_lang('input_password_confirmation'); ?></label>
                 <div class="col-sm-3">
                     <input type="password" name="confirm_password" id="confirm_password" class="form-control" />
                     <?= form_error('confirm_password'); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label for="original_password" class="col-sm-2 control-label">Senha atual</label>
+                <label for="original_password" class="col-sm-2 control-label"><?= wpn_lang('input_actual_password'); ?></label>
                 <div class="col-sm-3">
                     <input type="password" name="original_password" id="original_password" class="form-control" />
                     <?= form_error('original_password'); ?>
@@ -72,8 +67,8 @@
             <hr/>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-5">
-                    <button type="submit" class="btn btn-primary" >Salvar</button>
-                    <?= anchor('users', 'Cancelar', array('class' => 'btn btn-danger')); ?>
+                    <button type="submit" class="btn btn-primary" ><?= wpn_lang('wpn_bot_save'); ?></button>
+                    <?= anchor('users', wpn_lang('wpn_bot_cancel'), array('class' => 'btn btn-danger')); ?>
                 </div>
             </div>
         <?= form_close(); ?>

@@ -40,9 +40,9 @@ class Migration_Removeevents extends CI_Migration
             'author_website' => 'https://wpanel.org',
             'version' => '0.0.1',
             'status' => 1,
-            'name_id' => 'eventos',
-            'name' => 'Eventos',
-            'description' => 'Gerencaidor de eventos',
+            'name_id' => 'events',
+            'name' => 'Events',
+            'description' => 'Event manager',
             'icon' => '',
             'show_in_menu' => '1',
             'order' => '0',
@@ -55,25 +55,25 @@ class Migration_Removeevents extends CI_Migration
         $moduleactions_data = array(
             array(
                 'module_id' => $module_id,
-                'description' => 'Listar eventos',
+                'description' => 'List events',
                 'link' => 'admin/events',
                 'whitelist' => '0'
             ),
             array(
                 'module_id' => $module_id,
-                'description' => 'Adicionar evento',
+                'description' => 'Create event',
                 'link' => 'admin/events/add',
                 'whitelist' => '0'
             ),
             array(
                 'module_id' => $module_id,
-                'description' => 'Alterar evento',
+                'description' => 'Edit event',
                 'link' => 'admin/events/edit/*',
                 'whitelist' => '0'
             ),
             array(
                 'module_id' => $module_id,
-                'description' => 'Excluir evento',
+                'description' => 'Delete event',
                 'link' => 'admin/events/delete/*',
                 'whitelist' => '0'
             )
@@ -99,7 +99,7 @@ class Migration_Removeevents extends CI_Migration
      */
     private function deleteModule()
     {
-        $this->db->where('id', $this->getModuleId('eventos'));
+        $this->db->where('id', $this->getModuleId('events'));
         return $this->db->delete('modules');
     }
 
@@ -109,7 +109,7 @@ class Migration_Removeevents extends CI_Migration
      */
     private function deleteModuleActions()
     {
-        $this->db->where('module_id', $this->getModuleId('eventos'));
+        $this->db->where('module_id', $this->getModuleId('events'));
         return $this->db->delete('modules_actions');
     }
 

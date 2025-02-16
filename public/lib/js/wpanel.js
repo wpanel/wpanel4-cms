@@ -59,7 +59,7 @@
                 //"paging": false,
                 "bInfo": false,
                 language: {
-                    search: "Pesquisar na tabela: ",
+                    search: "Search: ",
                     lengthMenu: "Mostrar  _MENU_  registros por vez.",
                     info: "Exibindo registros de _START_ a _END_ de _TOTAL_ registros.",
                     paginate: {

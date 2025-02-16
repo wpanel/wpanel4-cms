@@ -44,10 +44,10 @@
                 <select name="status" class="form-control">
                     <option value="0" <?php if ($row->status == 0) {
                         echo 'selected';
-                    } ?> >Indisponível</option>
+                    } ?> ><?= wpn_lang('wpn_draft'); ?></option>
                     <option value="1" <?php if ($row->status == 1) {
                         echo 'selected';
-                    } ?> >Publicado</option>
+                    } ?> ><?= wpn_lang('wpn_published'); ?></option>
                 </select>
             </div>
             <hr/>

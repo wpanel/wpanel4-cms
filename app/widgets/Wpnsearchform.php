@@ -24,12 +24,10 @@ class Wpnsearchform extends Widget
         $html = "";
         $html .= form_open('search', array('class' => 'form-inline', 'role' => 'form'));
         $html .= "<div class=\"form-group\">";
-        $html .= "    <input type=\"text\" name=\"search\" class=\"form-control\" placeholder=\"Pesquisar ...\" />";
+        $html .= "    <input type=\"text\" name=\"search\" class=\"form-control\" placeholder=\"".wpn_lang('placeholder_search')."\" />";
         $html .= "</div>";
         $html .= "<button type=\"submit\" class=\"btn btn-primary\">Ok</button>";
-
         $html .= form_close();
-
         return $html;
     }
 
