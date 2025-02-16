@@ -31,6 +31,12 @@ $lang['module_edit_action'] = "Action module update";
  */
 $lang['field_id'] = "#";
 $lang['field_name'] = "Module name";
+$lang['field_short_name'] = "Name";
 $lang['field_description'] = "Description";
 $lang['field_link'] = "Link";
 $lang['field_whitelist'] = "White list";
+$lang['field_author_name'] = "Author name";
+$lang['field_author_email'] = "Author email";
+$lang['field_author_website'] = "Author website";
+$lang['field_version'] = "Version";
+$lang['field_status'] = "Status";
