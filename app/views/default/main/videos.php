@@ -8,14 +8,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); 
 
 ?>
-<!-- Bibliotecas adicionais para o Fancybox. -->
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.fancybox.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/jquery.easing.pack.js'); ?>"></script>
 <script type="text/javascript" src="<?= base_url('lib/plugins/fancybox/helpers/jquery.fancybox-media.js?v=1.0.6'); ?>"></script>
 <link rel="stylesheet" href="<?= base_url('lib/plugins/fancybox/jquery.fancybox.css'); ?>" type="text/css" media="screen" />
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-header">Galeria de Vídeos</h1>
+        <h1 class="page-header"><?= wpn_lang('video_gallery_title'); ?></h1>
     </div>
 </div>
 <div class="row wpn-social-buttons">
@@ -27,11 +26,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php
     $num_cols = 1;
     foreach ($videos as $video) {
-
-        /*
-         * Faz um calculo simples para adequar o total
-         * de colunas à class do bootstrap.
-         */
         $col = 12 / $max_cols;
         ?>
         <div class="col-md-<?= $col; ?>">
@@ -43,7 +37,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         'class' => 'img-responsive'
                     );
                     
-                    // Monta o link de acordo com a definição de exibição das configurações.
                     switch (wpn_config('media_show_video')) {
                         case 'normal':
                             echo anchor('video/'.$video->link.'/'.wpn_fakelink($video->titulo), img($conf_foto));
@@ -61,7 +54,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </div>
         <?php
-        // Cria uma nova linha de acordo com a quantidade de ítens por linha.
         if ($num_cols == $max_cols) {
             echo '</div><div class="row">';
             $num_cols = 1;

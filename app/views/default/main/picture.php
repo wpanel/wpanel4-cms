@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
-        <h3 class="page-header">Comentários</h3>
+        <h3 class="page-header"><?= wpn_lang('header_comments'); ?></h3>
         <?= $this->widget->load('wpnfacebookcomments', array('link' => site_url('foto/' . $picture->id))); ?>
     </div>
 </div>

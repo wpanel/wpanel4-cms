@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-md-12">
         <h1 class="page-header"><?php echo $post->title; ?></h1>
         <p class="text-muted">
-            <span>Postado dia <?php echo mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
+            <span><?= wpn_lang('posted_on'); ?> <?php echo mdate('%d/%m/%Y', strtotime($post->created_on)); ?> <br/></span>
             <small>
                 <?php if ($post->page==0){ ?>
                     <span class="category">
@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         echo $post->content;
 
         if ($post->page==0) {
-            echo '<h4>Comentarios</h4>';
+            echo '<h4>'.wpn_lang('head_comments').'</h4>';
             echo $this->widget->load('wpnfacebookcomments', array('link' => site_url('post/'.$post->link)));
         }
         
