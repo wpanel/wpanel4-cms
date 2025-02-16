@@ -36,10 +36,7 @@
                     <div class="col-md-6 " id="">
                         <div class="form-group" >
                             <label for="view"><?= wpn_lang('field_view'); ?></label>
-                            <?php
-                            $options = config_item('posts_views');
-                            echo form_dropdown('view', $options, '', array('class'=>'form-control'));
-                            ?>
+                            <?= form_dropdown('view', $view_options, '', array('class'=>'form-control')); ?>
                         </div>
                     </div>
                 </div>

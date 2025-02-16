@@ -58,10 +58,9 @@ echo $this->wpanel->load_editor();
                         <div class="form-group" >
                             <label for="status"><?= wpn_lang('field_status'); ?></label>
                             <?php
-                            // Opções de status
                             $options = array(
-                                '0' => 'Rascunho',
-                                '1' => 'Publicado'
+                                '0'  => wpn_lang('wpn_draft'),
+                                '1'  => wpn_lang('wpn_published')
                             );
                             echo form_dropdown('status', $options, null, array('class' => 'form-control'));
                             ?>

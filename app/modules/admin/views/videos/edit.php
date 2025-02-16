@@ -43,10 +43,9 @@
             </div>
             <div class="form-group">
                 <?php
-                // Status do usuário
                 $options = array(
-                    '0' => 'Indisponível',
-                    '1' => 'Publicado'
+                    '0'  => wpn_lang('wpn_draft'),
+                    '1'  => wpn_lang('wpn_published')
                 );
                 ?>
                 <label for="status" class="col-sm-2 col-md-2"><?= wpn_lang('field_status') ?></label>
